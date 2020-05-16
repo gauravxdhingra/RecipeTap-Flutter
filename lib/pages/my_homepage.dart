@@ -14,9 +14,9 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isLoading = true;
 
   final String url =
-      // "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
+      "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
       // "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
-      "https://www.allrecipes.com/recipe/127491/easy-oreo-truffles/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202";
+      // "https://www.allrecipes.com/recipe/127491/easy-oreo-truffles/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202";
   bool oldWebsite;
 
   String headline;
@@ -129,7 +129,10 @@ class _MyHomePageState extends State<MyHomePage> {
       if (selector.isNotEmpty)
         selector.forEach((element) {
           final inote = element.text.trim();
-          if (inote != '' && inote != "Footnotes") cooksNotes.add(inote);
+          if (inote != '' && inote != "Footnotes") {
+            cooksNotes.add(inote);
+            cooksNotes = cooksNotes[0].toString().split("  ");
+          }
         });
     }
     setState(() {
@@ -164,9 +167,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text(desc),
                   // Ingredients
                   Container(
-                    height: 250,
+                    height: 200,
                     child: ListView.builder(
-                      itemCount: ingredients.length,
+                      itemCount: oldWebsite
+                          ? ingredients.length
+                          : ingredients.length - 2,
                       itemBuilder: (BuildContext context, int index) {
                         return Text(ingredients[index]);
                       },
@@ -174,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   // directons/steps
                   Container(
-                    height: 250,
+                    height: 200,
                     child: ListView.builder(
                       itemCount: directions.length - 1,
                       itemBuilder: (BuildContext context, int index) {
@@ -198,9 +203,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   // extra cooks notes
                   if (cooksNotesExits)
+                    // Container(
+                    //   child:
+                    //       Text(cooksNotes[0].toString().substring(20).trim()),
+                    // ),
                     Container(
-                      child:
-                          Text(cooksNotes[0].toString().substring(20).trim()),
+                      height: 100,
+                      child: ListView.builder(
+                        itemCount: cooksNotes.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          print(cooksNotes.length);
+                          return Text(cooksNotes[index]);
+                        },
+                      ),
                     ),
                 ],
               ),
