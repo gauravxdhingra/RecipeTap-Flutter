@@ -14,11 +14,12 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isLoading = true;
 
   final String url =
-      "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
-
+      // "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
+      "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
   String headline;
 
   List ingredients = [];
+  List directions = [];
 
   getData() async {
     final response = await http.get(url);
@@ -31,6 +32,13 @@ class _MyHomePageState extends State<MyHomePage> {
       final iingred = element.text.trim();
       ingredients.add(iingred);
     });
+
+    document.getElementsByClassName("section-body").forEach((element) {
+      final istep = element.text.trim();
+      directions.add(istep);
+    });
+// section-body
+// subcontainer instructions-section-item
     setState(() {
       print(headline);
       print(ingredients[0]);
@@ -48,24 +56,35 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // getData();
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => getData(),
+      ),
       appBar: AppBar(
-          // title: Text(headline),
-          ),
+        title: isLoading ? Text('') : Text(headline),
+      ),
       body: isLoading
           ? CircularProgressIndicator()
-          : Container(
-              height: 250,
-              child: Column(
-                children: <Widget>[
-                  Text('ingredients'),
-                  // Text(ingredients[0]),
-                  // ListView.builder(
-                  //   itemBuilder: (context, index) {
-                  //     return Text(ingredients[index]);
-                  //   },
-                  // ),
-                ],
-              ),
+          : Column(
+              children: <Widget>[
+                Container(
+                  height: 250,
+                  child: ListView.builder(
+                    itemCount: ingredients.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Text(ingredients[index]);
+                    },
+                  ),
+                ),
+                Container(
+                  height: 250,
+                  child: ListView.builder(
+                    itemCount: directions.length - 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Text(directions[index]);
+                    },
+                  ),
+                ),
+              ],
             ),
     );
   }
