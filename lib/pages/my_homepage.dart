@@ -15,15 +15,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final String url =
       // "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
-      // "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
-      // "https://www.allrecipes.com/recipe/127491/easy-oreo-truffles/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202";
-      "https://www.allrecipes.com/recipe/228899/palak-paneer/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
+      "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
+  // "https://www.allrecipes.com/recipe/127491/easy-oreo-truffles/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202";
+  // "https://www.allrecipes.com/recipe/228899/palak-paneer/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
+  // "https://www.allrecipes.com/recipe/259199/grilled-tandoori-lamb/?internalSource=user%20pref&referringContentType=Homepage&clickId=cardslot%209";
+
   bool oldWebsite;
 
   String headline;
   String desc;
   String time;
   String servings;
+  List images = [];
   List ingredients = [];
   List directions = [];
   List nutritionalFacts = [];
@@ -53,6 +56,46 @@ class _MyHomePageState extends State<MyHomePage> {
           document.getElementsByClassName("headline heading-content")[3].text;
 // margin-0-auto
 
+      var coverimg = document
+          .getElementsByClassName(
+              "icon icon-pinterest-circle-solid social-icon pinterest-transparent")[0]
+          .querySelector("a")
+          .attributes["href"]
+          .toString()
+          .split("%3Furl%3D")[1]
+          .split("&descri")[0]
+          .replaceAll("%253A", ":")
+          .replaceAll("%252F", "/")
+          .replaceAll("%3A", ":")
+          .replaceAll("%2F", "/");
+
+      // .querySelector("img")
+      // .attributes["src"];
+      // print(coverimg);
+      images.add(coverimg);
+
+      var otherImagesRef = document.getElementsByClassName("ugc-photos-link");
+      int count = 0;
+      otherImagesRef.forEach((element) {
+        count++;
+        if (count > 2) {
+          final newElement = element
+              // .querySelector("a")
+              // .querySelector("div")
+              .attributes["data-cms-id"];
+          if ("https://images.media-allrecipes.com/userphotos/" +
+                  newElement +
+                  ".jpg" !=
+              coverimg) {
+            images.add(
+              "https://images.media-allrecipes.com/userphotos/" +
+                  newElement +
+                  ".jpg",
+            );
+          }
+        }
+      });
+      print(images);
       // 0 prep
       // 1 cook
       // 2 total
@@ -108,6 +151,24 @@ class _MyHomePageState extends State<MyHomePage> {
       headline = document.getElementsByClassName("recipe-summary__h1")[0].text;
 // margin-0-auto
 
+// TODO add to images list
+      final imagerow = document
+          .getElementsByClassName("photo-strip__items")[0]
+          .querySelectorAll("li");
+      // [0]
+      // .querySelector("a")
+      // .querySelector("img");
+
+      imagerow.forEach((element) {
+        if (element.querySelector("a").attributes["href"] != "#") {
+          final src =
+              element.querySelector("a").querySelector("img").attributes["src"];
+          print(src);
+        }
+      });
+
+      // print(imagerow.attributes["src"]);
+
       time = document.getElementsByClassName("ready-in-time")[0].text.trim();
       // final servingss = document
       //     .getElementsByClassName("recipe-ingredients ng-scope");
@@ -141,7 +202,6 @@ class _MyHomePageState extends State<MyHomePage> {
       // section-body
       // subcontainer instructions-section-item
 
-//TODO
       nutritionalFactsExits =
           document.getElementsByClassName("nutrition-summary-facts").isNotEmpty;
 
@@ -210,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(cooksNotes);
+    // print(cooksNotes);
     // getData();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
