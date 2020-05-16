@@ -14,13 +14,14 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isLoading = true;
 
   final String url =
-      // "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
-      "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
+      "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
+  // "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
   String headline;
 
   List ingredients = [];
   List directions = [];
   List nutritionalFacts = [];
+  List cooksNotes = [];
 
   getData() async {
     final response = await http.get(url);
@@ -43,9 +44,15 @@ class _MyHomePageState extends State<MyHomePage> {
     String nutritionText = directions[directions.length - 1];
     List<String> roughNutri = nutritionText.split("  ");
     roughNutri.forEach((element) {
-      element = element.trim();
+      if (element != '') nutritionalFacts.add(element.trim());
     });
-    nutritionalFacts = roughNutri;
+    // nutritionalFacts = roughNutri;
+
+    document.getElementsByClassName("recipe-note container").forEach((element) {
+      final inote = element.text.trim();
+      if (inote != '' && inote != "Cook's Notes:") cooksNotes.add(inote);
+    });
+// recipe-note container
 
     setState(() {
       print(headline);
@@ -72,37 +79,48 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: isLoading
           ? CircularProgressIndicator()
-          : Column(
-              children: <Widget>[
-                Container(
-                  height: 250,
-                  child: ListView.builder(
-                    itemCount: ingredients.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(ingredients[index]);
-                    },
+          : SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  // Ingredients
+                  Container(
+                    height: 250,
+                    child: ListView.builder(
+                      itemCount: ingredients.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Text(ingredients[index]);
+                      },
+                    ),
                   ),
-                ),
-                Container(
-                  height: 250,
-                  child: ListView.builder(
-                    itemCount: directions.length - 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(directions[index]);
-                    },
+                  // directons/steps
+                  Container(
+                    height: 250,
+                    child: ListView.builder(
+                      itemCount: directions.length - 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Text(directions[index]);
+                      },
+                    ),
                   ),
-                ),
-                Container(
-                  height: 250,
-                  // child: Text(directions[directions.length - 1]),
-                  child: ListView.builder(
-                    itemCount: nutritionalFacts.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(nutritionalFacts[index]);
-                    },
+                  // nutritional facts
+                  Container(
+                    height: 100,
+                    // child: Text(directions[directions.length - 1]),
+                    child: ListView.builder(
+                      itemCount: nutritionalFacts.length - 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        print(nutritionalFacts[index].toString().trimRight());
+                        return Text(
+                            nutritionalFacts[index].toString().trimRight());
+                      },
+                    ),
                   ),
-                ),
-              ],
+                  // extra cooks notes
+                  Container(
+                    child: Text(cooksNotes[0].toString().substring(20).trim()),
+                  ),
+                ],
+              ),
             ),
     );
   }
