@@ -15,6 +15,10 @@ class RecipeViewPage extends StatefulWidget {
 class _RecipeViewPageState extends State<RecipeViewPage> {
   bool isLoading = true;
 
+  // TODO handle empty image
+  // TODO solbe-if image rail is empty
+  // https://images.media-allrecipes.com/images/82579.png
+
   // final String url =
   //     widget.url;
   // "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
@@ -41,7 +45,8 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 
   getData() async {
     final String url = widget.url;
-    final String coverImageUrl = widget.coverImageUrl.replaceAll("/300x300", "");
+    final String coverImageUrl =
+        widget.coverImageUrl.replaceAll("/300x300", "");
     final response = await http.get(url);
     dom.Document document = parser.parse(response.body);
 
@@ -107,16 +112,26 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       // 2 total
       // 3 servings
       // 4. Servings
-
-      time = document
-          .getElementsByClassName("recipe-meta-item-body")[2]
-          .text
-          .trim();
-      servings = document
-          .getElementsByClassName("recipe-meta-item-body")[3]
-          .text
-          .trim();
-
+      try {
+        time = document
+            .getElementsByClassName("recipe-meta-item-body")[2]
+            .text
+            .trim();
+        servings = document
+            .getElementsByClassName("recipe-meta-item-body")[3]
+            .text
+            .trim();
+      } catch (e) {
+        time = "--";
+        try {
+          servings = document
+              .getElementsByClassName("recipe-meta-item-body")[0]
+              .text
+              .trim();
+        } catch (e) {
+          print(e);
+        }
+      }
       desc = document.getElementsByClassName("margin-0-auto")[0].text.trim();
 
       document
@@ -166,7 +181,8 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       // .querySelector("img");
 
       imagerow.forEach((element) {
-        if (element.querySelector("a").attributes["href"] != "#") {
+        if (element.querySelector("a").attributes["href"] != "#" ||
+            element.querySelector("a") == null) {
           final src =
               element.querySelector("a").querySelector("img").attributes["src"];
           print(src);
