@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:recipetap/models/recipe_card.dart';
-import 'package:recipetap/pages/my_homepage.dart';
+import 'package:recipetap/pages/recipe_view_page.dart';
 
 class SearchResultsScreen extends StatefulWidget {
   static const routeName = 'search_result_screen';
