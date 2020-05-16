@@ -41,10 +41,11 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
 
     recipeCardsFromHtml.forEach((element) {
       final imageUrlRecipe = element
-          .querySelector("div")
-          .querySelector("a")
+          .getElementsByClassName("grid-card-image-container")[0]
+          // .querySelector("div")
+          // .querySelector("a")
           .querySelector("img")
-          .attributes["src"];
+          .attributes["data-original-src"];
       // .getElementsByClassName("fixed-recipe-card__img ng-isolate-scope")[0]
       // .attributes["src"];
       print(imageUrlRecipe);
