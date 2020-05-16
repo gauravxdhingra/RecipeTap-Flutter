@@ -20,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List ingredients = [];
   List directions = [];
+  List nutritionalFacts = [];
 
   getData() async {
     final response = await http.get(url);
@@ -39,6 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 // section-body
 // subcontainer instructions-section-item
+    String nutritionText = directions[directions.length - 1];
+    List<String> roughNutri = nutritionText.split("  ");
+    roughNutri.forEach((element) {
+      element = element.trim();
+    });
+    nutritionalFacts = roughNutri;
+
     setState(() {
       print(headline);
       print(ingredients[0]);
@@ -81,6 +89,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemCount: directions.length - 1,
                     itemBuilder: (BuildContext context, int index) {
                       return Text(directions[index]);
+                    },
+                  ),
+                ),
+                Container(
+                  height: 250,
+                  // child: Text(directions[directions.length - 1]),
+                  child: ListView.builder(
+                    itemCount: nutritionalFacts.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Text(nutritionalFacts[index]);
                     },
                   ),
                 ),
