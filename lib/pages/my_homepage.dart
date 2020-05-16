@@ -4,7 +4,9 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 class RecipeViewPage extends StatefulWidget {
-  RecipeViewPage({Key key}) : super(key: key);
+  final String url;
+  final String coverImageUrl;
+  RecipeViewPage({Key key, this.url, this.coverImageUrl}) : super(key: key);
   static const routeName = 'recipe_view_page';
   @override
   _RecipeViewPageState createState() => _RecipeViewPageState();
@@ -13,11 +15,12 @@ class RecipeViewPage extends StatefulWidget {
 class _RecipeViewPageState extends State<RecipeViewPage> {
   bool isLoading = true;
 
-  final String url =
-      // "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
-      // "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
-      // "https://www.allrecipes.com/recipe/127491/easy-oreo-truffles/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202";
-      "https://www.allrecipes.com/recipe/228899/palak-paneer/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
+  // final String url =
+  //     widget.url;
+  // "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
+  // "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
+  // "https://www.allrecipes.com/recipe/127491/easy-oreo-truffles/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202";
+  // "https://www.allrecipes.com/recipe/228899/palak-paneer/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
   // "https://www.allrecipes.com/recipe/259199/grilled-tandoori-lamb/?internalSource=user%20pref&referringContentType=Homepage&clickId=cardslot%209";
 
   bool oldWebsite;
@@ -37,6 +40,8 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
   bool cooksNotesExits = false;
 
   getData() async {
+    final String url = widget.url;
+    final String coverImageUrl = widget.coverImageUrl.replaceAll("/300x300", "");
     final response = await http.get(url);
     dom.Document document = parser.parse(response.body);
 
@@ -56,23 +61,24 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
           document.getElementsByClassName("headline heading-content")[3].text;
 // margin-0-auto
 
-      var coverimg = document
-          .getElementsByClassName(
-              "icon icon-pinterest-circle-solid social-icon pinterest-transparent")[0]
-          .querySelector("a")
-          .attributes["href"]
-          .toString()
-          .split("%3Furl%3D")[1]
-          .split("&descri")[0]
-          .replaceAll("%253A", ":")
-          .replaceAll("%252F", "/")
-          .replaceAll("%3A", ":")
-          .replaceAll("%2F", "/");
+      // var coverimg = document
+      //     .getElementsByClassName(
+      //         "icon icon-pinterest-circle-solid social-icon pinterest-transparent")[0]
+      //     .querySelector("a")
+      //     .attributes["href"]
+      //     .toString()
+      //     .split("%3Furl%3D")[1]
+      //     .split("&descri")[0]
+      //     .replaceAll("%253A", ":")
+      //     .replaceAll("%252F", "/")
+      //     .replaceAll("%3A", ":")
+      //     .replaceAll("%2F", "/");
 
-      // .querySelector("img")
-      // .attributes["src"];
-      // print(coverimg);
-      images.add(coverimg);
+      // // .querySelector("img")
+      // // .attributes["src"];
+      print(coverImageUrl);
+      // images.add(coverimg);
+      images.add(coverImageUrl);
 
       var otherImagesRef = document.getElementsByClassName("ugc-photos-link");
       int count = 0;
@@ -86,7 +92,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
           if ("https://images.media-allrecipes.com/userphotos/" +
                   newElement +
                   ".jpg" !=
-              coverimg) {
+              coverImageUrl) {
             images.add(
               "https://images.media-allrecipes.com/userphotos/" +
                   newElement +
