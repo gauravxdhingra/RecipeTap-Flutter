@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipetap/pages/search_screen.dart';
 
 import 'pages/my_homepage.dart';
 
@@ -28,7 +29,12 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      // home: MyHomePage(),
+      routes: {
+        '/': (context) => SearchScreen(),
+        SearchScreen.routeName: (context) => SearchScreen(),
+        RecipeViewPage.routeName: (context) => RecipeViewPage(),
+      },
     );
   }
 }

@@ -3,21 +3,21 @@ import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
+class RecipeViewPage extends StatefulWidget {
+  RecipeViewPage({Key key}) : super(key: key);
+  static const routeName = 'recipe_view_page';
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _RecipeViewPageState createState() => _RecipeViewPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _RecipeViewPageState extends State<RecipeViewPage> {
   bool isLoading = true;
 
   final String url =
       // "https://www.allrecipes.com/recipe/262499/tandoori-paneer-tikka-masala/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
-      "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
-  // "https://www.allrecipes.com/recipe/127491/easy-oreo-truffles/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202";
-  // "https://www.allrecipes.com/recipe/228899/palak-paneer/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
+      // "https://www.allrecipes.com/recipe/129000/caribbean-nachos/?internalSource=staff%20pick&referringId=1228&referringContentType=Recipe%20Hub&clickId=cardslot%201#nutrition";
+      // "https://www.allrecipes.com/recipe/127491/easy-oreo-truffles/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202";
+      "https://www.allrecipes.com/recipe/228899/palak-paneer/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%201";
   // "https://www.allrecipes.com/recipe/259199/grilled-tandoori-lamb/?internalSource=user%20pref&referringContentType=Homepage&clickId=cardslot%209";
 
   bool oldWebsite;
