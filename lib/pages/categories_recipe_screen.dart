@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:recipetap/models/category_options_card.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
 
@@ -21,6 +22,9 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   // static String excl; //= 'salt,chicken';
 
   List<RecipeCard> recipeCards = [];
+  List<CategoryOptionsRecipeCard> categoryOptionsRecipeCards = [];
+  String categoryTitle;
+  String categoryDesc;
 
   @override
   void initState() {
@@ -33,6 +37,55 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   getSearchResults(url) async {
     final response = await http.get(url);
     dom.Document document = parser.parse(response.body);
+
+    categoryTitle = document
+        .getElementsByClassName("title-section__text title")[0]
+        .text
+        .trim();
+    categoryDesc = document
+        .getElementsByClassName("title-section__text subtitle")[0]
+        .text
+        .trim();
+
+    final categoryOptionsFromHtml = document
+        .getElementById("insideScroll")
+        .querySelector("ul")
+        .querySelectorAll("li");
+
+    categoryOptionsFromHtml.forEach((element) {
+      // title
+      // photoUrl
+      // href
+      final href = element
+          .querySelector("a")
+          .attributes["href"]
+          .split("?internalSource=")[0];
+
+      final photoUrl = element
+          .querySelector("a")
+          .querySelector("img")
+          .attributes["src"]
+          .replaceAll("/140x140", "");
+
+      final title =
+          element.querySelector("a").querySelector("span").text.trim();
+
+      categoryOptionsRecipeCards.add(CategoryOptionsRecipeCard(
+        title: title,
+        href: href,
+        photoUrl: photoUrl,
+      ));
+      // print("**********************************");
+      // print(title);
+      // print(href);
+      // print(photoUrl);
+      // print("**********************************");
+    });
+    // print("**********************************");
+
+    // print(categoryOptionsRecipeCards[1].href);
+
+    // print("**********************************");
 
     final recipeCardsFromHtml =
         document.getElementsByClassName("fixed-recipe-card");
@@ -71,7 +124,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         href: href,
       ));
     });
-    print(recipeCards);
+    // print(recipeCards);
     setState(() {
       isLoading = false;
     });
@@ -89,12 +142,52 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO Layout: Options form Catagories , CatagoryRecipes
+    // TODO Layout: CatagoryOptions , CatagoryRecipes
     return Scaffold(
-      appBar: AppBar(),
+      appBar: isLoading
+          ? AppBar()
+          : AppBar(
+              title: Text(categoryTitle),
+            ),
       body: isLoading
           ? CircularProgressIndicator()
-          : BuildRecipeListResults(recipeCards: recipeCards),
+          : SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 150,
+                    // width: 400,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categoryOptionsRecipeCards.length,
+                      itemBuilder: (context, i) => Container(
+                        height: 100,
+                        width: 100,
+                        child: Column(
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundImage: NetworkImage(
+                                categoryOptionsRecipeCards[i].photoUrl,
+                              ),
+                            ),
+                            Text(categoryOptionsRecipeCards[i].title),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text(categoryDesc),
+                  Container(
+                    height: 400,
+                    child: BuildRecipeListResults(
+                      recipeCards: recipeCards,
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

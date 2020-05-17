@@ -50,9 +50,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
     final response = await http.get(url);
     dom.Document document = parser.parse(response.body);
 
-//
-    // oldWebsite =
-
     try {
       document.getElementsByClassName("magazine-bar__social")[0].text;
       oldWebsite = false;
