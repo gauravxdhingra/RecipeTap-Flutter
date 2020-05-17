@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:html/dom.dart' as dom;
-import 'package:html/parser.dart' as parser;
+import 'package:flutter_chips_input/flutter_chips_input.dart';
+import 'package:recipetap/models/ingredients.dart';
 import 'package:recipetap/pages/search_results.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -16,8 +15,12 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
 
+// TODO spaces replace %20
+// TODO check same ingredient not included and excluded
+
   @override
   void initState() {
+    inclController = TextEditingController();
     super.initState();
   }
 

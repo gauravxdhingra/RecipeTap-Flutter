@@ -27,7 +27,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
     final String incl = widget.incl;
     final String excl = widget.excl;
     final String url =
-        'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl';
+        'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re';
     getSearchResults(url);
     super.initState();
   }
