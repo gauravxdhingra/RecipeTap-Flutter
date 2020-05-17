@@ -8,9 +8,13 @@ import 'package:recipetap/widgets/build_recipe_list_results.dart';
 
 class SearchResultsScreen extends StatefulWidget {
   static const routeName = 'search_result_screen';
-  final incl;
-  final excl;
-  SearchResultsScreen({Key key, this.incl, this.excl}) : super(key: key);
+  // final incl;
+  // final excl;
+  final url;
+  SearchResultsScreen({
+    Key key,
+    this.url,
+  }) : super(key: key);
 
   @override
   _SearchResultsScreenState createState() => _SearchResultsScreenState();
@@ -25,10 +29,11 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
 
   @override
   void initState() {
-    final String incl = widget.incl;
-    final String excl = widget.excl;
-    final String url =
-        'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re';
+    // final String incl = widget.incl;
+    // final String excl = widget.excl;
+    // final String url =
+    //     'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re';
+    final String url = widget.url;
     getSearchResults(url);
     super.initState();
   }

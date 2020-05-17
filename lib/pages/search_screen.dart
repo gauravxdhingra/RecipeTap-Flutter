@@ -20,11 +20,13 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
+  TextEditingController normalSearchController = TextEditingController();
 
   GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
   GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
 
+// TODO: all user search inputs lowercase
 // TODO spaces replace %20
 // TODO check same ingredient not included and excluded
 
@@ -32,6 +34,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     inclController = TextEditingController();
     exclController = TextEditingController();
+    normalSearchController = TextEditingController();
 
     super.initState();
     // print(suggestions);
@@ -42,15 +45,26 @@ class _SearchScreenState extends State<SearchScreen> {
   void dispose() {
     inclController.dispose();
     exclController.dispose();
+    normalSearchController.dispose();
     super.dispose();
   }
 
   submitSearch(incl, excl) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SearchResultsScreen(
-              incl: incl,
-              excl: excl,
-            )));
+            // incl: incl,
+            // excl: excl,
+            url:
+                'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re')));
+  }
+
+  submitSearchNormal(url) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => SearchResultsScreen(
+            // incl: incl,
+            // excl: excl,
+            url:
+                'https://www.allrecipes.com/search/results/?wt=rajma&sort=re')));
   }
 
   @override
@@ -62,6 +76,15 @@ class _SearchScreenState extends State<SearchScreen> {
         body: Container(
           child: Column(
             children: <Widget>[
+              Text('Search'),
+              TextFormField(
+                controller: normalSearchController,
+              ),
+              FlatButton(
+                child: Text('Search Recipe by name'),
+                onPressed: () =>
+                    submitSearchNormal(normalSearchController.text),
+              ),
               Text('Favourites'),
               Text('Browse By Category'),
               FlatButton(
