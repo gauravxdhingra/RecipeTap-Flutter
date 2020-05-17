@@ -7,6 +7,8 @@ void main() {
   runApp(MyApp());
 }
 
+// TODO: Handle Text Overflows Everywhere in the app
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override

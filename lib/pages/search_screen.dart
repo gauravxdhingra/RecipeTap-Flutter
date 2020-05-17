@@ -29,6 +29,8 @@ class _SearchScreenState extends State<SearchScreen> {
 // TODO: all user search inputs lowercase
 // TODO spaces replace %20
 // TODO check same ingredient not included and excluded
+// TODO: Handle empty search result page 404
+// TODO: Review all 10,000 Suggestions
 
   @override
   void initState() {
@@ -56,6 +58,8 @@ class _SearchScreenState extends State<SearchScreen> {
             // excl: excl,
             url:
                 'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re')));
+    print(
+        'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re');
   }
 
   submitSearchNormal(url) {
@@ -121,6 +125,8 @@ class _SearchScreenState extends State<SearchScreen> {
               SimpleAutoCompleteTextField(
                 key: key,
                 suggestions: suggestions,
+                textChanged: (query) => suggestions.add(query),
+                controller: inclController,
               ),
               SizedBox(
                 height: 50,
@@ -129,6 +135,7 @@ class _SearchScreenState extends State<SearchScreen> {
               SimpleAutoCompleteTextField(
                 key: keyy,
                 suggestions: suggestions,
+                controller: exclController,
               ),
               SizedBox(
                 height: 50,
