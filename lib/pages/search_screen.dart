@@ -1,7 +1,9 @@
+// import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_chips_input/flutter_chips_input.dart';
-import 'package:recipetap/models/ingredients.dart';
+// import 'package:flutter_chips_input/flutter_chips_input.dart';
+import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/search_results.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -15,6 +17,8 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
 
+  GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
+
 // TODO spaces replace %20
 // TODO check same ingredient not included and excluded
 
@@ -22,8 +26,10 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     inclController = TextEditingController();
     super.initState();
+    print(suggestions);
   }
 
+  List<String> suggestions = SearchSuggestions.suggestions;
   @override
   void dispose() {
     inclController.dispose();
@@ -46,11 +52,19 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Container(
         child: Column(
           children: <Widget>[
-            TextFormField(
-              controller: inclController,
-            ),
-            TextFormField(
-              controller: exclController,
+            // TextFormField(
+            //   controller: inclController,
+            // ),
+            // TextFormField(
+            //   controller: exclController,
+            // ),
+            AutoCompleteTextField(
+              itemSubmitted: null,
+              key: key,
+              suggestions: null,
+              itemBuilder: null,
+              itemSorter: null,
+              itemFilter: null,
             ),
             FlatButton(
               child: Text('Search'),
