@@ -252,7 +252,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       headline = document.getElementsByClassName("recipe-summary__h1")[0].text;
 // margin-0-auto
 
-// TODO add to images list
       final imagerow = document
           .getElementsByClassName("photo-strip__items")[0]
           .querySelectorAll("li");
@@ -265,7 +264,11 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
             element.querySelector("a") == null) {
           final src =
               element.querySelector("a").querySelector("img").attributes["src"];
-          print(src);
+          final srcfirstSplit = src.split("photos/")[0];
+          final srcsecondsplit = src.split("photos/")[1].split("/")[1];
+          final srcc = srcfirstSplit + "photos/" + srcsecondsplit;
+          print(srcc);
+          images.add(srcc);
         }
       });
 
@@ -459,7 +462,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                               children: <Widget>[
                                 Icon(Icons.timer),
                                 Text(time ?? ""),
-                                // TODO time settle total scrap
                               ],
                             ),
                           ),
