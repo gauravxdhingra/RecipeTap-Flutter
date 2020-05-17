@@ -37,7 +37,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
   String time;
   String servings;
   String yeild;
-  List images = [];
+  List<String> images = [];
   List ingredients = [];
   List directions = [];
   List nutritionalFacts = [];
@@ -53,11 +53,12 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 
   getData() async {
     final String url = widget.url;
-    final String coverImageUrl =
-        widget.coverImageUrl.replaceAll("/300x300", "");
+    final String coverImageUrl = widget.coverImageUrl;
+    images.add(coverImageUrl);
+    // .replaceAll("/300x300", "");
     final response = await http.get(url);
     dom.Document document = parser.parse(response.body);
-
+    print(url);
     try {
       document.getElementsByClassName("magazine-bar__social")[0].text;
       oldWebsite = false;
@@ -89,7 +90,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       // // .attributes["src"];
       print(coverImageUrl);
       // images.add(coverimg);
-      images.add(coverImageUrl);
+      // images.add(coverImageUrl);
 
       var otherImagesRef = document.getElementsByClassName("ugc-photos-link");
       int count = 0;
@@ -234,6 +235,9 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
         if (element.toString().contains("Reynold")) {
           cooksNotesExits = false;
         }
+        if (element.toString().contains("Partner")) {
+          cooksNotesExits = false;
+        }
       });
       //
       //
@@ -306,7 +310,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
         document
             .getElementsByClassName("recipe-directions__list--item")
             .forEach((element) {
-          final istep = element.text.trim();
+          final istep = element.text.trim().replaceAll("Watch Now", "");
           directions.add(istep);
           print(istep);
         });
@@ -374,9 +378,24 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
             if (cooksNotes[0].toString().contains("Reynold")) {
               cooksNotesExits = false;
             }
+            if (cooksNotes[0].toString().contains("Partner")) {
+              cooksNotesExits = false;
+            }
+            if (cooksNotes[0].toString().contains("Facts")) {
+              cooksNotesExits = false;
+            }
           }
         }
         newWebsiteFooterNotesExist = true;
+        if (cooksNotes[0].toString().contains("Facts")) {
+          newWebsiteFooterNotesExist = false;
+        }
+        if (cooksNotes[0].toString().contains("Partner")) {
+          newWebsiteFooterNotesExist = false;
+        }
+        if (cooksNotes[0].toString().contains("Facts")) {
+          newWebsiteFooterNotesExist = false;
+        }
       } catch (err) {
         newWebsiteFooterNotesExist = false;
       }
@@ -413,7 +432,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
 // TODO: Carousel
-                  if (images == null)
+                  if (images != null)
                     Image.network(images[0])
                   else
                     Text("No Image"),
