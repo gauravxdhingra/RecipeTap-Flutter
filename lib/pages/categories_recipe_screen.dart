@@ -4,6 +4,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:recipetap/models/category_options_card.dart';
 import 'package:recipetap/models/recipe_card.dart';
+import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
 
 import 'recipe_view_page.dart';
@@ -20,6 +21,8 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   bool isLoading = true;
   // static String incl; //= 'milk,sugar';
   // static String excl; //= 'salt,chicken';
+
+  // TODO: ImagePLaceholders on lazy loading images
 
   List<RecipeCard> recipeCards = [];
   List<CategoryOptionsRecipeCard> categoryOptionsRecipeCards = [];
@@ -161,19 +164,25 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: categoryOptionsRecipeCards.length,
-                      itemBuilder: (context, i) => Container(
-                        height: 100,
-                        width: 100,
-                        child: Column(
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 50,
-                              backgroundImage: NetworkImage(
-                                categoryOptionsRecipeCards[i].photoUrl,
+                      itemBuilder: (context, i) => GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => SearchResultsScreen(
+                                    url: categoryOptionsRecipeCards[i].href))),
+                        child: Container(
+                          height: 100,
+                          width: 100,
+                          child: Column(
+                            children: <Widget>[
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundImage: NetworkImage(
+                                  categoryOptionsRecipeCards[i].photoUrl,
+                                ),
                               ),
-                            ),
-                            Text(categoryOptionsRecipeCards[i].title),
-                          ],
+                              Text(categoryOptionsRecipeCards[i].title),
+                            ],
+                          ),
                         ),
                       ),
                     ),
