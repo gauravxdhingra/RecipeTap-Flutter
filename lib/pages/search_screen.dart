@@ -6,6 +6,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 // import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:recipetap/models/search_suggestions.dart';
+import 'package:recipetap/pages/catagories_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -31,7 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     inclController = TextEditingController();
     exclController = TextEditingController();
-    
+
     super.initState();
     // print(suggestions);
   }
@@ -63,10 +64,11 @@ class _SearchScreenState extends State<SearchScreen> {
             children: <Widget>[
               Text('Favourites'),
               Text('Browse By Category'),
-                FlatButton(
+              FlatButton(
                 child: Text('CategoriesScreen'),
                 onPressed: () {
-                  submitSearch(inclController.text, exclController.text);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CategoriesScreen()));
                 },
               ),
               // TextFormField(
