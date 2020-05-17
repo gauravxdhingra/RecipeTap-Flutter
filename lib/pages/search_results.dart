@@ -4,6 +4,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
+import 'package:recipetap/widgets/build_recipe_list_results.dart';
 
 class SearchResultsScreen extends StatefulWidget {
   static const routeName = 'search_result_screen';
@@ -79,16 +80,6 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
     });
   }
 
-  goToRecipe(url, coverImageUrl) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => RecipeViewPage(
-                  url: url,
-                  coverImageUrl: coverImageUrl,
-                )));
-  }
-
   @override
   Widget build(BuildContext context) {
     // final inclexclArgs = ModalRoute.of(context).settings.arguments;
@@ -97,26 +88,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
       appBar: AppBar(),
       body: isLoading
           ? CircularProgressIndicator()
-          : Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                ),
-                itemCount: recipeCards.length,
-                itemBuilder: (context, i) => GestureDetector(
-                  onTap: () =>
-                      goToRecipe(recipeCards[i].href, recipeCards[i].photoUrl),
-                  child: GridTile(
-                    child: Image.network(
-                      recipeCards[i].photoUrl,
-                    ),
-                    header: Text(recipeCards[i].title),
-                    footer: Text(recipeCards[i].desc),
-                  ),
-                ),
-              ),
-            ),
+          : BuildRecipeListResults(recipeCards: recipeCards),
     );
   }
 }
