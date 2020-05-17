@@ -34,6 +34,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
   String desc;
   String time;
   String servings;
+  String yeild;
   List images = [];
   List ingredients = [];
   List directions = [];
@@ -43,6 +44,9 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 
   bool nutritionalFactsExits = false;
   bool cooksNotesExits = false;
+  bool yeildExists = false;
+  bool timeExists = false;
+  bool servingsExist = false;
 
   getData() async {
     final String url = widget.url;
@@ -111,26 +115,78 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       // 2 total
       // 3 servings
       // 4. Servings
+
+      final infoBoxes = document
+          .getElementsByClassName(
+              "recipe-meta-container two-subcol-content clearfix")[0]
+          .getElementsByClassName("recipe-meta-item");
+
       try {
-        time = document
-            .getElementsByClassName("recipe-meta-item-body")[2]
-            .text
-            .trim();
-        servings = document
-            .getElementsByClassName("recipe-meta-item-body")[3]
-            .text
-            .trim();
+        infoBoxes.forEach((element) {
+          if (element
+              .getElementsByClassName("recipe-meta-item-header")[0]
+              .text
+              .trim()
+              .contains("total")) {
+            time = element
+                .getElementsByClassName("recipe-meta-item-body")[0]
+                .text
+                .trim();
+          }
+        });
+        timeExists = true;
       } catch (e) {
         time = "--";
-        try {
-          servings = document
-              .getElementsByClassName("recipe-meta-item-body")[0]
-              .text
-              .trim();
-        } catch (e) {
-          print(e);
-        }
+        timeExists = false;
       }
+
+      try {
+        infoBoxes.forEach((element) {
+          if (element
+              .getElementsByClassName("recipe-meta-item-header")[0]
+              .text
+              .trim()
+              .contains("erving")) {
+            servings = element
+                .getElementsByClassName("recipe-meta-item-body")[0]
+                .text
+                .trim();
+          }
+        });
+        servingsExist = true;
+      } catch (e) {
+        servings = "--";
+        servingsExist = false;
+      }
+
+      try {
+        infoBoxes.forEach((element) {
+          if (element
+              .getElementsByClassName("recipe-meta-item-header")[0]
+              .text
+              .trim()
+              .contains("ield")) {
+            yeild = element
+                .getElementsByClassName("recipe-meta-item-body")[0]
+                .text
+                .trim();
+          }
+        });
+        yeildExists = true;
+      } catch (e) {
+        yeild = "--";
+        yeildExists = false;
+      }
+
+      // time = document
+      //     .getElementsByClassName("recipe-meta-item-body")[2]
+      //     .text
+      //     .trim();
+      // servings = document
+      //     .getElementsByClassName("recipe-meta-item-body")[3]
+      //     .text
+      //     .trim();
+
       desc = document.getElementsByClassName("margin-0-auto")[0].text.trim();
 
       document
@@ -297,6 +353,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       print(headline);
       print(ingredients[0]);
       isLoading = false;
+      if (time == null) timeExists = false;
     });
   }
 
@@ -337,16 +394,55 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Icon(Icons.timer),
-                        Text(time),
-                        Icon(Icons.people_outline),
-                        Text(servings),
-                        Icon(Icons.restaurant_menu),
-                        Text(nutritionalFactsExits
-                            ? oldWebsite
-                                ? nutritionalFacts[0]
-                                : nutritionalFactsNew[0]
-                            : "--"),
+                        if (timeExists)
+                          Container(
+                            height: 70,
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.timer),
+                                Text(time ?? ""),
+                                // TODO time settle total scrap
+                              ],
+                            ),
+                          ),
+                        if (servingsExist)
+                          Container(
+                            height: 70,
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.people_outline),
+                                Text(servings ?? "--"),
+                              ],
+                            ),
+                          ),
+                        if (nutritionalFactsExits)
+                          Container(
+                            height: 70,
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.restaurant_menu),
+                                Text(nutritionalFactsExits
+                                    ? oldWebsite
+                                        ? nutritionalFacts[0]
+                                        : nutritionalFactsNew[0]
+                                    : "--" ?? "--"),
+                              ],
+                            ),
+                          ),
+                        if (yeildExists && oldWebsite == true)
+                          Container(
+                            height: 70,
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.fastfood),
+                                Text(
+                                  yeildExists
+                                      ? oldWebsite ? yeild : "--"
+                                      : "--" ?? "--",
+                                ),
+                              ],
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -382,7 +478,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                           leading: CircleAvatar(
                             child: Text('# $index'),
                           ),
-                          title: Text(ingredients[index]),
+                          title: Text(ingredients[index] ?? ""),
                         );
 
                         // Text(directions[index]);
