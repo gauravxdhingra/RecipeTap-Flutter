@@ -126,38 +126,41 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
           .getElementsByClassName("recipe-meta-item");
 
       try {
+        int counttt = 0;
         infoBoxes.forEach((element) {
+          counttt++;
           if (element
-              .getElementsByClassName("recipe-meta-item-header")[0]
+              .getElementsByClassName("recipe-meta-item-header")[counttt]
               .text
               .trim()
               .contains("total")) {
             time = element
-                .getElementsByClassName("recipe-meta-item-body")[0]
+                .getElementsByClassName("recipe-meta-item-body")[counttt]
                 .text
                 .trim();
+            timeExists = true;
           }
         });
-        timeExists = true;
       } catch (e) {
         time = "--";
         timeExists = false;
       }
 
       try {
+        int counttt = 0;
         infoBoxes.forEach((element) {
           if (element
-              .getElementsByClassName("recipe-meta-item-header")[0]
+              .getElementsByClassName("recipe-meta-item-header")[counttt]
               .text
               .trim()
               .contains("erving")) {
             servings = element
-                .getElementsByClassName("recipe-meta-item-body")[0]
+                .getElementsByClassName("recipe-meta-item-body")[counttt]
                 .text
                 .trim();
+            servingsExist = true;
           }
         });
-        servingsExist = true;
       } catch (e) {
         servings = "--";
         servingsExist = false;
@@ -165,18 +168,19 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 
       try {
         infoBoxes.forEach((element) {
+          int counttt = 0;
           if (element
-              .getElementsByClassName("recipe-meta-item-header")[0]
+              .getElementsByClassName("recipe-meta-item-header")[counttt]
               .text
               .trim()
               .contains("ield")) {
             yeild = element
-                .getElementsByClassName("recipe-meta-item-body")[0]
+                .getElementsByClassName("recipe-meta-item-body")[counttt]
                 .text
                 .trim();
+            yeildExists = true;
           }
         });
-        yeildExists = true;
       } catch (e) {
         yeild = "--";
         yeildExists = false;
@@ -491,7 +495,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                                 Icon(Icons.fastfood),
                                 Text(
                                   yeildExists
-                                      ? oldWebsite ? yeild : "--"
+                                      ? oldWebsite ? yeild ?? "--" : "--"
                                       : "--" ?? "--",
                                 ),
                               ],

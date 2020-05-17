@@ -67,8 +67,10 @@ class _SearchScreenState extends State<SearchScreen> {
         builder: (context) => SearchResultsScreen(
             // incl: incl,
             // excl: excl,
-            url:
-                'https://www.allrecipes.com/search/results/?wt=rajma&sort=re')));
+            url: 'https://www.allrecipes.com/search/results/?wt=$url&sort=re'
+            // url: url,
+            )));
+    print(url);
   }
 
   @override
