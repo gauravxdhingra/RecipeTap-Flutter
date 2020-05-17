@@ -56,6 +56,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
     try {
       document.getElementsByClassName("magazine-bar__social")[0].text;
       oldWebsite = false;
+      print('new website');
     } catch (e) {
       print('old website');
       oldWebsite = true;
