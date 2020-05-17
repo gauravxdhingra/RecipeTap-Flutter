@@ -18,6 +18,8 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
   // TODO handle empty image
   // TODO solve-if image rail is empty
   // TODO: Validate time and Servings mixing prevent
+  // TODO: all getData functions in try and catch
+  // TODO: Solve no image bug
   // https://images.media-allrecipes.com/images/82579.png
 
   // final String url =
@@ -47,6 +49,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
   bool yeildExists = false;
   bool timeExists = false;
   bool servingsExist = false;
+  bool newWebsiteFooterNotesExist = false;
 
   getData() async {
     final String url = widget.url;
@@ -259,18 +262,27 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       });
 
       // print(imagerow.attributes["src"]);
-
-      time = document.getElementsByClassName("ready-in-time")[0].text.trim();
+      try {
+        time = document.getElementsByClassName("ready-in-time")[0].text.trim();
+        timeExists = true;
+      } catch (e) {
+        timeExists = false;
+      }
       // final servingss = document
       //     .getElementsByClassName("recipe-ingredients ng-scope");
 
-      final servingss = document
-          .querySelector('[ng-controller="ar_controllers_recipe_ingredient"]')
-          .attributes["ng-init"]
-          .split("(")[1]
-          .split(",")[0];
-      servings = servingss;
-      print(servingss);
+      try {
+        final servingss = document
+            .querySelector('[ng-controller="ar_controllers_recipe_ingredient"]')
+            .attributes["ng-init"]
+            .split("(")[1]
+            .split(",")[0];
+        servings = servingss;
+        servingsExist = true;
+        print(servingss);
+      } catch (e) {
+        servingsExist = false;
+      }
 
       desc = document
           .getElementsByClassName("submitter__description")[0]
@@ -284,12 +296,21 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
         ingredients.add(iingred);
       });
 
-      document
-          .getElementsByClassName("recipe-directions__list--item")
-          .forEach((element) {
-        final istep = element.text.trim();
-        directions.add(istep);
-      });
+      int countt = 0;
+      if (countt <
+          document
+                  .getElementsByClassName("recipe-directions__list--item")
+                  .length -
+              1) {
+        countt++;
+        document
+            .getElementsByClassName("recipe-directions__list--item")
+            .forEach((element) {
+          final istep = element.text.trim();
+          directions.add(istep);
+          print(istep);
+        });
+      }
       // section-body
       // subcontainer instructions-section-item
 
@@ -327,26 +348,37 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       }
 
       // Footer notes
-      final selector = document.getElementsByClassName("recipe-footnotes__h4");
-      // recipe-footnotes__header
-      cooksNotesExits = selector[0].text.trim() == "Footnotes";
-      if (selector.isNotEmpty) {
-        document.getElementsByClassName("recipe-footnotes").forEach((element) {
-          final inote = element.text.trim();
-          if (inote != '' || inote != "Footnotes") {
-            cooksNotes.add(inote.trim());
-            // cooksNotes = cooksNotes[0].toString().split("  ");
+      try {
+        final selector =
+            document.getElementsByClassName("recipe-footnotes__h4");
+        // recipe-footnotes__header
+
+        if (selector[0].hasContent()) {
+          cooksNotesExits = selector[0].text.trim() == "Footnotes";
+          if (selector.isNotEmpty) {
+            document
+                .getElementsByClassName("recipe-footnotes")
+                .forEach((element) {
+              final inote = element.text.trim();
+              if (inote != '' || inote != "Footnotes") {
+                cooksNotes.add(inote.trim());
+                // cooksNotes = cooksNotes[0].toString().split("  ");
+              }
+            });
+            cooksNotes[0] = cooksNotes[0]
+                .toString()
+                .substring(10)
+                .trim()
+                .split("                ");
+            print('ckn' + cooksNotes[0].length.toString());
+            if (cooksNotes[0].toString().contains("Reynold")) {
+              cooksNotesExits = false;
+            }
           }
-        });
-        cooksNotes[0] = cooksNotes[0]
-            .toString()
-            .substring(10)
-            .trim()
-            .split("                ");
-        print('ckn' + cooksNotes[0].length.toString());
-        if (cooksNotes[0].toString().contains("Reynold")) {
-          cooksNotesExits = false;
         }
+        newWebsiteFooterNotesExist = true;
+      } catch (err) {
+        newWebsiteFooterNotesExist = false;
       }
     }
     setState(() {
@@ -381,7 +413,10 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
 // TODO: Carousel
-                  Image.network(images[0]),
+                  if (images == null)
+                    Image.network(images[0])
+                  else
+                    Text("No Image"),
 
                   Text('ABOUT'),
                   // Description
@@ -476,9 +511,9 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
                           leading: CircleAvatar(
-                            child: Text('# $index'),
+                            child: Text('# ${index + 1}'),
                           ),
-                          title: Text(ingredients[index] ?? ""),
+                          title: Text(directions[index] ?? ""),
                         );
 
                         // Text(directions[index]);
@@ -487,8 +522,8 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                   ),
 
                   // nutritional facts
-
-                  Text('NUTRITIONAL FACTS'),
+                  if (nutritionalFactsExits)
+                    Text('NUTRITIONAL FACTS'),
 
                   if (nutritionalFactsExits)
                     Container(
@@ -531,10 +566,12 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                     ),
 
                   // extra cooks notes
-                  if (cooksNotesExits)
+                  if ((oldWebsite && cooksNotesExits) ||
+                      newWebsiteFooterNotesExist)
                     Text("COOK'S NOTES"),
 
-                  if (cooksNotesExits)
+                  if ((oldWebsite && cooksNotesExits) ||
+                      newWebsiteFooterNotesExist)
                     // Container(
                     //   child:
                     //       Text(cooksNotes[0].toString().substring(20).trim()),
@@ -548,9 +585,10 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                                 // print(cooksNotes.length);
                                 return ListTile(
                                   title: Text(cooksNotes[index]
-                                      .toString()
-                                      .substring(20)
-                                      .trim()),
+                                          .toString()
+                                          .substring(20)
+                                          .trim() ??
+                                      ""),
                                 );
                                 // return Text(cooksNotes[index]
                                 //     .toString()
