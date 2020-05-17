@@ -36,12 +36,28 @@ class BuildRecipeListResults extends StatelessWidget {
         itemBuilder: (context, i) => GestureDetector(
           onTap: () =>
               goToRecipe(recipeCards[i].href, recipeCards[i].photoUrl, context),
-          child: GridTile(
-            child: Image.network(
-              recipeCards[i].photoUrl,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: GridTile(
+              child: Image.network(
+                recipeCards[i].photoUrl,
+                fit: BoxFit.cover,
+              ),
+              header: Container(
+                child: Text(
+                  recipeCards[i].title,
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.black,
+              ),
+              footer: Container(
+                child: Text(
+                  recipeCards[i].desc,
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.black,
+              ),
             ),
-            header: Text(recipeCards[i].title),
-            footer: Text(recipeCards[i].desc),
           ),
         ),
       ),

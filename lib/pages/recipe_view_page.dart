@@ -16,7 +16,8 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
   bool isLoading = true;
 
   // TODO handle empty image
-  // TODO solbe-if image rail is empty
+  // TODO solve-if image rail is empty
+  // TODO: Validate time and Servings mixing prevent
   // https://images.media-allrecipes.com/images/82579.png
 
   // final String url =
@@ -154,7 +155,10 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
         String nutritionText = directions[directions.length - 1];
         List<String> roughNutri = nutritionText.split("  ");
         roughNutri.forEach((element) {
-          if (element != '') nutritionalFacts.add(element.trim());
+          if (element != '')
+            nutritionalFacts.add(
+              element.trim().replaceAll(";", "").replaceAll(".", ""),
+            );
         });
       }
 
@@ -166,6 +170,17 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
           final inote = element.text.trim();
           if (inote != '' && inote != "Cook's Notes:") cooksNotes.add(inote);
         });
+
+      cooksNotes.forEach((element) {
+        if (element.toString().contains("Reynold")) {
+          cooksNotesExits = false;
+        }
+      });
+      //
+      //
+      //
+      //
+//
     } else {
       headline = document.getElementsByClassName("recipe-summary__h1")[0].text;
 // margin-0-auto
@@ -273,6 +288,9 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
             .trim()
             .split("                ");
         print('ckn' + cooksNotes[0].length.toString());
+        if (cooksNotes[0].toString().contains("Reynold")) {
+          cooksNotesExits = false;
+        }
       }
     }
     setState(() {
@@ -303,13 +321,40 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
           ? CircularProgressIndicator()
           : SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+// TODO: Carousel
+                  Image.network(images[0]),
+
+                  Text('ABOUT'),
                   // Description
                   Text(desc),
-                  // Time
-                  Text(time),
-                  // Servings
-                  Text(servings),
+
+                  Divider(),
+
+                  Container(
+                    height: 70,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Icon(Icons.timer),
+                        Text(time),
+                        Icon(Icons.people_outline),
+                        Text(servings),
+                        Icon(Icons.restaurant_menu),
+                        Text(nutritionalFactsExits
+                            ? oldWebsite
+                                ? nutritionalFacts[0]
+                                : nutritionalFactsNew[0]
+                            : "--"),
+                      ],
+                    ),
+                  ),
+
+                  Divider(),
+
+                  Text('INGREDIENTS'),
+
                   // Ingredients
                   Container(
                     height: 200,
@@ -318,21 +363,37 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                           ? ingredients.length
                           : ingredients.length - 2,
                       itemBuilder: (BuildContext context, int index) {
-                        return Text(ingredients[index]);
+                        return ListTile(
+                          title: Text(ingredients[index]),
+                        );
                       },
                     ),
                   ),
                   // directons/steps
+
+                  Text('DIRECTIONS'),
+
                   Container(
                     height: 200,
                     child: ListView.builder(
                       itemCount: directions.length - 1,
                       itemBuilder: (BuildContext context, int index) {
-                        return Text(directions[index]);
+                        return ListTile(
+                          leading: CircleAvatar(
+                            child: Text('# $index'),
+                          ),
+                          title: Text(ingredients[index]),
+                        );
+
+                        // Text(directions[index]);
                       },
                     ),
                   ),
+
                   // nutritional facts
+
+                  Text('NUTRITIONAL FACTS'),
+
                   if (nutritionalFactsExits)
                     Container(
                       height: 100,
@@ -341,27 +402,42 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                           ? ListView.builder(
                               itemCount: nutritionalFacts.length - 1,
                               itemBuilder: (BuildContext context, int index) {
-                                print(nutritionalFacts[index]
-                                    .toString()
-                                    .trimRight());
-                                return Text(nutritionalFacts[index]
-                                    .toString()
-                                    .trimRight());
+                                // print(nutritionalFacts[index]
+                                //     .toString()
+                                //     .trimRight());
+
+                                return ListTile(
+                                  title: Text(nutritionalFacts[index]
+                                      .toString()
+                                      .trimRight()),
+                                );
+                                // return Text(nutritionalFacts[index]
+                                //     .toString()
+                                //     .trimRight());
                               },
                             )
                           : ListView.builder(
                               itemCount: nutritionalFactsNew.length,
                               itemBuilder: (BuildContext context, int index) {
-                                print(nutritionalFactsNew[index]
-                                    .toString()
-                                    .trim());
-                                return Text(nutritionalFactsNew[index]
-                                    .toString()
-                                    .trim());
+                                // print(nutritionalFactsNew[index]
+                                //     .toString()
+                                //     .trim());
+                                return ListTile(
+                                  title: Text(nutritionalFactsNew[index]
+                                      .toString()
+                                      .trim()),
+                                );
+                                // Text(nutritionalFactsNew[index]
+                                //     .toString()
+                                //     .trim());
                               },
                             ),
                     ),
+
                   // extra cooks notes
+                  if (cooksNotesExits)
+                    Text("COOK'S NOTES"),
+
                   if (cooksNotesExits)
                     // Container(
                     //   child:
@@ -373,17 +449,26 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                           ? ListView.builder(
                               itemCount: cooksNotes.length,
                               itemBuilder: (BuildContext context, int index) {
-                                print(cooksNotes.length);
-                                return Text(cooksNotes[index]
-                                    .toString()
-                                    .substring(20)
-                                    .trim());
+                                // print(cooksNotes.length);
+                                return ListTile(
+                                  title: Text(cooksNotes[index]
+                                      .toString()
+                                      .substring(20)
+                                      .trim()),
+                                );
+                                // return Text(cooksNotes[index]
+                                //     .toString()
+                                //     .substring(20)
+                                //     .trim());
                               })
                           : ListView.builder(
                               itemCount: cooksNotes[0].length,
                               itemBuilder: (BuildContext context, int index) {
-                                print(cooksNotes[0].length);
-                                return Text(cooksNotes[0][index].trim());
+                                // print(cooksNotes[0].length);
+                                return ListTile(
+                                  title: Text(cooksNotes[0][index].trim()),
+                                );
+                                // Text(cooksNotes[0][index].trim());
                               }),
                     ),
                 ],

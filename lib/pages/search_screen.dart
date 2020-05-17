@@ -125,7 +125,7 @@ class _SearchScreenState extends State<SearchScreen> {
               SimpleAutoCompleteTextField(
                 key: key,
                 suggestions: suggestions,
-                textChanged: (query) => suggestions.add(query),
+                // textChanged: (query) => suggestions.add(query),
                 controller: inclController,
               ),
               SizedBox(
