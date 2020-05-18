@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => SearchScreen(),
         SearchScreen.routeName: (context) => SearchScreen(),
         RecipeViewPage.routeName: (context) => RecipeViewPage(),
+
       },
+      onUnknownRoute: ,
     );
   }
 }

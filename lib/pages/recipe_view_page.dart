@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:readmore/readmore.dart';
+import 'package:recipetap/widgets/recipe_view_page_widget.dart';
 
 class RecipeViewPage extends StatefulWidget {
   final String url;
@@ -73,26 +72,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
     if (oldWebsite) {
       headline =
           document.getElementsByClassName("headline heading-content")[3].text;
-// margin-0-auto
-
-      // var coverimg = document
-      //     .getElementsByClassName(
-      //         "icon icon-pinterest-circle-solid social-icon pinterest-transparent")[0]
-      //     .querySelector("a")
-      //     .attributes["href"]
-      //     .toString()
-      //     .split("%3Furl%3D")[1]
-      //     .split("&descri")[0]
-      //     .replaceAll("%253A", ":")
-      //     .replaceAll("%252F", "/")
-      //     .replaceAll("%3A", ":")
-      //     .replaceAll("%2F", "/");
-
-      // // .querySelector("img")
-      // // .attributes["src"];
-      // print(coverImageUrl);
-      // images.add(coverimg);
-      // images.add(coverImageUrl);
 
       final srcfirstSplit = coverImageUrl.split("photos/")[0];
       final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/")[1];
@@ -199,15 +178,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
         yeildExists = false;
       }
 
-      // time = document
-      //     .getElementsByClassName("recipe-meta-item-body")[2]
-      //     .text
-      //     .trim();
-      // servings = document
-      //     .getElementsByClassName("recipe-meta-item-body")[3]
-      //     .text
-      //     .trim();
-
       desc = document.getElementsByClassName("margin-0-auto")[0].text.trim();
 
       document
@@ -256,21 +226,17 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
           cooksNotesExits = false;
         }
       });
-      //
-      //
-      //
-      //
+//
+//
+//
+//
 //
     } else {
       headline = document.getElementsByClassName("recipe-summary__h1")[0].text;
-// margin-0-auto
 
       final imagerow = document
           .getElementsByClassName("photo-strip__items")[0]
           .querySelectorAll("li");
-      // [0]
-      // .querySelector("a")
-      // .querySelector("img");
 
       final srcfirstSplit = coverImageUrl.split("photos/")[0];
       final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/")[1];
@@ -290,7 +256,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
           if (!images.contains(srcc)) {
             images.add(srcc);
           }
-          // images.add(srcc);
         }
       });
 
@@ -352,6 +317,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 
       if (nutritionalFactsExits) {
         document.getElementsByClassName("nutrition-summary-facts");
+
         // print(nutritionalFactsNew[0]);
         // 1. calories
         // 2. Fat
@@ -456,498 +422,25 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       // ),
       body: isLoading
           ? CircularProgressIndicator()
-          : SafeArea(
-              child: CustomScrollView(slivers: <Widget>[
-                SliverAppBar(
-                  // title: Text(headline),
-                  // elevation: 0.1,
-
-                  expandedHeight: MediaQuery.of(context).size.height / 3,
-                  pinned: true,
-                  backgroundColor: Colors.white,
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    title: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black54,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: 3,
-                        horizontal: 6,
-                      ),
-                      child: Text(
-                        headline ?? "",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                        // textAlign: TextAlign.right,
-                      ),
-                    ),
-                    background: Container(
-                      height: 200,
-                      child: Swiper(
-                        itemHeight: 200,
-                        itemCount: images.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: new Image.network(
-                              images[index],
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        },
-                        pagination: new SwiperPagination(),
-                        control: new SwiperControl(
-                          iconNext: null,
-                          iconPrevious: null,
-                        ),
-                        physics: BouncingScrollPhysics(),
-                        // layout: SwiperLayout.TINDER,
-                        viewportFraction: 0.8,
-                        scale: 0.9,
-                        itemWidth: 300.0,
-                        loop: false,
-                      ),
-                    ),
-                  ),
-                ),
-                SliverFillRemaining(
-                  child: Column(
-                    children: <Widget>[
-                      ReadMoreText(
-                        desc,
-                        trimLines: 2,
-                        colorClickableText: Colors.grey,
-                        trimMode: TrimMode.Line,
-                        trimCollapsedText: '  Show more',
-                        trimExpandedText: '  Show less',
-                      ),
-
-                      Divider(),
-
-                      Container(
-                        height: 70,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            if (timeExists)
-                              Container(
-                                height: 70,
-                                child: Column(
-                                  children: <Widget>[
-                                    Icon(Icons.timer),
-                                    Text(time ?? ""),
-                                  ],
-                                ),
-                              ),
-                            if (servingsExist)
-                              Container(
-                                height: 70,
-                                child: Column(
-                                  children: <Widget>[
-                                    Icon(Icons.people_outline),
-                                    Text(servings ?? "--"),
-                                  ],
-                                ),
-                              ),
-                            if (nutritionalFactsExits)
-                              Container(
-                                height: 70,
-                                child: Column(
-                                  children: <Widget>[
-                                    Icon(Icons.restaurant_menu),
-                                    Text(nutritionalFactsExits
-                                        ? oldWebsite
-                                            ? nutritionalFacts[0]
-                                            : nutritionalFactsNew[0]
-                                        : "--" ?? "--"),
-                                  ],
-                                ),
-                              ),
-                            if (yeildExists && oldWebsite == true)
-                              Container(
-                                height: 70,
-                                child: Column(
-                                  children: <Widget>[
-                                    Icon(Icons.fastfood),
-                                    Text(
-                                      yeildExists
-                                          ? oldWebsite ? yeild ?? "--" : "--"
-                                          : "--" ?? "--",
-                                    ),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-
-                      Divider(),
-
-                      Text('INGREDIENTS'),
-
-                      // Ingredients
-                      Container(
-                        height: 200,
-                        child: ListView.builder(
-                          itemCount: oldWebsite
-                              ? ingredients.length
-                              : ingredients.length - 2,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              title: Text(ingredients[index]),
-                            );
-                          },
-                        ),
-                      ),
-                      // directons/steps
-
-                      Text('DIRECTIONS'),
-
-                      Container(
-                        height: 200,
-                        child: ListView.builder(
-                          itemCount: directions.length - 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              leading: CircleAvatar(
-                                child: Text('# ${index + 1}'),
-                              ),
-                              title: Text(directions[index] ?? ""),
-                            );
-
-                            // Text(directions[index]);
-                          },
-                        ),
-                      ),
-
-                      // nutritional facts
-                      if (nutritionalFactsExits)
-                        Text('NUTRITIONAL FACTS'),
-
-                      if (nutritionalFactsExits)
-                        Container(
-                          height: 100,
-                          // child: Text(directions[directions.length - 1]),
-                          child: oldWebsite
-                              ? ListView.builder(
-                                  itemCount: nutritionalFacts.length - 1,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    // print(nutritionalFacts[index]
-                                    //     .toString()
-                                    //     .trimRight());
-
-                                    return ListTile(
-                                      title: Text(nutritionalFacts[index]
-                                          .toString()
-                                          .trimRight()),
-                                    );
-                                    // return Text(nutritionalFacts[index]
-                                    //     .toString()
-                                    //     .trimRight());
-                                  },
-                                )
-                              : ListView.builder(
-                                  itemCount: nutritionalFactsNew.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    // print(nutritionalFactsNew[index]
-                                    //     .toString()
-                                    //     .trim());
-                                    return ListTile(
-                                      title: Text(nutritionalFactsNew[index]
-                                          .toString()
-                                          .trim()),
-                                    );
-                                    // Text(nutritionalFactsNew[index]
-                                    //     .toString()
-                                    //     .trim());
-                                  },
-                                ),
-                        ),
-
-                      // extra cooks notes
-                      if ((oldWebsite && cooksNotesExits) ||
-                          newWebsiteFooterNotesExist)
-                        Text("COOK'S NOTES"),
-
-                      if ((oldWebsite && cooksNotesExits) ||
-                          newWebsiteFooterNotesExist)
-                        // Container(
-                        //   child:
-                        //       Text(cooksNotes[0].toString().substring(20).trim()),
-                        // ),
-                        Container(
-                          height: 100,
-                          child: oldWebsite
-                              ? ListView.builder(
-                                  itemCount: cooksNotes.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    // print(cooksNotes.length);
-                                    return ListTile(
-                                      title: Text(cooksNotes[index]
-                                              .toString()
-                                              .substring(20)
-                                              .trim() ??
-                                          ""),
-                                    );
-                                    // return Text(cooksNotes[index]
-                                    //     .toString()
-                                    //     .substring(20)
-                                    //     .trim());
-                                  })
-                              : ListView.builder(
-                                  itemCount: cooksNotes[0].length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    // print(cooksNotes[0].length);
-                                    return ListTile(
-                                      title: Text(cooksNotes[0][index].trim()),
-                                    );
-                                    // Text(cooksNotes[0][index].trim());
-                                  }),
-                        ),
-                    ],
-                  ),
-                ),
-              ]
-
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: <Widget>[
-// // TODO: Carousel
-//                     // if (images != null)
-//                     // Image.network(images[0])
-//                     // Container(
-//                     //   height: 300,
-//                     //   child: Swiper(
-//                     //     itemCount: images.length,
-//                     //     itemBuilder: (BuildContext context, int index) {
-//                     //       return ClipRRect(
-//                     //         borderRadius: BorderRadius.circular(15),
-//                     //         child: new Image.network(
-//                     //           images[index],
-//                     //           fit: BoxFit.cover,
-//                     //         ),
-//                     //       );
-//                     //     },
-//                     //     pagination: new SwiperPagination(),
-//                     //     control: new SwiperControl(
-//                     //       iconNext: null,
-//                     //       iconPrevious: null,
-//                     //     ),
-//                     //     physics: BouncingScrollPhysics(),
-//                     //     // layout: SwiperLayout.TINDER,
-//                     //     viewportFraction: 0.8,
-//                     //     scale: 0.9,
-//                     //     itemWidth: 300.0,
-//                     //     loop: false,
-//                     //   ),
-//                     // ),
-//                     // else
-//                     //   Text("No Image"),
-
-//                     // Text('ABOUT'),
-//                     // Description
-//                     // Text(desc),
-//                     ReadMoreText(
-//                       desc,
-//                       trimLines: 2,
-//                       colorClickableText: Colors.pink,
-//                       trimMode: TrimMode.Line,
-//                       trimCollapsedText: '  Show more...',
-//                       trimExpandedText: '  Show less',
-//                     ),
-
-//                     Divider(),
-
-//                     Container(
-//                       height: 70,
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                         children: <Widget>[
-//                           if (timeExists)
-//                             Container(
-//                               height: 70,
-//                               child: Column(
-//                                 children: <Widget>[
-//                                   Icon(Icons.timer),
-//                                   Text(time ?? ""),
-//                                 ],
-//                               ),
-//                             ),
-//                           if (servingsExist)
-//                             Container(
-//                               height: 70,
-//                               child: Column(
-//                                 children: <Widget>[
-//                                   Icon(Icons.people_outline),
-//                                   Text(servings ?? "--"),
-//                                 ],
-//                               ),
-//                             ),
-//                           if (nutritionalFactsExits)
-//                             Container(
-//                               height: 70,
-//                               child: Column(
-//                                 children: <Widget>[
-//                                   Icon(Icons.restaurant_menu),
-//                                   Text(nutritionalFactsExits
-//                                       ? oldWebsite
-//                                           ? nutritionalFacts[0]
-//                                           : nutritionalFactsNew[0]
-//                                       : "--" ?? "--"),
-//                                 ],
-//                               ),
-//                             ),
-//                           if (yeildExists && oldWebsite == true)
-//                             Container(
-//                               height: 70,
-//                               child: Column(
-//                                 children: <Widget>[
-//                                   Icon(Icons.fastfood),
-//                                   Text(
-//                                     yeildExists
-//                                         ? oldWebsite ? yeild ?? "--" : "--"
-//                                         : "--" ?? "--",
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                         ],
-//                       ),
-//                     ),
-
-//                     Divider(),
-
-//                     Text('INGREDIENTS'),
-
-//                     // Ingredients
-//                     Container(
-//                       height: 200,
-//                       child: ListView.builder(
-//                         itemCount: oldWebsite
-//                             ? ingredients.length
-//                             : ingredients.length - 2,
-//                         itemBuilder: (BuildContext context, int index) {
-//                           return ListTile(
-//                             title: Text(ingredients[index]),
-//                           );
-//                         },
-//                       ),
-//                     ),
-//                     // directons/steps
-
-//                     Text('DIRECTIONS'),
-
-//                     Container(
-//                       height: 200,
-//                       child: ListView.builder(
-//                         itemCount: directions.length - 1,
-//                         itemBuilder: (BuildContext context, int index) {
-//                           return ListTile(
-//                             leading: CircleAvatar(
-//                               child: Text('# ${index + 1}'),
-//                             ),
-//                             title: Text(directions[index] ?? ""),
-//                           );
-
-//                           // Text(directions[index]);
-//                         },
-//                       ),
-//                     ),
-
-//                     // nutritional facts
-//                     if (nutritionalFactsExits)
-//                       Text('NUTRITIONAL FACTS'),
-
-//                     if (nutritionalFactsExits)
-//                       Container(
-//                         height: 100,
-//                         // child: Text(directions[directions.length - 1]),
-//                         child: oldWebsite
-//                             ? ListView.builder(
-//                                 itemCount: nutritionalFacts.length - 1,
-//                                 itemBuilder: (BuildContext context, int index) {
-//                                   // print(nutritionalFacts[index]
-//                                   //     .toString()
-//                                   //     .trimRight());
-
-//                                   return ListTile(
-//                                     title: Text(nutritionalFacts[index]
-//                                         .toString()
-//                                         .trimRight()),
-//                                   );
-//                                   // return Text(nutritionalFacts[index]
-//                                   //     .toString()
-//                                   //     .trimRight());
-//                                 },
-//                               )
-//                             : ListView.builder(
-//                                 itemCount: nutritionalFactsNew.length,
-//                                 itemBuilder: (BuildContext context, int index) {
-//                                   // print(nutritionalFactsNew[index]
-//                                   //     .toString()
-//                                   //     .trim());
-//                                   return ListTile(
-//                                     title: Text(nutritionalFactsNew[index]
-//                                         .toString()
-//                                         .trim()),
-//                                   );
-//                                   // Text(nutritionalFactsNew[index]
-//                                   //     .toString()
-//                                   //     .trim());
-//                                 },
-//                               ),
-//                       ),
-
-//                     // extra cooks notes
-//                     if ((oldWebsite && cooksNotesExits) ||
-//                         newWebsiteFooterNotesExist)
-//                       Text("COOK'S NOTES"),
-
-//                     if ((oldWebsite && cooksNotesExits) ||
-//                         newWebsiteFooterNotesExist)
-//                       // Container(
-//                       //   child:
-//                       //       Text(cooksNotes[0].toString().substring(20).trim()),
-//                       // ),
-//                       Container(
-//                         height: 100,
-//                         child: oldWebsite
-//                             ? ListView.builder(
-//                                 itemCount: cooksNotes.length,
-//                                 itemBuilder: (BuildContext context, int index) {
-//                                   // print(cooksNotes.length);
-//                                   return ListTile(
-//                                     title: Text(cooksNotes[index]
-//                                             .toString()
-//                                             .substring(20)
-//                                             .trim() ??
-//                                         ""),
-//                                   );
-//                                   // return Text(cooksNotes[index]
-//                                   //     .toString()
-//                                   //     .substring(20)
-//                                   //     .trim());
-//                                 })
-//                             : ListView.builder(
-//                                 itemCount: cooksNotes[0].length,
-//                                 itemBuilder: (BuildContext context, int index) {
-//                                   // print(cooksNotes[0].length);
-//                                   return ListTile(
-//                                     title: Text(cooksNotes[0][index].trim()),
-//                                   );
-//                                   // Text(cooksNotes[0][index].trim());
-//                                 }),
-//                       ),
-//                   ],
-//                 ),
-                  ),
+          : RecipeViewPageWidget(
+              headline: headline,
+              images: images,
+              desc: desc,
+              timeExists: timeExists,
+              time: time,
+              servingsExist: servingsExist,
+              servings: servings,
+              nutritionalFactsExits: nutritionalFactsExits,
+              oldWebsite: oldWebsite,
+              nutritionalFacts: nutritionalFacts,
+              nutritionalFactsNew: nutritionalFactsNew,
+              yeildExists: yeildExists,
+              yeild: yeild,
+              ingredients: ingredients,
+              directions: directions,
+              cooksNotesExits: cooksNotesExits,
+              newWebsiteFooterNotesExist: newWebsiteFooterNotesExist,
+              cooksNotes: cooksNotes,
             ),
     );
   }
