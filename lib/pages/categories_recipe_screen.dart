@@ -154,55 +154,50 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             ),
       body: isLoading
           ? CircularProgressIndicator()
-          : SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: 170,
-                    // width: 400,
-                    child: ListView.builder(
-                      padding: EdgeInsets.only(
-                        top: 15,
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: categoryOptionsRecipeCards.length,
-                      itemBuilder: (context, i) => GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => SearchResultsScreen(
-                                    url: categoryOptionsRecipeCards[i].href))),
-                        child: Container(
-                          height: 110,
-                          width: 120,
-                          child: Column(
-                            children: <Widget>[
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundImage: NetworkImage(
-                                  categoryOptionsRecipeCards[i].photoUrl,
-                                ),
+          : Column(
+              children: <Widget>[
+                Container(
+                  height: 180,
+                  // width: 400,
+                  child: ListView.builder(
+                    padding: EdgeInsets.only(
+                      top: 15,
+                    ),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categoryOptionsRecipeCards.length,
+                    itemBuilder: (context, i) => GestureDetector(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SearchResultsScreen(
+                              url: categoryOptionsRecipeCards[i].href))),
+                      child: Container(
+                        height: 110,
+                        width: 120,
+                        child: Column(
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundImage: NetworkImage(
+                                categoryOptionsRecipeCards[i].photoUrl,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                    Text(categoryOptionsRecipeCards[i].title),
-                              ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(categoryOptionsRecipeCards[i].title),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                  Text(categoryDesc),
-                  Container(
-                    height: 400,
-                    child: BuildRecipeListResults(
-                      recipeCards: recipeCards,
-                    ),
+                ),
+                Text(categoryDesc),
+                Container(
+                  height: 400,
+                  child: BuildRecipeListResults(
+                    recipeCards: recipeCards,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
     );
   }
