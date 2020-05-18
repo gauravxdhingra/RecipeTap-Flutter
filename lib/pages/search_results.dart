@@ -10,10 +10,12 @@ class SearchResultsScreen extends StatefulWidget {
   static const routeName = 'search_result_screen';
   // final incl;
   // final excl;
+  final appBarTitle;
   final url;
   SearchResultsScreen({
     Key key,
     this.url,
+    this.appBarTitle,
   }) : super(key: key);
 
   @override
@@ -90,7 +92,9 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
     // final inclexclArgs = ModalRoute.of(context).settings.arguments;
     // print(inclexclArgs.incl);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(widget.appBarTitle ?? ""),
+      ),
       body: isLoading
           ? CircularProgressIndicator()
           : BuildRecipeListResults(recipeCards: recipeCards),

@@ -62,11 +62,12 @@ class _SearchScreenState extends State<SearchScreen> {
         'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re');
   }
 
-  submitSearchNormal(url) {
+  submitSearchNormal(String appbarTitle, String url) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SearchResultsScreen(
             // incl: incl,
             // excl: excl,
+            appBarTitle: appbarTitle,
             url: 'https://www.allrecipes.com/search/results/?wt=$url&sort=re'
             // url: url,
             )));
@@ -76,6 +77,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // TODO Custom Name Appbar
       appBar: AppBar(),
       body: SlidingUpPanel(
         backdropEnabled: true,
@@ -88,9 +90,14 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               FlatButton(
                 child: Text('Search Recipe by name'),
-                onPressed: () =>
-                    submitSearchNormal(normalSearchController.text),
+                onPressed: () => submitSearchNormal(
+                  "Showing Results For " + normalSearchController.text,
+                  normalSearchController.text
+                      .replaceAll(" ", "%20")
+                      .toLowerCase(),
+                ),
               ),
+              // TODO retry button ip
               Text('Favourites'),
               Text('Browse By Category'),
               FlatButton(
@@ -145,7 +152,10 @@ class _SearchScreenState extends State<SearchScreen> {
               FlatButton(
                 child: Text('Search'),
                 onPressed: () {
-                  submitSearch(inclController.text, exclController.text);
+                  submitSearch(
+                    inclController.text.toLowerCase().replaceAll(" ", "%20"),
+                    exclController.text.toLowerCase().replaceAll(" ", "%20"),
+                  );
                 },
               ),
             ],
