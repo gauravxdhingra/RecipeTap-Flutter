@@ -9,7 +9,6 @@ import 'package:html/parser.dart' as parser;
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SearchScreen extends StatefulWidget {
   SearchScreen({Key key}) : super(key: key);
@@ -55,8 +54,6 @@ class _SearchScreenState extends State<SearchScreen> {
   submitSearch(incl, excl) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SearchResultsScreen(
-            // incl: incl,
-            // excl: excl,
             url:
                 'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re')));
     print(
@@ -66,8 +63,6 @@ class _SearchScreenState extends State<SearchScreen> {
   submitSearchNormal(String appbarTitle, String url) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SearchResultsScreen(
-            // incl: incl,
-            // excl: excl,
             appBarTitle: appbarTitle,
             url: 'https://www.allrecipes.com/search/results/?wt=$url&sort=re'
             // url: url,
@@ -76,94 +71,100 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   int _selectedIndex = 0;
+
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Likes',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: Search',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: Profile',
+      style: optionStyle,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO Custom Name Appbar
       appBar: AppBar(),
-      body: SlidingUpPanel(
-        backdropEnabled: true,
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              Text('Search'),
-              TextFormField(
-                controller: normalSearchController,
+
+      // body: Center(
+      //   child: _widgetOptions.elementAt(_selectedIndex),
+      // ),
+
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Text('Search'),
+            TextFormField(
+              controller: normalSearchController,
+            ),
+            FlatButton(
+              child: Text('Search Recipe by name'),
+              onPressed: () => submitSearchNormal(
+                "Showing Results For " + normalSearchController.text,
+                normalSearchController.text
+                    .replaceAll(" ", "%20")
+                    .toLowerCase(),
               ),
-              FlatButton(
-                child: Text('Search Recipe by name'),
-                onPressed: () => submitSearchNormal(
-                  "Showing Results For " + normalSearchController.text,
-                  normalSearchController.text
-                      .replaceAll(" ", "%20")
-                      .toLowerCase(),
-                ),
-              ),
-              // TODO retry button ip
-              Text('Favourites'),
-              Text('Browse By Category'),
-              FlatButton(
-                child: Text('CategoriesScreen'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CategoriesScreen()));
-                },
-              ),
-              // TextFormField(
-              //   controller: inclController,
-              // ),
-              // TextFormField(
-              //   controller: exclController,
-              // ),
-              // FlatButton(
-              //   child: Text('Search'),
-              //   onPressed: () {
-              //     submitSearch(inclController.text, exclController.text);
-              //   },
-              // ),
-            ],
-          ),
-        ),
-        panel: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            children: <Widget>[
-              Text('Search By Ingredients'),
-              SizedBox(
-                height: 50,
-              ),
-              Text('Include'),
-              SimpleAutoCompleteTextField(
-                key: key,
-                suggestions: suggestions,
-                // textChanged: (query) => suggestions.add(query),
-                controller: inclController,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Text('Exclude'),
-              SimpleAutoCompleteTextField(
-                key: keyy,
-                suggestions: suggestions,
-                controller: exclController,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              FlatButton(
-                child: Text('Search'),
-                onPressed: () {
-                  submitSearch(
-                    inclController.text.toLowerCase().replaceAll(" ", "%20"),
-                    exclController.text.toLowerCase().replaceAll(" ", "%20"),
-                  );
-                },
-              ),
-            ],
-          ),
+            ),
+            // TODO retry button for dns fail
+            Text('Favourites'),
+            Text('Browse By Category'),
+            FlatButton(
+              child: Text('CategoriesScreen'),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CategoriesScreen()));
+              },
+            ),
+            Text('Search By Ingredients'),
+            SizedBox(
+              height: 50,
+            ),
+            Text('Include'),
+            SimpleAutoCompleteTextField(
+              key: key,
+              suggestions: suggestions,
+              // textChanged: (query) => suggestions.add(query),
+              controller: inclController,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Text('Exclude'),
+            SimpleAutoCompleteTextField(
+              key: keyy,
+              suggestions: suggestions,
+              controller: exclController,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            FlatButton(
+              child: Text('Search'),
+              onPressed: () {
+                submitSearch(
+                  inclController.text.toLowerCase().replaceAll(" ", "%20"),
+                  exclController.text.toLowerCase().replaceAll(" ", "%20"),
+                );
+              },
+            ),
+          ],
         ),
       ),
+
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))

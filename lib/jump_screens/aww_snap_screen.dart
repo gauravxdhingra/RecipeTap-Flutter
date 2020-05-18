@@ -20,6 +20,10 @@ class AwwSnapScreen extends StatelessWidget {
           ),
           Text('Aw, Snap!'),
           Text('We have our best man working on it'),
+          FlatButton(
+            child: Text('Go Back'),
+            onPressed: () {},
+          )
         ],
       ),
     );

@@ -8,7 +8,7 @@ class RecipeViewPage extends StatefulWidget {
   final String url;
   final String coverImageUrl;
   RecipeViewPage({Key key, this.url, this.coverImageUrl}) : super(key: key);
-  static const routeName = 'recipe_view_page';
+  static const routeName = '/recipe_view_page';
   @override
   _RecipeViewPageState createState() => _RecipeViewPageState();
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/pages/search_screen.dart';
+import 'package:recipetap/utility/route_generator.dart';
 
 import 'pages/recipe_view_page.dart';
 
@@ -25,15 +26,15 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark().copyWith(),
 
-      // home: AwwSnapScreen(),
-
       routes: {
         '/': (context) => SearchScreen(),
         SearchScreen.routeName: (context) => SearchScreen(),
         RecipeViewPage.routeName: (context) => RecipeViewPage(),
-
       },
-      onUnknownRoute: ,
+      // onGenerateRoute: (settings) {
+      //   return RouteGenerator.generateRoute(settings);
+      // },
+      onUnknownRoute: (_) => MaterialPageRoute(builder: (_) => AwwSnapScreen()),
     );
   }
 }
