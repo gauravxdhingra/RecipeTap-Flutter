@@ -157,9 +157,10 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           : Column(
               children: <Widget>[
                 Container(
-                  height: 180,
+                  height: 170,
                   // width: 400,
                   child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.only(
                       top: 15,
                     ),
@@ -181,8 +182,11 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(categoryOptionsRecipeCards[i].title),
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Text(
+                                categoryOptionsRecipeCards[i].title,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ],
                         ),
@@ -190,7 +194,10 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     ),
                   ),
                 ),
-                Text(categoryDesc),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  child: Text(categoryDesc),
+                ),
                 Container(
                   height: 400,
                   child: BuildRecipeListResults(

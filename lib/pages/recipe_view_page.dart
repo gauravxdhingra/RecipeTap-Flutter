@@ -519,9 +519,9 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                       ReadMoreText(
                         desc,
                         trimLines: 2,
-                        colorClickableText: Colors.pink,
+                        colorClickableText: Colors.grey,
                         trimMode: TrimMode.Line,
-                        trimCollapsedText: '  Show more...',
+                        trimCollapsedText: '  Show more',
                         trimExpandedText: '  Show less',
                       ),
 
