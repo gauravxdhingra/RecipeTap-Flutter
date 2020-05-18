@@ -159,9 +159,12 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: 150,
+                    height: 170,
                     // width: 400,
                     child: ListView.builder(
+                      padding: EdgeInsets.only(
+                        top: 15,
+                      ),
                       scrollDirection: Axis.horizontal,
                       itemCount: categoryOptionsRecipeCards.length,
                       itemBuilder: (context, i) => GestureDetector(
@@ -170,8 +173,8 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                 builder: (context) => SearchResultsScreen(
                                     url: categoryOptionsRecipeCards[i].href))),
                         child: Container(
-                          height: 100,
-                          width: 100,
+                          height: 110,
+                          width: 120,
                           child: Column(
                             children: <Widget>[
                               CircleAvatar(
@@ -180,7 +183,11 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                   categoryOptionsRecipeCards[i].photoUrl,
                                 ),
                               ),
-                              Text(categoryOptionsRecipeCards[i].title),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child:
+                                    Text(categoryOptionsRecipeCards[i].title),
+                              ),
                             ],
                           ),
                         ),
