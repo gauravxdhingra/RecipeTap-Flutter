@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/pages/search_screen.dart';
 
 import 'pages/recipe_view_page.dart';
@@ -22,11 +23,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primarySwatch: Colors.red,
       ),
-      darkTheme: ThemeData.dark().copyWith(
-        
-      ),
+      darkTheme: ThemeData.dark().copyWith(),
 
-      // home: MyHomePage(),
+      // home: AwwSnapScreen(),
 
       routes: {
         '/': (context) => SearchScreen(),
