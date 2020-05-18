@@ -460,16 +460,34 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
               child: CustomScrollView(slivers: <Widget>[
                 SliverAppBar(
                   // title: Text(headline),
-                  
+                  // elevation: 0.1,
+
                   expandedHeight: MediaQuery.of(context).size.height / 3,
                   pinned: true,
-                  backgroundColor: Colors.white.withOpacity(0),
+                  backgroundColor: Colors.white,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Text(headline ?? ""),
+                    centerTitle: true,
+                    title: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.black54,
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 3,
+                        horizontal: 6,
+                      ),
+                      child: Text(
+                        headline ?? "",
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                        // textAlign: TextAlign.right,
+                      ),
+                    ),
                     background: Container(
                       height: 200,
                       child: Swiper(
-                        itemHeight: 100,
+                        itemHeight: 200,
                         itemCount: images.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ClipRRect(

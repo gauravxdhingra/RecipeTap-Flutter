@@ -42,11 +42,22 @@ class AllCategoriesScroll extends StatelessWidget {
             height: 120.0,
             // color: (state.isPinned ? Colors.pink : Colors.lightBlue)
             //     .withOpacity(1.0 - state.scrollPercentage),
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              categoriesMap.keys.toList()[0],
-              style: const TextStyle(color: Colors.white),
+            // padding: EdgeInsets.symmetric(horizontal: 16.0),
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              padding:
+                  EdgeInsets.only(left: 30, bottom: 15, right: 30, top: 15),
+              child: Text(
+                categoriesMap.keys.toList()[0],
+                style: const TextStyle(color: Colors.white, fontSize: 25),
+              ),
             ),
           ),
           sliver: SliverList(
@@ -111,11 +122,22 @@ class AllCategoriesScroll extends StatelessWidget {
             height: 120.0,
             // color: (state.isPinned ? Colors.pink : Colors.lightBlue)
             //     .withOpacity(1.0 - state.scrollPercentage),
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              categoriesMap.keys.toList()[2],
-              style: const TextStyle(color: Colors.white),
+            // padding: EdgeInsets.symmetric(horizontal: 16.0),
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              padding:
+                  EdgeInsets.only(left: 30, bottom: 15, right: 30, top: 15),
+              child: Text(
+                categoriesMap.keys.toList()[2],
+                style: const TextStyle(color: Colors.white, fontSize: 25),
+              ),
             ),
           ),
           sliver: SliverList(
@@ -179,11 +201,22 @@ class AllCategoriesScroll extends StatelessWidget {
             height: 120.0,
             // color: (state.isPinned ? Colors.pink : Colors.lightBlue)
             //     .withOpacity(1.0 - state.scrollPercentage),
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              categoriesMap.keys.toList()[3],
-              style: const TextStyle(color: Colors.white),
+            // padding: EdgeInsets.symmetric(horizontal: 16.0),
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              padding:
+                  EdgeInsets.only(left: 30, bottom: 15, right: 30, top: 15),
+              child: Text(
+                categoriesMap.keys.toList()[3],
+                style: const TextStyle(color: Colors.white, fontSize: 25),
+              ),
             ),
           ),
           sliver: SliverList(
@@ -248,11 +281,21 @@ class AllCategoriesScroll extends StatelessWidget {
             height: 120.0,
             // color: (state.isPinned ? Colors.pink : Colors.lightBlue)
             //     .withOpacity(1.0 - state.scrollPercentage),
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              categoriesMap.keys.toList()[4],
-              style: const TextStyle(color: Colors.white),
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              padding:
+                  EdgeInsets.only(left: 30, bottom: 15, right: 30, top: 15),
+              child: Text(
+                categoriesMap.keys.toList()[4],
+                style: const TextStyle(color: Colors.white, fontSize: 25),
+              ),
             ),
           ),
           sliver: SliverList(
@@ -317,11 +360,21 @@ class AllCategoriesScroll extends StatelessWidget {
             height: 120.0,
             // color: (state.isPinned ? Colors.pink : Colors.lightBlue)
             //     .withOpacity(1.0 - state.scrollPercentage),
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              categoriesMap.keys.toList()[5],
-              style: const TextStyle(color: Colors.white),
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              padding:
+                  EdgeInsets.only(left: 30, bottom: 15, right: 30, top: 15),
+              child: Text(
+                categoriesMap.keys.toList()[5],
+                style: const TextStyle(color: Colors.white, fontSize: 25),
+              ),
             ),
           ),
           sliver: SliverList(
@@ -386,11 +439,21 @@ class AllCategoriesScroll extends StatelessWidget {
             height: 120.0,
             // color: (state.isPinned ? Colors.pink : Colors.lightBlue)
             //     .withOpacity(1.0 - state.scrollPercentage),
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              categoriesMap.keys.toList()[6],
-              style: const TextStyle(color: Colors.white),
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              padding:
+                  EdgeInsets.only(left: 30, bottom: 15, right: 30, top: 15),
+              child: Text(
+                categoriesMap.keys.toList()[6],
+                style: const TextStyle(color: Colors.white, fontSize: 25),
+              ),
             ),
           ),
           sliver: SliverList(

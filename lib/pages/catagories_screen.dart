@@ -73,13 +73,20 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: isLoading
           ? CircularProgressIndicator()
-          : AllCategoriesScroll(
-              categoriesMap: categoriesMap,
+          : Stack(
+              children: [
+                AllCategoriesScroll(
+                  categoriesMap: categoriesMap,
+                ),
+                // Container(
+                //   height: MediaQuery.of(context).padding.top,
+                //   color: Colors.black,
+                // ),
+              ],
             ),
     );
   }
 }
-
