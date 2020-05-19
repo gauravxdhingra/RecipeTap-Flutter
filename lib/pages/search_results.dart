@@ -97,7 +97,10 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
       ),
       body: isLoading
           ? CircularProgressIndicator()
-          : BuildRecipeListResults(recipeCards: recipeCards),
+          : BuildRecipeListResults(
+              recipeCards: recipeCards,
+              url: widget.url,
+            ),
     );
   }
 }

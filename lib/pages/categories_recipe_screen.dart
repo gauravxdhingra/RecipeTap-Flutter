@@ -130,15 +130,15 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 // TODO: Category recipe of the day
 // TODO: First Check if next Page Exists
 
-  goToRecipe(url, coverImageUrl) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => RecipeViewPage(
-                  url: url,
-                  coverImageUrl: coverImageUrl,
-                )));
-  }
+  // goToRecipe(url, coverImageUrl) {
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => RecipeViewPage(
+  //                 url: url,
+  //                 coverImageUrl: coverImageUrl,
+  //               )));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -200,6 +200,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                   Container(
                     height: 500,
                     child: BuildRecipeListResults(
+                      url: widget.url,
                       recipeCards: recipeCards,
                     ),
                   ),

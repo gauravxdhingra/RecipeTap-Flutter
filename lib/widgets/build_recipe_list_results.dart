@@ -10,19 +10,31 @@ class BuildRecipeListResults extends StatefulWidget {
   const BuildRecipeListResults({
     Key key,
     @required this.recipeCards,
+    @required this.url,
   }) : super(key: key);
 
   final List<RecipeCard> recipeCards;
+  final String url;
 
   @override
   _BuildRecipeListResultsState createState() => _BuildRecipeListResultsState();
 }
 
 class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
-  List<RecipeCard> recipeCards = widget.recipeCards;
+  List<RecipeCard> recipeCards = [];
   bool firstPage = false;
   int page = 2;
   bool hasMore = true;
+
+  // ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    recipeCards = widget.recipeCards;
+    super.initState();
+    // _scrollController.addListener(() {
+    //   if _scrollController.position.pixels==_scrollController.position.maxScrollExtent()loadMore(page);
+  }
 
   getSearchResults(url) async {
     print(url);
@@ -37,7 +49,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
       hasMore = false;
       return;
     }
-
+// TODO bummer page
     final recipeCardsFromHtml =
         document.getElementsByClassName("fixed-recipe-card");
 
@@ -72,19 +84,14 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
         href: href,
       ));
     });
-    // print(recipeCards);
-    if (firstPage)
-      setState(() {
-        isLoading = false;
-      });
   }
 
   loadMore(page) {
     if (hasMore)
-      getSearchResults(widget.url + "?page=" + page);
+      getSearchResults(widget.url + "?page=" + '$page');
     else
       return;
-    page++;
+    // page++;
   }
 
   goToRecipe(url, coverImageUrl, context) {
@@ -108,55 +115,57 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
         //   mainAxisSpacing: 20,
         // ),
         physics: BouncingScrollPhysics(),
-        itemCount: widget.recipeCards.length,
+        itemCount: recipeCards.length,
         itemBuilder: (context, i) => LazyLoadingList(
-          initialSizeOfItems: widget.recipeCards.length,
+          initialSizeOfItems: recipeCards.length,
           index: i,
-          hasMore: widget.hasMore,
-          loadMore: widget.loadMore(i),
+          hasMore: hasMore,
+          loadMore: loadMore(i),
           // TODO fav button on recipe page
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(40),
-              bottomLeft: Radius.circular(40),
-            ),
-            child: ListTile(
-              onTap: goToRecipe(widget.recipeCards[i].href,
-                  widget.recipeCards[i].photoUrl, context),
-              leading: Image.network(
-                widget.recipeCards[i].photoUrl,
-                fit: BoxFit.cover,
+          child: GestureDetector(
+            onTap: goToRecipe(
+                recipeCards[i].href, recipeCards[i].photoUrl, context),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(40),
+                bottomLeft: Radius.circular(40),
               ),
-              title: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 10,
+              child: ListTile(
+                leading: Image.network(
+                  recipeCards[i].photoUrl,
+                  fit: BoxFit.cover,
                 ),
-                child: Text(
-                  widget.recipeCards[i].title,
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                color: Colors.black54,
-              ),
-              subtitle: Container(
-                padding: EdgeInsets.only(
-                  left: 25,
-                  top: 10,
-                  bottom: 10,
-                  right: 15,
-                ),
-                child: Text(
-                  widget.recipeCards[i].desc,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
+                title: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
                   ),
-                  maxLines: 2,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
+                  child: Text(
+                    recipeCards[i].title,
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  color: Colors.black54,
                 ),
-                color: Colors.black54,
+                subtitle: Container(
+                  padding: EdgeInsets.only(
+                    left: 25,
+                    top: 10,
+                    bottom: 10,
+                    right: 15,
+                  ),
+                  child: Text(
+                    recipeCards[i].desc,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                    maxLines: 2,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  color: Colors.black54,
+                ),
               ),
             ),
           ),
