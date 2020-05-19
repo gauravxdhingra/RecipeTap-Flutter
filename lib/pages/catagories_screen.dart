@@ -3,6 +3,7 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:recipetap/jump_screens/loading_categories_screen.dart';
 import 'package:recipetap/jump_screens/retry_screen.dart';
 import 'package:recipetap/widgets/all_categories_scroll.dart';
 
@@ -84,7 +85,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return Scaffold(
       // appBar: AppBar(),
       body: isLoading
-          ? showRetry ? RetryScreen() : CircularProgressIndicator()
+          ? showRetry ? RetryScreen() : LoadingCategoriesScreen()
           : Stack(
               children: [
                 AllCategoriesScroll(
