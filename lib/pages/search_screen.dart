@@ -1,5 +1,7 @@
 // import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+// import 'package:floating_search_bar/floating_search_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +11,7 @@ import 'package:html/parser.dart' as parser;
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
+import 'package:simple_search_bar/simple_search_bar.dart';
 
 class SearchScreen extends StatefulWidget {
   SearchScreen({Key key}) : super(key: key);
@@ -93,11 +96,50 @@ class _SearchScreenState extends State<SearchScreen> {
     ),
   ];
 
+  var searchValue = '';
+
+  final AppBarController appBarController = AppBarController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO Custom Name Appbar
-      appBar: AppBar(),
+      // TODO: Searchlist images resolution full
+      appBar: SearchAppBar(
+        primary: Theme.of(context).primaryColor,
+        appBarController: appBarController,
+
+        searchHint: "Search Recipes",
+        mainTextColor: Colors.white,
+        onChange: (String value) {
+          //Your function to filter list. It should interact with
+          //the Stream that generate the final list
+        },
+        //Will show when SEARCH MODE wasn't active
+        mainAppBar: AppBar(
+          title: Text("Welcome, User!"),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: InkWell(
+                child: Icon(
+                  Icons.search,
+                ),
+                onTap: () {
+                  //This is where You change to SEARCH MODE. To hide, just
+                  //add FALSE as value on the stream
+                  appBarController.stream.add(true);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      // appBar: AppBar(
+      //   title: CupertinoTextField(
+      //     padding: EdgeInsets.all(10),
+      //   ),
+      // ),
 
       // body: Center(
       //   child: _widgetOptions.elementAt(_selectedIndex),
@@ -106,10 +148,27 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Container(
         child: Column(
           children: <Widget>[
+            // Container(
+            //   height: 200,
+            //   child: FloatingSearchBar(
+            //     children: <Widget>[
+            //       // Text(searchValue),
+            //     ],
+            //     onChanged: (String value) {
+            //       searchValue = value;
+            //     },
+            //     onTap: () {},
+            //     body: Text(""),
+            //     pinned: true,
+            //     decoration: InputDecoration.collapsed(
+            //       hintText: "Search For Your Favourite Recipes...",
+            //     ),
+            //   ),
+            // ),
             Text('Search'),
-            TextFormField(
-              controller: normalSearchController,
-            ),
+            // TextFormField(
+            //   controller: normalSearchController,
+            // ),
             FlatButton(
               child: Text('Search Recipe by name'),
               onPressed: () => submitSearchNormal(

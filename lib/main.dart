@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.pink,
       ),
       darkTheme: ThemeData.dark().copyWith(),
 
