@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipetap/pages/catagories_screen.dart';
 
 class RetryScreen extends StatelessWidget {
   const RetryScreen({Key key}) : super(key: key);
@@ -10,7 +11,8 @@ class RetryScreen extends StatelessWidget {
         children: <Widget>[
           Text('Connection Error!'),
           FlatButton(
-            onPressed: () {},
+            onPressed: () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => CategoriesScreen())),
             child: Text('Retry'),
           ),
         ],

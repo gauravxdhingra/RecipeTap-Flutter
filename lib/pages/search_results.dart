@@ -36,8 +36,9 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
     // final String url =
     //     'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re';
     final String url = widget.url;
-    getSearchResults(url);
+
     super.initState();
+    getSearchResults(url);
   }
 
   getSearchResults(url) async {

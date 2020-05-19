@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipetap/jump_screens/aww_snap_screen.dart';
+// import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:lazy_loading_list/lazy_loading_list.dart';
@@ -24,17 +24,23 @@ class BuildRecipeListResults extends StatefulWidget {
 class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   List<RecipeCard> recipeCards = [];
   bool firstPage = false;
-  // int page = 2;
+  int page = 2;
   bool hasMore = true;
+  int currentMax;
 
-  // ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     recipeCards = widget.recipeCards;
     super.initState();
-    // _scrollController.addListener(() {
-    //   if _scrollController.position.pixels==_scrollController.position.maxScrollExtent()loadMore(page);
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        loadMore();
+      }
+    });
+    currentMax = recipeCards.length;
   }
 
   getSearchResults(url) async {
@@ -48,9 +54,9 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
           .trim();
       hasMore = true;
     } catch (e) {
-      setState(() {
-        hasMore = false;
-      });
+      // setState(() {
+      hasMore = false;
+      // });
       return;
     }
 // TODO bummer page
@@ -90,14 +96,21 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
     });
   }
 
-  loadMore(page) {
+  loadMore() {
     if (hasMore) {
       getSearchResults(widget.url + "?page=" + '$page');
-      // setState(() {});
+      page++;
+      setState(() {});
     } else
       return;
     // page++;
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   setState(() {});
+  // }
 
   goToRecipe(url, coverImageUrl, context) {
     Navigator.push(
@@ -123,16 +136,13 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
         //   childAspectRatio: 4 / 3,
         //   mainAxisSpacing: 20,
         // ),
+        // itemExtent: ,
+        controller: _scrollController,
         physics: BouncingScrollPhysics(),
-        itemCount: recipeCards.length,
-        itemBuilder: (context, i) => LazyLoadingList(
-          initialSizeOfItems: recipeCards.length,
-
-          index: i,
-          hasMore: hasMore,
-          loadMore: loadMore(i),
-          // TODO fav button on recipe page
-          child: GestureDetector(
+        itemCount: recipeCards.length + 1,
+        itemBuilder: (context, i) {
+          if (i == recipeCards.length) return CircularProgressIndicator();
+          return GestureDetector(
             onTap: () => goToRecipe(
                 recipeCards[i].href, recipeCards[i].photoUrl, context),
             child: ClipRRect(
@@ -178,8 +188,8 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
