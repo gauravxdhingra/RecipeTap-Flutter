@@ -12,6 +12,7 @@ import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:simple_search_bar/simple_search_bar.dart';
+import 'package:slimy_card/slimy_card.dart';
 
 class SearchScreen extends StatefulWidget {
   SearchScreen({Key key}) : super(key: key);
@@ -147,81 +148,95 @@ class _SearchScreenState extends State<SearchScreen> {
       // ),
 
       body: Container(
-        child: Column(
-          children: <Widget>[
-            // Container(
-            //   height: 200,
-            //   child: FloatingSearchBar(
-            //     children: <Widget>[
-            //       // Text(searchValue),
-            //     ],
-            //     onChanged: (String value) {
-            //       searchValue = value;
-            //     },
-            //     onTap: () {},
-            //     body: Text(""),
-            //     pinned: true,
-            //     decoration: InputDecoration.collapsed(
-            //       hintText: "Search For Your Favourite Recipes...",
-            //     ),
-            //   ),
-            // ),
-            Text('Search'),
-            // TextFormField(
-            //   controller: normalSearchController,
-            // ),
-            FlatButton(
-              child: Text('Search Recipe by name'),
-              onPressed: () => submitSearchNormal(
-                "Showing Results For " + normalSearchController.text,
-                normalSearchController.text
-                    .replaceAll(" ", "%20")
-                    .toLowerCase(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SlimyCard(
+                color: Colors.red.shade500,
+                width: MediaQuery.of(context).size.width * 0.95,
+                borderRadius: 25,
+                topCardHeight: 235,
+                topCardWidget: Container(
+                  child: Column(
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: Image.asset('assets/images/fridge.jpg'),
+                      ),
+                    ],
+                  ),
+                ),
+                bottomCardHeight: 200,
+                bottomCardWidget: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/fridge.jpg',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
-            ),
-            // TODO retry button for dns fail
-            Text('Favourites'),
-            Text('Browse By Category'),
-            FlatButton(
-              child: Text('CategoriesScreen'),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CategoriesScreen()));
-              },
-            ),
-            Text('Search By Ingredients'),
-            SizedBox(
-              height: 50,
-            ),
-            Text('Include'),
-            SimpleAutoCompleteTextField(
-              key: key,
-              suggestions: suggestions,
-              // textChanged: (query) => suggestions.add(query),
-              controller: inclController,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Text('Exclude'),
-            SimpleAutoCompleteTextField(
-              key: keyy,
-              suggestions: suggestions,
-              controller: exclController,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            FlatButton(
-              child: Text('Search'),
-              onPressed: () {
-                submitSearch(
-                  inclController.text.toLowerCase().replaceAll(" ", "%20"),
-                  exclController.text.toLowerCase().replaceAll(" ", "%20"),
-                );
-              },
-            ),
-          ],
+
+              // Text('Search'),
+              // TextFormField(
+              //   controller: normalSearchController,
+              // ),
+              // FlatButton(
+              //   child: Text('Search Recipe by name'),
+              //   onPressed: () => submitSearchNormal(
+              //     "Showing Results For " + normalSearchController.text,
+              //     normalSearchController.text
+              //         .replaceAll(" ", "%20")
+              //         .toLowerCase(),
+              //   ),
+              // ),
+              // // TODO retry button for dns fail
+              // Text('Favourites'),
+              // Text('Browse By Category'),
+              FlatButton(
+                child: Text('CategoriesScreen'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CategoriesScreen()));
+                },
+              ),
+              // Text('Search By Ingredients'),
+              // SizedBox(
+              //   height: 50,
+              // ),
+              // Text('Include'),
+              // SimpleAutoCompleteTextField(
+              //   key: key,
+              //   suggestions: suggestions,
+              //   // textChanged: (query) => suggestions.add(query),
+              //   controller: inclController,
+              // ),
+              // SizedBox(
+              //   height: 50,
+              // ),
+              // Text('Exclude'),
+              // SimpleAutoCompleteTextField(
+              //   key: keyy,
+              //   suggestions: suggestions,
+              //   controller: exclController,
+              // ),
+              // SizedBox(
+              //   height: 50,
+              // ),
+              // FlatButton(
+              //   child: Text('Search'),
+              //   onPressed: () {
+              //     submitSearch(
+              //       inclController.text.toLowerCase().replaceAll(" ", "%20"),
+              //       exclController.text.toLowerCase().replaceAll(" ", "%20"),
+              //     );
+              //   },
+              // ),
+            ],
+          ),
         ),
       ),
 
@@ -269,3 +284,20 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
+// Container(
+//   height: 200,
+//   child: FloatingSearchBar(
+//     children: <Widget>[
+//       // Text(searchValue),
+//     ],
+//     onChanged: (String value) {
+//       searchValue = value;
+//     },
+//     onTap: () {},
+//     body: Text(""),
+//     pinned: true,
+//     decoration: InputDecoration.collapsed(
+//       hintText: "Search For Your Favourite Recipes...",
+//     ),
+//   ),
+// ),

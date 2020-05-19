@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
+import 'package:lazy_loading_list/lazy_loading_list.dart';
 
 class BuildRecipeListResults extends StatelessWidget {
   const BuildRecipeListResults({
@@ -28,12 +29,12 @@ class BuildRecipeListResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          childAspectRatio: 4 / 3,
-          mainAxisSpacing: 20,
-        ),
+      child: ListView.builder(
+        // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //   crossAxisCount: 1,
+        //   childAspectRatio: 4 / 3,
+        //   mainAxisSpacing: 20,
+        // ),
         physics: BouncingScrollPhysics(),
         itemCount: recipeCards.length,
         itemBuilder: (context, i) => GestureDetector(
@@ -44,12 +45,12 @@ class BuildRecipeListResults extends StatelessWidget {
               topRight: Radius.circular(40),
               bottomLeft: Radius.circular(40),
             ),
-            child: GridTile(
-              child: Image.network(
+            child: ListTile(
+              leading: Image.network(
                 recipeCards[i].photoUrl,
                 fit: BoxFit.cover,
               ),
-              header: Container(
+              title: Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 10,
@@ -61,7 +62,7 @@ class BuildRecipeListResults extends StatelessWidget {
                 ),
                 color: Colors.black54,
               ),
-              footer: Container(
+              subtitle: Container(
                 padding: EdgeInsets.only(
                   left: 25,
                   top: 10,
