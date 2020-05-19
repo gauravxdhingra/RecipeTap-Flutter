@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:readmore/readmore.dart';
+import 'package:sliver_fab/sliver_fab.dart';
 
 class RecipeViewPageWidget extends StatelessWidget {
   const RecipeViewPageWidget({
@@ -47,7 +48,21 @@ class RecipeViewPageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: CustomScrollView(
+      child: SliverFab(
+        floatingWidget: CircleAvatar(
+          child: IconButton(
+            icon: Icon(
+              Icons.favorite_border,
+              // size: 50,
+            ),
+            onPressed: () {},
+          ),
+        ),
+
+        // TODO Adjust max resolution for loading Images
+        floatingPosition:
+            FloatingPosition(left: MediaQuery.of(context).size.width * 0.7),
+        expandedHeight: MediaQuery.of(context).size.height / 3,
         slivers: <Widget>[
           SliverAppBar(
             // title: Text(headline),
@@ -103,147 +118,136 @@ class RecipeViewPageWidget extends StatelessWidget {
               ),
             ),
           ),
+          SliverToBoxAdapter(
+            child: ReadMoreText(
+              desc,
+              trimLines: 2,
+              colorClickableText: Colors.grey,
+              trimMode: TrimMode.Line,
+              trimCollapsedText: '  Show more',
+              trimExpandedText: '  Show less',
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Divider(),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: 70,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  if (timeExists)
+                    Container(
+                      height: 70,
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.timer),
+                          Text(time ?? ""),
+                        ],
+                      ),
+                    ),
+                  if (servingsExist)
+                    Container(
+                      height: 70,
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.people_outline),
+                          Text(servings ?? "--"),
+                        ],
+                      ),
+                    ),
+                  if (nutritionalFactsExits)
+                    Container(
+                      height: 70,
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.restaurant_menu),
+                          Text(nutritionalFactsExits
+                              ? oldWebsite
+                                  ? nutritionalFacts[0]
+                                  : nutritionalFactsNew[0]
+                              : "--" ?? "--"),
+                        ],
+                      ),
+                    ),
+                  if (yeildExists && oldWebsite == true)
+                    Container(
+                      height: 70,
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.fastfood),
+                          Text(
+                            yeildExists
+                                ? oldWebsite ? yeild ?? "--" : "--"
+                                : "--" ?? "--",
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Text('INGREDIENTS'),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(ingredients[index]),
+                );
+              },
+              childCount:
+                  oldWebsite ? ingredients.length : ingredients.length - 2,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Text('DIRECTIONS'),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                    child: Text('# ${index + 1}'),
+                  ),
+                  title: Text(directions[index] ?? ""),
+                );
+                // Text(directions[index]);
+              },
+              childCount: directions.length - 1,
+            ),
+          ),
+          if (nutritionalFactsExits)
+            SliverToBoxAdapter(
+              child: Text('NUTRITIONAL FACTS'),
+            ),
+          if (nutritionalFactsExits)
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                oldWebsite
+                    ? (BuildContext context, int index) {
+                        return ListTile(
+                          title: Text(
+                              nutritionalFacts[index].toString().trimRight()),
+                        );
+                      }
+                    : (BuildContext context, int index) {
+                        return ListTile(
+                          title: Text(
+                              nutritionalFactsNew[index].toString().trim()),
+                        );
+                      },
+                childCount: oldWebsite
+                    ? nutritionalFacts.length - 1
+                    : nutritionalFactsNew.length,
+              ),
+            ),
           SliverFillRemaining(
             child: Column(
               children: <Widget>[
-                ReadMoreText(
-                  desc,
-                  trimLines: 2,
-                  colorClickableText: Colors.grey,
-                  trimMode: TrimMode.Line,
-                  trimCollapsedText: '  Show more',
-                  trimExpandedText: '  Show less',
-                ),
-
-                Divider(),
-
-                Container(
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      if (timeExists)
-                        Container(
-                          height: 70,
-                          child: Column(
-                            children: <Widget>[
-                              Icon(Icons.timer),
-                              Text(time ?? ""),
-                            ],
-                          ),
-                        ),
-                      if (servingsExist)
-                        Container(
-                          height: 70,
-                          child: Column(
-                            children: <Widget>[
-                              Icon(Icons.people_outline),
-                              Text(servings ?? "--"),
-                            ],
-                          ),
-                        ),
-                      if (nutritionalFactsExits)
-                        Container(
-                          height: 70,
-                          child: Column(
-                            children: <Widget>[
-                              Icon(Icons.restaurant_menu),
-                              Text(nutritionalFactsExits
-                                  ? oldWebsite
-                                      ? nutritionalFacts[0]
-                                      : nutritionalFactsNew[0]
-                                  : "--" ?? "--"),
-                            ],
-                          ),
-                        ),
-                      if (yeildExists && oldWebsite == true)
-                        Container(
-                          height: 70,
-                          child: Column(
-                            children: <Widget>[
-                              Icon(Icons.fastfood),
-                              Text(
-                                yeildExists
-                                    ? oldWebsite ? yeild ?? "--" : "--"
-                                    : "--" ?? "--",
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-
-                Divider(),
-
-                Text('INGREDIENTS'),
-
-                // Ingredients
-                Container(
-                  height: 200,
-                  child: ListView.builder(
-                    itemCount: oldWebsite
-                        ? ingredients.length
-                        : ingredients.length - 2,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text(ingredients[index]),
-                      );
-                    },
-                  ),
-                ),
-                // directons/steps
-
-                Text('DIRECTIONS'),
-
-                Container(
-                  height: 200,
-                  child: ListView.builder(
-                    itemCount: directions.length - 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        leading: CircleAvatar(
-                          child: Text('# ${index + 1}'),
-                        ),
-                        title: Text(directions[index] ?? ""),
-                      );
-
-                      // Text(directions[index]);
-                    },
-                  ),
-                ),
-
-                // nutritional facts
-                if (nutritionalFactsExits)
-                  Text('NUTRITIONAL FACTS'),
-
-                if (nutritionalFactsExits)
-                  Container(
-                    height: 100,
-                    // child: Text(directions[directions.length - 1]),
-                    child: oldWebsite
-                        ? ListView.builder(
-                            itemCount: nutritionalFacts.length - 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                title: Text(nutritionalFacts[index]
-                                    .toString()
-                                    .trimRight()),
-                              );
-                            },
-                          )
-                        : ListView.builder(
-                            itemCount: nutritionalFactsNew.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                title: Text(nutritionalFactsNew[index]
-                                    .toString()
-                                    .trim()),
-                              );
-                            },
-                          ),
-                  ),
-
                 // extra cooks notes
                 if ((oldWebsite && cooksNotesExits) ||
                     newWebsiteFooterNotesExist)
