@@ -7,7 +7,13 @@ class RetryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: <Widget>[],
+        children: <Widget>[
+          Text('Connection Error!'),
+          FlatButton(
+            onPressed: () {},
+            child: Text('Retry'),
+          ),
+        ],
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:recipetap/jump_screens/loading_recipe_screen.dart';
 import 'package:recipetap/widgets/recipe_view_page_widget.dart';
 
 class RecipeViewPage extends StatefulWidget {
@@ -420,8 +421,10 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       // appBar: AppBar(
       //   title: isLoading ? Text('') : Text(headline),
       // ),
+
+      // TODO no empty search field
       body: isLoading
-          ? CircularProgressIndicator()
+          ? LoadingRecipeScreen()
           : RecipeViewPageWidget(
               headline: headline,
               images: images,

@@ -118,6 +118,7 @@ class _SearchScreenState extends State<SearchScreen> {
         //Will show when SEARCH MODE wasn't active
         mainAppBar: AppBar(
           title: Text("Welcome, User!"),
+          leading: CircleAvatar(),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
