@@ -149,53 +149,70 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             ? AppBar()
             : AppBar(
                 title: Text(categoryTitle),
+                elevation: 0,
               ),
         body: isLoading
             ? CircularProgressIndicator()
             : Column(
                 children: <Widget>[
-                  Container(
-                    height: 170,
-                    // width: 400,
-                    child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(
-                        top: 15,
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: categoryOptionsRecipeCards.length,
-                      itemBuilder: (context, i) => GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => SearchResultsScreen(
-                                    url: categoryOptionsRecipeCards[i].href))),
-                        child: Container(
-                          height: 110,
-                          width: 120,
-                          child: Column(
-                            children: <Widget>[
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundImage: NetworkImage(
-                                  categoryOptionsRecipeCards[i].photoUrl,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        color: Theme.of(context).primaryColor,
+                        height: 170,
+                        // width: 400,
+                        child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          padding: EdgeInsets.only(
+                            top: 15,
+                            left: 15,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: categoryOptionsRecipeCards.length,
+                          itemBuilder: (context, i) => GestureDetector(
+                            onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => SearchResultsScreen(
+                                        url: categoryOptionsRecipeCards[i]
+                                            .href))),
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: Container(
+                                height: 110,
+                                width: 100,
+                                child: Column(
+                                  children: <Widget>[
+                                    CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: NetworkImage(
+                                        categoryOptionsRecipeCards[i].photoUrl,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10.0),
+                                      child: Text(
+                                        categoryOptionsRecipeCards[i].title,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  categoryOptionsRecipeCards[i].title,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                    child: Text(categoryDesc),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        color: Theme.of(context).primaryColor,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                        child: Text(categoryDesc),
+                      ),
+                    ],
                   ),
                   Container(
                     height: 500,

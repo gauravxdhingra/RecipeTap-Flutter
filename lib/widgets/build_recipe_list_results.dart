@@ -23,7 +23,7 @@ class BuildRecipeListResults extends StatefulWidget {
 
 class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   List<RecipeCard> recipeCards = [];
-  bool firstPage = false;
+  bool firstPage = true;
   int page = 2;
   bool hasMore = true;
   int currentMax;
@@ -44,7 +44,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   }
 
   getSearchResults(url) async {
-    print(url);
+    // print(url);
     final response = await http.get(url);
     dom.Document document = parser.parse(response.body);
     try {
@@ -54,9 +54,9 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
           .trim();
       hasMore = true;
     } catch (e) {
-      // setState(() {
-      hasMore = false;
-      // });
+      setState(() {
+        hasMore = false;
+      });
       return;
     }
 // TODO bummer page
@@ -69,23 +69,23 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
           .querySelector("img")
           .attributes["data-original-src"];
 
-      print(imageUrlRecipe);
+      // print(imageUrlRecipe);
 
       final titleRecipe = element
           .getElementsByClassName("fixed-recipe-card__title-link")[0]
           .text
           .trim();
-      print(titleRecipe);
+      // print(titleRecipe);
 
       final desc = element.text.split(titleRecipe)[1].split("By ")[0].trim();
-      print(desc);
+      // print(desc);
 
       final href = element
           .getElementsByClassName("fixed-recipe-card__info")[0]
           .querySelector("a")
           .attributes["href"]
           .split("?internal")[0];
-      print(href);
+      // print(href);
 
       recipeCards.add(RecipeCard(
         title: titleRecipe,
@@ -100,7 +100,10 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
     if (hasMore) {
       getSearchResults(widget.url + "?page=" + '$page');
       page++;
-      setState(() {});
+      firstPage = false;
+      setState(() {
+        print(recipeCards.length);
+      });
     } else
       return;
     // page++;
@@ -130,17 +133,18 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: ListView.builder(
-        // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //   crossAxisCount: 1,
-        //   childAspectRatio: 4 / 3,
-        //   mainAxisSpacing: 20,
-        // ),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          childAspectRatio: 4 / 3,
+          mainAxisSpacing: 20,
+        ),
         // itemExtent: ,
         controller: _scrollController,
         physics: BouncingScrollPhysics(),
-        itemCount: recipeCards.length + 1,
+        itemCount: hasMore ? recipeCards.length + 1 : recipeCards.length,
         itemBuilder: (context, i) {
+          // print(recipeCards.length);
           if (i == recipeCards.length) return CircularProgressIndicator();
           return GestureDetector(
             onTap: () => goToRecipe(
@@ -150,12 +154,12 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
                 topRight: Radius.circular(40),
                 bottomLeft: Radius.circular(40),
               ),
-              child: ListTile(
-                leading: Image.network(
+              child: GridTile(
+                child: Image.network(
                   recipeCards[i].photoUrl,
                   fit: BoxFit.cover,
                 ),
-                title: Container(
+                header: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 10,
@@ -167,7 +171,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
                   ),
                   color: Colors.black54,
                 ),
-                subtitle: Container(
+                footer: Container(
                   padding: EdgeInsets.only(
                     left: 25,
                     top: 10,

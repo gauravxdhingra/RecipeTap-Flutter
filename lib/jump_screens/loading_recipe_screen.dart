@@ -8,10 +8,22 @@ class LoadingRecipeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          // SvgPicture.asset(assetName)
-          Text('Getting Your Recipe Ready'),
+          SvgPicture.asset(
+            'assets/svg/bestManWorking.svg',
+            fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.width * 1.4,
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Text('Your Recipe Is Almost Ready'),
           Text('Great Things Take Time'),
+          SizedBox(
+            height: 50,
+          ),
+          CircularProgressIndicator(),
         ],
       ),
     );
