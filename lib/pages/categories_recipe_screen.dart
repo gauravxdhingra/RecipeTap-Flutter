@@ -38,6 +38,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   }
 
   getSearchResults(url) async {
+    print(url);
     final response = await http.get(url);
     dom.Document document = parser.parse(response.body);
 
@@ -45,6 +46,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         .getElementsByClassName("title-section__text title")[0]
         .text
         .trim();
+
     categoryDesc = document
         .getElementsByClassName("title-section__text subtitle")[0]
         .text
@@ -70,6 +72,8 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           .attributes["src"]
           .replaceAll("/140x140", "");
 
+// TODO fix resolution
+
       final title =
           element.querySelector("a").querySelector("span").text.trim();
 
@@ -78,17 +82,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         href: href,
         photoUrl: photoUrl,
       ));
-      // print("**********************************");
-      // print(title);
-      // print(href);
-      // print(photoUrl);
-      // print("**********************************");
     });
-    // print("**********************************");
-
-    // print(categoryOptionsRecipeCards[1].href);
-
-    // print("**********************************");
 
     final recipeCardsFromHtml =
         document.getElementsByClassName("fixed-recipe-card");
@@ -128,10 +122,13 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
       ));
     });
     // print(recipeCards);
+
     setState(() {
       isLoading = false;
     });
   }
+// TODO: Category recipe of the day
+// TODO: First Check if next Page Exists
 
   goToRecipe(url, coverImageUrl) {
     Navigator.push(
@@ -146,66 +143,69 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   @override
   Widget build(BuildContext context) {
     // TODO Layout: CatagoryOptions , CatagoryRecipes
-    return Scaffold(
-      appBar: isLoading
-          ? AppBar()
-          : AppBar(
-              title: Text(categoryTitle),
-            ),
-      body: isLoading
-          ? CircularProgressIndicator()
-          : Column(
-              children: <Widget>[
-                Container(
-                  height: 170,
-                  // width: 400,
-                  child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(
-                      top: 15,
-                    ),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categoryOptionsRecipeCards.length,
-                    itemBuilder: (context, i) => GestureDetector(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SearchResultsScreen(
-                              url: categoryOptionsRecipeCards[i].href))),
-                      child: Container(
-                        height: 110,
-                        width: 120,
-                        child: Column(
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 50,
-                              backgroundImage: NetworkImage(
-                                categoryOptionsRecipeCards[i].photoUrl,
+    return SafeArea(
+      child: Scaffold(
+        appBar: isLoading
+            ? AppBar()
+            : AppBar(
+                title: Text(categoryTitle),
+              ),
+        body: isLoading
+            ? CircularProgressIndicator()
+            : Column(
+                children: <Widget>[
+                  Container(
+                    height: 170,
+                    // width: 400,
+                    child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(
+                        top: 15,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categoryOptionsRecipeCards.length,
+                      itemBuilder: (context, i) => GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => SearchResultsScreen(
+                                    url: categoryOptionsRecipeCards[i].href))),
+                        child: Container(
+                          height: 110,
+                          width: 120,
+                          child: Column(
+                            children: <Widget>[
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundImage: NetworkImage(
+                                  categoryOptionsRecipeCards[i].photoUrl,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Text(
-                                categoryOptionsRecipeCards[i].title,
-                                textAlign: TextAlign.center,
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Text(
+                                  categoryOptionsRecipeCards[i].title,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                  child: Text(categoryDesc),
-                ),
-                Container(
-                  height: 400,
-                  child: BuildRecipeListResults(
-                    recipeCards: recipeCards,
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                    child: Text(categoryDesc),
                   ),
-                ),
-              ],
-            ),
+                  Container(
+                    height: 500,
+                    child: BuildRecipeListResults(
+                      recipeCards: recipeCards,
+                    ),
+                  ),
+                ],
+              ),
+      ),
     );
   }
 }

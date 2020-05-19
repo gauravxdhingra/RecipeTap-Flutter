@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:lazy_loading_list/lazy_loading_list.dart';
+import 'package:http/http.dart' as http;
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as parser;
 
-class BuildRecipeListResults extends StatelessWidget {
+class BuildRecipeListResults extends StatefulWidget {
   const BuildRecipeListResults({
     Key key,
     @required this.recipeCards,
@@ -11,9 +14,78 @@ class BuildRecipeListResults extends StatelessWidget {
 
   final List<RecipeCard> recipeCards;
 
-// TODO : Pagination Support
+  @override
+  _BuildRecipeListResultsState createState() => _BuildRecipeListResultsState();
+}
 
-// /?page=3
+class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
+  List<RecipeCard> recipeCards = widget.recipeCards;
+  bool firstPage = false;
+  int page = 2;
+  bool hasMore = true;
+
+  getSearchResults(url) async {
+    print(url);
+    final response = await http.get(url);
+    dom.Document document = parser.parse(response.body);
+    try {
+      document
+          .getElementsByClassName("title-section__text title")[0]
+          .text
+          .trim();
+    } catch (e) {
+      hasMore = false;
+      return;
+    }
+
+    final recipeCardsFromHtml =
+        document.getElementsByClassName("fixed-recipe-card");
+
+    recipeCardsFromHtml.forEach((element) {
+      final imageUrlRecipe = element
+          .getElementsByClassName("grid-card-image-container")[0]
+          .querySelector("img")
+          .attributes["data-original-src"];
+
+      print(imageUrlRecipe);
+
+      final titleRecipe = element
+          .getElementsByClassName("fixed-recipe-card__title-link")[0]
+          .text
+          .trim();
+      print(titleRecipe);
+
+      final desc = element.text.split(titleRecipe)[1].split("By ")[0].trim();
+      print(desc);
+
+      final href = element
+          .getElementsByClassName("fixed-recipe-card__info")[0]
+          .querySelector("a")
+          .attributes["href"]
+          .split("?internal")[0];
+      print(href);
+
+      recipeCards.add(RecipeCard(
+        title: titleRecipe,
+        desc: desc,
+        photoUrl: imageUrlRecipe,
+        href: href,
+      ));
+    });
+    // print(recipeCards);
+    if (firstPage)
+      setState(() {
+        isLoading = false;
+      });
+  }
+
+  loadMore(page) {
+    if (hasMore)
+      getSearchResults(widget.url + "?page=" + page);
+    else
+      return;
+    page++;
+  }
 
   goToRecipe(url, coverImageUrl, context) {
     Navigator.push(
@@ -36,18 +108,23 @@ class BuildRecipeListResults extends StatelessWidget {
         //   mainAxisSpacing: 20,
         // ),
         physics: BouncingScrollPhysics(),
-        itemCount: recipeCards.length,
-        itemBuilder: (context, i) => GestureDetector(
-          onTap: () =>
-              goToRecipe(recipeCards[i].href, recipeCards[i].photoUrl, context),
+        itemCount: widget.recipeCards.length,
+        itemBuilder: (context, i) => LazyLoadingList(
+          initialSizeOfItems: widget.recipeCards.length,
+          index: i,
+          hasMore: widget.hasMore,
+          loadMore: widget.loadMore(i),
+          // TODO fav button on recipe page
           child: ClipRRect(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(40),
               bottomLeft: Radius.circular(40),
             ),
             child: ListTile(
+              onTap: goToRecipe(widget.recipeCards[i].href,
+                  widget.recipeCards[i].photoUrl, context),
               leading: Image.network(
-                recipeCards[i].photoUrl,
+                widget.recipeCards[i].photoUrl,
                 fit: BoxFit.cover,
               ),
               title: Container(
@@ -56,7 +133,7 @@ class BuildRecipeListResults extends StatelessWidget {
                   vertical: 10,
                 ),
                 child: Text(
-                  recipeCards[i].title,
+                  widget.recipeCards[i].title,
                   style: TextStyle(color: Colors.white, fontSize: 25),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -70,7 +147,7 @@ class BuildRecipeListResults extends StatelessWidget {
                   right: 15,
                 ),
                 child: Text(
-                  recipeCards[i].desc,
+                  widget.recipeCards[i].desc,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
