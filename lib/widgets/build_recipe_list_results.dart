@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:lazy_loading_list/lazy_loading_list.dart';
@@ -23,7 +24,7 @@ class BuildRecipeListResults extends StatefulWidget {
 class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   List<RecipeCard> recipeCards = [];
   bool firstPage = false;
-  int page = 2;
+  // int page = 2;
   bool hasMore = true;
 
   // ScrollController _scrollController = ScrollController();
@@ -45,8 +46,11 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
           .getElementsByClassName("title-section__text title")[0]
           .text
           .trim();
+      hasMore = true;
     } catch (e) {
-      hasMore = false;
+      setState(() {
+        hasMore = false;
+      });
       return;
     }
 // TODO bummer page
@@ -87,21 +91,26 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   }
 
   loadMore(page) {
-    if (hasMore)
+    if (hasMore) {
       getSearchResults(widget.url + "?page=" + '$page');
-    else
+      // setState(() {});
+    } else
       return;
     // page++;
   }
 
   goToRecipe(url, coverImageUrl, context) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => RecipeViewPage(
-                  url: url,
-                  coverImageUrl: coverImageUrl,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            // AwwSnapScreen()
+            RecipeViewPage(
+          url: url,
+          coverImageUrl: coverImageUrl,
+        ),
+      ),
+    );
   }
 
   @override
@@ -118,12 +127,13 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
         itemCount: recipeCards.length,
         itemBuilder: (context, i) => LazyLoadingList(
           initialSizeOfItems: recipeCards.length,
+
           index: i,
           hasMore: hasMore,
           loadMore: loadMore(i),
           // TODO fav button on recipe page
           child: GestureDetector(
-            onTap: goToRecipe(
+            onTap: () => goToRecipe(
                 recipeCards[i].href, recipeCards[i].photoUrl, context),
             child: ClipRRect(
               borderRadius: BorderRadius.only(
