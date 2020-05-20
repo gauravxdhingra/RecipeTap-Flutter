@@ -7,6 +7,7 @@ import 'package:recipetap/models/category_options_card.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
+import 'package:recipetap/widgets/loading_spinner.dart';
 
 import 'recipe_view_page.dart';
 
@@ -326,8 +327,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     delegate: SliverChildBuilderDelegate(
                       (context, i) {
                         // print(recipeCards.length);
-                        if (i == recipeCards.length)
-                          return CircularProgressIndicator();
+                        if (i == recipeCards.length) return LoadingSpinner();
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(

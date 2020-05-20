@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
+import 'loading_spinner.dart';
+
 class BuildRecipeListResults extends StatefulWidget {
   const BuildRecipeListResults({
     Key key,
@@ -143,7 +145,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
       itemCount: hasMore ? recipeCards.length + 1 : recipeCards.length,
       itemBuilder: (context, i) {
         // print(recipeCards.length);
-        if (i == recipeCards.length) return CircularProgressIndicator();
+        if (i == recipeCards.length) return LoadingSpinner();
         return GestureDetector(
           onTap: () =>
               goToRecipe(recipeCards[i].href, recipeCards[i].photoUrl, context),

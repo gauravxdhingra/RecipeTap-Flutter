@@ -4,6 +4,7 @@ import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/utility/route_generator.dart';
+import 'package:recipetap/widgets/loading_spinner.dart';
 
 import 'pages/recipe_view_page.dart';
 
@@ -28,7 +29,9 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark().copyWith(),
 
       routes: {
-        '/': (context) => HomeScreen(),
+        '/':
+            // (context) => LoadingSpinner(),
+            (context) => HomeScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
         SearchScreen.routeName: (context) => SearchScreen(),
         RecipeViewPage.routeName: (context) => RecipeViewPage(),

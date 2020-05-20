@@ -5,6 +5,7 @@ import 'package:html/parser.dart' as parser;
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
+import 'package:recipetap/widgets/loading_spinner.dart';
 
 class SearchResultsScreen extends StatefulWidget {
   static const routeName = 'search_result_screen';
@@ -97,7 +98,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         title: Text(widget.appBarTitle ?? ""),
       ),
       body: isLoading
-          ? CircularProgressIndicator()
+          ? LoadingSpinner()
           : BuildRecipeListResults(
               recipeCards: recipeCards,
               url: widget.url,

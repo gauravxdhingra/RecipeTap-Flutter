@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:recipetap/widgets/loading_spinner.dart';
 
 class LoadingRecipeScreen extends StatelessWidget {
   const LoadingRecipeScreen({Key key}) : super(key: key);
@@ -24,7 +25,7 @@ class LoadingRecipeScreen extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
-            CircularProgressIndicator(),
+            LoadingSpinner(),
           ],
         ),
       ),

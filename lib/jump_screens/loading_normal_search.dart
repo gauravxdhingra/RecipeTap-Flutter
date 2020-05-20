@@ -11,6 +11,7 @@ class LoadingNormalSearchScreen extends StatelessWidget {
         children: <Widget>[
           // SvgPicture.asset(assetName)
           Text('Getting The Best Recipes For You!'),
+          
           // Text('Great Things Take Time'),
         ],
       ),

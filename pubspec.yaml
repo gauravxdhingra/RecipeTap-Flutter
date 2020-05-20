@@ -37,6 +37,8 @@ dependencies:
   slimy_card: ^1.0.4
   # lazy_loading_list: ^1.0.0+1
   sliver_fab: ^1.0.0
+  # flutter_animation_set: ^0.0.4
+  flutter_spinkit: ^4.1.2+1
 
   simple_search_bar: ^0.1.7
 
