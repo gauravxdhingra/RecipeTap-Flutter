@@ -1,4 +1,6 @@
 // import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'dart:ui';
+
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 // import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,9 +9,14 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 // import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
+import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
+import 'package:recipetap/pages/search_screen.dart';
+import 'package:recipetap/pages/settings_screen.dart';
 import 'package:simple_search_bar/simple_search_bar.dart';
 import 'package:slimy_card/slimy_card.dart';
+
+// TODO GIPHY Navbar
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -152,21 +159,35 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: <Widget>[
               SlimyCard(
-                color: Colors.red.shade500,
+                color: Colors.deepPurple,
                 width: MediaQuery.of(context).size.width * 0.95,
                 borderRadius: 25,
-                topCardHeight: 235,
+                topCardHeight: 275,
+                // 235
                 topCardWidget: Stack(
                   children: [
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
-                            child: Image.asset('assets/images/fridge.jpg'),
+                    Column(
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(25),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/fridge.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            // child: BackdropFilter(
+                            //   filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                            // ),
+                            // child: Image.asset('assets/images/fridge.jpg'),
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(17.0),
@@ -181,12 +202,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottomCardWidget: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/fridge.jpg',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
                   ),
                 ),
               ),
@@ -212,6 +227,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => CategoriesScreen()));
+                },
+              ),
+              FlatButton(
+                child: Text('Search Screen'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SearchScreen()));
+                },
+              ),
+              FlatButton(
+                child: Text('FavouritesScreen'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FavouritesScreen()));
+                },
+              ),
+              FlatButton(
+                child: Text('Settings Screen'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SettingsScreen()));
                 },
               ),
               // Text('Search By Ingredients'),
@@ -269,14 +305,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   GButton(
                     icon: Icons.home,
                     text: 'Home',
-                  ),
-                  GButton(
-                    icon: Icons.favorite,
-                    text: 'Likes',
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen())),
                   ),
                   GButton(
                     icon: Icons.search,
-                    text: 'Search',
+                    text: 'Likes',
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchScreen())),
+                  ),
+                  GButton(
+                    icon: Icons.favorite,
+                    text: 'Favourite',
                   ),
                   GButton(
                     icon: Icons.supervised_user_circle,

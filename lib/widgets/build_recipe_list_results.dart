@@ -60,6 +60,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
       return;
     }
 // TODO bummer page
+// TODO handle less than 10 results circle indicator
     final recipeCardsFromHtml =
         document.getElementsByClassName("fixed-recipe-card");
 
