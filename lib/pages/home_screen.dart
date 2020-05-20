@@ -158,54 +158,63 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              SlimyCard(
-                color: Colors.deepPurple,
-                width: MediaQuery.of(context).size.width * 0.95,
-                borderRadius: 25,
-                topCardHeight: 275,
-                // 235
-                topCardWidget: Stack(
-                  children: [
-                    Column(
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/fridge.jpg'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SlimyCard(
+                  color: Colors.deepPurple,
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  borderRadius: 25,
+                  topCardHeight: 275,
+                  // 235
+                  topCardWidget: Stack(
+                    children: [
+                      Column(
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: Container(
+                              child: Image.asset(
+                                'assets/images/fridge.jpg',
                                 fit: BoxFit.cover,
                               ),
-                              borderRadius: BorderRadius.circular(25),
+
+                              // child: BackdropFilter(
+                              //   filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                              // ),
+                              // child: Image.asset('assets/images/fridge.jpg'),
                             ),
-                            // child: BackdropFilter(
-                            //   filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                            // ),
-                            // child: Image.asset('assets/images/fridge.jpg'),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(17.0),
-                      child: Text(
-                        'Now, Find Recipes From The Items You Have In Your Fridge',
-                        textAlign: TextAlign.center,
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(17.0),
+                        child: Text(
+                          'Find Recipes From The Items In Your Fridge'
+                              .toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.caption.copyWith(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.w200,
+                                wordSpacing: 2,
+                                letterSpacing: 1.2,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  bottomCardHeight: 200,
+                  bottomCardWidget: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                  ],
-                ),
-                bottomCardHeight: 200,
-                bottomCardWidget: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
-
+              Text("Recently Viewed"),
               // Text('Search'),
               // TextFormField(
               //   controller: normalSearchController,

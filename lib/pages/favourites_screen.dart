@@ -10,6 +10,22 @@ class FavouritesScreen extends StatefulWidget {
 class _FavouritesScreenState extends State<FavouritesScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Favourites"),
+      ),
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text('Favorite Recipes'),
+            SizedBox(
+              height: 100,
+            ),
+            Text('Favorite Categories'),
+          ],
+        ),
+      ),
+    );
   }
 }
