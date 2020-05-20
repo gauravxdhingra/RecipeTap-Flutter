@@ -245,46 +245,42 @@ class RecipeViewPageWidget extends StatelessWidget {
                     : nutritionalFactsNew.length,
               ),
             ),
-          SliverFillRemaining(
-            child: Column(
-              children: <Widget>[
-                // extra cooks notes
-                if ((oldWebsite && cooksNotesExits) ||
-                    newWebsiteFooterNotesExist)
-                  Text("COOK'S NOTES"),
-
-                if ((oldWebsite && cooksNotesExits) ||
-                    newWebsiteFooterNotesExist)
-                  Container(
-                    height: 100,
-                    child: oldWebsite
-                        ? ListView.builder(
-                            itemCount: cooksNotes.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              // print(cooksNotes.length);
-                              return ListTile(
-                                title: Text(cooksNotes[index]
-                                        .toString()
-                                        .substring(20)
-                                        .trim() ??
-                                    ""),
-                              );
-                            },
-                          )
-                        : ListView.builder(
-                            itemCount: cooksNotes[0].length,
-                            itemBuilder: (BuildContext context, int index) {
-                              // print(cooksNotes[0].length);
-                              return ListTile(
-                                title: Text(cooksNotes[0][index].trim()),
-                              );
-                              // Text(cooksNotes[0][index].trim());
-                            },
-                          ),
-                  ),
-              ],
+          if ((oldWebsite && cooksNotesExits) || newWebsiteFooterNotesExist)
+            SliverToBoxAdapter(
+              child: Text('NUTRITIONAL FACTS'),
             ),
-          ),
+          if ((oldWebsite && cooksNotesExits) || newWebsiteFooterNotesExist)
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                oldWebsite
+                    ? (BuildContext context, int index) {
+                        // print(cooksNotes.length);
+                        return ListTile(
+                          title: Text(cooksNotes[index]
+                                  .toString()
+                                  .substring(20)
+                                  .trim() ??
+                              ""),
+                        );
+                      }
+                    : (BuildContext context, int index) {
+                        // print(cooksNotes[0].length);
+                        return ListTile(
+                          title: Text(cooksNotes[0][index].trim()),
+                        );
+                        // Text(cooksNotes[0][index].trim());
+                      },
+                childCount:
+                    oldWebsite ? cooksNotes.length : cooksNotes[0].length,
+              ),
+            ),
+          // SliverFillRemaining(
+          //   child: Column(
+          //     children: <Widget>[
+          //       // extra cooks notes
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
