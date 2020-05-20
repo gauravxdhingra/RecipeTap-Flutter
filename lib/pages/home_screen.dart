@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ]),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
             child: GNav(
               gap: 8,
               activeColor: Colors.white,

@@ -24,7 +24,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        primaryColor: Colors.white,
+        // primaryColor: Colors.white,
+        textTheme: TextTheme(
+            headline1: TextStyle(
+          fontSize: 30,
+        )),
       ),
       darkTheme: ThemeData.dark().copyWith(),
 

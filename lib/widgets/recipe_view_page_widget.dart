@@ -50,18 +50,21 @@ class RecipeViewPageWidget extends StatelessWidget {
     return SafeArea(
       child: SliverFab(
         floatingWidget: CircleAvatar(
-          child: IconButton(
-            icon: Icon(
-              Icons.favorite_border,
-              // size: 50,
+          radius: 25,
+          child: Center(
+            child: IconButton(
+              icon: Icon(
+                Icons.favorite_border,
+                size: 30,
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           ),
         ),
 
         // TODO Adjust max resolution for loading Images
         floatingPosition:
-            FloatingPosition(left: MediaQuery.of(context).size.width * 0.7),
+            FloatingPosition(left: MediaQuery.of(context).size.width * 0.8),
         expandedHeight: MediaQuery.of(context).size.height / 3,
         slivers: <Widget>[
           SliverAppBar(
@@ -70,6 +73,8 @@ class RecipeViewPageWidget extends StatelessWidget {
             expandedHeight: MediaQuery.of(context).size.height / 3,
             pinned: true,
             backgroundColor: Colors.white,
+            leading: Icon(Icons.arrow_back_ios),
+            // floating: true,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: Container(
@@ -96,22 +101,30 @@ class RecipeViewPageWidget extends StatelessWidget {
                   itemCount: images.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: new Image.network(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(45),
+                        bottomRight: Radius.circular(45),
+                      ),
+                      child: Image.network(
                         images[index],
                         fit: BoxFit.cover,
                       ),
                     );
                   },
-                  pagination: new SwiperPagination(),
-                  control: new SwiperControl(
-                    iconNext: null,
-                    iconPrevious: null,
+
+                  pagination: SwiperPagination(
+                    builder: SwiperPagination.fraction,
+                    alignment: Alignment.topRight,
                   ),
+
+                  // control: new SwiperControl(
+                  //   iconNext: null,
+                  //   iconPrevious: null,
+                  // ),
                   physics: BouncingScrollPhysics(),
-                  // layout: SwiperLayout.TINDER,
-                  viewportFraction: 0.8,
-                  scale: 0.9,
+                  // layout: SwiperLayout.DEFAULT,
+                  // viewportFraction: 0.8,
+                  // scale: 0.9,
                   itemWidth: 300.0,
                   loop: false,
                 ),
@@ -119,13 +132,23 @@ class RecipeViewPageWidget extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: ReadMoreText(
-              desc,
-              trimLines: 2,
-              colorClickableText: Colors.grey,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: '  Show more',
-              trimExpandedText: '  Show less',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(35),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 25,
+                ),
+                child: ReadMoreText(
+                  desc,
+                  trimLines: 2,
+                  colorClickableText: Colors.grey,
+                  trimMode: TrimMode.Line,
+                  trimCollapsedText: '  Show more',
+                  trimExpandedText: '  Show less',
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
           ),
           SliverToBoxAdapter(
@@ -133,16 +156,20 @@ class RecipeViewPageWidget extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Container(
-              height: 70,
+              height: 80,
               child: Row(
+                // TODO add faeture for ingredients servings division
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   if (timeExists)
                     Container(
                       height: 70,
+                      width: MediaQuery.of(context).size.width / 5,
                       child: Column(
                         children: <Widget>[
                           Icon(Icons.timer),
+                          Text("Time"),
                           Text(time ?? ""),
                         ],
                       ),
@@ -150,9 +177,11 @@ class RecipeViewPageWidget extends StatelessWidget {
                   if (servingsExist)
                     Container(
                       height: 70,
+                      width: MediaQuery.of(context).size.width / 5,
                       child: Column(
                         children: <Widget>[
                           Icon(Icons.people_outline),
+                          Text("Serves".toUpperCase()),
                           Text(servings ?? "--"),
                         ],
                       ),
@@ -160,9 +189,11 @@ class RecipeViewPageWidget extends StatelessWidget {
                   if (nutritionalFactsExits)
                     Container(
                       height: 70,
+                      width: MediaQuery.of(context).size.width / 5,
                       child: Column(
                         children: <Widget>[
                           Icon(Icons.restaurant_menu),
+                          Text("Calories".toUpperCase()),
                           Text(nutritionalFactsExits
                               ? oldWebsite
                                   ? nutritionalFacts[0]
@@ -173,14 +204,20 @@ class RecipeViewPageWidget extends StatelessWidget {
                     ),
                   if (yeildExists && oldWebsite == true)
                     Container(
-                      height: 70,
+                      height: 80,
+                      width: MediaQuery.of(context).size.width / 5,
                       child: Column(
                         children: <Widget>[
                           Icon(Icons.fastfood),
+                          Text("YEILDS"),
                           Text(
                             yeildExists
                                 ? oldWebsite ? yeild ?? "--" : "--"
                                 : "--" ?? "--",
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.fade,
+                            maxLines: 2,
+                            softWrap: true,
                           ),
                         ],
                       ),
