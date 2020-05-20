@@ -40,6 +40,9 @@ dependencies:
   # flutter_animation_set: ^0.0.4
   flutter_spinkit: ^4.1.2+1
   flare_flutter: ^2.0.3
+  # flutter_neumorphic: ^2.0.1
+  neuomorphic_container: ^2.0.3
+  clay_containers: ^0.2.2
 
   simple_search_bar: ^0.1.7
 
@@ -67,7 +70,8 @@ flutter:
     - assets/flare/.
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
+  # https://flutter.dev/assets
+  # -and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
   # To add custom fonts to your application, add a fonts section here,

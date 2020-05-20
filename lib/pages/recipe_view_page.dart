@@ -415,9 +415,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
     // print(cooksNotes);
     // getData();
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => getData(),
-      ),
       // appBar: AppBar(
       //   title: isLoading ? Text('') : Text(headline),
       // ),

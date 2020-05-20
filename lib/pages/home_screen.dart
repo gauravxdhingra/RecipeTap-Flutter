@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:clay_containers/clay_containers.dart';
 // import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,27 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   int _selectedIndex = 0;
-
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
-  ];
 
   var searchValue = '';
 
@@ -231,12 +211,14 @@ class _HomeScreenState extends State<HomeScreen> {
               // // TODO retry button for dns fail
               // Text('Favourites'),
               // Text('Browse By Category'),
-              FlatButton(
-                child: Text('CategoriesScreen'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CategoriesScreen()));
-                },
+              ClayContainer(
+                child: FlatButton(
+                  child: Text('CategoriesScreen'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CategoriesScreen()));
+                  },
+                ),
               ),
               FlatButton(
                 child: Text('Search Screen'),
@@ -319,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   GButton(
                     icon: Icons.search,
-                    text: 'Likes',
+                    text: 'Search',
                     onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -328,10 +310,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   GButton(
                     icon: Icons.favorite,
                     text: 'Favourite',
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FavouritesScreen())),
                   ),
                   GButton(
-                    icon: Icons.supervised_user_circle,
+                    icon: Icons.account_circle,
                     text: 'Profile',
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SettingsScreen())),
                   ),
                 ],
                 selectedIndex: _selectedIndex,
