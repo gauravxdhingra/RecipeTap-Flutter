@@ -120,9 +120,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            // AwwSnapScreen()
-            RecipeViewPage(
+        builder: (context) => RecipeViewPage(
           url: url,
           coverImageUrl: coverImageUrl,
         ),

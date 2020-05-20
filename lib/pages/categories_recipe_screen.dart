@@ -29,6 +29,12 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   List<CategoryOptionsRecipeCard> categoryOptionsRecipeCards = [];
   String categoryTitle;
   String categoryDesc;
+  bool firstPage = true;
+  int page = 2;
+  bool hasMore = true;
+  int currentMax;
+
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -36,6 +42,13 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     // 'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re';
     getSearchResults(url);
     super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        print("loading More");
+        loadMore();
+      }
+    });
   }
 
   getSearchResults(url) async {
@@ -131,15 +144,84 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 // TODO: Category recipe of the day
 // TODO: First Check if next Page Exists
 
-  // goToRecipe(url, coverImageUrl) {
-  //   Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => RecipeViewPage(
-  //                 url: url,
-  //                 coverImageUrl: coverImageUrl,
-  //               )));
-  // }
+  getSearchResultsNext(url) async {
+    // print(url);
+    final response = await http.get(url);
+    dom.Document document = parser.parse(response.body);
+    try {
+      document
+          .getElementsByClassName("title-section__text title")[0]
+          .text
+          .trim();
+      hasMore = true;
+    } catch (e) {
+      setState(() {
+        hasMore = false;
+      });
+      return;
+    }
+// TODO bummer page
+    final recipeCardsFromHtml =
+        document.getElementsByClassName("fixed-recipe-card");
+
+    recipeCardsFromHtml.forEach((element) {
+      final imageUrlRecipe = element
+          .getElementsByClassName("grid-card-image-container")[0]
+          .querySelector("img")
+          .attributes["data-original-src"];
+
+      // print(imageUrlRecipe);
+
+      final titleRecipe = element
+          .getElementsByClassName("fixed-recipe-card__title-link")[0]
+          .text
+          .trim();
+      // print(titleRecipe);
+
+      final desc = element.text.split(titleRecipe)[1].split("By ")[0].trim();
+      // print(desc);
+
+      final href = element
+          .getElementsByClassName("fixed-recipe-card__info")[0]
+          .querySelector("a")
+          .attributes["href"]
+          .split("?internal")[0];
+      // print(href);
+
+      recipeCards.add(RecipeCard(
+        title: titleRecipe,
+        desc: desc,
+        photoUrl: imageUrlRecipe,
+        href: href,
+      ));
+    });
+    setState(() {});
+  }
+
+  loadMore() {
+    if (hasMore) {
+      getSearchResultsNext(widget.url + "?page=" + '$page');
+      page++;
+      firstPage = false;
+      setState(() {
+        print(recipeCards.length);
+      });
+    } else
+      return;
+    // page++;
+  }
+
+  goToRecipe(url, coverImageUrl, context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RecipeViewPage(
+          url: url,
+          coverImageUrl: coverImageUrl,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,6 +229,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     // TODO Loading Progress
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
         // appBar: isLoading
         //     ? AppBar()
         //     : AppBar(
@@ -155,19 +238,9 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         //       ),
         body: isLoading
             ? CircularProgressIndicator()
-            : SliverFab(
-                floatingWidget: CircleAvatar(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.favorite_border,
-                      // size: 50,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-                // floatingPosition: FloatingPosition(
-                //     left: MediaQuery.of(context).size.width * 0.7),
-                expandedHeight: MediaQuery.of(context).size.height / 3,
+            : CustomScrollView(
+                physics: BouncingScrollPhysics(),
+                controller: _scrollController,
                 slivers: <Widget>[
                   SliverAppBar(
                     title: isLoading ? Text("") : Text(categoryTitle),
@@ -246,18 +319,71 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     height: 10,
                     color: Theme.of(context).primaryColor,
                   )),
-                  // SliverGrid(delegate: null, gridDelegate: null)
-                  SliverFillRemaining(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        left: 20,
-                        right: 20,
-                      ),
-                      child: BuildRecipeListResults(
-                        url: widget.url,
-                        recipeCards: recipeCards,
-                      ),
+                  SliverGrid(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, i) {
+                        // print(recipeCards.length);
+                        if (i == recipeCards.length)
+                          return CircularProgressIndicator();
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () => goToRecipe(recipeCards[i].href,
+                                recipeCards[i].photoUrl, context),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(40),
+                                bottomLeft: Radius.circular(40),
+                              ),
+                              child: GridTile(
+                                child: Image.network(
+                                  recipeCards[i].photoUrl,
+                                  fit: BoxFit.cover,
+                                ),
+                                header: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 10,
+                                  ),
+                                  child: Text(
+                                    recipeCards[i].title,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 25),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  color: Colors.black54,
+                                ),
+                                footer: Container(
+                                  padding: EdgeInsets.only(
+                                    left: 25,
+                                    top: 10,
+                                    bottom: 10,
+                                    right: 15,
+                                  ),
+                                  child: Text(
+                                    recipeCards[i].desc,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                    maxLines: 2,
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount:
+                          hasMore ? recipeCards.length + 1 : recipeCards.length,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      childAspectRatio: 4 / 3,
+                      mainAxisSpacing: 20,
                     ),
                   ),
                 ],
