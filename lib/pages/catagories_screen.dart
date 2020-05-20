@@ -16,7 +16,8 @@ class CategoriesScreen extends StatefulWidget {
   _CategoriesScreenState createState() => _CategoriesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _CategoriesScreenState extends State<CategoriesScreen>
+    with AutomaticKeepAliveClientMixin<CategoriesScreen> {
   bool isLoading = true;
   List categories = [];
   bool showRetry = false;
@@ -73,15 +74,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
       print(categoriesMap);
     } catch (e) {
+      print(e);
       setState(() {
         showRetry = true;
       });
-      print(e);
     }
   }
 
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       // appBar: AppBar(),
       body: isLoading

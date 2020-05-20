@@ -14,6 +14,7 @@ import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/pages/settings_screen.dart';
+import 'package:recipetap/widgets/home_screen_widget.dart';
 import 'package:simple_search_bar/simple_search_bar.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -27,9 +28,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
   TextEditingController normalSearchController = TextEditingController();
+
+  PageController pageController = PageController();
 
   GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
@@ -46,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     inclController = TextEditingController();
     exclController = TextEditingController();
     normalSearchController = TextEditingController();
-
+    pageController = PageController();
     super.initState();
     // print(suggestions);
   }
@@ -79,205 +83,29 @@ class _HomeScreenState extends State<HomeScreen> {
     print(url);
   }
 
-  int _selectedIndex = 0;
-
   var searchValue = '';
-
-  final AppBarController appBarController = AppBarController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO Custom Name Appbar
       // TODO: Searchlist images resolution full
-      appBar: SearchAppBar(
-        primary: Theme.of(context).primaryColor,
-        appBarController: appBarController,
 
-        searchHint: "Search Recipes",
-        mainTextColor: Colors.white,
-        onChange: (String value) {
-          //Your function to filter list. It should interact with
-          //the Stream that generate the final list
+      body: PageView(
+        controller: pageController,
+        children: <Widget>[
+          HomeScreenWidget(),
+          CategoriesScreen(),
+          FavouritesScreen(),
+          SearchScreen(),
+          SettingsScreen(),
+        ],
+        onPageChanged: (i) {
+          _selectedIndex = i;
+          setState(() {});
         },
-        //Will show when SEARCH MODE wasn't active
-        mainAppBar: AppBar(
-          title: Text("Welcome, User!"),
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(),
-          ),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 15.0),
-              child: InkWell(
-                child: Icon(
-                  Icons.search,
-                ),
-                onTap: () {
-                  //This is where You change to SEARCH MODE. To hide, just
-                  //add FALSE as value on the stream
-                  appBarController.stream.add(true);
-                },
-              ),
-            ),
-          ],
-        ),
+        pageSnapping: true,
       ),
-      // appBar: AppBar(
-      //   title: CupertinoTextField(
-      //     padding: EdgeInsets.all(10),
-      //   ),
-      // ),
-
-      // body: Center(
-      //   child: _widgetOptions.elementAt(_selectedIndex),
-      // ),
-
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SlimyCard(
-                  color: Colors.deepPurple,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  borderRadius: 25,
-                  topCardHeight: 275,
-                  // 235
-                  topCardWidget: Stack(
-                    children: [
-                      Column(
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
-                            child: Container(
-                              child: Image.asset(
-                                'assets/images/fridge.jpg',
-                                fit: BoxFit.cover,
-                              ),
-
-                              // child: BackdropFilter(
-                              //   filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                              // ),
-                              // child: Image.asset('assets/images/fridge.jpg'),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(17.0),
-                        child: Text(
-                          'Find Recipes From The Items In Your Fridge'
-                              .toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.caption.copyWith(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.w200,
-                                wordSpacing: 2,
-                                letterSpacing: 1.2,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  bottomCardHeight: 200,
-                  bottomCardWidget: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                ),
-              ),
-              Text("Recently Viewed"),
-              // Text('Search'),
-              // TextFormField(
-              //   controller: normalSearchController,
-              // ),
-              // FlatButton(
-              //   child: Text('Search Recipe by name'),
-              //   onPressed: () => submitSearchNormal(
-              //     "Showing Results For " + normalSearchController.text,
-              //     normalSearchController.text
-              //         .replaceAll(" ", "%20")
-              //         .toLowerCase(),
-              //   ),
-              // ),
-              // // TODO retry button for dns fail
-              // Text('Favourites'),
-              // Text('Browse By Category'),
-              ClayContainer(
-                child: FlatButton(
-                  child: Text('CategoriesScreen'),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CategoriesScreen()));
-                  },
-                ),
-              ),
-              FlatButton(
-                child: Text('Search Screen'),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SearchScreen()));
-                },
-              ),
-              FlatButton(
-                child: Text('FavouritesScreen'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => FavouritesScreen()));
-                },
-              ),
-              FlatButton(
-                child: Text('Settings Screen'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => SettingsScreen()));
-                },
-              ),
-              // Text('Search By Ingredients'),
-              // SizedBox(
-              //   height: 50,
-              // ),
-              // Text('Include'),
-              // SimpleAutoCompleteTextField(
-              //   key: key,
-              //   suggestions: suggestions,
-              //   // textChanged: (query) => suggestions.add(query),
-              //   controller: inclController,
-              // ),
-              // SizedBox(
-              //   height: 50,
-              // ),
-              // Text('Exclude'),
-              // SimpleAutoCompleteTextField(
-              //   key: keyy,
-              //   suggestions: suggestions,
-              //   controller: exclController,
-              // ),
-              // SizedBox(
-              //   height: 50,
-              // ),
-              // FlatButton(
-              //   child: Text('Search'),
-              //   onPressed: () {
-              //     submitSearch(
-              //       inclController.text.toLowerCase().replaceAll(" ", "%20"),
-              //       exclController.text.toLowerCase().replaceAll(" ", "%20"),
-              //     );
-              //   },
-              // ),
-            ],
-          ),
-        ),
-      ),
-
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
@@ -286,56 +114,50 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-                gap: 8,
-                activeColor: Colors.white,
-                iconSize: 24,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                duration: Duration(milliseconds: 800),
-                tabBackgroundColor: Colors.grey[800],
-                tabs: [
-                  GButton(
-                    icon: Icons.home,
-                    text: 'Home',
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen())),
-                  ),
-                  GButton(
-                    icon: Icons.search,
-                    text: 'Search',
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SearchScreen())),
-                  ),
-                  GButton(
-                    icon: Icons.favorite,
-                    text: 'Favourite',
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FavouritesScreen())),
-                  ),
-                  GButton(
-                    icon: Icons.account_circle,
-                    text: 'Profile',
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SettingsScreen())),
-                  ),
-                ],
-                selectedIndex: _selectedIndex,
-                onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                }),
+              gap: 8,
+              activeColor: Colors.white,
+              iconSize: 24,
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              duration: Duration(milliseconds: 800),
+              tabBackgroundColor: Colors.grey[800],
+              tabs: [
+                GButton(
+                  icon: Icons.home,
+                  text: 'Home',
+                ),
+                // TODO Category pageview
+                GButton(
+                  icon: Icons.category,
+                  text: 'Categories',
+                ),
+                GButton(
+                  icon: Icons.favorite,
+                  text: 'Favourites',
+                ),
+                GButton(
+                  icon: Icons.search,
+                  text: 'Search',
+                ),
+                GButton(
+                  icon: Icons.account_circle,
+                  text: 'Profile',
+                ),
+              ],
+              selectedIndex: _selectedIndex,
+              onTabChange: (index) {
+                setState(() {
+                  pageController.jumpToPage(index);
+                  _selectedIndex = index;
+                });
+              },
+            ),
           ),
         ),
       ),
     );
   }
 }
+
 // Container(
 //   height: 200,
 //   child: FloatingSearchBar(
