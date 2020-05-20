@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:recipetap/jump_screens/loading_category_recipes.dart';
 import 'package:recipetap/models/category_options_card.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
-import 'package:sliver_fab/sliver_fab.dart';
 
 import 'recipe_view_page.dart';
 
@@ -237,7 +237,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         //         elevation: 0,
         //       ),
         body: isLoading
-            ? CircularProgressIndicator()
+            ? LoadingCategoryRecipes()
             : CustomScrollView(
                 physics: BouncingScrollPhysics(),
                 controller: _scrollController,
@@ -248,6 +248,9 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     // expandedHeight: MediaQuery.of(context).size.height / 3,
                     pinned: true,
                     // backgroundColor: Colors.white,
+                    actions: <Widget>[
+                      IconButton(icon: Icon(Icons.favorite), onPressed: () {})
+                    ],
                   ),
                   SliverToBoxAdapter(
                     child: Column(

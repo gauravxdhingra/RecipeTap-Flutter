@@ -10,7 +10,7 @@
 
 //     switch (settings.name) {
 //       case '/':
-//         return MaterialPageRoute(builder: (_) => SearchScreen());
+//         return MaterialPageRoute(builder: (_) => HomeScreen());
 
 //       case RecipeViewPage.routeName:
 //         return MaterialPageRoute(
