@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
-import 'package:lazy_loading_list/lazy_loading_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
@@ -37,6 +36,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
+        print("loading More");
         loadMore();
       }
     });
@@ -94,6 +94,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
         href: href,
       ));
     });
+    setState(() {});
   }
 
   loadMore() {
@@ -131,70 +132,67 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          childAspectRatio: 4 / 3,
-          mainAxisSpacing: 20,
-        ),
-        // itemExtent: ,
-        controller: _scrollController,
-        physics: BouncingScrollPhysics(),
-        itemCount: hasMore ? recipeCards.length + 1 : recipeCards.length,
-        itemBuilder: (context, i) {
-          // print(recipeCards.length);
-          if (i == recipeCards.length) return CircularProgressIndicator();
-          return GestureDetector(
-            onTap: () => goToRecipe(
-                recipeCards[i].href, recipeCards[i].photoUrl, context),
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(40),
-                bottomLeft: Radius.circular(40),
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 1,
+        childAspectRatio: 4 / 3,
+        mainAxisSpacing: 20,
+      ),
+      // itemExtent: ,
+      controller: _scrollController,
+      physics: BouncingScrollPhysics(),
+      itemCount: hasMore ? recipeCards.length + 1 : recipeCards.length,
+      itemBuilder: (context, i) {
+        // print(recipeCards.length);
+        if (i == recipeCards.length) return CircularProgressIndicator();
+        return GestureDetector(
+          onTap: () =>
+              goToRecipe(recipeCards[i].href, recipeCards[i].photoUrl, context),
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(40),
+              bottomLeft: Radius.circular(40),
+            ),
+            child: GridTile(
+              child: Image.network(
+                recipeCards[i].photoUrl,
+                fit: BoxFit.cover,
               ),
-              child: GridTile(
-                child: Image.network(
-                  recipeCards[i].photoUrl,
-                  fit: BoxFit.cover,
+              header: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
                 ),
-                header: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 10,
-                  ),
-                  child: Text(
-                    recipeCards[i].title,
-                    style: TextStyle(color: Colors.white, fontSize: 25),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  color: Colors.black54,
+                child: Text(
+                  recipeCards[i].title,
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                footer: Container(
-                  padding: EdgeInsets.only(
-                    left: 25,
-                    top: 10,
-                    bottom: 10,
-                    right: 15,
-                  ),
-                  child: Text(
-                    recipeCards[i].desc,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                    maxLines: 2,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  color: Colors.black54,
+                color: Colors.black54,
+              ),
+              footer: Container(
+                padding: EdgeInsets.only(
+                  left: 25,
+                  top: 10,
+                  bottom: 10,
+                  right: 15,
                 ),
+                child: Text(
+                  recipeCards[i].desc,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                color: Colors.black54,
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

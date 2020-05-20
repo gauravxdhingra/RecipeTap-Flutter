@@ -6,6 +6,7 @@ import 'package:recipetap/models/category_options_card.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
+import 'package:sliver_fab/sliver_fab.dart';
 
 import 'recipe_view_page.dart';
 
@@ -143,82 +144,120 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   @override
   Widget build(BuildContext context) {
     // TODO Layout: CatagoryOptions , CatagoryRecipes
+    // TODO Loading Progress
     return SafeArea(
       child: Scaffold(
-        appBar: isLoading
-            ? AppBar()
-            : AppBar(
-                title: Text(categoryTitle),
-                elevation: 0,
-              ),
+        // appBar: isLoading
+        //     ? AppBar()
+        //     : AppBar(
+        //         title: Text(categoryTitle),
+        //         elevation: 0,
+        //       ),
         body: isLoading
             ? CircularProgressIndicator()
-            : Column(
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        color: Theme.of(context).primaryColor,
-                        height: 170,
-                        // width: 400,
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          padding: EdgeInsets.only(
-                            top: 15,
-                            left: 15,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: categoryOptionsRecipeCards.length,
-                          itemBuilder: (context, i) => GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => SearchResultsScreen(
-                                        url: categoryOptionsRecipeCards[i]
-                                            .href))),
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 15),
-                              child: Container(
-                                height: 110,
-                                width: 100,
-                                child: Column(
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      radius: 50,
-                                      backgroundImage: NetworkImage(
-                                        categoryOptionsRecipeCards[i].photoUrl,
+            : SliverFab(
+                floatingWidget: CircleAvatar(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.favorite_border,
+                      // size: 50,
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+                // floatingPosition: FloatingPosition(
+                //     left: MediaQuery.of(context).size.width * 0.7),
+                expandedHeight: MediaQuery.of(context).size.height / 3,
+                slivers: <Widget>[
+                  SliverAppBar(
+                    title: isLoading ? Text("") : Text(categoryTitle),
+                    // elevation: 0.1,
+                    // expandedHeight: MediaQuery.of(context).size.height / 3,
+                    pinned: true,
+                    // backgroundColor: Colors.white,
+                  ),
+                  SliverToBoxAdapter(
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          color: Theme.of(context).primaryColor,
+                          height: 170,
+                          // width: 400,
+                          child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            padding: EdgeInsets.only(
+                              top: 15,
+                              left: 15,
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: categoryOptionsRecipeCards.length,
+                            itemBuilder: (context, i) => GestureDetector(
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchResultsScreen(
+                                          url: categoryOptionsRecipeCards[i]
+                                              .href))),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 15),
+                                child: Container(
+                                  height: 110,
+                                  width: 100,
+                                  child: Column(
+                                    children: <Widget>[
+                                      CircleAvatar(
+                                        radius: 50,
+                                        backgroundImage: NetworkImage(
+                                          categoryOptionsRecipeCards[i]
+                                              .photoUrl,
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10.0),
-                                      child: Text(
-                                        categoryOptionsRecipeCards[i].title,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 10.0),
+                                        child: Text(
+                                          categoryOptionsRecipeCards[i].title,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        color: Theme.of(context).primaryColor,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                        child: Text(categoryDesc),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Container(
-                    height: 500,
-                    child: BuildRecipeListResults(
-                      url: widget.url,
-                      recipeCards: recipeCards,
+                  SliverToBoxAdapter(
+                    child: Container(
+                      // width: MediaQuery.of(context).size.width,
+                      color: Theme.of(context).primaryColor,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                      child: Text(categoryDesc),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                      child: Container(
+                    height: 10,
+                    color: Theme.of(context).primaryColor,
+                  )),
+                  // SliverGrid(delegate: null, gridDelegate: null)
+                  SliverFillRemaining(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                        left: 20,
+                        right: 20,
+                      ),
+                      child: BuildRecipeListResults(
+                        url: widget.url,
+                        recipeCards: recipeCards,
+                      ),
                     ),
                   ),
                 ],
