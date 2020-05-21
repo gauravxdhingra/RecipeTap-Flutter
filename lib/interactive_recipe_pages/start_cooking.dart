@@ -18,6 +18,7 @@ class StartCooking extends StatelessWidget {
         title: Text(recipe.title),
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -65,9 +66,8 @@ class StartCooking extends StatelessWidget {
                 // ),
               ),
             ),
-
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -122,16 +122,15 @@ class StartCooking extends StatelessWidget {
               child: Text(
                 recipe.desc,
                 style: Theme.of(context).textTheme.bodyText1.copyWith(
-                      fontSize: 17,
+                      fontSize: 16,
                       fontWeight: FontWeight.normal,
                     ),
                 textAlign: TextAlign.center,
               ),
             ),
-            // ROW
-            // desc
-            // serves
-            // time
+            SizedBox(
+              height: 70,
+            ),
           ],
         ),
       ),
