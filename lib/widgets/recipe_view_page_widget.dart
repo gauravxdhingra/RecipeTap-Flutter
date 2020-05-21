@@ -415,17 +415,59 @@ class RecipeViewPageWidget extends StatelessWidget {
                     oldWebsite ? cooksNotes.length : cooksNotes[0].length,
               ),
             ),
-
           SliverToBoxAdapter(
-            child: Text('Bon Appetit'),
-          ),
-          // TODO bon appetit svg
-          SliverToBoxAdapter(
-            child: RaisedButton(
-              child: Text('Save As PDF'),
-              onPressed: () {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 20,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40),
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      'assets/images/recipeview.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                      ),
+                      child: Align(
+                        child: Text('Bon Appetit'),
+                        alignment: Alignment.topCenter,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            // TODO pdf generator
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 20,
+              ),
+              child: GestureDetector(
+                onTap: () {},
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Container(
+                    height: 60,
+                    color: Color(0xfff4d6cd),
+                    child: Center(
+                      child: Text('Save The Recipe As PDF'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 70,
+            ),
           ),
           // SliverFillRemaining(
           //   child: Column(
