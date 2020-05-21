@@ -146,7 +146,7 @@ class StartCooking extends StatelessWidget {
         label: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('I Am Ready'),
+            Text('Let\'s Go'),
             Icon(Icons.navigate_next),
           ],
         ),

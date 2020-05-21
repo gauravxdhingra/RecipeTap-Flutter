@@ -28,6 +28,9 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Directions"),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.pop(context)),
       ),
       body: Container(
         child: CustomScrollView(
@@ -128,6 +131,7 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
                         title: Text(
                           widget.recipe.cooksNotes[i].toString().trim(),
                           textAlign: TextAlign.center,
+                          style: TextStyle(height: 1.4),
                         ),
                       ),
                     );

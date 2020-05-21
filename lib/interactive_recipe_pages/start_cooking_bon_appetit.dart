@@ -8,13 +8,26 @@ class StartCookingBonAppetit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ready'),
+        title: Text('Ready!'),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.pop(context)),
       ),
       body: Container(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Bon Appetit'),
-            // TODO SVG
+            Image.asset('assets/images/family.png'),
+            Text(
+              'Bon Appetit!',
+              style: Theme.of(context).textTheme.headline1.copyWith(
+                    fontWeight: FontWeight.w300,
+                  ),
+            ),
+            SizedBox(
+              height: 70,
+            ),
+            Text('Rate Us'),
             // TODO Rate Us
           ],
         ),

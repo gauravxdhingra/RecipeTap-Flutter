@@ -34,6 +34,9 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
         title: Text(
           'Ingredients',
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.pop(context)),
       ),
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
