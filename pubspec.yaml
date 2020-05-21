@@ -43,6 +43,7 @@ dependencies:
   # flutter_neumorphic: ^2.0.1
   neuomorphic_container: ^2.0.3
   clay_containers: ^0.2.2
+  provider: ^4.1.2
 
   simple_search_bar: ^0.1.7
 
