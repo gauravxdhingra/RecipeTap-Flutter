@@ -220,7 +220,8 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       if (selector.isNotEmpty)
         selector.forEach((element) {
           final inote = element.text.trim();
-          if (inote != '' && inote != "Cook's Notes:") cooksNotes.add(inote);
+          if (inote != '' && inote.contains("Cook's Note:"))
+            cooksNotes.add(inote.substring(20).trim());
         });
 
       cooksNotes.forEach((element) {
@@ -398,6 +399,20 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
         }
       } catch (err) {
         newWebsiteFooterNotesExist = false;
+      }
+    }
+
+    if (oldWebsite) {
+      if (cooksNotesExits) {
+        for (int i = 0; i < cooksNotes.length; i++) {
+          cooksNotes[i].substring(20).trim();
+        }
+      }
+    } else {
+      if (newWebsiteFooterNotesExist) {
+        for (int i = 0; i < cooksNotes[0].length; i++) {
+          cooksNotes[0][i].trim();
+        }
       }
     }
     setState(() {

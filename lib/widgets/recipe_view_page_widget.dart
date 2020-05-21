@@ -310,6 +310,7 @@ class RecipeViewPageWidget extends StatelessWidget {
               (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
+                    vertical: 5,
                     horizontal: 10,
                   ),
                   child: ListTile(
@@ -398,12 +399,13 @@ class RecipeViewPageWidget extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10,
+                            vertical: 10,
                           ),
                           child: ListTile(
-                            title: Text(cooksNotes[index]
-                                    .toString()
-                                    .substring(20)
-                                    .trim() ??
+                            title: Text(cooksNotes[index].toString()
+                                // .substring(20)
+                                // .trim()
+                                ??
                                 ""),
                           ),
                         );

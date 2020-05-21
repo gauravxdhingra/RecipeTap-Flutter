@@ -15,46 +15,89 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Directions"),
+      ),
       body: Container(
-        child: Column(
-          children: <Widget>[
-            Text('Mark After Every Step'),
-            Container(
-              height: 450,
-              child: ListView.builder(
-                itemCount: widget.recipe.steps.length - 1,
-                itemBuilder: (context, i) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      child: Text('# ${i + 1}'),
-                    ),
-                    title: Text(
-                      widget.recipe.steps[i],
+        child: CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: <Widget>[
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 20,
+                ),
+                child: Text(
+                  'Mark After Every Step',
+                  style: Theme.of(context).textTheme.headline3.copyWith(
+                        height: 1.4,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, i) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text('# ${i + 1}'),
+                      ),
+                      title: Text(
+                        widget.recipe.steps[i],
+                      ),
                     ),
                   );
                 },
+                childCount: widget.recipe.steps.length - 1,
               ),
             ),
-            // TODO Remove blank spaces and Reynolds Tips and COOKS NOTES
             if (widget.recipe.cooksNotes.isNotEmpty)
-              Text('Cook\'s Notes'),
+              SliverToBoxAdapter(
+                child: Divider(),
+              ),
             if (widget.recipe.cooksNotes.isNotEmpty)
-              Container(
-                height: 200,
-                child: ListView.builder(
-                  itemCount: widget.recipe.cooksNotes.length,
-                  itemBuilder: (context, i) {
-                    return ListTile(
-                      title: Text(
-                        widget.recipe.cooksNotes[i].toString().trim(),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 40.0),
+                  child: Text(
+                    'Cook\'s Notes',
+                    style: Theme.of(context).textTheme.headline3.copyWith(
+                          height: 1.4,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            if (widget.recipe.cooksNotes.isNotEmpty)
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, i) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: ListTile(
+                        title: Text(
+                          widget.recipe.cooksNotes[i].toString().trim(),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     );
                   },
+                  childCount: widget.recipe.cooksNotes.length,
                 ),
               ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 70,
+              ),
+            )
           ],
         ),
+
         // TODO highlight current step and transparent next steps
       ),
       floatingActionButton: FloatingActionButton.extended(
