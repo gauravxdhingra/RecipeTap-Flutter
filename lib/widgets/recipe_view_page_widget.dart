@@ -53,12 +53,14 @@ class RecipeViewPageWidget extends StatelessWidget {
     return SafeArea(
       child: SliverFab(
         floatingWidget: CircleAvatar(
+          backgroundColor: Colors.red,
           radius: 25,
           child: Center(
             child: IconButton(
               icon: Icon(
                 Icons.favorite_border,
                 size: 30,
+                color: Colors.white,
               ),
               onPressed: () {},
             ),
@@ -74,8 +76,9 @@ class RecipeViewPageWidget extends StatelessWidget {
             // title: Text(headline),
             // elevation: 0.1,
             expandedHeight: MediaQuery.of(context).size.height / 3,
+
             pinned: true,
-            backgroundColor: Colors.white,
+            // backgroundColor: Colors.white,
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
@@ -84,11 +87,13 @@ class RecipeViewPageWidget extends StatelessWidget {
             ),
             // floating: true,
             flexibleSpace: FlexibleSpaceBar(
+              titlePadding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
               centerTitle: true,
+              collapseMode: CollapseMode.pin,
               title: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.black54,
+                  color: Colors.black38,
                 ),
                 padding: EdgeInsets.symmetric(
                   vertical: 3,
@@ -97,13 +102,17 @@ class RecipeViewPageWidget extends StatelessWidget {
                 child: Text(
                   headline ?? "",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 15,
                   ),
-                  // textAlign: TextAlign.right,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  textAlign: TextAlign.center,
                 ),
               ),
               background: Container(
                 height: 200,
+                color: Colors.white,
                 child: Swiper(
                   itemHeight: 200,
                   itemCount: images.length,

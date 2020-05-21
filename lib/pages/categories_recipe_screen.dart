@@ -273,6 +273,9 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                               onTap: () => Navigator.of(context).push(
                                   MaterialPageRoute(
                                       builder: (context) => SearchResultsScreen(
+                                          appBarTitle:
+                                              categoryOptionsRecipeCards[i]
+                                                  .title,
                                           url: categoryOptionsRecipeCards[i]
                                               .href))),
                               child: Padding(
