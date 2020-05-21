@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:recipetap/interactive_recipe_pages/start_cooking.dart';
 import 'package:recipetap/jump_screens/loading_recipe_screen.dart';
 import 'package:recipetap/widgets/recipe_view_page_widget.dart';
 
@@ -442,6 +443,23 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
               newWebsiteFooterNotesExist: newWebsiteFooterNotesExist,
               cooksNotes: cooksNotes,
             ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StartCooking(),
+            ),
+          );
+        },
+        label: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('Start Cooking'),
+            Icon(Icons.navigate_next),
+          ],
+        ),
+      ),
     );
   }
 }
