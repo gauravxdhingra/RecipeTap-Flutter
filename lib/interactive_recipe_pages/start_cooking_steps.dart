@@ -36,6 +36,9 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
                 },
               ),
             ),
+            // TODO Remove blank spaces and Reynolds Tips and COOKS NOTES
+            if (widget.recipe.cooksNotes.isNotEmpty)
+              Text('Cook\'s Notes'),
             if (widget.recipe.cooksNotes.isNotEmpty)
               Container(
                 height: 200,
@@ -43,11 +46,8 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
                   itemCount: widget.recipe.cooksNotes.length,
                   itemBuilder: (context, i) {
                     return ListTile(
-                      leading: CircleAvatar(
-                        child: Text('# ${i + 1}'),
-                      ),
                       title: Text(
-                        widget.recipe.cooksNotes[i],
+                        widget.recipe.cooksNotes[i].toString().trim(),
                       ),
                     );
                   },

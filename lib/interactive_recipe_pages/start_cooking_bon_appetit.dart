@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipetap/pages/recipe_view_page.dart';
 
 class StartCookingBonAppetit extends StatelessWidget {
   const StartCookingBonAppetit({Key key}) : super(key: key);
@@ -9,14 +10,21 @@ class StartCookingBonAppetit extends StatelessWidget {
       appBar: AppBar(
         title: Text('Ready'),
       ),
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Text('Bon Appetit'),
+            // TODO SVG
+            // TODO Rate Us
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => StartCookingBonAppetit(
-                      // recipe: widget.recipe,
-                      )));
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
         },
         label: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
