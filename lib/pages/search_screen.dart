@@ -54,15 +54,15 @@ class _SearchScreenState extends State<SearchScreen> {
         'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re');
   }
 
-  submitSearchNormal(String appbarTitle, String url) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => SearchResultsScreen(
-            appBarTitle: appbarTitle,
-            url: 'https://www.allrecipes.com/search/results/?wt=$url&sort=re'
-            // url: url,
-            )));
-    print(url);
-  }
+  // submitSearchNormal(String appbarTitle, String url) {
+  //   Navigator.of(context).push(MaterialPageRoute(
+  //       builder: (context) => SearchResultsScreen(
+  //           appBarTitle: appbarTitle,
+  //           url: 'https://www.allrecipes.com/search/results/?wt=$url&sort=re'
+  //           // url: url,
+  //           )));
+  //   print(url);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,45 +71,67 @@ class _SearchScreenState extends State<SearchScreen> {
         title: Text('Search'),
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Text('Search'),
+              // Text('Search'),
               CupertinoTextField(
                 controller: normalSearchController,
               ),
-              FlatButton(
-                child: Text('Search Recipe by name'),
-                onPressed: () => submitSearchNormal(
-                  "Showing Results For " + normalSearchController.text,
-                  normalSearchController.text
-                      .replaceAll(" ", "%20")
-                      .toLowerCase(),
+              // FlatButton(
+              //   child: Text('Search Recipe by name'),
+              //   onPressed: () => submitSearchNormal(
+              //     "Showing Results For " + normalSearchController.text,
+              //     normalSearchController.text
+              //         .replaceAll(" ", "%20")
+              //         .toLowerCase(),
+              //   ),
+              // ),
+
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text('Include'),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 2 / 3,
+                      child: SimpleAutoCompleteTextField(
+                        key: key,
+                        suggestions: suggestions,
+                        // textChanged: (query) => suggestions.add(query),
+                        controller: inclController,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 100,
+
+              // SizedBox(
+              //   height: 50,
+              // ),
+
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text('Exclude'),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 2 / 3,
+                      child: SimpleAutoCompleteTextField(
+                        key: keyy,
+                        suggestions: suggestions,
+                        controller: exclController,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Text('Search By Ingredients'),
-              SizedBox(
-                height: 50,
-              ),
-              Text('Include'),
-              SimpleAutoCompleteTextField(
-                key: key,
-                suggestions: suggestions,
-                // textChanged: (query) => suggestions.add(query),
-                controller: inclController,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Text('Exclude'),
-              SimpleAutoCompleteTextField(
-                key: keyy,
-                suggestions: suggestions,
-                controller: exclController,
-              ),
+
               SizedBox(
                 height: 50,
               ),

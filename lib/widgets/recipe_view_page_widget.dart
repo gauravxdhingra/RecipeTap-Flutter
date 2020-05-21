@@ -89,7 +89,7 @@ class RecipeViewPageWidget extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
               centerTitle: true,
-              collapseMode: CollapseMode.pin,
+              collapseMode: CollapseMode.parallax,
               title: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
