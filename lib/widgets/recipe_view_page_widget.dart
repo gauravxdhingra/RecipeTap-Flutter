@@ -113,8 +113,8 @@ class RecipeViewPageWidget extends StatelessWidget {
                   },
 
                   pagination: SwiperPagination(
-                    builder: SwiperPagination.fraction,
-                    alignment: Alignment.topRight,
+                    builder: SwiperPagination.dots,
+                    alignment: Alignment.topCenter,
                   ),
 
                   // control: new SwiperControl(
@@ -136,7 +136,7 @@ class RecipeViewPageWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(35),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
+                  horizontal: 20,
                   vertical: 25,
                 ),
                 child: ReadMoreText(
@@ -157,83 +157,103 @@ class RecipeViewPageWidget extends StatelessWidget {
           SliverToBoxAdapter(
             child: Container(
               height: 80,
-              child: Row(
-                // TODO add faeture for ingredients servings division
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  if (timeExists)
-                    Container(
-                      height: 70,
-                      width: MediaQuery.of(context).size.width / 5,
-                      child: Column(
-                        children: <Widget>[
-                          Icon(Icons.timer),
-                          Text("Time"),
-                          Text(time ?? ""),
-                        ],
+              child: Center(
+                child: Row(
+                  // TODO add faeture for ingredients servings division
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    if (timeExists)
+                      Container(
+                        height: 70,
+                        width: MediaQuery.of(context).size.width / 5,
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.timer),
+                            Text("Time"),
+                            Text(time ?? ""),
+                          ],
+                        ),
                       ),
-                    ),
-                  if (servingsExist)
-                    Container(
-                      height: 70,
-                      width: MediaQuery.of(context).size.width / 5,
-                      child: Column(
-                        children: <Widget>[
-                          Icon(Icons.people_outline),
-                          Text("Serves".toUpperCase()),
-                          Text(servings ?? "--"),
-                        ],
+                    if (servingsExist)
+                      Container(
+                        height: 70,
+                        width: MediaQuery.of(context).size.width / 5,
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.people_outline),
+                            Text("Serves".toUpperCase()),
+                            Text(servings ?? "--"),
+                          ],
+                        ),
                       ),
-                    ),
-                  if (nutritionalFactsExits)
-                    Container(
-                      height: 70,
-                      width: MediaQuery.of(context).size.width / 5,
-                      child: Column(
-                        children: <Widget>[
-                          Icon(Icons.restaurant_menu),
-                          Text("Calories".toUpperCase()),
-                          Text(nutritionalFactsExits
-                              ? oldWebsite
-                                  ? nutritionalFacts[0]
-                                  : nutritionalFactsNew[0]
-                              : "--" ?? "--"),
-                        ],
+                    if (nutritionalFactsExits)
+                      Container(
+                        height: 70,
+                        width: MediaQuery.of(context).size.width / 5,
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.restaurant_menu),
+                            Text("Calories".toUpperCase()),
+                            Text(nutritionalFactsExits
+                                ? oldWebsite
+                                    ? nutritionalFacts[0]
+                                    : nutritionalFactsNew[0]
+                                : "--" ?? "--"),
+                          ],
+                        ),
                       ),
-                    ),
-                  if (yeildExists && oldWebsite == true)
-                    Container(
-                      height: 80,
-                      width: MediaQuery.of(context).size.width / 5,
-                      child: Column(
-                        children: <Widget>[
-                          Icon(Icons.fastfood),
-                          Text("YEILDS"),
-                          Text(
-                            yeildExists
-                                ? oldWebsite ? yeild ?? "--" : "--"
-                                : "--" ?? "--",
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.fade,
-                            maxLines: 2,
-                            softWrap: true,
-                          ),
-                        ],
+                    if (yeildExists && oldWebsite == true)
+                      Container(
+                        height: 80,
+                        width: MediaQuery.of(context).size.width / 5,
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.fastfood),
+                            Text("YEILDS"),
+                            Text(
+                              yeildExists
+                                  ? oldWebsite ? yeild ?? "--" : "--"
+                                  : "--" ?? "--",
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              softWrap: true,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
           SliverToBoxAdapter(
-            child: Text('INGREDIENTS'),
+            child: Divider(),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                // vertical: 25,
+              ),
+              child: Text(
+                'INGREDIENTS',
+                style: Theme.of(context).textTheme.headline3.copyWith(),
+              ),
+            ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(ingredients[index]),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    // vertical: 25,
+                  ),
+                  child: ListTile(
+                    title: Text(ingredients[index]),
+                  ),
                 );
               },
               childCount:
@@ -241,7 +261,19 @@ class RecipeViewPageWidget extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: Text('DIRECTIONS'),
+            child: Divider(),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                // vertical: 25,
+              ),
+              child: Text(
+                'DIRECTIONS',
+                style: Theme.of(context).textTheme.headline3.copyWith(),
+              ),
+            ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -259,7 +291,14 @@ class RecipeViewPageWidget extends StatelessWidget {
           ),
           if (nutritionalFactsExits)
             SliverToBoxAdapter(
-              child: Text('NUTRITIONAL FACTS'),
+              child: Divider(),
+            ),
+          if (nutritionalFactsExits)
+            SliverToBoxAdapter(
+              child: Text(
+                'NUTRITIONAL FACTS',
+                style: Theme.of(context).textTheme.headline3.copyWith(),
+              ),
             ),
           if (nutritionalFactsExits)
             SliverList(
@@ -284,7 +323,14 @@ class RecipeViewPageWidget extends StatelessWidget {
             ),
           if ((oldWebsite && cooksNotesExits) || newWebsiteFooterNotesExist)
             SliverToBoxAdapter(
-              child: Text('NUTRITIONAL FACTS'),
+              child: Divider(),
+            ),
+          if ((oldWebsite && cooksNotesExits) || newWebsiteFooterNotesExist)
+            SliverToBoxAdapter(
+              child: Text(
+                "COOK'S NOTES",
+                style: Theme.of(context).textTheme.headline3.copyWith(),
+              ),
             ),
           if ((oldWebsite && cooksNotesExits) || newWebsiteFooterNotesExist)
             SliverList(

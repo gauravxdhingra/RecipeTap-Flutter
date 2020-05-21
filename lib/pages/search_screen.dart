@@ -42,13 +42,16 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
-  submitSearch(incl, excl) {
+  submitSearch(appBarTitle, dish, incl, excl) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SearchResultsScreen(
+            appBarTitle: appBarTitle,
+            incl: incl,
+            excl: excl,
             url:
-                'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re')));
+                'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re')));
     print(
-        'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re');
+        'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re');
   }
 
   submitSearchNormal(String appbarTitle, String url) {
@@ -114,8 +117,20 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Text('Search'),
                 onPressed: () {
                   submitSearch(
-                    inclController.text.toLowerCase().replaceAll(" ", "%20"),
-                    exclController.text.toLowerCase().replaceAll(" ", "%20"),
+                    normalSearchController.text.trim().isNotEmpty
+                        ? "Showing Results For " + normalSearchController.text
+                        : "Showing Recipes From Ingredients",
+                    normalSearchController.text
+                        .replaceAll(" ", "%20")
+                        .toLowerCase(),
+                    inclController.text
+                        .toLowerCase()
+                        .replaceAll(", ", ",")
+                        .replaceAll(" ", "%20"),
+                    exclController.text
+                        .toLowerCase()
+                        .replaceAll(", ", ",")
+                        .replaceAll(" ", "%20"),
                   );
                 },
               ),

@@ -13,10 +13,15 @@ class SearchResultsScreen extends StatefulWidget {
   // final excl;
   final appBarTitle;
   final url;
+  final incl;
+  final excl;
+
   SearchResultsScreen({
     Key key,
-    this.url,
-    this.appBarTitle,
+    @required this.url,
+    @required this.appBarTitle,
+    this.incl,
+    this.excl,
   }) : super(key: key);
 
   @override
@@ -97,6 +102,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
       appBar: AppBar(
         title: Text(widget.appBarTitle ?? ""),
       ),
+      extendBodyBehindAppBar: true,
       body: isLoading
           ? LoadingSpinner()
           : BuildRecipeListResults(

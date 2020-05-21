@@ -26,9 +26,13 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         // primaryColor: Colors.white,
         textTheme: TextTheme(
-            headline1: TextStyle(
-          fontSize: 30,
-        )),
+          headline1: TextStyle(
+            fontSize: 30,
+          ),
+          headline3: TextStyle(
+            fontSize: 20,
+          ),
+        ),
       ),
       darkTheme: ThemeData.dark().copyWith(),
 
