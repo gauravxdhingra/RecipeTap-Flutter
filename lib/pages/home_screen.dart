@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: GNav(
               gap: 8,
               activeColor: Colors.white,
-              iconSize: 24,
+              iconSize: 22,
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               duration: Duration(milliseconds: 800),
               tabBackgroundColor: Colors.grey[800],

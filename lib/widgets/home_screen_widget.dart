@@ -145,7 +145,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                         child: Text(
                           'Find Recipes From The Items In Your Fridge'
                               .toUpperCase(),
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.right,
                           style: Theme.of(context).textTheme.caption.copyWith(
                                 color: Colors.white,
                                 fontSize: 30,

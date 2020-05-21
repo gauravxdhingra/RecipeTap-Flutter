@@ -100,7 +100,45 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
     // print(inclexclArgs.incl);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.appBarTitle ?? ""),
+        title: Text(
+          widget.appBarTitle ?? "",
+          overflow: TextOverflow.ellipsis,
+        ),
+        bottom: (widget.incl.toString().isNotEmpty ||
+                widget.excl.toString().isNotEmpty)
+            ? PreferredSize(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Including: "),
+                        Text(
+                          widget.incl,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Excluding: "),
+                        Text(
+                          widget.excl,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                  ],
+                ),
+                preferredSize: Size(MediaQuery.of(context).size.width, 18),
+              )
+            : null,
       ),
       extendBodyBehindAppBar: true,
       body: isLoading

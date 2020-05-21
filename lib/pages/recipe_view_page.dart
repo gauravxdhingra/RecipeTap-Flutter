@@ -408,7 +408,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
     });
     recipe = RecipeModel(
       title: headline,
-      coverPhotoUrl: coverImageUrl,
+      coverPhotoUrl: images,
       desc: desc,
       time: time,
       servings: servings,

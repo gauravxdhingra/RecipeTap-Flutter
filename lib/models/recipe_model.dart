@@ -1,6 +1,6 @@
 class RecipeModel {
   final String title;
-  final String coverPhotoUrl;
+  final List coverPhotoUrl;
   final String desc;
   final String time;
   final String servings;

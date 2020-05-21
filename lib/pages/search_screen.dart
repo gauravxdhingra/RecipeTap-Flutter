@@ -78,6 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
               // Text('Search'),
               CupertinoTextField(
                 controller: normalSearchController,
+                autofocus: true,
               ),
               // FlatButton(
               //   child: Text('Search Recipe by name'),
