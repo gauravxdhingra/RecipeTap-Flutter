@@ -86,6 +86,29 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
               childCount: widget.recipe.ingredients.length,
             ),
           ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 20,
+              ),
+              child: RaisedButton(
+                child: Text("Mark All"),
+                onPressed: () {
+                  for (int i = 0; i < grabbed.length; i++) {
+                    grabbed[i] = true;
+                  }
+                  setState(() {});
+                },
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 70,
+            ),
+          ),
         ],
         // child: Container(
         //   child: Column(
@@ -123,7 +146,6 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
               return;
             }
           }
-
           Navigator.push(
               context,
               MaterialPageRoute(

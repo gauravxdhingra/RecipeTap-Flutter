@@ -12,9 +12,20 @@ class StartCookingSteps extends StatefulWidget {
 }
 
 class _StartCookingStepsState extends State<StartCookingSteps> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  List<bool> done = [];
+  @override
+  void initState() {
+    widget.recipe.steps.forEach((element) {
+      done.add(false);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Directions"),
       ),
@@ -43,16 +54,50 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: ListTile(
+                      onTap: () {
+                        done[i] = !done[i];
+                        setState(() {});
+                      },
                       leading: CircleAvatar(
-                        child: Text('# ${i + 1}'),
+                        child: done[i]
+                            ? Icon(
+                                Icons.check,
+                              )
+                            : Text('# ${i + 1}'),
                       ),
                       title: Text(
                         widget.recipe.steps[i],
+                        style: done[i]
+                            ? TextStyle(
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough,
+                              )
+                            : TextStyle(
+                                color: Colors.black,
+                              ),
                       ),
                     ),
                   );
                 },
                 childCount: widget.recipe.steps.length - 1,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+                child: RaisedButton(
+                  child: Text("Mark All"),
+                  onPressed: () {
+                    for (int i = 0; i < done.length; i++) {
+                      done[i] = true;
+                    }
+                    setState(() {});
+                  },
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             ),
             if (widget.recipe.cooksNotes.isNotEmpty)
@@ -102,6 +147,16 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          for (int i = 0; i < done.length; i++) {
+            if (done[i] == true) {
+            } else {
+              _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                  duration: Duration(milliseconds: 700),
+                  content: new Text("Finish All Steps To Proceed!")));
+              return;
+            }
+          }
+
           Navigator.push(
               context,
               MaterialPageRoute(
