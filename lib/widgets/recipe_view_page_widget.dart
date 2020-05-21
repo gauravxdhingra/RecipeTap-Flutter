@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:readmore/readmore.dart';
+import 'package:recipetap/models/recipe_model.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 
 class RecipeViewPageWidget extends StatelessWidget {
@@ -24,6 +25,7 @@ class RecipeViewPageWidget extends StatelessWidget {
     @required this.cooksNotesExits,
     @required this.newWebsiteFooterNotesExist,
     @required this.cooksNotes,
+    @required this.recipe,
   }) : super(key: key);
 
   final String headline;
@@ -44,6 +46,7 @@ class RecipeViewPageWidget extends StatelessWidget {
   final bool cooksNotesExits;
   final bool newWebsiteFooterNotesExist;
   final List cooksNotes;
+  final RecipeModel recipe;
 
   @override
   Widget build(BuildContext context) {
@@ -357,6 +360,18 @@ class RecipeViewPageWidget extends StatelessWidget {
                     oldWebsite ? cooksNotes.length : cooksNotes[0].length,
               ),
             ),
+
+          SliverToBoxAdapter(
+            child: Text('Bon Appetit'),
+          ),
+          // TODO bon appetit svg
+          SliverToBoxAdapter(
+            child: RaisedButton(
+              child: Text('Save As PDF'),
+              onPressed: () {},
+            ),
+            // TODO pdf generator
+          ),
           // SliverFillRemaining(
           //   child: Column(
           //     children: <Widget>[

@@ -4,6 +4,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:recipetap/interactive_recipe_pages/start_cooking.dart';
 import 'package:recipetap/jump_screens/loading_recipe_screen.dart';
+import 'package:recipetap/models/recipe_model.dart';
 import 'package:recipetap/widgets/recipe_view_page_widget.dart';
 
 class RecipeViewPage extends StatefulWidget {
@@ -53,6 +54,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
   bool timeExists = false;
   bool servingsExist = false;
   bool newWebsiteFooterNotesExist = false;
+  RecipeModel recipe;
 
   getData() async {
     final String url = widget.url;
@@ -108,6 +110,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
         }
       });
       print(images);
+
       // 0 prep
       // 1 cook
       // 2 total
@@ -403,6 +406,18 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       isLoading = false;
       if (time == null) timeExists = false;
     });
+    recipe = RecipeModel(
+      title: headline,
+      coverPhotoUrl: coverImageUrl,
+      desc: desc,
+      time: time,
+      servings: servings,
+      yeild: yeild,
+      ingredients: ingredients,
+      steps: directions,
+      nutritionalFacts: nutritionalFacts,
+      cooksNotes: cooksNotes,
+    );
   }
 
   @override
@@ -442,24 +457,29 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
               cooksNotesExits: cooksNotesExits,
               newWebsiteFooterNotesExist: newWebsiteFooterNotesExist,
               cooksNotes: cooksNotes,
+              recipe: recipe,
             ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => StartCooking(),
+      floatingActionButton: isLoading
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StartCooking(
+                      recipe: recipe,
+                    ),
+                  ),
+                );
+              },
+              label: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('Start Cooking'),
+                  Icon(Icons.navigate_next),
+                ],
+              ),
             ),
-          );
-        },
-        label: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text('Start Cooking'),
-            Icon(Icons.navigate_next),
-          ],
-        ),
-      ),
     );
   }
 }
