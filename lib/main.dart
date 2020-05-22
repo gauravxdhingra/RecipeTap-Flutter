@@ -25,14 +25,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         // primaryColor: Colors.white,
-        primaryColor: Color(0xfff4d6cd),
-        accentColor: Colors.redAccent,
+        // primaryColor: Color(0xffEC008C),
+        primaryColor: Color(0xffF01E91),
+        accentColor: Colors.blueGrey[900],
         textTheme: TextTheme(
           headline1: TextStyle(
             fontSize: 30,
           ),
           headline3: TextStyle(
             fontSize: 20,
+          ),
+          bodyText2: TextStyle(
+            // fontSize: 20,
+            color: Colors.black,
           ),
         ),
       ),
