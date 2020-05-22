@@ -15,7 +15,7 @@ import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/pages/settings_screen.dart';
 import 'package:recipetap/widgets/home_screen_widget.dart';
-import 'package:simple_search_bar/simple_search_bar.dart';
+// import 'package:simple_search_bar/simple_search_bar.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 // TODO GIPHY Navbar
@@ -64,14 +64,15 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  submitSearch(incl, excl) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => SearchResultsScreen(
-            url:
-                'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re')));
-    print(
-        'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re');
-  }
+  // submitSearch(incl, excl) {
+  //   Navigator.of(context).push(MaterialPageRoute(
+  //       builder: (context) => SearchResultsScreen(
+
+  //           url:
+  //               'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re')));
+  //   print(
+  //       'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re');
+  // }
 
   submitSearchNormal(String appbarTitle, String url) {
     Navigator.of(context).push(MaterialPageRoute(

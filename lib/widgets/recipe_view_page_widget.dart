@@ -442,10 +442,15 @@ class RecipeViewPageWidget extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 10,
+                        top: 12,
                       ),
                       child: Align(
-                        child: Text('Bon Appetit'),
+                        child: Text(
+                          'Bon Appetit!',
+                          style: Theme.of(context).textTheme.headline3.copyWith(
+                                fontSize: 25,
+                              ),
+                        ),
                         alignment: Alignment.topCenter,
                       ),
                     ),

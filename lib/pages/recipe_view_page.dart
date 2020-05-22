@@ -405,13 +405,13 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
     if (oldWebsite) {
       if (cooksNotesExits) {
         for (int i = 0; i < cooksNotes.length; i++) {
-          cooksNotes[i].substring(20).trim();
+          cooksNotes[i] = cooksNotes[i].substring(20).trim();
         }
       }
     } else {
       if (newWebsiteFooterNotesExist) {
         for (int i = 0; i < cooksNotes[0].length; i++) {
-          cooksNotes[0][i].trim();
+          cooksNotes[0][i] = cooksNotes[0][i].trim();
         }
       }
     }
@@ -431,7 +431,9 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       ingredients: ingredients,
       steps: directions,
       nutritionalFacts: nutritionalFacts,
-      cooksNotes: cooksNotes,
+      cooksNotes: oldWebsite
+          ? cooksNotes
+          : newWebsiteFooterNotesExist ? cooksNotes[0] : [],
     );
   }
 

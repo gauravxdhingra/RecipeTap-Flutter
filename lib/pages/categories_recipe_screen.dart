@@ -273,6 +273,8 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                               onTap: () => Navigator.of(context).push(
                                   MaterialPageRoute(
                                       builder: (context) => SearchResultsScreen(
+                                          excl: "",
+                                          incl: "",
                                           appBarTitle:
                                               categoryOptionsRecipeCards[i]
                                                   .title,
@@ -318,12 +320,15 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                       color: Theme.of(context).primaryColor,
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                      child: Text(categoryDesc),
+                      child: Text(
+                        categoryDesc,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                   SliverToBoxAdapter(
                       child: Container(
-                    height: 10,
+                    height: 30,
                     color: Theme.of(context).primaryColor,
                   )),
                   SliverGrid(
@@ -332,14 +337,16 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                         // print(recipeCards.length);
                         if (i == recipeCards.length) return LoadingSpinner();
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(left: 15.0),
                           child: GestureDetector(
                             onTap: () => goToRecipe(recipeCards[i].href,
                                 recipeCards[i].photoUrl, context),
                             child: ClipRRect(
                               borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(40),
-                                bottomLeft: Radius.circular(40),
+                                // topRight: Radius.circular(20),
+                                bottomLeft: Radius.circular(20),
+                                // bottomRight: Radius.circular(20),
+                                topLeft: Radius.circular(20),
                               ),
                               child: GridTile(
                                 child: Image.network(
@@ -354,10 +361,16 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                   child: Text(
                                     recipeCards[i].title,
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 25),
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                     overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
                                   ),
-                                  color: Colors.black54,
+                                  color: Theme.of(context)
+                                      .accentColor
+                                      .withOpacity(0.6),
                                 ),
                                 footer: Container(
                                   padding: EdgeInsets.only(
@@ -375,8 +388,11 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                     maxLines: 2,
                                     softWrap: true,
                                     overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
                                   ),
-                                  color: Colors.black54,
+                                  color: Theme.of(context)
+                                      .accentColor
+                                      .withOpacity(0.6),
                                 ),
                               ),
                             ),
@@ -388,7 +404,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     ),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
-                      childAspectRatio: 4 / 3,
+                      childAspectRatio: 20 / 13,
                       mainAxisSpacing: 20,
                     ),
                   ),
