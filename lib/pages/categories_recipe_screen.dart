@@ -1,3 +1,4 @@
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
@@ -287,21 +288,36 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                   width: 100,
                                   child: Column(
                                     children: <Widget>[
-                                      CircleAvatar(
-                                        radius: 50,
-                                        backgroundImage: NetworkImage(
-                                          categoryOptionsRecipeCards[i]
-                                              .photoUrl,
+                                      ClayContainer(
+                                        // curveType: CurveType.convex,
+                                        borderRadius: 50,
+                                        surfaceColor:
+                                            Theme.of(context).primaryColor,
+                                        color: Theme.of(context).primaryColor,
+                                        parentColor:
+                                            Theme.of(context).primaryColor,
+
+                                        depth: 20,
+                                        child: CircleAvatar(
+                                          radius: 50,
+                                          backgroundColor:
+                                              Theme.of(context).primaryColor,
+                                          backgroundImage: NetworkImage(
+                                            categoryOptionsRecipeCards[i]
+                                                .photoUrl,
+                                          ),
                                         ),
                                       ),
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(top: 10.0),
-                                        child: Text(
-                                          categoryOptionsRecipeCards[i].title,
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
+                                        child: Center(
+                                          child: Text(
+                                            categoryOptionsRecipeCards[i].title,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -348,86 +364,91 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                           child: GestureDetector(
                             onTap: () => goToRecipe(recipeCards[i].href,
                                 recipeCards[i].photoUrl, context),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20),
-                              ),
-                              child: Container(
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.2),
-                                child: Column(
-                                  children: <Widget>[
-                                    Stack(
-                                      children: <Widget>[
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(20),
-                                          ),
-                                          child: Image.network(
-                                            recipeCards[i].photoUrl,
-                                            height: 220,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Positioned(
-                                          // top: 0,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .accentColor
-                                                  .withOpacity(0.6),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
+                            child: ClayContainer(
+                              borderRadius: 20,
+                              depth: 50,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                                child: Container(
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(0.2),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Stack(
+                                        children: <Widget>[
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(20),
                                             ),
-                                            height: 50,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 15.0,
-                                                ),
-                                                child: Text(
-                                                  recipeCards[i].title,
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.w300,
+                                            child: Image.network(
+                                              recipeCards[i].photoUrl,
+                                              height: 220,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            // top: 0,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .accentColor
+                                                    .withOpacity(0.6),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              height: 50,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Center(
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 15.0,
                                                   ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.center,
+                                                  child: Text(
+                                                    recipeCards[i].title,
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    // TODO Fab Fav
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 20),
-                                      child: Text(
-                                        recipeCards[i].desc,
-                                        style: TextStyle(
-                                          // color: Colors.white,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                        maxLines: 2,
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.center,
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                      // TODO Fab Fav
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 20),
+                                        child: Text(
+                                          recipeCards[i].desc,
+                                          style: TextStyle(
+                                            // color: Colors.white,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                          maxLines: 2,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

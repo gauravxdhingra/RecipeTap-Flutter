@@ -137,7 +137,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor,
+      // color: Theme.of(context).primaryColor,
       padding: const EdgeInsets.all(10.0),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -154,57 +154,91 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
           if (i == recipeCards.length)
             return LoadingSpinner();
           else
-            return ClayContainer(
-              customBorderRadius: BorderRadius.only(
-                topRight: Radius.circular(40),
-                bottomLeft: Radius.circular(40),
+            return ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
               ),
-              spread: 2,
-              depth: 50,
-              color: Theme.of(context).primaryColor,
-              child: GestureDetector(
-                onTap: () => goToRecipe(
-                    recipeCards[i].href, recipeCards[i].photoUrl, context),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(40),
-                    bottomLeft: Radius.circular(40),
-                  ),
-                  child: GridTile(
-                    child: Image.network(
-                      recipeCards[i].photoUrl,
-                      fit: BoxFit.cover,
+              child: ClayContainer(
+                borderRadius: 20,
+                depth: 90,
+                spread: 6,
+                // depth: 90,
+                // color: Theme.of(context).primaryColor,
+                child: GestureDetector(
+                  onTap: () => goToRecipe(
+                      recipeCards[i].href, recipeCards[i].photoUrl, context),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
                     ),
-                    header: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
+                    child: Container(
+                      color: Theme.of(context).primaryColor.withOpacity(0.2),
+                      child: Column(
+                        children: <Widget>[
+                          Stack(
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                                child: Image.network(
+                                  recipeCards[i].photoUrl,
+                                  height: 220,
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                // top: 0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.6),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 15.0,
+                                      ),
+                                      child: Text(
+                                        recipeCards[i].title,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // TODO Fab Fav
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 20),
+                            child: Text(
+                              recipeCards[i].desc,
+                              style: TextStyle(
+                                // color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w300,
+                              ),
+                              maxLines: 2,
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
                       ),
-                      child: Text(
-                        recipeCards[i].title,
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      color: Colors.black54,
-                    ),
-                    footer: Container(
-                      padding: EdgeInsets.only(
-                        left: 25,
-                        top: 10,
-                        bottom: 10,
-                        right: 15,
-                      ),
-                      child: Text(
-                        recipeCards[i].desc,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                        ),
-                        maxLines: 2,
-                        softWrap: true,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      color: Colors.black54,
                     ),
                   ),
                 ),
