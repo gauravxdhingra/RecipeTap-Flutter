@@ -14,6 +14,10 @@ class RecentsProvider with ChangeNotifier {
   List<RecentsModel> recentslist = [];
   String recipeId = Uuid().v4();
 
+  List<RecentsModel> get recentRecipes {
+    return recentslist;
+  }
+
   addToRecents(RecipeModel recipe, String email) async {
     DocumentSnapshot doc = await recentsRef.document(currentUser.email).get();
     // if (doc.exists) {
@@ -38,6 +42,7 @@ class RecentsProvider with ChangeNotifier {
   }
 
   fetchRecentRecipes(email) async {
+    List<RecentsModel> _recentslist = [];
     QuerySnapshot recents = await recentsRef
         .document(email)
         .collection('recents')
@@ -48,11 +53,14 @@ class RecentsProvider with ChangeNotifier {
         .limit(10)
         .getDocuments();
 
+    // recentslist = recents.documents;
     recents.documents.forEach((DocumentSnapshot doc) {
       print(doc);
-      recentslist.add(RecentsModel.fromDocument(doc));
+      _recentslist.add(RecentsModel.fromDocument(doc));
       print(recentslist);
     });
+    recentslist = _recentslist;
+    notifyListeners();
   }
 
 // TODO: Collapsing Home Search

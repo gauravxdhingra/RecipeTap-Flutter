@@ -18,6 +18,7 @@ import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/pages/settings_screen.dart';
+import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/widgets/home_screen_widget.dart';
 import '../provider/auth_provider.dart';
 // import 'package:simple_search_bar/simple_search_bar.dart';
@@ -145,7 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           HomeScreenWidget(),
           CategoriesScreen(),
-          FavouritesScreen(),
+          Consumer<RecentsProvider>(
+              builder: (context, recents, _) => FavouritesScreen()),
           // SearchScreen(),
           SettingsScreen(),
         ],

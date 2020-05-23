@@ -33,7 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       email = auth.email;
       isAuth = auth.isAuth;
       authSkipped = auth.authSkipped;
-      logout = auth.logout;
+      // logout = auth.logout;
       // if (authSkipped)
       // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
       _isLoading = false;
@@ -59,14 +59,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   //   super.didChangeDependencies();
   // }
 
-  Future<void> _signIn() async {
-    setState(() {
-      _isLoading = true;
-    });
-    // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
-    // TODO: Login not working
-    await Provider.of<AuthProvider>(context, listen: false).login();
-  }
+  // Future<void> _signIn() async {
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
+  //   // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
+  //   // TODO: Login not working
+  //   await Provider.of<AuthProvider>(context, listen: false).login();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       color: Colors.blue,
                                     ),
                                   ),
-                                  onTap: logout,
+                                  // onTap: logout,
                                 ),
                               ],
                             )
@@ -144,7 +144,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
             InkWell(
               onTap: () async {
-                await _signIn();
+                // await _signIn();
               },
               child: ListTile(
                 title: Text('Veg'),

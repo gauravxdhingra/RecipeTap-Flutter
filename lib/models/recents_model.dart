@@ -16,7 +16,7 @@ class RecentsModel {
   factory RecentsModel.fromDocument(DocumentSnapshot doc) {
     return RecentsModel(
       title: doc['title'],
-      desc: doc['userId'],
+      desc: doc['desc'],
       coverPhotoUrl: doc['coverImageUrl'],
       timestamp: doc['timestamp'],
     );
