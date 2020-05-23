@@ -79,11 +79,14 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       headline =
           document.getElementsByClassName("headline heading-content")[3].text;
 
-      final srcfirstSplit = coverImageUrl.split("photos/")[0];
-      final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/")[1];
-      final srcc = srcfirstSplit + "photos/" + srcsecondsplit;
-      print(srcc);
-      images.add(srcc);
+// TODO: CHECK THIS SNIPPET FOR ERROR
+      // final srcfirstSplit = coverImageUrl.split("photos/")[0];
+      // final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/")[1];
+      // final srcc = srcfirstSplit + "photos/" + srcsecondsplit;
+      // print(srcc);
+      // images.add(srcc);
+
+      images.add(coverImageUrl);
 
       var otherImagesRef = document.getElementsByClassName("ugc-photos-link");
       int count = 0;
@@ -433,6 +436,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       ingredients: ingredients,
       steps: directions,
       nutritionalFacts: nutritionalFacts,
+      recipeUrl: url,
       cooksNotes: oldWebsite
           ? cooksNotes
           : newWebsiteFooterNotesExist ? cooksNotes[0] : [],

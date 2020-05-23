@@ -25,6 +25,22 @@ class RecentsProvider with ChangeNotifier {
     print(doc.documentID);
     print(doc.exists);
     Timestamp timestamp = Timestamp.now();
+
+    bool notPresent = true;
+
+//     final recref=  await recentsRef
+//         .document(email)
+//         .collection('recents')
+//         .orderBy(
+//           'timestamp',
+//           descending: true,
+//         )
+//         .limit(10).getDocuments();
+
+//         recref.documents.forEach((doc) { doc.data['title']});
+
+// if()
+
     await recentsRef
         .document(email)
         .collection('recents')
@@ -34,6 +50,7 @@ class RecentsProvider with ChangeNotifier {
       "title": recipe.title,
       "coverImageUrl": recipe.coverPhotoUrl[0],
       "desc": recipe.desc,
+      "recipeUrl": recipe.recipeUrl,
       "timestamp": timestamp,
     });
 

@@ -73,7 +73,10 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+
+
   login() {
+    
     googleSignIn.signIn().then(
           (value) => isAuthh = true,
         );

@@ -4,6 +4,7 @@ class RecipeModel {
   final String desc;
   final String time;
   final String servings;
+  final String recipeUrl;
   final yeild;
   final List ingredients;
   final List steps;
@@ -11,6 +12,7 @@ class RecipeModel {
   final List cooksNotes;
 
   RecipeModel({
+    this.recipeUrl,
     this.title,
     this.coverPhotoUrl,
     this.desc,

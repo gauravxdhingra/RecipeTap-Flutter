@@ -4,9 +4,11 @@ class RecentsModel {
   final String title;
   final String desc;
   final String coverPhotoUrl;
+  final String recipeUrl;
   final Timestamp timestamp;
 
   RecentsModel({
+    this.recipeUrl,
     this.title,
     this.desc,
     this.coverPhotoUrl,
@@ -18,6 +20,7 @@ class RecentsModel {
       title: doc['title'],
       desc: doc['desc'],
       coverPhotoUrl: doc['coverImageUrl'],
+      recipeUrl: doc['recipeUrl'],
       timestamp: doc['timestamp'],
     );
   }

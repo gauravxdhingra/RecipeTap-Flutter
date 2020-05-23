@@ -1,8 +1,11 @@
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/models/recents_model.dart';
+import 'package:recipetap/widgets/fav_screen_widgets/build_recents_in_favourites.dart';
 
 class FavouritesScreen extends StatefulWidget {
   FavouritesScreen({Key key}) : super(key: key);
@@ -58,36 +61,16 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           child: Column(
             children: <Widget>[
               Text('RECENTS'),
-              Container(
-                height: 300,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: recentRecipesList.length,
-                  itemBuilder: (context, i) {
-                    return Container(
-                      height: 100,
-                      width: 400,
-                      child: GridTile(
-                        header: Text(recentRecipesList[i].title),
-                        child:
-                            Image.network(recentRecipesList[i].coverPhotoUrl),
-                        footer: Text(
-                          recentRecipesList[i].desc ?? "",
-                        ),
-                        //  Text(
-                        //   recentRecipesList[i]
-                        //           .timestamp
-                        //           .toDate()
-                        //           .difference(DateTime.now())
-                        //           .inMinutes
-                        //           .toString() ??
-                        //       "",
-                        // ),
-                      ),
-                    );
-                  },
-                ),
-              )
+              BuildRecentsInFavourites(recentRecipesList: recentRecipesList),
+              Row(
+                children: <Widget>[
+                  Text('Favourites'),
+                  FlatButton(
+                    child: Text('View All'),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ],
           ),
         ));
