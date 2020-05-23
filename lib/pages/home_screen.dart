@@ -11,6 +11,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
 import 'package:recipetap/pages/favourites_screen.dart';
+// import 'package:recipetap/pages/login_page.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/pages/settings_screen.dart';
@@ -29,6 +30,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  bool isAuth = false;
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
   TextEditingController normalSearchController = TextEditingController();
@@ -86,75 +88,88 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var searchValue = '';
 
+  loginPage() {
+    return Scaffold(
+      body: Container(
+        color: Colors.blue,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO Custom Name Appbar
       // TODO: Searchlist images resolution full
 
-      body: PageView(
-        controller: pageController,
-        children: <Widget>[
-          HomeScreenWidget(),
-          CategoriesScreen(),
-          FavouritesScreen(),
-          SearchScreen(),
-          SettingsScreen(),
-        ],
-        onPageChanged: (i) {
-          _selectedIndex = i;
-          setState(() {});
-        },
-        pageSnapping: true,
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
-        ]),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-            child: GNav(
-              gap: 8,
-              activeColor: Colors.white,
-              iconSize: 22,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              duration: Duration(milliseconds: 800),
-              tabBackgroundColor: Colors.grey[800],
-              tabs: [
-                GButton(
-                  icon: Icons.home,
-                  text: 'Home',
-                ),
-                // TODO Category pageview
-                GButton(
-                  icon: Icons.category,
-                  text: 'Categories',
-                ),
-                GButton(
-                  icon: Icons.favorite,
-                  text: 'Favourites',
-                ),
-                GButton(
-                  icon: Icons.search,
-                  text: 'Search',
-                ),
-                GButton(
-                  icon: Icons.account_circle,
-                  text: 'Profile',
-                ),
+      body: isAuth
+          ? PageView(
+              controller: pageController,
+              children: <Widget>[
+                HomeScreenWidget(),
+                CategoriesScreen(),
+                FavouritesScreen(),
+                SearchScreen(),
+                SettingsScreen(),
               ],
-              selectedIndex: _selectedIndex,
-              onTabChange: (index) {
-                setState(() {
-                  pageController.jumpToPage(index);
-                  _selectedIndex = index;
-                });
+              onPageChanged: (i) {
+                _selectedIndex = i;
+                setState(() {});
               },
-            ),
-          ),
-        ),
-      ),
+              pageSnapping: true,
+            )
+          : loginPage(),
+      bottomNavigationBar: isAuth
+          ? Container(
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+              ]),
+              child: SafeArea(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+                  child: GNav(
+                    gap: 8,
+                    activeColor: Colors.white,
+                    iconSize: 22,
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    duration: Duration(milliseconds: 800),
+                    tabBackgroundColor: Colors.grey[800],
+                    tabs: [
+                      GButton(
+                        icon: Icons.home,
+                        text: 'Home',
+                      ),
+                      // TODO Category pageview
+                      GButton(
+                        icon: Icons.category,
+                        text: 'Categories',
+                      ),
+                      GButton(
+                        icon: Icons.favorite,
+                        text: 'Favourites',
+                      ),
+                      GButton(
+                        icon: Icons.search,
+                        text: 'Search',
+                      ),
+                      GButton(
+                        icon: Icons.account_circle,
+                        text: 'Profile',
+                      ),
+                    ],
+                    selectedIndex: _selectedIndex,
+                    onTabChange: (index) {
+                      setState(() {
+                        pageController.jumpToPage(index);
+                        _selectedIndex = index;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            )
+          : null,
     );
   }
 }

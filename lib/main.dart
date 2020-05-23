@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'RecipeTap',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         // primaryColor: Colors.white,
@@ -45,8 +45,9 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark().copyWith(),
 
       routes: {
-        '/': (context) => LoginPage(),
-        // (context) => HomeScreen(),
+        '/':
+            // (context) => LoginPage(),
+            (context) => HomeScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
         SearchScreen.routeName: (context) => SearchScreen(),
         RecipeViewPage.routeName: (context) => RecipeViewPage(),
