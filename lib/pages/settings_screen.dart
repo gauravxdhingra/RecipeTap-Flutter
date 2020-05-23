@@ -1,24 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipetap/provider/auth_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
-  SettingsScreen(
-      {Key key,
-      this.isAuth,
-      this.profilePhotoUrl,
-      this.username,
-      this.email,
-      this.authSkipped})
-      : super(key: key);
-  final bool isAuth;
-  final bool authSkipped;
-  final String profilePhotoUrl;
-  final String username;
-  final String email;
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  bool isAuth;
+  bool authSkipped;
+  String profilePhotoUrl;
+  String username;
+  String email;
+
+  var _isLoading = false;
+
+  var isInit = false;
+
+  @override
+  void didChangeDependencies() async {
+    if (!isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      final auth = Provider.of<AuthProvider>(context, listen: false);
+
+      profilePhotoUrl = auth.profilePhotoUrl;
+      username = auth.username;
+      email = auth.email;
+      isAuth = auth.isAuth;
+      authSkipped = auth.authSkipped;
+      // if (authSkipped)
+      // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
+      _isLoading = false;
+
+      isInit = true;
+    }
+    super.didChangeDependencies();
+  }
+
+  //   @override
+  // void didChangeDependencies() async {
+  //   if (!isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+
+  //     await Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
+
+  //     _isLoading = false;
+
+  //     isInit = true;
+  //   }
+  //   super.didChangeDependencies();
+  // }
+
+  Future<void> _signIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+    // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
+    // TODO: Login not working
+    await Provider.of<AuthProvider>(context, listen: false).login();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
-            widget.isAuth
+            isAuth
                 ? Column(
                     children: <Widget>[
                       Container(
@@ -43,7 +90,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             CircleAvatar(
                               radius: 60,
                               backgroundImage: NetworkImage(
-                                widget.profilePhotoUrl,
+                                profilePhotoUrl,
                               ),
                               backgroundColor: Theme.of(context).primaryColor,
                             ),
@@ -58,7 +105,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   height: 25,
                                 ),
                                 Text(
-                                  widget.username ?? "User",
+                                  username ?? "User",
                                   style: TextStyle(
                                     fontSize: 25,
                                   ),
@@ -93,8 +140,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                   ),
-            ListTile(
-              title: Text('Veg'),
+            InkWell(
+              onTap: () async {
+                await _signIn();
+              },
+              child: ListTile(
+                title: Text('Veg'),
+              ),
             ),
           ],
         ),

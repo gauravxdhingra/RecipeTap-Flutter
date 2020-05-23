@@ -215,62 +215,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: SlimyCard(
-              //     color: Colors.deepPurple,
-              //     width: MediaQuery.of(context).size.width * 0.95,
-              //     borderRadius: 25,
-              //     topCardHeight: 275,
-              //     // 235
-              //     topCardWidget: Stack(
-              //       children: [
-              //         Column(
-              //           children: <Widget>[
-              //             ClipRRect(
-              //               borderRadius: BorderRadius.circular(25),
-              //               child: Container(
-              //                 child: Image.asset(
-              //                   'assets/images/fridge.jpg',
-              //                   fit: BoxFit.cover,
-              //                 ),
 
-              //                 // child: BackdropFilter(
-              //                 //   filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-              //                 // ),
-              //                 // child: Image.asset('assets/images/fridge.jpg'),
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               height: 20,
-              //             ),
-              //           ],
-              //         ),
-              //         Padding(
-              //           padding: const EdgeInsets.all(17.0),
-              //           child: Text(
-              //             'Find Recipes From The Items In Your Fridge'
-              //                 .toUpperCase(),
-              //             textAlign: TextAlign.center,
-              //             style: Theme.of(context).textTheme.caption.copyWith(
-              //                   color: Colors.white,
-              //                   fontSize: 30,
-              //                   fontWeight: FontWeight.w200,
-              //                   wordSpacing: 2,
-              //                   letterSpacing: 1.2,
-              //                 ),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //     bottomCardHeight: 200,
-              //     bottomCardWidget: Container(
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(30),
-              //       ),
-              //     ),
-              //   ),
-              // ),
 //
 //
 //
@@ -280,26 +225,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 //
 //
 //
-              // Text("Recently Viewed"),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: SlimyCard(
-              //     topCardHeight: 150,
-              //     bottomCardHeight: 250,
-              //     color: Theme.of(context).primaryColor,
-              //     width: MediaQuery.of(context).size.width,
-              //     topCardWidget: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       crossAxisAlignment: CrossAxisAlignment.center,
-              //       children: <Widget>[
-              //         Icon(Icons.history),
-              //         Text('RECENTS'),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-
-              //
 //
 //
 //

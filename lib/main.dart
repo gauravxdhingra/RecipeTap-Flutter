@@ -66,7 +66,9 @@ class MyApp extends StatelessWidget {
           routes: {
             '/':
                 // (context) => LoginPage(),
-                (context) => auth.isAuth ? HomeScreen() : LoginPage(),
+                (context) => (auth.isAuth || auth.authSkipped)
+                    ? HomeScreen()
+                    : LoginPage(),
             HomeScreen.routeName: (context) => HomeScreen(),
             SearchScreen.routeName: (context) => SearchScreen(),
             RecipeViewPage.routeName: (context) => RecipeViewPage(),

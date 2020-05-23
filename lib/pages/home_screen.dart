@@ -147,13 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CategoriesScreen(),
           FavouritesScreen(),
           SearchScreen(),
-          SettingsScreen(
-            isAuth: isAuth,
-            email: email,
-            username: username,
-            profilePhotoUrl: profilePhotoUrl,
-            authSkipped: authSkipped,
-          ),
+          SettingsScreen(),
         ],
         onPageChanged: (i) {
           _selectedIndex = i;

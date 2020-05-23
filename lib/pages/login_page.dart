@@ -39,6 +39,14 @@ class _LoginPageState extends State<LoginPage> {
     await Provider.of<AuthProvider>(context, listen: false).login();
   }
 
+  Future<void> _skipSignIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Provider.of<AuthProvider>(context, listen: false).skipAuth();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             FlatButton(
-              onPressed: () {
-                setState(() {
-                  // authSkipped = true;
-                });
-              },
+              onPressed: _skipSignIn,
               child: Text(
                 'Skip SignIn',
                 style: TextStyle(

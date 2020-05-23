@@ -18,6 +18,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text("Recently Viewed"),
             Text('Favorite Recipes'),
             SizedBox(
               height: 100,

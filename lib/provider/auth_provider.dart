@@ -18,7 +18,7 @@ class AuthProvider with ChangeNotifier {
     return isAuthh;
   }
 
- bool get authSkipped {
+  bool get authSkipped {
     return authSkippedd;
   }
 
@@ -78,6 +78,12 @@ class AuthProvider with ChangeNotifier {
 
   logout() {
     googleSignIn.signOut();
+    notifyListeners();
+  }
+
+  skipAuth() {
+    authSkippedd = true;
+    isAuthh = false;
     notifyListeners();
   }
 }
