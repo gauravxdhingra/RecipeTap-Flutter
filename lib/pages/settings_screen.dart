@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
-  SettingsScreen({Key key}) : super(key: key);
-
+  SettingsScreen(
+      {Key key, this.isAuth, this.profilePhotoUrl, this.username, this.email})
+      : super(key: key);
+  final bool isAuth;
+  final String profilePhotoUrl;
+  final String username;
+  final String email;
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }

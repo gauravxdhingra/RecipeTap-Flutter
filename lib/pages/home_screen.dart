@@ -38,6 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isAuth = false;
   bool signInSkipped = false;
 
+  String username;
+  String profilePhotoUrl;
+  String email;
+
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
   TextEditingController normalSearchController = TextEditingController();
@@ -84,6 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
   handleSignIn(GoogleSignInAccount account) {
     if (account != null) {
       print('User:  $account');
+      username = account.displayName.split(" ")[0];
+      profilePhotoUrl = account.photoUrl;
+      email = account.email;
+
       setState(() {
         isAuth = true;
       });
@@ -193,17 +201,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ? PageView(
               controller: pageController,
               children: <Widget>[
-                HomeScreenWidget(),
+                HomeScreenWidget(
+                  isAuth: isAuth,
+                  email: email,
+                  username: username,
+                  profilePhotoUrl: profilePhotoUrl,
+                ),
                 CategoriesScreen(),
                 FavouritesScreen(),
                 SearchScreen(),
-                SettingsScreen(),
+                SettingsScreen(
+                  isAuth: isAuth,
+                  email: email,
+                  username: username,
+                  profilePhotoUrl: profilePhotoUrl,
+                ),
               ],
               onPageChanged: (i) {
                 _selectedIndex = i;
                 setState(() {});
               },
-              pageSnapping: false,
+              // pageSnapping: false,
             )
           : loginPage(),
       bottomNavigationBar: isAuth

@@ -11,6 +11,15 @@ import 'package:recipetap/pages/settings_screen.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class HomeScreenWidget extends StatefulWidget {
+  final bool isAuth;
+  final String profilePhotoUrl;
+  final String username;
+  final String email;
+
+  const HomeScreenWidget(
+      {Key key, this.isAuth, this.profilePhotoUrl, this.username, this.email})
+      : super(key: key);
+
   @override
   _HomeScreenWidgetState createState() => _HomeScreenWidgetState();
 }
@@ -50,12 +59,31 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     return Scaffold(
       appBar: !search
           ? AppBar(
-              leading: Center(child: CircleAvatar()),
+              leading: Center(
+                  child: CircleAvatar(
+                backgroundColor: Theme.of(context).primaryColor,
+                child: !widget.isAuth
+                    ? Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 32,
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          widget.profilePhotoUrl,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                // backgroundColor: ,
+              )),
               title: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Welcome, User!'),
+                  Text(widget.isAuth
+                      ? 'Welcome, ${widget.username}!'
+                      : 'Welcome!'),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
                     child: Text(
@@ -215,24 +243,43 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               //     ),
               //   ),
               // ),
-              Text("Recently Viewed"),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SlimyCard(
-                  topCardHeight: 150,
-                  bottomCardHeight: 250,
-                  color: Theme.of(context).primaryColor,
-                  width: MediaQuery.of(context).size.width,
-                  topCardWidget: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.history),
-                      Text('RECENTS'),
-                    ],
-                  ),
-                ),
-              ),
+//
+//
+//
+//
+//
+//
+//
+//
+//
+              // Text("Recently Viewed"),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: SlimyCard(
+              //     topCardHeight: 150,
+              //     bottomCardHeight: 250,
+              //     color: Theme.of(context).primaryColor,
+              //     width: MediaQuery.of(context).size.width,
+              //     topCardWidget: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: <Widget>[
+              //         Icon(Icons.history),
+              //         Text('RECENTS'),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+
+              //
+//
+//
+//
+//
+//
+//
+//
+//
               // Text('Search'),
               // TextFormField(
               //   controller: normalSearchController,
