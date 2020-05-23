@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +23,7 @@ class HomeScreenWidget extends StatefulWidget {
 }
 
 class _HomeScreenWidgetState extends State<HomeScreenWidget> {
-  bool search = false;
+  // bool search = false;
   TextEditingController controller;
 
   bool isAuth;
@@ -100,128 +102,94 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: !search
-          ? AppBar(
-              elevation: 0,
-              bottom: PreferredSize(
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 200,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        ),
-                        boxShadow: [
-                          // BoxShadow(color: Colors.black45),
-                          BoxShadow(
-                            blurRadius: 0.6,
-                            spreadRadius: 0.6,
-                            color: Colors.black45,
-                            offset: Offset(0.1, 2.1),
-                          ),
-                        ],
-                      ),
-                      child: SearchHomeWidget(
-                        controller: controller,
-                        // key: key,
-                        suggestions: suggestions,
-                        inclController: inclController,
-                        // keyy: keyy,
-                        exclController: exclController,
-                        submitSearch: submitSearch,
-                      ),
+      appBar: AppBar(
+        elevation: 0,
+        bottom: PreferredSize(
+          child: Stack(
+            children: [
+              Container(
+                height: 200,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+              Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(40),
+                    bottomRight: Radius.circular(40),
+                  ),
+                  boxShadow: [
+                    // BoxShadow(color: Colors.black45),
+                    BoxShadow(
+                      blurRadius: 0.6,
+                      spreadRadius: 0.6,
+                      color: Colors.black45,
+                      offset: Offset(0.1, 2.1),
                     ),
                   ],
                 ),
-                preferredSize: Size.fromHeight(200),
+                child: SearchHomeWidget(
+                  controller: controller,
+                  // key: key,
+                  suggestions: suggestions,
+                  inclController: inclController,
+                  // keyy: keyy,
+                  exclController: exclController,
+                  submitSearch: submitSearch,
+                ),
               ),
-              leading: Center(
-                  child: CircleAvatar(
-                backgroundColor: Theme.of(context).primaryColor,
-                child: !isAuth
-                    ? Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 32,
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          profilePhotoUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                // backgroundColor: ,
-              )),
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    isAuth ? 'Welcome, ${username.split(" ")[0]}!' : 'Welcome!',
+            ],
+          ),
+          preferredSize: Size.fromHeight(200),
+        ),
+        leading: Center(
+            child: CircleAvatar(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: !isAuth
+              ? Icon(
+                  Icons.person,
+                  color: Colors.white,
+                  size: 32,
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    profilePhotoUrl,
+                    fit: BoxFit.cover,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
-                    child: Text(
-                      "What would you like to have today?",
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
-                    ),
-                  ),
-                ],
-              ),
-              // centerTitle: true,
-              actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      Provider.of<AuthProvider>(context, listen: false)
-                          .logout();
-                      // search = true;
-                      // setState(() {});
-                    })
-              ],
-            )
-          : AppBar(
-              leading: Icon(Icons.search),
-              title: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TextField(
-                    controller: controller,
-                    autofocus: true,
-                    onSubmitted: (query) {
-                      submitSearch(
-                        controller.text.trim().isNotEmpty
-                            ? "Showing Results For " + controller.text
-                            : "Showing Recipes From Ingredients",
-                        controller.text.replaceAll(" ", "%20").toLowerCase(),
-                        "",
-                        "",
-                      );
-                      controller.clear();
-                    }
-                    // TODO SLiver Incl Excl Search
-                    // TODO all appbars arrow back ios
-                    ),
-              ),
-              actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      search = false;
-                      controller.clear();
-                      setState(() {});
-                    })
-              ],
+                ),
+          // backgroundColor: ,
+        )),
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              isAuth ? 'Welcome, ${username.split(" ")[0]}!' : 'Welcome!',
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 2.0),
+              child: Text(
+                "What would you like to have today?",
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+              ),
+            ),
+          ],
+        ),
+        // centerTitle: true,
+        // actions: <Widget>[
+        //   IconButton(
+        //       icon: Icon(Icons.search),
+        //       onPressed: () {
+        //         Provider.of<AuthProvider>(context, listen: false)
+        //             .logout();
+        //         // search = true;
+        //         // setState(() {});
+        //       })
+        // ],
+      ),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
@@ -229,8 +197,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchScreen())),
+                  onTap: () => {},
+                  //  Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => SearchScreen())),
                   child: Stack(
                     children: [
                       Column(
@@ -242,7 +211,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                 'assets/images/fridge.jpg',
                                 fit: BoxFit.cover,
                               ),
-
                               // child: BackdropFilter(
                               //   filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                               // ),

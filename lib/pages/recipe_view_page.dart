@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:provider/provider.dart';
 import 'package:recipetap/interactive_recipe_pages/start_cooking.dart';
 import 'package:recipetap/jump_screens/loading_recipe_screen.dart';
 import 'package:recipetap/models/recipe_model.dart';
+import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/widgets/recipe_view_page_widget.dart';
 
 class RecipeViewPage extends StatefulWidget {
@@ -455,26 +457,28 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       // TODO no empty search field
       body: isLoading
           ? LoadingRecipeScreen()
-          : RecipeViewPageWidget(
-              headline: headline,
-              images: images,
-              desc: desc,
-              timeExists: timeExists,
-              time: time,
-              servingsExist: servingsExist,
-              servings: servings,
-              nutritionalFactsExits: nutritionalFactsExits,
-              oldWebsite: oldWebsite,
-              nutritionalFacts: nutritionalFacts,
-              nutritionalFactsNew: nutritionalFactsNew,
-              yeildExists: yeildExists,
-              yeild: yeild,
-              ingredients: ingredients,
-              directions: directions,
-              cooksNotesExits: cooksNotesExits,
-              newWebsiteFooterNotesExist: newWebsiteFooterNotesExist,
-              cooksNotes: cooksNotes,
-              recipe: recipe,
+          : Consumer<RecentsProvider>(
+              builder: (ctx, auth, _) => RecipeViewPageWidget(
+                headline: headline,
+                images: images,
+                desc: desc,
+                timeExists: timeExists,
+                time: time,
+                servingsExist: servingsExist,
+                servings: servings,
+                nutritionalFactsExits: nutritionalFactsExits,
+                oldWebsite: oldWebsite,
+                nutritionalFacts: nutritionalFacts,
+                nutritionalFactsNew: nutritionalFactsNew,
+                yeildExists: yeildExists,
+                yeild: yeild,
+                ingredients: ingredients,
+                directions: directions,
+                cooksNotesExits: cooksNotesExits,
+                newWebsiteFooterNotesExist: newWebsiteFooterNotesExist,
+                cooksNotes: cooksNotes,
+                recipe: recipe,
+              ),
             ),
       floatingActionButton: isLoading
           ? null

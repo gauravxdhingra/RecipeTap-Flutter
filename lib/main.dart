@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
                     ? HomeScreen()
                     : LoginPage(),
             HomeScreen.routeName: (context) => HomeScreen(),
-            SearchScreen.routeName: (context) => SearchScreen(),
+            // SearchScreen.routeName: (context) => SearchScreen(),
             RecipeViewPage.routeName: (context) => RecipeViewPage(),
           },
           // onGenerateRoute: (settings) {

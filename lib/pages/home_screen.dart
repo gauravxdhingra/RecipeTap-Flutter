@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
           HomeScreenWidget(),
           CategoriesScreen(),
           FavouritesScreen(),
-          SearchScreen(),
+          // SearchScreen(),
           SettingsScreen(),
         ],
         onPageChanged: (i) {
@@ -161,11 +161,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ]),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
               gap: 8,
               activeColor: Colors.white,
-              iconSize: 22,
+              iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               duration: Duration(milliseconds: 800),
               tabBackgroundColor: Colors.grey[800],
@@ -183,10 +183,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.favorite,
                   text: 'Favourites',
                 ),
-                GButton(
-                  icon: Icons.search,
-                  text: 'Search',
-                ),
+                // GButton(
+                //   icon: Icons.search,
+                //   text: 'Search',
+                // ),
                 GButton(
                   icon: Icons.account_circle,
                   text: 'Profile',

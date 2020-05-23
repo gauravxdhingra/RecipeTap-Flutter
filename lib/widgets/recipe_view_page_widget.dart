@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:recipetap/models/recipe_model.dart';
+import 'package:recipetap/provider/auth_provider.dart';
+import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 
-class RecipeViewPageWidget extends StatelessWidget {
+class RecipeViewPageWidget extends StatefulWidget {
   const RecipeViewPageWidget({
     Key key,
     @required this.headline,
@@ -47,6 +50,35 @@ class RecipeViewPageWidget extends StatelessWidget {
   final bool newWebsiteFooterNotesExist;
   final List cooksNotes;
   final RecipeModel recipe;
+
+  @override
+  _RecipeViewPageWidgetState createState() => _RecipeViewPageWidgetState();
+}
+
+class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
+  var _isLoading = false;
+
+  var isInit = false;
+
+  @override
+  void didChangeDependencies() async {
+    if (!isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
+        final email = Provider.of<AuthProvider>(context, listen: false).email;
+        print(email);
+        await Provider.of<RecentsProvider>(context, listen: false)
+            .addToRecents(widget.recipe, email);
+      // }
+      _isLoading = false;
+
+      isInit = true;
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +132,7 @@ class RecipeViewPageWidget extends StatelessWidget {
                   horizontal: 6,
                 ),
                 child: Text(
-                  headline ?? "",
+                  widget.headline ?? "",
                   style: TextStyle(
                     fontSize: 15,
                   ),
@@ -115,7 +147,7 @@ class RecipeViewPageWidget extends StatelessWidget {
                 color: Colors.white,
                 child: Swiper(
                   itemHeight: 200,
-                  itemCount: images.length,
+                  itemCount: widget.images.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ClipRRect(
                       borderRadius: BorderRadius.only(
@@ -123,7 +155,7 @@ class RecipeViewPageWidget extends StatelessWidget {
                         bottomRight: Radius.circular(45),
                       ),
                       child: Image.network(
-                        images[index],
+                        widget.images[index],
                         fit: BoxFit.cover,
                       ),
                     );
@@ -157,7 +189,7 @@ class RecipeViewPageWidget extends StatelessWidget {
                   vertical: 25,
                 ),
                 child: ReadMoreText(
-                  desc,
+                  widget.desc,
                   trimLines: 2,
                   colorClickableText: Colors.grey,
                   trimMode: TrimMode.Line,
@@ -180,7 +212,7 @@ class RecipeViewPageWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    if (timeExists)
+                    if (widget.timeExists)
                       Container(
                         height: 80,
                         width: MediaQuery.of(context).size.width / 5,
@@ -188,11 +220,11 @@ class RecipeViewPageWidget extends StatelessWidget {
                           children: <Widget>[
                             Icon(Icons.timer),
                             Text("Time"),
-                            Text(time ?? ""),
+                            Text(widget.time ?? ""),
                           ],
                         ),
                       ),
-                    if (servingsExist)
+                    if (widget.servingsExist)
                       Container(
                         height: 80,
                         width: MediaQuery.of(context).size.width / 5,
@@ -200,11 +232,11 @@ class RecipeViewPageWidget extends StatelessWidget {
                           children: <Widget>[
                             Icon(Icons.people_outline),
                             Text("Serves".toUpperCase()),
-                            Text(servings ?? "--"),
+                            Text(widget.servings ?? "--"),
                           ],
                         ),
                       ),
-                    if (nutritionalFactsExits)
+                    if (widget.nutritionalFactsExits)
                       Container(
                         height: 80,
                         width: MediaQuery.of(context).size.width / 5,
@@ -213,10 +245,10 @@ class RecipeViewPageWidget extends StatelessWidget {
                             Icon(Icons.restaurant_menu),
                             Text("Calories".toUpperCase()),
                             Text(
-                              nutritionalFactsExits
-                                  ? oldWebsite
-                                      ? nutritionalFacts[0]
-                                      : nutritionalFactsNew[0]
+                              widget.nutritionalFactsExits
+                                  ? widget.oldWebsite
+                                      ? widget.nutritionalFacts[0]
+                                      : widget.nutritionalFactsNew[0]
                                   : "--" ?? "--",
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
@@ -226,7 +258,7 @@ class RecipeViewPageWidget extends StatelessWidget {
                           ],
                         ),
                       ),
-                    if (yeildExists && oldWebsite == true)
+                    if (widget.yeildExists && widget.oldWebsite == true)
                       Container(
                         height: 80,
                         width: MediaQuery.of(context).size.width / 5,
@@ -235,8 +267,10 @@ class RecipeViewPageWidget extends StatelessWidget {
                             Icon(Icons.fastfood),
                             Text("YEILDS"),
                             Text(
-                              yeildExists
-                                  ? oldWebsite ? yeild ?? "--" : "--"
+                              widget.yeildExists
+                                  ? widget.oldWebsite
+                                      ? widget.yeild ?? "--"
+                                      : "--"
                                   : "--" ?? "--",
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
@@ -280,12 +314,13 @@ class RecipeViewPageWidget extends StatelessWidget {
                     // vertical: 25,
                   ),
                   child: ListTile(
-                    title: Text(ingredients[index]),
+                    title: Text(widget.ingredients[index]),
                   ),
                 );
               },
-              childCount:
-                  oldWebsite ? ingredients.length : ingredients.length - 2,
+              childCount: widget.oldWebsite
+                  ? widget.ingredients.length
+                  : widget.ingredients.length - 2,
             ),
           ),
           SliverToBoxAdapter(
@@ -317,19 +352,19 @@ class RecipeViewPageWidget extends StatelessWidget {
                     leading: CircleAvatar(
                       child: Text('# ${index + 1}'),
                     ),
-                    title: Text(directions[index] ?? ""),
+                    title: Text(widget.directions[index] ?? ""),
                   ),
                 );
                 // Text(directions[index]);
               },
-              childCount: directions.length - 1,
+              childCount: widget.directions.length - 1,
             ),
           ),
-          if (nutritionalFactsExits)
+          if (widget.nutritionalFactsExits)
             SliverToBoxAdapter(
               child: Divider(),
             ),
-          if (nutritionalFactsExits)
+          if (widget.nutritionalFactsExits)
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -342,18 +377,19 @@ class RecipeViewPageWidget extends StatelessWidget {
                 ),
               ),
             ),
-          if (nutritionalFactsExits)
+          if (widget.nutritionalFactsExits)
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                oldWebsite
+                widget.oldWebsite
                     ? (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10,
                           ),
                           child: ListTile(
-                            title: Text(
-                                nutritionalFacts[index].toString().trimRight()),
+                            title: Text(widget.nutritionalFacts[index]
+                                .toString()
+                                .trimRight()),
                           ),
                         );
                       }
@@ -363,21 +399,24 @@ class RecipeViewPageWidget extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                               horizontal: 10,
                             ),
-                            child: Text(
-                                nutritionalFactsNew[index].toString().trim()),
+                            child: Text(widget.nutritionalFactsNew[index]
+                                .toString()
+                                .trim()),
                           ),
                         );
                       },
-                childCount: oldWebsite
-                    ? nutritionalFacts.length - 1
-                    : nutritionalFactsNew.length,
+                childCount: widget.oldWebsite
+                    ? widget.nutritionalFacts.length - 1
+                    : widget.nutritionalFactsNew.length,
               ),
             ),
-          if ((oldWebsite && cooksNotesExits) || newWebsiteFooterNotesExist)
+          if ((widget.oldWebsite && widget.cooksNotesExits) ||
+              widget.newWebsiteFooterNotesExist)
             SliverToBoxAdapter(
               child: Divider(),
             ),
-          if ((oldWebsite && cooksNotesExits) || newWebsiteFooterNotesExist)
+          if ((widget.oldWebsite && widget.cooksNotesExits) ||
+              widget.newWebsiteFooterNotesExist)
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -390,10 +429,11 @@ class RecipeViewPageWidget extends StatelessWidget {
                 ),
               ),
             ),
-          if ((oldWebsite && cooksNotesExits) || newWebsiteFooterNotesExist)
+          if ((widget.oldWebsite && widget.cooksNotesExits) ||
+              widget.newWebsiteFooterNotesExist)
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                oldWebsite
+                widget.oldWebsite
                     ? (BuildContext context, int index) {
                         // print(cooksNotes.length);
                         return Padding(
@@ -402,7 +442,7 @@ class RecipeViewPageWidget extends StatelessWidget {
                             vertical: 10,
                           ),
                           child: ListTile(
-                            title: Text(cooksNotes[index].toString()
+                            title: Text(widget.cooksNotes[index].toString()
                                 // .substring(20)
                                 // .trim()
                                 ??
@@ -417,13 +457,14 @@ class RecipeViewPageWidget extends StatelessWidget {
                             horizontal: 10,
                           ),
                           child: ListTile(
-                            title: Text(cooksNotes[0][index].trim()),
+                            title: Text(widget.cooksNotes[0][index].trim()),
                           ),
                         );
                         // Text(cooksNotes[0][index].trim());
                       },
-                childCount:
-                    oldWebsite ? cooksNotes.length : cooksNotes[0].length,
+                childCount: widget.oldWebsite
+                    ? widget.cooksNotes.length
+                    : widget.cooksNotes[0].length,
               ),
             ),
           SliverToBoxAdapter(
