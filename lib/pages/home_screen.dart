@@ -3,10 +3,12 @@ import 'dart:ui';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:clay_containers/clay_containers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
@@ -21,6 +23,9 @@ import 'package:slimy_card/slimy_card.dart';
 
 // TODO GIPHY Navbar
 
+final GoogleSignIn googleSignIn = GoogleSignIn();
+final usersRef = Firestore.instance.collection('users');
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
   static const routeName = 'home_screen';
@@ -31,6 +36,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   bool isAuth = false;
+  bool signInSkipped = false;
+
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
   TextEditingController normalSearchController = TextEditingController();
@@ -53,8 +60,55 @@ class _HomeScreenState extends State<HomeScreen> {
     exclController = TextEditingController();
     normalSearchController = TextEditingController();
     pageController = PageController();
+
+    getUsersById();
     super.initState();
+    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+      handleSignIn(account);
+    }, onError: (err) {
+      print('Error Signing In: $err');
+    });
     // print(suggestions);
+    // REAUTH
+    googleSignIn
+        .signInSilently(
+      suppressErrors: false,
+    )
+        .then((account) {
+      handleSignIn(account);
+    }).catchError((err) {
+      print('Error Silently Signing In: $err');
+    });
+  }
+
+  handleSignIn(GoogleSignInAccount account) {
+    if (account != null) {
+      print('User:  $account');
+      setState(() {
+        isAuth = true;
+      });
+    } else {
+      setState(() {
+        isAuth = false;
+      });
+    }
+  }
+
+  // getUsers() {
+  //   usersRef.getDocuments().then((QuerySnapshot snapshot) {
+  //     snapshot.documents.forEach((DocumentSnapshot doc) {
+  //       doc.data;
+  //     });
+  //   });
+  // }
+// TODO: Min SDK 16
+  getUsersById() async {
+    String id = "grvdhingra1999@gmail.com";
+    DocumentSnapshot doc = await usersRef.document(id).get();
+
+    print(doc.data);
+    print(doc.documentID);
+    print(doc.exists);
   }
 
   List<String> suggestions = SearchSuggestions.suggestions;
@@ -88,10 +142,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var searchValue = '';
 
+  login() {
+    googleSignIn.signIn();
+  }
+
+  logout() {
+    googleSignIn.signOut();
+  }
+
   loginPage() {
     return Scaffold(
       body: Container(
-        color: Colors.blue,
+        color: Colors.red,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text('SIGN IN'),
+            FlatButton(
+              onPressed: login,
+              child: Text(
+                'Sign In With Google',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            FlatButton(
+              onPressed: () {},
+              child: Text(
+                'Skip SignIn',
+                style: TextStyle(
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -116,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _selectedIndex = i;
                 setState(() {});
               },
-              pageSnapping: true,
+              pageSnapping: false,
             )
           : loginPage(),
       bottomNavigationBar: isAuth
@@ -160,8 +247,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                     selectedIndex: _selectedIndex,
                     onTabChange: (index) {
+                      // if (index == 0) {
+                      //   logout();
+                      // }
+
                       setState(() {
-                        pageController.jumpToPage(index);
+                        pageController.animateToPage(
+                          index,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.fastOutSlowIn,
+                        );
                         _selectedIndex = index;
                       });
                     },
