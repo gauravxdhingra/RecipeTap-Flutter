@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
@@ -18,6 +19,7 @@ import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/pages/settings_screen.dart';
 import 'package:recipetap/widgets/home_screen_widget.dart';
+import '../provider/auth_provider.dart';
 // import 'package:simple_search_bar/simple_search_bar.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -197,6 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<AuthProvider>(context);
     return Scaffold(
       // TODO Custom Name Appbar
       // TODO: Searchlist images resolution full

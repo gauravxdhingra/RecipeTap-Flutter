@@ -5,13 +5,14 @@ import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/pages/login_page.dart';
 import 'package:recipetap/pages/search_screen.dart';
+import './provider/auth_provider.dart';
 import 'package:recipetap/utility/route_generator.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
 
 import 'pages/recipe_view_page.dart';
 
 void main() {
-  runApp(Provider(child: MyApp()));
+  runApp(MyApp());
 }
 
 // TODO: Handle Text Overflows Everywhere in the app
@@ -49,7 +50,10 @@ class MyApp extends StatelessWidget {
         '/':
             // (context) => LoginPage(),
             (context) => HomeScreen(),
-        HomeScreen.routeName: (context) => HomeScreen(),
+        HomeScreen.routeName: (context) => ChangeNotifierProvider<AuthProvider>(
+              child: HomeScreen(),
+              create: (context) => AuthProvider(),
+            ),
         SearchScreen.routeName: (context) => SearchScreen(),
         RecipeViewPage.routeName: (context) => RecipeViewPage(),
       },
