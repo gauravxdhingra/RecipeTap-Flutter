@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
     normalSearchController = TextEditingController();
     pageController = PageController();
 
-    getUsersById();
+    // getUsersById();
     super.initState();
     // googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
     //   handleSignIn(account);
@@ -86,6 +86,25 @@ class _HomeScreenState extends State<HomeScreen> {
     //   print('Error Silently Signing In: $err');
     // });
   }
+
+//  var isInit = false;
+//  var _isLoading=false;
+
+//   @override
+//   void didChangeDependencies() {
+//      if (!isInit) {
+//       setState(() {
+//         _isLoading = true;
+//       });
+
+//       Provider.of<AuthProvider>(context)..then((_) {
+//         _isLoading = false;
+//       });
+//       isInit = true;
+//     }
+//     super.didChangeDependencies();
+
+//   }
 
   // handleSignIn(GoogleSignInAccount account) {
   //   if (account != null) {
@@ -201,97 +220,91 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
     return Scaffold(
-      // TODO Custom Name Appbar
       // TODO: Searchlist images resolution full
 
-      body: (isAuth || authSkipped)
-          ? PageView(
-              controller: pageController,
-              children: <Widget>[
-                HomeScreenWidget(
-                  isAuth: isAuth,
-                  email: email,
-                  username: username,
-                  profilePhotoUrl: profilePhotoUrl,
-                  authSkipped: authSkipped,
+      body: PageView(
+        controller: pageController,
+        children: <Widget>[
+          HomeScreenWidget(
+            isAuth: isAuth,
+            email: email,
+            username: username,
+            profilePhotoUrl: profilePhotoUrl,
+            authSkipped: authSkipped,
+          ),
+          CategoriesScreen(),
+          FavouritesScreen(),
+          SearchScreen(),
+          SettingsScreen(
+            isAuth: isAuth,
+            email: email,
+            username: username,
+            profilePhotoUrl: profilePhotoUrl,
+            authSkipped: authSkipped,
+          ),
+        ],
+        onPageChanged: (i) {
+          _selectedIndex = i;
+          setState(() {});
+        },
+        // pageSnapping: false,
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+        ]),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+            child: GNav(
+              gap: 8,
+              activeColor: Colors.white,
+              iconSize: 22,
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              duration: Duration(milliseconds: 800),
+              tabBackgroundColor: Colors.grey[800],
+              tabs: [
+                GButton(
+                  icon: Icons.home,
+                  text: 'Home',
                 ),
-                CategoriesScreen(),
-                FavouritesScreen(),
-                SearchScreen(),
-                SettingsScreen(
-                  isAuth: isAuth,
-                  email: email,
-                  username: username,
-                  profilePhotoUrl: profilePhotoUrl,
-                  authSkipped: authSkipped,
+                // TODO Category pageview
+                GButton(
+                  icon: Icons.category,
+                  text: 'Categories',
+                ),
+                GButton(
+                  icon: Icons.favorite,
+                  text: 'Favourites',
+                ),
+                GButton(
+                  icon: Icons.search,
+                  text: 'Search',
+                ),
+                GButton(
+                  icon: Icons.account_circle,
+                  text: 'Profile',
                 ),
               ],
-              onPageChanged: (i) {
-                _selectedIndex = i;
-                setState(() {});
-              },
-              // pageSnapping: false,
-            )
-          : loginPage(),
-      bottomNavigationBar: (isAuth || authSkipped)
-          ? Container(
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
-              ]),
-              child: SafeArea(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-                  child: GNav(
-                    gap: 8,
-                    activeColor: Colors.white,
-                    iconSize: 22,
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                    duration: Duration(milliseconds: 800),
-                    tabBackgroundColor: Colors.grey[800],
-                    tabs: [
-                      GButton(
-                        icon: Icons.home,
-                        text: 'Home',
-                      ),
-                      // TODO Category pageview
-                      GButton(
-                        icon: Icons.category,
-                        text: 'Categories',
-                      ),
-                      GButton(
-                        icon: Icons.favorite,
-                        text: 'Favourites',
-                      ),
-                      GButton(
-                        icon: Icons.search,
-                        text: 'Search',
-                      ),
-                      GButton(
-                        icon: Icons.account_circle,
-                        text: 'Profile',
-                      ),
-                    ],
-                    selectedIndex: _selectedIndex,
-                    onTabChange: (index) {
-                      // if (index == 0) {
-                      //   logout();
-                      // }
+              selectedIndex: _selectedIndex,
+              onTabChange: (index) {
+                // if (index == 0) {
+                //   logout();
+                // }
 
-                      setState(() {
-                        pageController.animateToPage(
-                          index,
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.fastOutSlowIn,
-                        );
-                        _selectedIndex = index;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            )
-          : null,
+                setState(() {
+                  pageController.animateToPage(
+                    index,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.fastOutSlowIn,
+                  );
+                  _selectedIndex = index;
+                });
+              },
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

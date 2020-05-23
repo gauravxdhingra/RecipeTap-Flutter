@@ -15,7 +15,7 @@ class AuthProvider with ChangeNotifier {
   String email;
 
   bool get isAuth {
-    return isAuth;
+    return isAuthh;
   }
 
   tryGoogleSignIn() {

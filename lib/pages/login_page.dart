@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipetap/pages/home_screen.dart';
+import '../provider/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -8,6 +11,39 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var _isLoading = false;
+
+  var isInit = false;
+
+  @override
+  void didChangeDependencies() async {
+    if (!isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      await Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
+
+      _isLoading = false;
+
+      isInit = true;
+    }
+    super.didChangeDependencies();
+  }
+
+  Future<void> _submit() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await Provider.of<AuthProvider>(context, listen: false).login();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Text('SIGN IN'),
             FlatButton(
-              onPressed: login,
+              onPressed: _submit,
               child: Text(
                 'Sign In With Google',
                 style: TextStyle(
@@ -30,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             FlatButton(
               onPressed: () {
                 setState(() {
-                  authSkipped = true;
+                  // authSkipped = true;
                 });
               },
               child: Text(

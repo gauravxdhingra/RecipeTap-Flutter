@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           value: RecentsProvider(),
         ),
       ],
-      child: Consumer(
+      child: Consumer<AuthProvider>(
         builder: (ctx, auth, _) => MaterialApp(
           title: 'RecipeTap',
           debugShowCheckedModeBanner: false,
