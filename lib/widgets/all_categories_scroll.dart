@@ -32,10 +32,11 @@ class AllCategoriesScroll extends StatelessWidget {
                       Radius.circular(40),
                     ),
               image: DecorationImage(
-                image: NetworkImage(
-                  categoriesMap[categoriesMap.keys.toList()[0]]["imageUrl"]
-                      ["imageUrl"],
-                ),
+                image: AssetImage('assets/images/categories/mealtype.jpg'),
+                // NetworkImage(
+                //   categoriesMap[categoriesMap.keys.toList()[0]]["imageUrl"]
+                //       ["imageUrl"],
+                // ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -112,10 +113,11 @@ class AllCategoriesScroll extends StatelessWidget {
               //     color: Colors.green,
               //     style: BorderStyle.solid),
               image: DecorationImage(
-                image: NetworkImage(
-                  categoriesMap[categoriesMap.keys.toList()[2]]["imageUrl"]
-                      ["imageUrl"],
-                ),
+                image: AssetImage('assets/images/categories/dietandhealth.jpg'),
+                //  NetworkImage(
+                //   categoriesMap[categoriesMap.keys.toList()[2]]["imageUrl"]
+                //       ["imageUrl"],
+                // ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -191,10 +193,11 @@ class AllCategoriesScroll extends StatelessWidget {
               //     color: Colors.green,
               //     style: BorderStyle.solid),
               image: DecorationImage(
-                image: NetworkImage(
-                  categoriesMap[categoriesMap.keys.toList()[3]]["imageUrl"]
-                      ["imageUrl"],
-                ),
+                image: AssetImage('assets/images/categories/seasonal.jpg'),
+                //  NetworkImage(
+                //   categoriesMap[categoriesMap.keys.toList()[3]]["imageUrl"]
+                //       ["imageUrl"],
+                // ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -271,10 +274,11 @@ class AllCategoriesScroll extends StatelessWidget {
               //     color: Colors.green,
               //     style: BorderStyle.solid),
               image: DecorationImage(
-                image: NetworkImage(
-                  categoriesMap[categoriesMap.keys.toList()[4]]["imageUrl"]
-                      ["imageUrl"],
-                ),
+                image: AssetImage('assets/images/categories/dishtype.jpg'),
+                //  NetworkImage(
+                //   categoriesMap[categoriesMap.keys.toList()[4]]["imageUrl"]
+                //       ["imageUrl"],
+                // ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -350,10 +354,11 @@ class AllCategoriesScroll extends StatelessWidget {
               //     color: Colors.green,
               //     style: BorderStyle.solid),
               image: DecorationImage(
-                image: NetworkImage(
-                  categoriesMap[categoriesMap.keys.toList()[5]]["imageUrl"]
-                      ["imageUrl"],
-                ),
+                image: AssetImage('assets/images/categories/cookingstyle.jpg'),
+                //  NetworkImage(
+                //   categoriesMap[categoriesMap.keys.toList()[5]]["imageUrl"]
+                //       ["imageUrl"],
+                // ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -429,10 +434,11 @@ class AllCategoriesScroll extends StatelessWidget {
               //     color: Colors.green,
               //     style: BorderStyle.solid),
               image: DecorationImage(
-                image: NetworkImage(
-                  categoriesMap[categoriesMap.keys.toList()[6]]["imageUrl"]
-                      ["imageUrl"],
-                ),
+                image: AssetImage('assets/images/categories/worldcuisine.jpg'),
+                // NetworkImage(
+                //   categoriesMap[categoriesMap.keys.toList()[6]]["imageUrl"]
+                //       ["imageUrl"],
+                // ),
                 fit: BoxFit.cover,
               ),
             ),

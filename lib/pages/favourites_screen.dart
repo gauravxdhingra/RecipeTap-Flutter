@@ -62,6 +62,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
             children: <Widget>[
               Text('RECENTS'),
               BuildRecentsInFavourites(recentRecipesList: recentRecipesList),
+              // TODO : Timeago
               Row(
                 children: <Widget>[
                   Text('Favourites'),
