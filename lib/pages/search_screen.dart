@@ -99,21 +99,22 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: <Widget>[
                     Text('Include'),
                     Container(
-                        width: MediaQuery.of(context).size.width * 2 / 3,
-                        child: ChipsInput(
-                          chipBuilder: null,
-                          suggestionBuilder: null,
-                          findSuggestions: null,
-                          onChanged: null,
-                        )
-                        //  SimpleAutoCompleteTextField(
-                        //   key: key,
-                        //   suggestions: suggestions,
-                        //   // textChanged: (query) => suggestions.add(query),
+                      width: MediaQuery.of(context).size.width * 2 / 3,
+                      child:
+                          // ChipsInput(
+                          //   chipBuilder: null,
+                          //   suggestionBuilder: null,
+                          //   findSuggestions: null,
+                          //   onChanged: null,
+                          // )
+                          SimpleAutoCompleteTextField(
+                        key: key,
+                        suggestions: suggestions,
+                        // textChanged: (query) => suggestions.add(query),
 
-                        //   controller: inclController,
-                        // ),
-                        ),
+                        controller: inclController,
+                      ),
+                    ),
                   ],
                 ),
               ),

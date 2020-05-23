@@ -1,7 +1,9 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
 import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
@@ -11,6 +13,7 @@ import 'package:recipetap/provider/auth_provider.dart';
 // import 'package:search_app_bar/search_app_bar.dart';
 // import 'package:simple_search_bar/simple_search_bar.dart';
 import 'package:slimy_card/slimy_card.dart';
+import './search_home_widget.dart';
 
 class HomeScreenWidget extends StatefulWidget {
   @override
@@ -27,11 +30,32 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   String username;
   String email;
 
+  TextEditingController inclController = TextEditingController();
+  TextEditingController exclController = TextEditingController();
+  // TextEditingController normalSearchController = TextEditingController();
+
+  // GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
+
+  // GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
+
+  var searchValue = '';
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    inclController = TextEditingController();
+    exclController = TextEditingController();
     controller = TextEditingController();
+  }
+
+  List<String> suggestions = SearchSuggestions.suggestions;
+  @override
+  void dispose() {
+    inclController.dispose();
+    exclController.dispose();
+    controller.dispose();
+    super.dispose();
   }
 
   var _isLoading = false;
@@ -74,13 +98,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: !search
@@ -99,8 +116,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(60),
-                          bottomRight: Radius.circular(60),
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
                         ),
                         boxShadow: [
                           // BoxShadow(color: Colors.black45),
@@ -111,6 +128,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                             offset: Offset(0.1, 2.1),
                           ),
                         ],
+                      ),
+                      child: SearchHomeWidget(
+                        controller: controller,
+                        // key: key,
+                        suggestions: suggestions,
+                        inclController: inclController,
+                        // keyy: keyy,
+                        exclController: exclController,
+                        submitSearch: submitSearch,
                       ),
                     ),
                   ],
