@@ -103,6 +103,9 @@ class AuthProvider with ChangeNotifier {
         "photoUrl": profilePhotoUrll,
         "username": usernamee,
       });
+
+      doc = await usersRef.document(emaill).get();
+      notifyListeners();
     }
     currentUser = User.fromDocument(doc);
   }

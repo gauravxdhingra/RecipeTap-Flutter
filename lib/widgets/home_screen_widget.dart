@@ -85,6 +85,38 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     return Scaffold(
       appBar: !search
           ? AppBar(
+              elevation: 0,
+              bottom: PreferredSize(
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 200,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                    ),
+                    Container(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(60),
+                          bottomRight: Radius.circular(60),
+                        ),
+                        boxShadow: [
+                          // BoxShadow(color: Colors.black45),
+                          BoxShadow(
+                            blurRadius: 0.6,
+                            spreadRadius: 0.6,
+                            color: Colors.black45,
+                            offset: Offset(0.1, 2.1),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                preferredSize: Size.fromHeight(200),
+              ),
               leading: Center(
                   child: CircleAvatar(
                 backgroundColor: Theme.of(context).primaryColor,
@@ -107,9 +139,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(isAuth
-                      ? 'Welcome, ${username.split(" ")[0]}!'
-                      : 'Welcome!'),
+                  Text(
+                    isAuth ? 'Welcome, ${username.split(" ")[0]}!' : 'Welcome!',
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
                     child: Text(
