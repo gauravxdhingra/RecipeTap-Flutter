@@ -25,8 +25,8 @@ import 'package:slimy_card/slimy_card.dart';
 
 // TODO GIPHY Navbar
 
-final GoogleSignIn googleSignIn = GoogleSignIn();
-final usersRef = Firestore.instance.collection('users');
+// final GoogleSignIn googleSignIn = GoogleSignIn();
+// final usersRef = Firestore.instance.collection('users');
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -69,11 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     getUsersById();
     super.initState();
-    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-      handleSignIn(account);
-    }, onError: (err) {
-      print('Error Signing In: $err');
-    });
+    // googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+    //   handleSignIn(account);
+    // }, onError: (err) {
+    //   print('Error Signing In: $err');
+    // });
     // print(suggestions);
     // REAUTH
     // googleSignIn
@@ -87,22 +87,22 @@ class _HomeScreenState extends State<HomeScreen> {
     // });
   }
 
-  handleSignIn(GoogleSignInAccount account) {
-    if (account != null) {
-      print('User:  $account');
-      username = account.displayName;
-      profilePhotoUrl = account.photoUrl;
-      email = account.email;
+  // handleSignIn(GoogleSignInAccount account) {
+  //   if (account != null) {
+  //     print('User:  $account');
+  //     username = account.displayName;
+  //     profilePhotoUrl = account.photoUrl;
+  //     email = account.email;
 
-      setState(() {
-        isAuth = true;
-      });
-    } else {
-      setState(() {
-        isAuth = false;
-      });
-    }
-  }
+  //     setState(() {
+  //       isAuth = true;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       isAuth = false;
+  //     });
+  //   }
+  // }
 
   // getUsers() {
   //   usersRef.getDocuments().then((QuerySnapshot snapshot) {
@@ -112,14 +112,14 @@ class _HomeScreenState extends State<HomeScreen> {
   //   });
   // }
 // TODO: Min SDK 16
-  getUsersById() async {
-    String id = "grvdhingra1999@gmail.com";
-    DocumentSnapshot doc = await usersRef.document(id).get();
+  // getUsersById() async {
+  //   String id = "grvdhingra1999@gmail.com";
+  //   DocumentSnapshot doc = await usersRef.document(id).get();
 
-    print(doc.data);
-    print(doc.documentID);
-    print(doc.exists);
-  }
+  //   print(doc.data);
+  //   print(doc.documentID);
+  //   print(doc.exists);
+  // }
 
   List<String> suggestions = SearchSuggestions.suggestions;
   @override
@@ -152,50 +152,50 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var searchValue = '';
 
-  login() {
-    googleSignIn.signIn();
-  }
+  // login() {
+  //   googleSignIn.signIn();
+  // }
 
-  logout() {
-    googleSignIn.signOut();
-  }
+  // logout() {
+  //   googleSignIn.signOut();
+  // }
 
-  loginPage() {
-    return Scaffold(
-      body: Container(
-        color: Colors.red,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text('SIGN IN'),
-            FlatButton(
-              onPressed: login,
-              child: Text(
-                'Sign In With Google',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            FlatButton(
-              onPressed: () {
-                setState(() {
-                  authSkipped = true;
-                });
-              },
-              child: Text(
-                'Skip SignIn',
-                style: TextStyle(
-                  color: Colors.yellow,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // loginPage() {
+  //   return Scaffold(
+  //     body: Container(
+  //       color: Colors.red,
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         children: <Widget>[
+  //           Text('SIGN IN'),
+  //           FlatButton(
+  //             onPressed: login,
+  //             child: Text(
+  //               'Sign In With Google',
+  //               style: TextStyle(
+  //                 color: Colors.white,
+  //               ),
+  //             ),
+  //           ),
+  //           FlatButton(
+  //             onPressed: () {
+  //               setState(() {
+  //                 authSkipped = true;
+  //               });
+  //             },
+  //             child: Text(
+  //               'Skip SignIn',
+  //               style: TextStyle(
+  //                 color: Colors.yellow,
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
