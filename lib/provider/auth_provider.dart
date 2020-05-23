@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../models/userdata.dart';
 // import 'package:provider/provider.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final usersRef = Firestore.instance.collection('users');
+User currentUser;
 
 class AuthProvider with ChangeNotifier {
   bool isAuthh = false;
@@ -58,7 +60,7 @@ class AuthProvider with ChangeNotifier {
       usernamee = account.displayName;
       profilePhotoUrll = account.photoUrl;
       emaill = account.email;
-
+      addUserToDatabase(emaill, usernamee, profilePhotoUrll);
       // setState(() {
       isAuthh = true;
       notifyListeners();
@@ -85,5 +87,23 @@ class AuthProvider with ChangeNotifier {
     authSkippedd = true;
     isAuthh = false;
     notifyListeners();
+  }
+
+  addUserToDatabase(
+      String emaill, String usernamee, String profilePhotoUrll) async {
+    DocumentSnapshot doc = await usersRef.document(emaill).get();
+
+    if (doc.exists) {
+      print(doc.data);
+      print(doc.documentID);
+      print(doc.exists);
+    } else {
+      await usersRef.document(emaill).setData({
+        "email": emaill,
+        "photoUrl": profilePhotoUrll,
+        "username": usernamee,
+      });
+    }
+    currentUser = User.fromDocument(doc);
   }
 }
