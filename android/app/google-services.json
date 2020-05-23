@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "306531039991",
+    "firebase_url": "https://recipetap-88326.firebaseio.com",
+    "project_id": "recipetap-88326",
+    "storage_bucket": "recipetap-88326.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306531039991:android:e19db65f84a759e14f71f2",
+        "android_client_info": {
+          "package_name": "com.guravxdhingra.recipetap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306531039991-b4q2lca2pupoo2sin82232edp1ksv7b9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guravxdhingra.recipetap",
+            "certificate_hash": "4145b6591c2b4bc5d84dd4325fb52e47f069bff7"
+          }
+        },
+        {
+          "client_id": "306531039991-4293624b077s0mfqncib7l9kmd7cnl19.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1_Xz6tSBW9E9L4t_HdnjnWlyT_WzIfJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306531039991-4293624b077s0mfqncib7l9kmd7cnl19.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

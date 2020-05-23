@@ -138,7 +138,11 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   Widget build(BuildContext context) {
     return Container(
       // color: Theme.of(context).primaryColor,
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(
+        top: 20.0,
+        right: 20,
+        left: 20,
+      ),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
@@ -183,7 +187,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
                                 ),
                                 child: Image.network(
                                   recipeCards[i].photoUrl,
-                                  height: 220,
+                                  height: 210,
                                   width: MediaQuery.of(context).size.width,
                                   fit: BoxFit.cover,
                                 ),

@@ -57,4 +57,11 @@ class MyApp extends StatelessWidget {
       onUnknownRoute: (_) => MaterialPageRoute(builder: (_) => AwwSnapScreen()),
     );
   }
+// TODO: Firebase Login
+// TODO: Favourites on Firebase
+// TODO: Recent Recipes on Firebase
+// TODO: Favourite categories on Firebse
+// TODO: Favoutite Category Options on Firebase
 }
+
+

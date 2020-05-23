@@ -1,6 +1,7 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/pages/search_results.dart';
 
@@ -76,7 +77,7 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Column(
             children: <Widget>[
               // Text('Search'),
-              CupertinoTextField(
+              TextField(
                 controller: normalSearchController,
                 autofocus: true,
               ),
@@ -98,14 +99,21 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: <Widget>[
                     Text('Include'),
                     Container(
-                      width: MediaQuery.of(context).size.width * 2 / 3,
-                      child: SimpleAutoCompleteTextField(
-                        key: key,
-                        suggestions: suggestions,
-                        // textChanged: (query) => suggestions.add(query),
-                        controller: inclController,
-                      ),
-                    ),
+                        width: MediaQuery.of(context).size.width * 2 / 3,
+                        child: ChipsInput(
+                          chipBuilder: null,
+                          suggestionBuilder: null,
+                          findSuggestions: null,
+                          onChanged: null,
+                        )
+                        //  SimpleAutoCompleteTextField(
+                        //   key: key,
+                        //   suggestions: suggestions,
+                        //   // textChanged: (query) => suggestions.add(query),
+
+                        //   controller: inclController,
+                        // ),
+                        ),
                   ],
                 ),
               ),
