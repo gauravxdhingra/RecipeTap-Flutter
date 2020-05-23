@@ -13,6 +13,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String profilePhotoUrl;
   String username;
   String email;
+  Function logout;
 
   var _isLoading = false;
 
@@ -32,6 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       email = auth.email;
       isAuth = auth.isAuth;
       authSkipped = auth.authSkipped;
+      logout = auth.logout;
       // if (authSkipped)
       // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
       _isLoading = false;
@@ -122,7 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       color: Colors.blue,
                                     ),
                                   ),
-                                  onTap: () {},
+                                  onTap: logout,
                                 ),
                               ],
                             )
