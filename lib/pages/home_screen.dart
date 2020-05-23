@@ -68,60 +68,33 @@ class _HomeScreenState extends State<HomeScreen> {
     pageController = PageController();
 
     // getUsersById();
+
     super.initState();
-    // googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-    //   handleSignIn(account);
-    // }, onError: (err) {
-    //   print('Error Signing In: $err');
-    // });
-    // print(suggestions);
-    // REAUTH
-    // googleSignIn
-    //     .signInSilently(
-    //   suppressErrors: false,
-    // )
-    //     .then((account) {
-    //   handleSignIn(account);
-    // }).catchError((err) {
-    //   print('Error Silently Signing In: $err');
-    // });
   }
 
-//  var isInit = false;
-//  var _isLoading=false;
+  var isInit = false;
+  var _isLoading = false;
 
-//   @override
-//   void didChangeDependencies() {
-//      if (!isInit) {
-//       setState(() {
-//         _isLoading = true;
-//       });
+  @override
+  void didChangeDependencies() {
+    if (!isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      final auth = Provider.of<AuthProvider>(context);
+      isAuth = auth.isAuth;
+      print(isAuth);
+      username = auth.username;
+      profilePhotoUrl = auth.profilePhotoUrl;
+      email = auth.email;
 
-//       Provider.of<AuthProvider>(context)..then((_) {
-//         _isLoading = false;
-//       });
-//       isInit = true;
-//     }
-//     super.didChangeDependencies();
+      // isAuth = true;
+      _isLoading = false;
 
-//   }
-
-  // handleSignIn(GoogleSignInAccount account) {
-  //   if (account != null) {
-  //     print('User:  $account');
-  //     username = account.displayName;
-  //     profilePhotoUrl = account.photoUrl;
-  //     email = account.email;
-
-  //     setState(() {
-  //       isAuth = true;
-  //     });
-  //   } else {
-  //     setState(() {
-  //       isAuth = false;
-  //     });
-  //   }
-  // }
+      isInit = true;
+    }
+    super.didChangeDependencies();
+  }
 
   // getUsers() {
   //   usersRef.getDocuments().then((QuerySnapshot snapshot) {
@@ -149,16 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  // submitSearch(incl, excl) {
-  //   Navigator.of(context).push(MaterialPageRoute(
-  //       builder: (context) => SearchResultsScreen(
-
-  //           url:
-  //               'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re')));
-  //   print(
-  //       'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re');
-  // }
-
   submitSearchNormal(String appbarTitle, String url) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SearchResultsScreen(
@@ -171,51 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var searchValue = '';
 
-  // login() {
-  //   googleSignIn.signIn();
-  // }
-
-  // logout() {
-  //   googleSignIn.signOut();
-  // }
-
-  // loginPage() {
-  //   return Scaffold(
-  //     body: Container(
-  //       color: Colors.red,
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         crossAxisAlignment: CrossAxisAlignment.center,
-  //         children: <Widget>[
-  //           Text('SIGN IN'),
-  //           FlatButton(
-  //             onPressed: login,
-  //             child: Text(
-  //               'Sign In With Google',
-  //               style: TextStyle(
-  //                 color: Colors.white,
-  //               ),
-  //             ),
-  //           ),
-  //           FlatButton(
-  //             onPressed: () {
-  //               setState(() {
-  //                 authSkipped = true;
-  //               });
-  //             },
-  //             child: Text(
-  //               'Skip SignIn',
-  //               style: TextStyle(
-  //                 color: Colors.yellow,
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
@@ -225,13 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: pageController,
         children: <Widget>[
-          HomeScreenWidget(
-            isAuth: isAuth,
-            email: email,
-            username: username,
-            profilePhotoUrl: profilePhotoUrl,
-            authSkipped: authSkipped,
-          ),
+          HomeScreenWidget(),
           CategoriesScreen(),
           FavouritesScreen(),
           SearchScreen(),
@@ -308,21 +220,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-// Container(
-//   height: 200,
-//   child: FloatingSearchBar(
-//     children: <Widget>[
-//       // Text(searchValue),
-//     ],
-//     onChanged: (String value) {
-//       searchValue = value;
-//     },
-//     onTap: () {},
-//     body: Text(""),
-//     pinned: true,
-//     decoration: InputDecoration.collapsed(
-//       hintText: "Search For Your Favourite Recipes...",
-//     ),
-//   ),
-// ),

@@ -37,11 +37,6 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     await Provider.of<AuthProvider>(context, listen: false).login();
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => HomeScreen(),
-      ),
-    );
   }
 
   @override
