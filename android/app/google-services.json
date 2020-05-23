@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:306531039991:android:e19db65f84a759e14f71f2",
+        "mobilesdk_app_id": "1:306531039991:android:9712b63a77b5b7494f71f2",
         "android_client_info": {
-          "package_name": "com.guravxdhingra.recipetap"
+          "package_name": "com.gauravxdhingra.recipetap"
         }
       },
       "oauth_client": [
         {
-          "client_id": "306531039991-b4q2lca2pupoo2sin82232edp1ksv7b9.apps.googleusercontent.com",
+          "client_id": "306531039991-eji37pnudb7e47l531skul6a8jqfibde.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.guravxdhingra.recipetap",
+            "package_name": "com.gauravxdhingra.recipetap",
             "certificate_hash": "4145b6591c2b4bc5d84dd4325fb52e47f069bff7"
           }
         },

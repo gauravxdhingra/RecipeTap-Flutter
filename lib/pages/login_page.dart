@@ -10,6 +10,22 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Text("Sign In"),
+            FlatButton(
+              onPressed: () {},
+              child: Text('Google Sign In Now'),
+            ),
+            FlatButton(
+              onPressed: () {},
+              child: Text('Skip'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
