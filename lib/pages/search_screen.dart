@@ -79,7 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
               // Text('Search'),
               TextField(
                 controller: normalSearchController,
-                autofocus: true,
+                // autofocus: true,
               ),
               // FlatButton(
               //   child: Text('Search Recipe by name'),

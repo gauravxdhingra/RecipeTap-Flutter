@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/pages/login_page.dart';
@@ -10,7 +11,7 @@ import 'package:recipetap/widgets/loading_spinner.dart';
 import 'pages/recipe_view_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Provider(child: MyApp()));
 }
 
 // TODO: Handle Text Overflows Everywhere in the app

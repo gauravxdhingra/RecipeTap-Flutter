@@ -36,7 +36,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   bool isAuth = false;
-  bool signInSkipped = false;
+  bool authSkipped = false;
 
   String username;
   String profilePhotoUrl;
@@ -74,21 +74,21 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     // print(suggestions);
     // REAUTH
-    googleSignIn
-        .signInSilently(
-      suppressErrors: false,
-    )
-        .then((account) {
-      handleSignIn(account);
-    }).catchError((err) {
-      print('Error Silently Signing In: $err');
-    });
+    // googleSignIn
+    //     .signInSilently(
+    //   suppressErrors: false,
+    // )
+    //     .then((account) {
+    //   handleSignIn(account);
+    // }).catchError((err) {
+    //   print('Error Silently Signing In: $err');
+    // });
   }
 
   handleSignIn(GoogleSignInAccount account) {
     if (account != null) {
       print('User:  $account');
-      username = account.displayName.split(" ")[0];
+      username = account.displayName;
       profilePhotoUrl = account.photoUrl;
       email = account.email;
 
@@ -177,7 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  authSkipped = true;
+                });
+              },
               child: Text(
                 'Skip SignIn',
                 style: TextStyle(
@@ -197,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // TODO Custom Name Appbar
       // TODO: Searchlist images resolution full
 
-      body: isAuth
+      body: (isAuth || authSkipped)
           ? PageView(
               controller: pageController,
               children: <Widget>[
@@ -206,6 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   email: email,
                   username: username,
                   profilePhotoUrl: profilePhotoUrl,
+                  authSkipped: authSkipped,
                 ),
                 CategoriesScreen(),
                 FavouritesScreen(),
@@ -215,6 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   email: email,
                   username: username,
                   profilePhotoUrl: profilePhotoUrl,
+                  authSkipped: authSkipped,
                 ),
               ],
               onPageChanged: (i) {
@@ -224,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // pageSnapping: false,
             )
           : loginPage(),
-      bottomNavigationBar: isAuth
+      bottomNavigationBar: (isAuth || authSkipped)
           ? Container(
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))

@@ -12,12 +12,13 @@ import 'package:slimy_card/slimy_card.dart';
 
 class HomeScreenWidget extends StatefulWidget {
   final bool isAuth;
+  final bool authSkipped;
   final String profilePhotoUrl;
   final String username;
   final String email;
 
   const HomeScreenWidget(
-      {Key key, this.isAuth, this.profilePhotoUrl, this.username, this.email})
+      {Key key, this.isAuth, this.profilePhotoUrl, this.username, this.email, this.authSkipped})
       : super(key: key);
 
   @override
@@ -82,7 +83,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(widget.isAuth
-                      ? 'Welcome, ${widget.username}!'
+                      ? 'Welcome, ${widget.username.split(" ")[0]}!'
                       : 'Welcome!'),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
