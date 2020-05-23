@@ -68,10 +68,10 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
       });
 
       // if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
-        final email = Provider.of<AuthProvider>(context, listen: false).email;
-        print(email);
-        await Provider.of<RecentsProvider>(context, listen: false)
-            .addToRecents(widget.recipe, email);
+      // final email = Provider.of<AuthProvider>(context, listen: false).email;
+      print(currentUser.email + " this");
+      await Provider.of<RecentsProvider>(context, listen: false)
+          .addToRecents(widget.recipe, currentUser.email);
       // }
       _isLoading = false;
 

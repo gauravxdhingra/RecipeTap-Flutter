@@ -81,7 +81,9 @@ class AuthProvider with ChangeNotifier {
   }
 
   logout() {
-    googleSignIn.signOut();
+    googleSignIn.signOut().then(
+          (value) => isAuthh = false,
+        );
     notifyListeners();
   }
 
