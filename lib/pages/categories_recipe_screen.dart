@@ -49,12 +49,16 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 
   @override
   void initState() {
-    // isLoading = true;
+    isLoading = true;
     categoryTitle = widget.categoryName;
     final String url = widget.url;
     _scaffoldKey = GlobalKey<ScaffoldState>();
     // 'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re';
-    getSearchResults(url);
+    getSearchResults(url).whenComplete(() {
+      Future.delayed(Duration(microseconds: 0)).then(
+        (value) => checkFav(),
+      );
+    });
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -62,27 +66,32 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         loadMore();
       }
     });
-    Future.delayed(Duration(microseconds: 0)).then(
-      (value) => checkFav(),
-    );
+    // Future.delayed(Duration(microseconds: 0)).then(
+    //   (value) => checkFav(),
+    // );
     super.initState();
   }
 
   checkFav() async {
-    if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
+    var isAuth = Provider.of<AuthProvider>(context, listen: false);
+    if (isAuth.isAuth) {
       isFav = await Provider.of<RecentsProvider>(context, listen: false)
           .checkIfFavCategory(
         categoryTitle,
         currentUser.email,
       );
     }
+    isLoading = false;
+    setState(() {
+      isLoading = false;
+    });
   }
 
-  getSearchResults(url) async {
+  Future<void> getSearchResults(url) async {
     // if (this.mounted) {
-    //   setState(() {
-    //     isLoading = true;
-    //   });
+    setState(() {
+      isLoading = true;
+    });
     // }
     print(url);
     final response = await http.get(url);
@@ -173,9 +182,6 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 
 // TODO check if setting state
     // if (this.mounted)
-    setState(() {
-      isLoading = false;
-    });
   }
 // TODO: Category recipe of the day
 // TODO: First Check if next Page Exists
@@ -298,6 +304,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     // isLoading = true;
     // TODO Layout: CatagoryOptions , CatagoryRecipes
     // TODO Loading Progress
+
     return Scaffold(
       key: _scaffoldKey,
       // TODO Collapsing AppBar
@@ -461,7 +468,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     color: Theme.of(context).primaryColor,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: Text(
-                      categoryDesc,
+                      categoryDesc ?? "",
                       textAlign: TextAlign.center,
                     ),
                   ),
