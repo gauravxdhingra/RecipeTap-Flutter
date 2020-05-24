@@ -19,14 +19,15 @@ import 'recipe_view_page.dart';
 
 class CategoryRecipesScreen extends StatefulWidget {
   final String url;
-  CategoryRecipesScreen({Key key, this.url}) : super(key: key);
+  final String categoryName;
+  CategoryRecipesScreen({Key key, this.url, this.categoryName})
+      : super(key: key);
 
   @override
   _CategoryRecipesScreenState createState() => _CategoryRecipesScreenState();
 }
 
 class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
-  bool isLoading = true;
   // static String incl; //= 'milk,sugar';
   // static String excl; //= 'salt,chicken';
 
@@ -34,7 +35,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 
   List<RecipeCard> recipeCards = [];
   List<CategoryOptionsRecipeCard> categoryOptionsRecipeCards = [];
-  String categoryTitle = "";
+  String categoryTitle;
   String categoryDesc;
   bool firstPage = true;
   int page = 2;
@@ -44,12 +45,16 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 
   ScrollController _scrollController = ScrollController();
 
+  bool isLoading = true;
+
   @override
   void initState() {
+    // isLoading = true;
+    categoryTitle = widget.categoryName;
     final String url = widget.url;
+    _scaffoldKey = GlobalKey<ScaffoldState>();
     // 'https://www.allrecipes.com/search/results/?ingIncl=$incl&ingExcl=$excl&sort=re';
     getSearchResults(url);
-    super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -57,9 +62,28 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         loadMore();
       }
     });
+    Future.delayed(Duration(microseconds: 0)).then(
+      (value) => checkFav(),
+    );
+    super.initState();
+  }
+
+  checkFav() async {
+    if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
+      isFav = await Provider.of<RecentsProvider>(context, listen: false)
+          .checkIfFavCategory(
+        categoryTitle,
+        currentUser.email,
+      );
+    }
   }
 
   getSearchResults(url) async {
+    // if (this.mounted) {
+    //   setState(() {
+    //     isLoading = true;
+    //   });
+    // }
     print(url);
     final response = await http.get(url);
     dom.Document document = parser.parse(response.body);
@@ -148,6 +172,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     // print(recipeCards);
 
 // TODO check if setting state
+    // if (this.mounted)
     setState(() {
       isLoading = false;
     });
@@ -222,44 +247,37 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     // page++;
   }
 
-  var _isLoading = false;
-  var isInit = false;
+  // // var _isLoading = false;
+  // var isInit = false;
 
-  @override
-  void didChangeDependencies() async {
-    if (!isInit) {
-      setState(() {
-        isLoading = true;
-      });
+  // @override
+  // void didChangeDependencies() async {
+  //   if (!isInit) {
+  //     if (this.mounted)
+  //       setState(() {
+  //         isLoading = true;
+  //       });
 
-      if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
-        // final email = Provider.of<AuthProvider>(context, listen: false).email;
-        // print(currentUser.email + " this");
+  //     if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
+  //       isFav = await Provider.of<RecentsProvider>(context, listen: false)
+  //           .checkIfFavCategory(
+  //         categoryTitle,
+  //         currentUser.email,
+  //       );
+  //     }
 
-        // addToFavorites =
-        //     await Provider.of<RecentsProvider>(context, listen: false)
-        //         .addToFavourites(widget.recipe, currentUser.email);
+  //     // setState(() {
+  //     //   _isLoading = false;
+  //     // });
+  //     if (this.mounted)
+  //       setState(() {
+  //         isLoading = false;
+  //       });
 
-        // Check for fav
-
-        isFav = await Provider.of<RecentsProvider>(context, listen: false)
-            .checkIfFavCategory(
-          categoryTitle,
-          currentUser.email,
-        );
-      }
-
-      // setState(() {
-      //   _isLoading = false;
-      // });
-      setState(() {
-        isLoading = false;
-      });
-
-      isInit = true;
-    }
-    super.didChangeDependencies();
-  }
+  //     isInit = true;
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   goToRecipe(url, coverImageUrl, context) {
     Navigator.push(
@@ -273,10 +291,11 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
+    // isLoading = true;
     // TODO Layout: CatagoryOptions , CatagoryRecipes
     // TODO Loading Progress
     return Scaffold(
@@ -347,7 +366,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
       //         elevation: 0,
       //       ),
       body: isLoading
-          ? LoadingCategoryRecipes()
+          ? CircularProgressIndicator()
           : CustomScrollView(
               physics: BouncingScrollPhysics(),
               controller: _scrollController,

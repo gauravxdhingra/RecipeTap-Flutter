@@ -266,6 +266,7 @@ class RecentsProvider with ChangeNotifier {
     // final recipeurl1 = url.split("/recipe/")[1];
     // final recipeurll =
     //     recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
+    print(category+"*************************************************************************");
     DocumentSnapshot doc = await favoriteCategoriesRef
         .document(email)
         .collection('favs')

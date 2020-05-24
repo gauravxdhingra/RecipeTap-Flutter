@@ -9,11 +9,14 @@ class AllCategoriesScroll extends StatelessWidget {
   }) : super(key: key);
 
   final Map<String, Map<String, Map<String, String>>> categoriesMap;
-  mealsFromCategory(categoryUrl, context) {
+  mealsFromCategory(categoryUrl, categoryname, context) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => CategoryRecipesScreen(url: categoryUrl)));
+            builder: (context) => CategoryRecipesScreen(
+                  url: categoryUrl,
+                  categoryName: categoryname,
+                )));
   }
 
   @override
@@ -82,6 +85,10 @@ class AllCategoriesScroll extends StatelessWidget {
                                     ["categories"]
                                 .keys
                                 .toList()[i]],
+                        categoriesMap[categoriesMap.keys.toList()[0]]
+                                ["categories"]
+                            .keys
+                            .toList()[i],
                         context,
                         // .keys
                         // .toList()[i],
@@ -165,6 +172,10 @@ class AllCategoriesScroll extends StatelessWidget {
                                     ["categories"]
                                 .keys
                                 .toList()[i]],
+                        categoriesMap[categoriesMap.keys.toList()[2]]
+                                ["categories"]
+                            .keys
+                            .toList()[i],
                         context,
                         // .keys
                         // .toList()[i],
@@ -244,6 +255,10 @@ class AllCategoriesScroll extends StatelessWidget {
                                     ["categories"]
                                 .keys
                                 .toList()[i]],
+                        categoriesMap[categoriesMap.keys.toList()[3]]
+                                ["categories"]
+                            .keys
+                            .toList()[i],
                         context,
                         // .keys
                         // .toList()[i],
@@ -324,6 +339,10 @@ class AllCategoriesScroll extends StatelessWidget {
                                     ["categories"]
                                 .keys
                                 .toList()[i]],
+                        categoriesMap[categoriesMap.keys.toList()[4]]
+                                ["categories"]
+                            .keys
+                            .toList()[i],
                         context,
                         // .keys
                         // .toList()[i],
@@ -405,6 +424,10 @@ class AllCategoriesScroll extends StatelessWidget {
                                     ["categories"]
                                 .keys
                                 .toList()[i]],
+                        categoriesMap[categoriesMap.keys.toList()[5]]
+                                ["categories"]
+                            .keys
+                            .toList()[i],
                         context,
                         // .keys
                         // .toList()[i],
@@ -486,6 +509,10 @@ class AllCategoriesScroll extends StatelessWidget {
                                     ["categories"]
                                 .keys
                                 .toList()[i]],
+                        categoriesMap[categoriesMap.keys.toList()[6]]
+                                ["categories"]
+                            .keys
+                            .toList()[i],
                         context,
                         // .keys
                         // .toList()[i],
