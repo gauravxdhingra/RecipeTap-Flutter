@@ -64,6 +64,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   var isInit = false;
 
+  bool isSearch = false;
+
   @override
   void didChangeDependencies() async {
     if (!isInit) {
@@ -99,6 +101,34 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re');
   }
 
+  var closedContainerHeight = 10;
+  var openContainerHeight = 200;
+  BorderRadius openContainerBR = BorderRadius.only(
+    bottomLeft: Radius.circular(40),
+    bottomRight: Radius.circular(40),
+  );
+  BorderRadius closedContainerBR = BorderRadius.only(
+    bottomLeft: Radius.circular(40),
+    bottomRight: Radius.circular(40),
+  );
+  BoxShadow openContainerBS =
+      // BoxShadow(color: Colors.black45),
+      BoxShadow(
+    blurRadius: 0.6,
+    spreadRadius: 0.6,
+    color: Colors.black45,
+    offset: Offset(0.1, 2.1),
+  );
+
+  BoxShadow closedContainerBS = BoxShadow(
+    blurRadius: 0.3,
+    spreadRadius: 0.3,
+    color: Colors.black45,
+    offset: Offset(0.1, 2),
+  );
+
+  Duration duration = Duration(milliseconds: 400);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,61 +137,65 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         bottom: PreferredSize(
           child: Stack(
             children: [
-              Container(
-                height: 200,
+              AnimatedContainer(
+                duration: duration,
+                height: isSearch ? 200 : 10,
                 color: Theme.of(context).scaffoldBackgroundColor,
               ),
-              Container(
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
+              SingleChildScrollView(
+                child: AnimatedContainer(
+                  duration: duration,
+                  height: isSearch ? 200 : 10,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius:
+                        isSearch ? openContainerBR : closedContainerBR,
+                    boxShadow: [
+                      if (isSearch) openContainerBS else closedContainerBS,
+                    ],
                   ),
-                  boxShadow: [
-                    // BoxShadow(color: Colors.black45),
-                    BoxShadow(
-                      blurRadius: 0.6,
-                      spreadRadius: 0.6,
-                      color: Colors.black45,
-                      offset: Offset(0.1, 2.1),
-                    ),
-                  ],
-                ),
-                child: SearchHomeWidget(
-                  controller: controller,
-                  // key: key,
-                  suggestions: suggestions,
-                  inclController: inclController,
-                  // keyy: keyy,
-                  exclController: exclController,
-                  submitSearch: submitSearch,
+                  child: isSearch
+                      ? SingleChildScrollView(
+                          child: AnimatedContainer(
+                            
+                            duration: duration,
+                            child: SearchHomeWidget(
+                              controller: controller,
+                              // key: key,
+                              suggestions: suggestions,
+                              inclController: inclController,
+                              // keyy: keyy,
+                              exclController: exclController,
+                              submitSearch: submitSearch,
+                            ),
+                          ),
+                        )
+                      : null,
                 ),
               ),
             ],
           ),
-          preferredSize: Size.fromHeight(200),
+          preferredSize: isSearch ? Size.fromHeight(200) : Size.fromHeight(10),
         ),
         leading: Center(
-            child: CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: !(Provider.of<AuthProvider>(context, listen: false).isAuth)
-              ? Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: 32,
-                )
-              : ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    profilePhotoUrl,
-                    fit: BoxFit.cover,
+          child: CircleAvatar(
+            backgroundColor: Theme.of(context).primaryColor,
+            child: !(Provider.of<AuthProvider>(context, listen: false).isAuth)
+                ? Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 32,
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      profilePhotoUrl,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-          // backgroundColor: ,
-        )),
+          ),
+        ),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,17 +214,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             ),
           ],
         ),
-        // centerTitle: true,
-        // actions: <Widget>[
-        //   IconButton(
-        //       icon: Icon(Icons.search),
-        //       onPressed: () {
-        //         Provider.of<AuthProvider>(context, listen: false)
-        //             .logout();
-        //         // search = true;
-        //         // setState(() {});
-        //       })
-        // ],
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                // Provider.of<AuthProvider>(context, listen: false).logout();
+                isSearch = !isSearch;
+                setState(() {});
+              })
+        ],
       ),
       body: Container(
         child: SingleChildScrollView(
