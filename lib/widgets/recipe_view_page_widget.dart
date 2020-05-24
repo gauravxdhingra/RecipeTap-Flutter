@@ -129,6 +129,8 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                 ),
               ),
 
+
+
               // TODO Adjust max resolution for loading Images
               floatingPosition: FloatingPosition(
                   left: MediaQuery.of(context).size.width * 0.8),

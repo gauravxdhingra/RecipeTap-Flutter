@@ -80,12 +80,12 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // logout() {
-  //   googleSignIn.signOut().then(
-  //         (value) => isAuthh = false,
-  //       );
-  //   notifyListeners();
-  // }
+  logout() {
+    googleSignIn.signOut().then(
+          (value) => isAuthh = false,
+        );
+    notifyListeners();
+  }
 
   skipAuth() {
     authSkippedd = true;
