@@ -200,7 +200,7 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     ),
                     background: Container(
                       height: 200,
-                      color: Colors.white,
+                      color: Theme.of(context).scaffoldBackgroundColor,
                       child: Swiper(
                         itemHeight: 200,
                         itemCount: widget.images.length,

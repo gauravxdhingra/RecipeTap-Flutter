@@ -1,14 +1,19 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:provider/provider.dart';
 import 'package:recipetap/jump_screens/loading_category_recipes.dart';
 import 'package:recipetap/models/category_options_card.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/search_results.dart';
+import 'package:recipetap/provider/auth_provider.dart';
+import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
+import 'package:recipetap/models/category_model.dart';
 
 import 'recipe_view_page.dart';
 
@@ -29,7 +34,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 
   List<RecipeCard> recipeCards = [];
   List<CategoryOptionsRecipeCard> categoryOptionsRecipeCards = [];
-  String categoryTitle;
+  String categoryTitle = "";
   String categoryDesc;
   bool firstPage = true;
   int page = 2;
@@ -141,6 +146,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     });
     // print(recipeCards);
 
+// TODO check if setting state
     setState(() {
       isLoading = false;
     });
@@ -215,6 +221,46 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     // page++;
   }
 
+  bool isFav = false;
+  var _isLoading = false;
+  var isInit = false;
+  @override
+  void didChangeDependencies() async {
+    if (!isInit) {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
+        // final email = Provider.of<AuthProvider>(context, listen: false).email;
+        // print(currentUser.email + " this");
+
+        // addToFavorites =
+        //     await Provider.of<RecentsProvider>(context, listen: false)
+        //         .addToFavourites(widget.recipe, currentUser.email);
+
+        // Check for fav
+        setState(() async {
+          isFav = await Provider.of<RecentsProvider>(context, listen: false)
+              .checkIfFavCategory(
+            categoryTitle,
+            currentUser.email,
+          );
+        });
+      }
+
+      // setState(() {
+      //   _isLoading = false;
+      // });
+      setState(() {
+        isLoading = false;
+      });
+
+      isInit = true;
+    }
+    super.didChangeDependencies();
+  }
+
   goToRecipe(url, coverImageUrl, context) {
     Navigator.push(
       context,
@@ -227,231 +273,157 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     );
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     // TODO Layout: CatagoryOptions , CatagoryRecipes
     // TODO Loading Progress
-    return SafeArea(
-      child: Scaffold(
-        // backgroundColor: Theme.of(context).primaryColor,
-        // appBar: isLoading
-        //     ? AppBar()
-        //     : AppBar(
-        //         title: Text(categoryTitle),
-        //         elevation: 0,
-        //       ),
-        body: isLoading
-            ? LoadingCategoryRecipes()
-            : CustomScrollView(
-                physics: BouncingScrollPhysics(),
-                controller: _scrollController,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    title: isLoading ? Text("") : Text(categoryTitle),
-                    // elevation: 0.1,
-                    // expandedHeight: MediaQuery.of(context).size.height / 3,
-                    pinned: true,
-                    // backgroundColor: Colors.white,
-                    actions: <Widget>[
-                      IconButton(icon: Icon(Icons.favorite), onPressed: () {})
-                    ],
-                  ),
-                  SliverToBoxAdapter(
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        if (categoryOptionsRecipeCards.length != 0)
-                          Container(
-                            color: Theme.of(context).primaryColor,
-                            height: 170,
-                            // width: 400,
-                            child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              padding: EdgeInsets.only(
-                                top: 15,
-                                left: 15,
-                              ),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: categoryOptionsRecipeCards.length,
-                              itemBuilder: (context, i) => GestureDetector(
-                                onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SearchResultsScreen(
-                                                excl: "",
-                                                incl: "",
-                                                appBarTitle:
-                                                    categoryOptionsRecipeCards[
-                                                            i]
-                                                        .title,
-                                                url: categoryOptionsRecipeCards[
-                                                        i]
-                                                    .href))),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 15),
-                                  child: Container(
-                                    height: 110,
-                                    width: 100,
-                                    child: Column(
-                                      children: <Widget>[
-                                        ClayContainer(
-                                          // curveType: CurveType.convex,
-                                          borderRadius: 50,
-                                          surfaceColor:
-                                              Theme.of(context).primaryColor,
-                                          color: Theme.of(context).primaryColor,
-                                          parentColor:
-                                              Theme.of(context).primaryColor,
+    return Scaffold(
+      key: _scaffoldKey,
+      // TODO Collapsing AppBar
+      floatingActionButton: isLoading
+          ? null
+          : FloatingActionButton(
+              child: Icon(
+                isFav ? Icons.favorite : Icons.favorite_border,
+                size: 30,
+                color: Colors.white,
+              ),
+              onPressed: isFav
+                  ? () async {
+                      isFav = false;
+                      setState(() {});
+                      await Provider.of<RecentsProvider>(context, listen: false)
+                          .removeFavCategory(categoryTitle, currentUser.email);
 
-                                          depth: 20,
-                                          child: CircleAvatar(
-                                            radius: 50,
-                                            backgroundColor:
-                                                Theme.of(context).primaryColor,
-                                            backgroundImage: NetworkImage(
-                                              categoryOptionsRecipeCards[i]
-                                                  .photoUrl,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10.0),
-                                          child: Center(
-                                            child: Text(
+                      if (await Provider.of<RecentsProvider>(context,
+                              listen: false)
+                          .checkIfFavCategory(
+                        categoryTitle,
+                        currentUser.email,
+                      )) {
+                        isFav = true;
+                        setState(() {});
+                      }
+                    }
+                  : () async {
+                      if (Provider.of<AuthProvider>(context, listen: false)
+                          .isAuth) {
+                        isFav = true;
+                        setState(() {});
+                        await Provider.of<RecentsProvider>(context,
+                                listen: false)
+                            .addToFavouriteCategories(
+                          CategoryModel(
+                            title: categoryTitle,
+                            categoryUrl: widget.url,
+                            timestamp: Timestamp.now(),
+                          ),
+                          currentUser.email,
+                        );
+
+                        if (!await Provider.of<RecentsProvider>(context,
+                                listen: false)
+                            .checkIfFavCategory(
+                          categoryTitle,
+                          currentUser.email,
+                        )) {
+                          isFav = false;
+                          setState(() {});
+                        }
+                      } else {
+                        _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                            content:
+                                new Text("Log In To Add To Favourites !")));
+                      }
+                    },
+            ),
+      // backgroundColor: Theme.of(context).primaryColor,
+      // appBar: isLoading
+      //     ? AppBar()
+      //     : AppBar(
+      //         title: Text(categoryTitle),
+      //         elevation: 0,
+      //       ),
+      body: isLoading
+          ? LoadingCategoryRecipes()
+          : CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              controller: _scrollController,
+              slivers: <Widget>[
+                SliverAppBar(
+                  title: isLoading ? Text("") : Text(categoryTitle) ?? "",
+                  // elevation: 0.1,
+                  // expandedHeight: MediaQuery.of(context).size.height / 3,
+                  pinned: true,
+                  // backgroundColor: Colors.white,
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      if (categoryOptionsRecipeCards.length != 0)
+                        Container(
+                          color: Theme.of(context).primaryColor,
+                          height: 170,
+                          // width: 400,
+                          child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            padding: EdgeInsets.only(
+                              top: 15,
+                              left: 15,
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: categoryOptionsRecipeCards.length,
+                            itemBuilder: (context, i) => GestureDetector(
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchResultsScreen(
+                                          excl: "",
+                                          incl: "",
+                                          appBarTitle:
                                               categoryOptionsRecipeCards[i]
                                                   .title,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      color: Theme.of(context).primaryColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                      child: Text(
-                        categoryDesc,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                      child: Container(
-                    height: 30,
-                    color: Theme.of(context).primaryColor,
-                  )),
-                  SliverToBoxAdapter(
-                      child: Container(
-                    height: 10,
-                  )),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, i) {
-                        // print(recipeCards.length);
-                        if (i == recipeCards.length) return LoadingSpinner();
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
-                          ),
-                          child: GestureDetector(
-                            onTap: () => goToRecipe(recipeCards[i].href,
-                                recipeCards[i].photoUrl, context),
-                            child: ClayContainer(
-                              borderRadius: 20,
-                              depth: 50,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
+                                          url: categoryOptionsRecipeCards[i]
+                                              .href))),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 15),
                                 child: Container(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.2),
+                                  height: 110,
+                                  width: 100,
                                   child: Column(
                                     children: <Widget>[
-                                      Stack(
-                                        children: <Widget>[
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(20),
-                                            ),
-                                            child: Image.network(
-                                              recipeCards[i].photoUrl,
-                                              height: 220,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              fit: BoxFit.cover,
-                                            ),
+                                      ClayContainer(
+                                        // curveType: CurveType.convex,
+                                        borderRadius: 50,
+                                        surfaceColor:
+                                            Theme.of(context).primaryColor,
+                                        color: Theme.of(context).primaryColor,
+                                        parentColor:
+                                            Theme.of(context).primaryColor,
+
+                                        depth: 20,
+                                        child: CircleAvatar(
+                                          radius: 50,
+                                          backgroundColor:
+                                              Theme.of(context).primaryColor,
+                                          backgroundImage: NetworkImage(
+                                            categoryOptionsRecipeCards[i]
+                                                .photoUrl,
                                           ),
-                                          Positioned(
-                                            // top: 0,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .accentColor
-                                                    .withOpacity(0.6),
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              height: 50,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Center(
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 15.0,
-                                                  ),
-                                                  child: Text(
-                                                    recipeCards[i].title,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25,
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                      // TODO Fab Fav
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 20),
-                                        child: Text(
-                                          recipeCards[i].desc,
-                                          style: TextStyle(
-                                            // color: Colors.white,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w300,
+                                        padding:
+                                            const EdgeInsets.only(top: 10.0),
+                                        child: Center(
+                                          child: Text(
+                                            categoryOptionsRecipeCards[i].title,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                          maxLines: 2,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ],
@@ -460,20 +432,144 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                               ),
                             ),
                           ),
-                        );
-                      },
-                      childCount:
-                          hasMore ? recipeCards.length + 1 : recipeCards.length,
-                    ),
-                    // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    //   crossAxisCount: 1,
-                    //   // childAspectRatio: 20 / 13,
-                    //   mainAxisSpacing: 20,
-                    // ),
+                        ),
+                    ],
                   ),
-                ],
-              ),
-      ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: Theme.of(context).primaryColor,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                    child: Text(
+                      categoryDesc,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                    child: Container(
+                  height: 30,
+                  color: Theme.of(context).primaryColor,
+                )),
+                SliverToBoxAdapter(
+                    child: Container(
+                  height: 10,
+                )),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, i) {
+                      // print(recipeCards.length);
+                      if (i == recipeCards.length) return LoadingSpinner();
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: GestureDetector(
+                          onTap: () => goToRecipe(recipeCards[i].href,
+                              recipeCards[i].photoUrl, context),
+                          child: ClayContainer(
+                            borderRadius: 20,
+                            depth: 50,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                              child: Container(
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.2),
+                                child: Column(
+                                  children: <Widget>[
+                                    Stack(
+                                      children: <Widget>[
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(20),
+                                          ),
+                                          child: Image.network(
+                                            recipeCards[i].photoUrl,
+                                            height: 220,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          // top: 0,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .accentColor
+                                                  .withOpacity(0.6),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            height: 50,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 15.0,
+                                                ),
+                                                child: Text(
+                                                  recipeCards[i].title,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    // TODO Fab Fav
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 20),
+                                      child: Text(
+                                        recipeCards[i].desc,
+                                        style: TextStyle(
+                                          // color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                        maxLines: 2,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    childCount:
+                        hasMore ? recipeCards.length + 1 : recipeCards.length,
+                  ),
+                  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //   crossAxisCount: 1,
+                  //   // childAspectRatio: 20 / 13,
+                  //   mainAxisSpacing: 20,
+                  // ),
+                ),
+              ],
+            ),
     );
   }
 }

@@ -124,7 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: pageController,
         children: <Widget>[
           HomeScreenWidget(),
-          CategoriesScreen(),
+          Consumer<RecentsProvider>(
+              builder: (context, recents, _) => CategoriesScreen()),
           Consumer<RecentsProvider>(
               builder: (context, recents, _) => FavouritesScreen()),
           // SearchScreen(),

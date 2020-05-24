@@ -234,7 +234,7 @@ class RecentsProvider with ChangeNotifier {
         .document('${category.title}')
         .setData({
       "title": category.title,
-      "categoryUrl": recipe.recipeUrl,
+      "categoryUrl": category.categoryUrl,
       "timestamp": timestamp,
     });
     notifyListeners();
@@ -262,26 +262,25 @@ class RecentsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> checkIfFavCategory(CategoryModel category, String email) async {
+  Future<bool> checkIfFavCategory(String category, String email) async {
     // final recipeurl1 = url.split("/recipe/")[1];
     // final recipeurll =
     //     recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
     DocumentSnapshot doc = await favoriteCategoriesRef
         .document(email)
         .collection('favs')
-        .document(category.title)
+        .document(category)
         .get();
 
     if (doc.exists) {
       print("Is a fav cat checked");
-
       return true;
     }
     print("Is Not a fav cat Checked");
     return false;
   }
 
-  removeFavCategory(CategoryModel category, String email) async {
+  removeFavCategory(String category, String email) async {
     bool isAlreadyFav = await checkIfFavCategory(category, email);
 
     // final recipeurl1 = url.split("/recipe/")[1];
@@ -292,7 +291,7 @@ class RecentsProvider with ChangeNotifier {
       await favoriteCategoriesRef
           .document(email)
           .collection('favs')
-          .document(category.title)
+          .document(category)
           .delete();
       notifyListeners();
       print("Removed From Fav");
