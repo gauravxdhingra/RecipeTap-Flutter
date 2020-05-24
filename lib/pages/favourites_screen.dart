@@ -5,7 +5,9 @@ import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/models/recents_model.dart';
+import 'package:recipetap/models/favourites_model.dart';
 import 'package:recipetap/widgets/fav_screen_widgets/build_recents_in_favourites.dart';
+import 'package:recipetap/widgets/fav_screen_widgets/build_fav_in_favourites.dart';
 
 class FavouritesScreen extends StatefulWidget {
   FavouritesScreen({Key key}) : super(key: key);
@@ -19,6 +21,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   bool authSkipped;
   String email;
   List<RecentsModel> recentRecipesList = [];
+  List<FavouritesModel> favRecipesList = [];
 
   var _isLoading = false;
 
@@ -35,13 +38,20 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
 
       email = auth.email;
 
-      if (auth.isAuth)
+      if (auth.isAuth) {
         final fetch = await Provider.of<RecentsProvider>(context, listen: false)
             .fetchRecentRecipes(email);
 
-      if (auth.isAuth)
         recentRecipesList =
             Provider.of<RecentsProvider>(context, listen: false).recentRecipes;
+
+        final fetchfav =
+            await Provider.of<RecentsProvider>(context, listen: false)
+                .fetchFavoriteRecipes(email);
+
+        favRecipesList =
+            Provider.of<RecentsProvider>(context, listen: false).favRecipes;
+      }
 
       isAuth = auth.isAuth;
       authSkipped = auth.authSkipped;
@@ -63,12 +73,13 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           ? SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
+                // TODO : Timeago
+                // TODO Add Shadow to Categories Pinned Appbars
+
                 children: <Widget>[
                   Text('RECENTS'),
                   BuildRecentsInFavourites(
                       recentRecipesList: recentRecipesList),
-                  // TODO : Timeago
-                  // TODO Add Shadow to Categories Pinned Appbars
                   Row(
                     children: <Widget>[
                       Text('Favourites'),
@@ -78,6 +89,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       ),
                     ],
                   ),
+                  BuildFavInFavourites(favRecipesList: favRecipesList),
                 ],
               ),
             )

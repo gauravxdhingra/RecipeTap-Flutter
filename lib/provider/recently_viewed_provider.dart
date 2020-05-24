@@ -1,3 +1,5 @@
+// ALso Includes Favourites Provider Functions and others
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipetap/models/recipe_model.dart';
@@ -156,6 +158,7 @@ class RecentsProvider with ChangeNotifier {
 
     if (doc.exists) {
       print("Is a fav checked");
+
       return true;
     }
     print("Is Not a fav Checked");
@@ -175,9 +178,12 @@ class RecentsProvider with ChangeNotifier {
           .collection('favs')
           .document(recipeurll)
           .delete();
-          print("Removed From Fav");
+      notifyListeners();
+      print("Removed From Fav");
+    } else {
+      notifyListeners();
+      print("Not a fav");
     }
-    else print("Not a fav");
   }
 
 // TODO ZERO RECENTS START ADDING - MESSAGE
