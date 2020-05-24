@@ -15,7 +15,7 @@ class FavouritesScreen extends StatefulWidget {
 }
 
 class _FavouritesScreenState extends State<FavouritesScreen> {
-  bool isAuth;
+  bool isAuth = false;
   bool authSkipped;
   String email;
   List<RecentsModel> recentRecipesList = [];
@@ -35,7 +35,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
 
       email = auth.email;
 
-      await Provider.of<RecentsProvider>(context, listen: false)
+      final fetch = await Provider.of<RecentsProvider>(context, listen: false)
           .fetchRecentRecipes(email);
 
       recentRecipesList =
@@ -54,26 +54,34 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Favourites"),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Text('RECENTS'),
-              BuildRecentsInFavourites(recentRecipesList: recentRecipesList),
-              // TODO : Timeago
-              Row(
+      appBar: AppBar(
+        title: Text("Favourites"),
+      ),
+      body: isAuth
+          ? SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
                 children: <Widget>[
-                  Text('Favourites'),
-                  FlatButton(
-                    child: Text('View All'),
-                    onPressed: () {},
+                  Text('RECENTS'),
+                  BuildRecentsInFavourites(
+                      recentRecipesList: recentRecipesList),
+                  // TODO : Timeago
+                  // TODO Add Shadow to Categories Pinned Appbars
+                  Row(
+                    children: <Widget>[
+                      Text('Favourites'),
+                      FlatButton(
+                        child: Text('View All'),
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
+                  
+
                 ],
               ),
-            ],
-          ),
-        ));
+            )
+          : Text("login to see fav and recents"),
+    );
   }
 }

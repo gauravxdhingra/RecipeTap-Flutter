@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<AuthProvider>(context);
+    // final auth = Provider.of<AuthProvider>(context);
     return Scaffold(
       // TODO: Searchlist images resolution full
 

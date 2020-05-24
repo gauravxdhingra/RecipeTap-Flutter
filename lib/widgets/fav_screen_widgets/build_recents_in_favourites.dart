@@ -16,6 +16,7 @@ class BuildRecentsInFavourites extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height / 3,
       child: ListView.builder(
+        physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: recentRecipesList.length,
         itemBuilder: (context, i) {

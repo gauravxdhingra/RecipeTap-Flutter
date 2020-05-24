@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:recipetap/models/recipe_model.dart';
 import 'package:recipetap/models/userdata.dart';
 import 'package:recipetap/provider/auth_provider.dart';
+import 'package:recipetap/provider/favorites_provider.dart';
 import 'package:uuid/uuid.dart';
 import '../models/recents_model.dart';
+import '../models/favourites_model.dart';
 // import 'package:provider/provider.dart';
 
 final recentsRef = Firestore.instance.collection('recentlyViewed');
@@ -14,8 +16,14 @@ class RecentsProvider with ChangeNotifier {
   List<RecentsModel> recentslist = [];
   String recipeId = Uuid().v4();
 
+  List<FavouritesModel> favouritesList = [];
+
   List<RecentsModel> get recentRecipes {
     return recentslist;
+  }
+
+  List<FavouritesModel> get favRecipes {
+    return favouritesList;
   }
 
   addToRecents(RecipeModel recipe, String email) async {
@@ -27,20 +35,7 @@ class RecentsProvider with ChangeNotifier {
     Timestamp timestamp = Timestamp.now();
 
     bool notPresent = true;
-
-//     final recref=  await recentsRef
-//         .document(email)
-//         .collection('recents')
-//         .orderBy(
-//           'timestamp',
-//           descending: true,
-//         )
-//         .limit(10).getDocuments();
-
-//         recref.documents.forEach((doc) { doc.data['title']});
-
-// if()
-
+// TODO check with database if already present
     await recentsRef
         .document(email)
         .collection('recents')
