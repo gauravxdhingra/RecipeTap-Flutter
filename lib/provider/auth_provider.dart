@@ -40,6 +40,8 @@ class AuthProvider with ChangeNotifier {
     googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       handleSignIn(account);
     }, onError: (err) {
+      isAuthh = false;
+      notifyListeners();
       print('Error Signing In: $err');
     });
 
@@ -50,17 +52,19 @@ class AuthProvider with ChangeNotifier {
         .then((account) {
       handleSignIn(account);
     }).catchError((err) {
+      isAuthh = false;
+      notifyListeners();
       print('Error Silently Signing In: $err');
     });
   }
 
-  handleSignIn(GoogleSignInAccount account) {
+  handleSignIn(GoogleSignInAccount account) async {
     if (account != null) {
       print('User:  $account');
       usernamee = account.displayName;
       profilePhotoUrll = account.photoUrl;
       emaill = account.email;
-      addUserToDatabase(emaill, usernamee, profilePhotoUrll);
+      await addUserToDatabase(emaill, usernamee, profilePhotoUrll);
       // setState(() {
       isAuthh = true;
       notifyListeners();
@@ -73,17 +77,15 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  login() {
-    googleSignIn.signIn().then(
-          (value) => isAuthh = true,
-        );
+  login() async {
+    await googleSignIn.signIn();
+    isAuthh = true;
     notifyListeners();
   }
 
-  logout() {
-    googleSignIn.signOut().then(
-          (value) => isAuthh = false,
-        );
+  logout() async {
+    await googleSignIn.signOut();
+    isAuthh = false;
     notifyListeners();
   }
 
@@ -104,11 +106,11 @@ class AuthProvider with ChangeNotifier {
       print(doc.data);
       print(doc.documentID);
       print(doc.exists);
-      await usersRef.document(emaill).updateData({
-        "email": emaill,
-        "photoUrl": profilePhotoUrll,
-        "username": usernamee,
-      });
+      // await usersRef.document(emaill).updateData({
+      //   "email": emaill,
+      //   "photoUrl": profilePhotoUrll,
+      //   "username": usernamee,
+      // });
     } else {
       print('yes');
       await usersRef.document(emaill).setData({
@@ -121,5 +123,6 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     }
     currentUser = User.fromDocument(doc);
+    notifyListeners();
   }
 }

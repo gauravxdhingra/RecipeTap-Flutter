@@ -1,14 +1,13 @@
 // import 'package:autocomplete_textfield/autocomplete_textfield.dart';
-import 'dart:ui';
+// import 'dart:ui';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:clay_containers/clay_containers.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:recipetap/models/search_suggestions.dart';
@@ -16,18 +15,12 @@ import 'package:recipetap/pages/catagories_screen.dart';
 import 'package:recipetap/pages/favourites_screen.dart';
 // import 'package:recipetap/pages/login_page.dart';
 import 'package:recipetap/pages/search_results.dart';
-import 'package:recipetap/pages/search_screen.dart';
+// import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/pages/settings_screen.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/widgets/home_screen_widget.dart';
 import '../provider/auth_provider.dart';
-// import 'package:simple_search_bar/simple_search_bar.dart';
-import 'package:slimy_card/slimy_card.dart';
-
-// TODO GIPHY Navbar
-
-// final GoogleSignIn googleSignIn = GoogleSignIn();
-// final usersRef = Firestore.instance.collection('users');
+// import 'package:slimy_card/slimy_card.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -90,29 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
       email = auth.email;
 
       // isAuth = true;
-      _isLoading = false;
-
+      setState(() {
+        _isLoading = false;
+      });
       isInit = true;
     }
     super.didChangeDependencies();
   }
 
-  // getUsers() {
-  //   usersRef.getDocuments().then((QuerySnapshot snapshot) {
-  //     snapshot.documents.forEach((DocumentSnapshot doc) {
-  //       doc.data;
-  //     });
-  //   });
-  // }
 // TODO: Min SDK 16
-  // getUsersById() async {
-  //   String id = "grvdhingra1999@gmail.com";
-  //   DocumentSnapshot doc = await usersRef.document(id).get();
-
-  //   print(doc.data);
-  //   print(doc.documentID);
-  //   print(doc.exists);
-  // }
 
   List<String> suggestions = SearchSuggestions.suggestions;
   @override
@@ -185,10 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.favorite,
                   text: 'Favourites',
                 ),
-                // GButton(
-                //   icon: Icons.search,
-                //   text: 'Search',
-                // ),
                 GButton(
                   icon: Icons.account_circle,
                   text: 'Profile',
@@ -196,10 +171,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
               selectedIndex: _selectedIndex,
               onTabChange: (index) {
-                // if (index == 0) {
-                //   logout();
-                // }
-
                 setState(() {
                   pageController.animateToPage(
                     index,

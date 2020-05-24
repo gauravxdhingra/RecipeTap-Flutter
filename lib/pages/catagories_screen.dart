@@ -7,7 +7,7 @@ import 'package:recipetap/jump_screens/loading_categories_screen.dart';
 import 'package:recipetap/jump_screens/retry_screen.dart';
 import 'package:recipetap/widgets/all_categories_scroll.dart';
 
-import 'categories_recipe_screen.dart';
+// import 'categories_recipe_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
   CategoriesScreen({Key key}) : super(key: key);
@@ -95,10 +95,6 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 AllCategoriesScroll(
                   categoriesMap: categoriesMap,
                 ),
-                // Container(
-                //   height: MediaQuery.of(context).padding.top,
-                //   color: Colors.black,
-                // ),
               ],
             ),
     );

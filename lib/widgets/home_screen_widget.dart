@@ -1,20 +1,20 @@
 import 'dart:ui';
 
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
-import 'package:clay_containers/clay_containers.dart';
+// import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+// import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/models/search_suggestions.dart';
-import 'package:recipetap/pages/catagories_screen.dart';
-import 'package:recipetap/pages/favourites_screen.dart';
+// import 'package:recipetap/pages/catagories_screen.dart';
+// import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
-import 'package:recipetap/pages/search_screen.dart';
-import 'package:recipetap/pages/settings_screen.dart';
+// import 'package:recipetap/pages/search_screen.dart';
+// import 'package:recipetap/pages/settings_screen.dart';
 import 'package:recipetap/provider/auth_provider.dart';
 // import 'package:search_app_bar/search_app_bar.dart';
 // import 'package:simple_search_bar/simple_search_bar.dart';
-import 'package:slimy_card/slimy_card.dart';
+// import 'package:slimy_card/slimy_card.dart';
 import './search_home_widget.dart';
 
 class HomeScreenWidget extends StatefulWidget {
@@ -147,7 +147,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         leading: Center(
             child: CircleAvatar(
           backgroundColor: Theme.of(context).primaryColor,
-          child: !isAuth
+          child: !(Provider.of<AuthProvider>(context, listen: false).isAuth)
               ? Icon(
                   Icons.person,
                   color: Colors.white,
@@ -167,7 +167,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              isAuth ? 'Welcome, ${username.split(" ")[0]}!' : 'Welcome!',
+              Provider.of<AuthProvider>(context, listen: false).isAuth
+                  ? 'Welcome, ${username.split(" ")[0]}!'
+                  : 'Welcome!',
             ),
             Padding(
               padding: const EdgeInsets.only(top: 2.0),
@@ -241,72 +243,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   ),
                 ),
               ),
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-              // Text('Search'),
-              // TextFormField(
-              //   controller: normalSearchController,
-              // ),
-              // FlatButton(
-              //   child: Text('Search Recipe by name'),
-              //   onPressed: () => submitSearchNormal(
-              //     "Showing Results For " + normalSearchController.text,
-              //     normalSearchController.text
-              //         .replaceAll(" ", "%20")
-              //         .toLowerCase(),
-              //   ),
-              // ),
               // // TODO retry button for dns fail
-              // Text('Favourites'),
-              // Text('Browse By Category'),
-              // Text('Search By Ingredients'),
-              // SizedBox(
-              //   height: 50,
-              // ),
-              // Text('Include'),
-              // SimpleAutoCompleteTextField(
-              //   key: key,
-              //   suggestions: suggestions,
-              //   // textChanged: (query) => suggestions.add(query),
-              //   controller: inclController,
-              // ),
-              // SizedBox(
-              //   height: 50,
-              // ),
-              // Text('Exclude'),
-              // SimpleAutoCompleteTextField(
-              //   key: keyy,
-              //   suggestions: suggestions,
-              //   controller: exclController,
-              // ),
-              // SizedBox(
-              //   height: 50,
-              // ),
-              // FlatButton(
-              //   child: Text('Search'),
-              //   onPressed: () {
-              //     submitSearch(
-              //       inclController.text.toLowerCase().replaceAll(" ", "%20"),
-              //       exclController.text.toLowerCase().replaceAll(" ", "%20"),
-              //     );
-              //   },
-              // ),
             ],
           ),
         ),
