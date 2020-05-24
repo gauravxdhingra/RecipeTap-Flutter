@@ -9,10 +9,13 @@ import 'package:recipetap/provider/favorites_provider.dart';
 import 'package:uuid/uuid.dart';
 import '../models/recents_model.dart';
 import '../models/favourites_model.dart';
+import '../models/category_model.dart';
 // import 'package:provider/provider.dart';
 
 final recentsRef = Firestore.instance.collection('recentlyViewed');
 final favoritesRef = Firestore.instance.collection('favoriteRecipes');
+final favoriteCategoriesRef =
+    Firestore.instance.collection('favoriteCategories');
 
 class RecentsProvider with ChangeNotifier {
   RecipeModel recipe;
@@ -22,12 +25,18 @@ class RecentsProvider with ChangeNotifier {
 
   List<FavouritesModel> favouritesList = [];
 
+  List<CategoryModel> favouriteCategoriesList = [];
+
   List<RecentsModel> get recentRecipes {
     return recentslist;
   }
 
   List<FavouritesModel> get favRecipes {
     return favouritesList;
+  }
+
+  List<CategoryModel> get getFavouriteCategoriesList {
+    return favouriteCategoriesList;
   }
 
   addToRecents(RecipeModel recipe, String email) async {
@@ -185,6 +194,114 @@ class RecentsProvider with ChangeNotifier {
       print("Not a fav");
     }
   }
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  // CATEGORY FAVS
+  addToFavouriteCategories(CategoryModel category, String email) async {
+    DocumentSnapshot doc =
+        await favoriteCategoriesRef.document(currentUser.email).get();
+    print(doc.data);
+    print(doc.documentID);
+    print(doc.exists);
+    Timestamp timestamp = Timestamp.now();
+
+    final documents = await favoriteCategoriesRef
+        .document(email)
+        .collection('favoriteRecipes')
+        .getDocuments();
+
+    // final recipeurl1 = recipe.recipeUrl.split("/recipe/")[1];
+    // final recipeurll =
+    //     recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
+
+    documents.documents.forEach((doc) {
+      if (doc.documentID == category.title) {
+        return;
+      }
+    });
+// TODO crud delete - check if favourite
+    await favoriteCategoriesRef
+        .document(email)
+        .collection('favs')
+        // .document(recipeId)
+        .document('${category.title}')
+        .setData({
+      "title": category.title,
+      "categoryUrl": recipe.recipeUrl,
+      "timestamp": timestamp,
+    });
+    notifyListeners();
+  }
+
+  fetchFavoriteCategories(email) async {
+    List<CategoryModel> _favcatslist = [];
+    QuerySnapshot recents = await favoriteCategoriesRef
+        .document(email)
+        .collection('favs')
+        .orderBy(
+          'timestamp',
+          descending: true,
+        )
+        // .limit(10)
+        .getDocuments();
+
+    // recentslist = recents.documents;
+    recents.documents.forEach((DocumentSnapshot doc) {
+      print(doc);
+      _favcatslist.add(CategoryModel.fromDocument(doc));
+      // print(recentslist);
+    });
+    favouriteCategoriesList = _favcatslist;
+    notifyListeners();
+  }
+
+  Future<bool> checkIfFavCategory(CategoryModel category, String email) async {
+    // final recipeurl1 = url.split("/recipe/")[1];
+    // final recipeurll =
+    //     recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
+    DocumentSnapshot doc = await favoriteCategoriesRef
+        .document(email)
+        .collection('favs')
+        .document(category.title)
+        .get();
+
+    if (doc.exists) {
+      print("Is a fav cat checked");
+
+      return true;
+    }
+    print("Is Not a fav cat Checked");
+    return false;
+  }
+
+  removeFavCategory(CategoryModel category, String email) async {
+    bool isAlreadyFav = await checkIfFavCategory(category, email);
+
+    // final recipeurl1 = url.split("/recipe/")[1];
+    // final recipeurll =
+    //     recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
+
+    if (isAlreadyFav) {
+      await favoriteCategoriesRef
+          .document(email)
+          .collection('favs')
+          .document(category.title)
+          .delete();
+      notifyListeners();
+      print("Removed From Fav");
+    } else {
+      notifyListeners();
+      print("Not a fav");
+    }
+  }
+
 // TODO Reload Favourites page at every click
 // TODO ZERO RECENTS START ADDING - MESSAGE
 // TODO: Collapsing Home Search

@@ -114,21 +114,35 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     ),
                     onPressed: isFav
                         ? () async {
+                            isFav = false;
                             await Provider.of<RecentsProvider>(context,
                                     listen: false)
                                 .removeFav(
                                     widget.recipe.recipeUrl, currentUser.email);
-                            isFav = false;
+
+                            if (await Provider.of<RecentsProvider>(context,
+                                    listen: false)
+                                .checkIfFav(widget.recipe.recipeUrl,
+                                    currentUser.email)) {
+                              isFav = true;
+                            }
                           }
                         : () async {
                             if (Provider.of<AuthProvider>(context,
                                     listen: false)
                                 .isAuth) {
+                              isFav = true;
                               await Provider.of<RecentsProvider>(context,
                                       listen: false)
                                   .addToFavourites(
                                       widget.recipe, currentUser.email);
-                              isFav = true;
+
+                              if (!await Provider.of<RecentsProvider>(context,
+                                      listen: false)
+                                  .checkIfFav(widget.recipe.recipeUrl,
+                                      currentUser.email)) {
+                                isFav = false;
+                              }
                             } else {
                               _scaffoldKey.currentState.showSnackBar(
                                   new SnackBar(
