@@ -35,11 +35,13 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
 
       email = auth.email;
 
-      final fetch = await Provider.of<RecentsProvider>(context, listen: false)
-          .fetchRecentRecipes(email);
+      if (auth.isAuth)
+        final fetch = await Provider.of<RecentsProvider>(context, listen: false)
+            .fetchRecentRecipes(email);
 
-      recentRecipesList =
-          Provider.of<RecentsProvider>(context, listen: false).recentRecipes;
+      if (auth.isAuth)
+        recentRecipesList =
+            Provider.of<RecentsProvider>(context, listen: false).recentRecipes;
 
       isAuth = auth.isAuth;
       authSkipped = auth.authSkipped;
@@ -76,8 +78,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       ),
                     ],
                   ),
-                  
-
                 ],
               ),
             )

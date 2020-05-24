@@ -10,6 +10,7 @@ import '../models/favourites_model.dart';
 // import 'package:provider/provider.dart';
 
 final recentsRef = Firestore.instance.collection('recentlyViewed');
+final favoritesRef = Firestore.instance.collection('favoriteRecipes');
 
 class RecentsProvider with ChangeNotifier {
   RecipeModel recipe;
@@ -28,19 +29,29 @@ class RecentsProvider with ChangeNotifier {
 
   addToRecents(RecipeModel recipe, String email) async {
     DocumentSnapshot doc = await recentsRef.document(currentUser.email).get();
-    // if (doc.exists) {
     print(doc.data);
     print(doc.documentID);
     print(doc.exists);
     Timestamp timestamp = Timestamp.now();
 
-    bool notPresent = true;
-// TODO check with database if already present
+    final documents =
+        await recentsRef.document(email).collection('recents').getDocuments();
+
+    final recipeurl1 = recipe.recipeUrl.split("/recipe/")[1];
+    final recipeurll =
+        recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
+
+    documents.documents.forEach((doc) {
+      if (doc.documentID == recipeurll) {
+        return;
+      }
+    });
+
     await recentsRef
         .document(email)
         .collection('recents')
         // .document(recipeId)
-        .document()
+        .document('$recipeurll')
         .setData({
       "title": recipe.title,
       "coverImageUrl": recipe.coverPhotoUrl[0],
@@ -48,8 +59,6 @@ class RecentsProvider with ChangeNotifier {
       "recipeUrl": recipe.recipeUrl,
       "timestamp": timestamp,
     });
-
-    // doc = await recentsRef.document(email).get();
     notifyListeners();
   }
 
@@ -75,6 +84,44 @@ class RecentsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  addToFavourites(RecipeModel recipe, String email) async {
+    DocumentSnapshot doc = await favoritesRef.document(currentUser.email).get();
+    print(doc.data);
+    print(doc.documentID);
+    print(doc.exists);
+    Timestamp timestamp = Timestamp.now();
+
+    final documents = await favoritesRef
+        .document(email)
+        .collection('favoriteRecipes')
+        .getDocuments();
+
+    final recipeurl1 = recipe.recipeUrl.split("/recipe/")[1];
+    final recipeurll =
+        recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
+
+    documents.documents.forEach((doc) {
+      if (doc.documentID == recipeurll) {
+        return;
+      }
+    });
+
+    await favoritesRef
+        .document(email)
+        .collection('favs')
+        // .document(recipeId)
+        .document('$recipeurll')
+        .setData({
+      "title": recipe.title,
+      "coverImageUrl": recipe.coverPhotoUrl[0],
+      "desc": recipe.desc,
+      "recipeUrl": recipe.recipeUrl,
+      "timestamp": timestamp,
+    });
+    notifyListeners();
+  }
+
+// TODO ZERO RECENTS START ADDING - MESSAGE
 // TODO: Collapsing Home Search
 // TODO: Search not adding more
 }

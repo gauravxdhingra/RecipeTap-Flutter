@@ -73,22 +73,19 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-
-
   login() {
-    
     googleSignIn.signIn().then(
           (value) => isAuthh = true,
         );
     notifyListeners();
   }
 
-  logout() {
-    googleSignIn.signOut().then(
-          (value) => isAuthh = false,
-        );
-    notifyListeners();
-  }
+  // logout() {
+  //   googleSignIn.signOut().then(
+  //         (value) => isAuthh = false,
+  //       );
+  //   notifyListeners();
+  // }
 
   skipAuth() {
     authSkippedd = true;

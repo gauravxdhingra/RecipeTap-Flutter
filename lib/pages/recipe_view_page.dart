@@ -436,7 +436,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       ingredients: ingredients,
       steps: directions,
       nutritionalFacts: nutritionalFacts,
-      recipeUrl: url,
+      recipeUrl: widget.url,
       cooksNotes: oldWebsite
           ? cooksNotes
           : newWebsiteFooterNotesExist ? cooksNotes[0] : [],

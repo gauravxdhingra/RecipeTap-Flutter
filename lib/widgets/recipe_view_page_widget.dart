@@ -57,8 +57,9 @@ class RecipeViewPageWidget extends StatefulWidget {
 
 class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
   var _isLoading = false;
-
   var isInit = false;
+
+  Function addToFavorites = () {};
 
   @override
   void didChangeDependencies() async {
@@ -68,10 +69,14 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
       });
 
       if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
-      // final email = Provider.of<AuthProvider>(context, listen: false).email;
-      // print(currentUser.email + " this");
-      await Provider.of<RecentsProvider>(context, listen: false)
-          .addToRecents(widget.recipe, currentUser.email);
+        // final email = Provider.of<AuthProvider>(context, listen: false).email;
+        // print(currentUser.email + " this");
+        await Provider.of<RecentsProvider>(context, listen: false)
+            .addToRecents(widget.recipe, currentUser.email);
+
+        // addToFavorites =
+        //     await Provider.of<RecentsProvider>(context, listen: false)
+        //         .addToFavourites(widget.recipe, currentUser.email);
       }
       _isLoading = false;
 
@@ -94,7 +99,10 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                 size: 30,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () async {
+                await Provider.of<RecentsProvider>(context, listen: false)
+                    .addToFavourites(widget.recipe, currentUser.email);
+              },
             ),
           ),
         ),
