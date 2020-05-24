@@ -14,8 +14,9 @@ final favoritesRef = Firestore.instance.collection('favoriteRecipes');
 
 class RecentsProvider with ChangeNotifier {
   RecipeModel recipe;
-  List<RecentsModel> recentslist = [];
   String recipeId = Uuid().v4();
+
+  List<RecentsModel> recentslist = [];
 
   List<FavouritesModel> favouritesList = [];
 
@@ -105,7 +106,7 @@ class RecentsProvider with ChangeNotifier {
         return;
       }
     });
-
+// TODO crud delete - check if favourite
     await favoritesRef
         .document(email)
         .collection('favs')
@@ -119,6 +120,64 @@ class RecentsProvider with ChangeNotifier {
       "timestamp": timestamp,
     });
     notifyListeners();
+  }
+
+  fetchFavoriteRecipes(email) async {
+    List<FavouritesModel> _favslist = [];
+    QuerySnapshot recents = await favoritesRef
+        .document(email)
+        .collection('favs')
+        .orderBy(
+          'timestamp',
+          descending: true,
+        )
+        // .limit(10)
+        .getDocuments();
+
+    // recentslist = recents.documents;
+    recents.documents.forEach((DocumentSnapshot doc) {
+      print(doc);
+      _favslist.add(FavouritesModel.fromDocument(doc));
+      // print(recentslist);
+    });
+    favouritesList = _favslist;
+    notifyListeners();
+  }
+
+  Future<bool> checkIfFav(String url, String email) async {
+    final recipeurl1 = url.split("/recipe/")[1];
+    final recipeurll =
+        recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
+    DocumentSnapshot doc = await favoritesRef
+        .document(email)
+        .collection('favs')
+        .document(recipeurll)
+        .get();
+
+    if (doc.exists) {
+      print("Is a fav checked");
+      return true;
+    }
+    print("Is Not a fav Checked");
+    return false;
+  }
+
+  removeFav(String url, String email) async {
+    bool isAlreadyFav = await checkIfFav(url, email);
+
+    final recipeurl1 = url.split("/recipe/")[1];
+    final recipeurll =
+        recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
+
+    if (isAlreadyFav) {
+      await favoritesRef
+          .document(email)
+          .collection('favs')
+          .document(recipeurll)
+          .delete();
+          print("Removed From Fav");
+    }
+    else print("Not a fav");
   }
 
 // TODO ZERO RECENTS START ADDING - MESSAGE
