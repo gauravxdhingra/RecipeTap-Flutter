@@ -64,6 +64,30 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     super.didChangeDependencies();
   }
 
+  // Future<void> refreshFav() async {
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
+  //   if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
+  //     final recenttag = Provider.of<RecentsProvider>(context, listen: false);
+
+  //     await recenttag.fetchRecentRecipes(email);
+
+  //     recentRecipesList = recenttag.recentRecipes;
+
+  //     // "********"
+
+  //     // final favtag = Provider.of<RecentsProvider>(context, listen: false);
+
+  //     await recenttag.fetchFavoriteRecipes(email);
+
+  //     favRecipesList = recenttag.favRecipes;
+  //   }
+  //   setState(() {
+  //     _isLoading = false;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,47 +96,28 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       ),
       body: _isLoading
           ? CircularProgressIndicator()
-          : isAuth
-              ? RefreshIndicator(
-                  onRefresh: () async {
-                    if (isAuth) {
-                      await Provider.of<RecentsProvider>(context, listen: false)
-                          .fetchRecentRecipes(email);
+          : Provider.of<AuthProvider>(context, listen: false).isAuth
+              ? SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    // TODO : Timeago
+                    // TODO Add Shadow to Categories Pinned Appbars
 
-                      recentRecipesList =
-                          Provider.of<RecentsProvider>(context, listen: false)
-                              .recentRecipes;
-
-                      await Provider.of<RecentsProvider>(context, listen: false)
-                          .fetchFavoriteRecipes(email);
-
-                      favRecipesList =
-                          Provider.of<RecentsProvider>(context, listen: false)
-                              .favRecipes;
-                    }
-                  },
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Column(
-                      // TODO : Timeago
-                      // TODO Add Shadow to Categories Pinned Appbars
-
-                      children: <Widget>[
-                        Text('RECENTS'),
-                        BuildRecentsInFavourites(
-                            recentRecipesList: recentRecipesList),
-                        Row(
-                          children: <Widget>[
-                            Text('Favourites'),
-                            FlatButton(
-                              child: Text('View All'),
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
-                        BuildFavInFavourites(favRecipesList: favRecipesList),
-                      ],
-                    ),
+                    children: <Widget>[
+                      Text('RECENTS'),
+                      BuildRecentsInFavourites(
+                          recentRecipesList: recentRecipesList),
+                      Row(
+                        children: <Widget>[
+                          Text('Favourites'),
+                          FlatButton(
+                            child: Text('View All'),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                      BuildFavInFavourites(favRecipesList: favRecipesList),
+                    ],
                   ),
                 )
               : Text("login to see fav and recents"),

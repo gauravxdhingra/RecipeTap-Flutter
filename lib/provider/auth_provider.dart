@@ -78,14 +78,14 @@ class AuthProvider with ChangeNotifier {
   }
 
   login() async {
-    await googleSignIn.signIn();
-    isAuthh = true;
+    await googleSignIn.signIn().then((value) => isAuthh = true);
+
     notifyListeners();
   }
 
   logout() async {
-    await googleSignIn.signOut();
-    isAuthh = false;
+    googleSignIn.signOut().then((value) => isAuthh = false);
+
     notifyListeners();
   }
 
