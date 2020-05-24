@@ -68,37 +68,39 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         .text
         .trim();
 
-    final categoryOptionsFromHtml = document
-        .getElementById("insideScroll")
-        .querySelector("ul")
-        .querySelectorAll("li");
+    final categoryOptionsFromHtmll = document.getElementById("insideScroll");
 
-    categoryOptionsFromHtml.forEach((element) {
-      // title
-      // photoUrl
-      // href
-      final href = element
-          .querySelector("a")
-          .attributes["href"]
-          .split("?internalSource=")[0];
+    if (!categoryOptionsFromHtmll.className.contains("video")) {
+      final categoryOptionsFromHtml =
+          categoryOptionsFromHtmll.querySelector("ul").querySelectorAll("li");
 
-      final photoUrl = element
-          .querySelector("a")
-          .querySelector("img")
-          .attributes["src"]
-          .replaceAll("/140x140", "");
+      categoryOptionsFromHtml.forEach((element) {
+        // title
+        // photoUrl
+        // href
+        final href = element
+            .querySelector("a")
+            .attributes["href"]
+            .split("?internalSource=")[0];
+
+        final photoUrl = element
+            .querySelector("a")
+            .querySelector("img")
+            .attributes["src"]
+            .replaceAll("/140x140", "");
 
 // TODO fix resolution
 
-      final title =
-          element.querySelector("a").querySelector("span").text.trim();
+        final title =
+            element.querySelector("a").querySelector("span").text.trim();
 
-      categoryOptionsRecipeCards.add(CategoryOptionsRecipeCard(
-        title: title,
-        href: href,
-        photoUrl: photoUrl,
-      ));
-    });
+        categoryOptionsRecipeCards.add(CategoryOptionsRecipeCard(
+          title: title,
+          href: href,
+          photoUrl: photoUrl,
+        ));
+      });
+    }
 
     final recipeCardsFromHtml =
         document.getElementsByClassName("fixed-recipe-card");
@@ -258,75 +260,80 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     child: Column(
                       // mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                          color: Theme.of(context).primaryColor,
-                          height: 170,
-                          // width: 400,
-                          child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            padding: EdgeInsets.only(
-                              top: 15,
-                              left: 15,
-                            ),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: categoryOptionsRecipeCards.length,
-                            itemBuilder: (context, i) => GestureDetector(
-                              onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => SearchResultsScreen(
-                                          excl: "",
-                                          incl: "",
-                                          appBarTitle:
+                        if (categoryOptionsRecipeCards.length != 0)
+                          Container(
+                            color: Theme.of(context).primaryColor,
+                            height: 170,
+                            // width: 400,
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              padding: EdgeInsets.only(
+                                top: 15,
+                                left: 15,
+                              ),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: categoryOptionsRecipeCards.length,
+                              itemBuilder: (context, i) => GestureDetector(
+                                onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SearchResultsScreen(
+                                                excl: "",
+                                                incl: "",
+                                                appBarTitle:
+                                                    categoryOptionsRecipeCards[
+                                                            i]
+                                                        .title,
+                                                url: categoryOptionsRecipeCards[
+                                                        i]
+                                                    .href))),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 15),
+                                  child: Container(
+                                    height: 110,
+                                    width: 100,
+                                    child: Column(
+                                      children: <Widget>[
+                                        ClayContainer(
+                                          // curveType: CurveType.convex,
+                                          borderRadius: 50,
+                                          surfaceColor:
+                                              Theme.of(context).primaryColor,
+                                          color: Theme.of(context).primaryColor,
+                                          parentColor:
+                                              Theme.of(context).primaryColor,
+
+                                          depth: 20,
+                                          child: CircleAvatar(
+                                            radius: 50,
+                                            backgroundColor:
+                                                Theme.of(context).primaryColor,
+                                            backgroundImage: NetworkImage(
+                                              categoryOptionsRecipeCards[i]
+                                                  .photoUrl,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 10.0),
+                                          child: Center(
+                                            child: Text(
                                               categoryOptionsRecipeCards[i]
                                                   .title,
-                                          url: categoryOptionsRecipeCards[i]
-                                              .href))),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 15),
-                                child: Container(
-                                  height: 110,
-                                  width: 100,
-                                  child: Column(
-                                    children: <Widget>[
-                                      ClayContainer(
-                                        // curveType: CurveType.convex,
-                                        borderRadius: 50,
-                                        surfaceColor:
-                                            Theme.of(context).primaryColor,
-                                        color: Theme.of(context).primaryColor,
-                                        parentColor:
-                                            Theme.of(context).primaryColor,
-
-                                        depth: 20,
-                                        child: CircleAvatar(
-                                          radius: 50,
-                                          backgroundColor:
-                                              Theme.of(context).primaryColor,
-                                          backgroundImage: NetworkImage(
-                                            categoryOptionsRecipeCards[i]
-                                                .photoUrl,
+                                              textAlign: TextAlign.center,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 10.0),
-                                        child: Center(
-                                          child: Text(
-                                            categoryOptionsRecipeCards[i].title,
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),

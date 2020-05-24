@@ -50,14 +50,49 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.blueGrey[900],
             textTheme: TextTheme(
               headline1: TextStyle(
+                fontFamily: 'OpenSans',
                 fontSize: 30,
               ),
               headline3: TextStyle(
+                fontFamily: 'OpenSans',
                 fontSize: 20,
               ),
               bodyText2: TextStyle(
+                fontFamily: 'OpenSans',
                 // fontSize: 20,
                 color: Colors.black,
+              ),
+              bodyText1: TextStyle(
+                fontFamily: 'OpenSans',
+                // fontSize: 20,
+                // color: Colors.black,
+              ),
+              headline2: TextStyle(
+                fontFamily: 'OpenSans',
+              ),
+              headline4: TextStyle(
+                fontFamily: 'OpenSans',
+              ),
+              subtitle2: TextStyle(
+                fontFamily: 'OpenSans',
+              ),
+              subtitle1: TextStyle(
+                fontFamily: 'OpenSans',
+              ),
+              headline6: TextStyle(
+                fontFamily: 'OpenSans',
+              ),
+              headline5: TextStyle(
+                fontFamily: 'OpenSans',
+              ),
+              overline: TextStyle(
+                fontFamily: 'OpenSans',
+              ),
+              caption: TextStyle(
+                fontFamily: 'OpenSans',
+              ),
+               button: TextStyle(
+                fontFamily: 'OpenSans',
               ),
             ),
           ),

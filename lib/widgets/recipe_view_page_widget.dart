@@ -59,7 +59,7 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
   var _isLoading = false;
   var isInit = false;
 
-  bool isFav;
+  bool isFav = false;
 
   Function addToFavorites = () {};
 
@@ -94,10 +94,12 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
     super.didChangeDependencies();
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: _isLoading
+    return Scaffold(
+      key: _scaffoldKey,
+      body: _isLoading
           ? CircularProgressIndicator()
           : SliverFab(
               floatingWidget: CircleAvatar(
@@ -119,17 +121,24 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                             isFav = false;
                           }
                         : () async {
-                            await Provider.of<RecentsProvider>(context,
+                            if (Provider.of<AuthProvider>(context,
                                     listen: false)
-                                .addToFavourites(
-                                    widget.recipe, currentUser.email);
-                            isFav = true;
+                                .isAuth) {
+                              await Provider.of<RecentsProvider>(context,
+                                      listen: false)
+                                  .addToFavourites(
+                                      widget.recipe, currentUser.email);
+                              isFav = true;
+                            } else {
+                              _scaffoldKey.currentState.showSnackBar(
+                                  new SnackBar(
+                                      content: new Text(
+                                          "Log In To Add To Favourites !")));
+                            }
                           },
                   ),
                 ),
               ),
-
-
 
               // TODO Adjust max resolution for loading Images
               floatingPosition: FloatingPosition(
@@ -195,6 +204,7 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                         },
 
                         pagination: SwiperPagination(
+                          margin: EdgeInsets.only(top: 50),
                           builder: SwiperPagination.dots,
                           alignment: Alignment.topCenter,
                         ),
