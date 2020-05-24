@@ -40,6 +40,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   int page = 2;
   bool hasMore = true;
   int currentMax;
+  bool isFav = false;
 
   ScrollController _scrollController = ScrollController();
 
@@ -221,9 +222,9 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     // page++;
   }
 
-  bool isFav = false;
   var _isLoading = false;
   var isInit = false;
+
   @override
   void didChangeDependencies() async {
     if (!isInit) {
@@ -240,13 +241,12 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         //         .addToFavourites(widget.recipe, currentUser.email);
 
         // Check for fav
-        setState(() async {
-          isFav = await Provider.of<RecentsProvider>(context, listen: false)
-              .checkIfFavCategory(
-            categoryTitle,
-            currentUser.email,
-          );
-        });
+
+        isFav = await Provider.of<RecentsProvider>(context, listen: false)
+            .checkIfFavCategory(
+          categoryTitle,
+          currentUser.email,
+        );
       }
 
       // setState(() {

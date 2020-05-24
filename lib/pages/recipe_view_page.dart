@@ -249,11 +249,17 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
           .getElementsByClassName("photo-strip__items")[0]
           .querySelectorAll("li");
 
-      final srcfirstSplit = coverImageUrl.split("photos/")[0];
-      final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/")[1];
-      final srcc = srcfirstSplit + "photos/" + srcsecondsplit;
-      // print(srcc);
-      images.add(srcc);
+      try {
+        final srcfirstSplit = coverImageUrl.split("photos/")[0];
+        // print(srcfirstSplit);
+        final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/")[1];
+        // print(srcsecondsplit);
+        final srcc = srcfirstSplit + "photos/" + srcsecondsplit;
+        // print(srcc);
+        images.add(srcc);
+      } catch (e) {
+        images.add(coverImageUrl);
+      }
 
       imagerow.forEach((element) {
         if (element.querySelector("a").attributes["href"] != "#" ||
