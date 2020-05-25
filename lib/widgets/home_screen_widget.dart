@@ -4,6 +4,7 @@ import 'dart:ui';
 // import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/models/userdata.dart';
@@ -34,6 +35,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   String profilePhotoUrl;
   String username;
   String email;
+  int i = 0;
 
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
@@ -44,6 +46,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   // GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
 
   var searchValue = '';
+
+  List<dynamic> include = [];
+  List exclude = [];
 
   @override
   void initState() {
@@ -61,13 +66,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   }
 
   List<String> suggestions = SearchSuggestions.suggestions;
-  @override
-  void dispose() {
-    inclController.dispose();
-    exclController.dispose();
-    controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   inclController.dispose();
+  //   exclController.dispose();
+  //   controller.dispose();
+  //   super.dispose();
+  // }
 
   // var _isLoading = false;
 
@@ -138,12 +143,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   Duration duration = Duration(milliseconds: 200);
 
-  void _showDialog(Widget child) {
+  _showDialog(Widget child) {
     slideDialog.showSlideDialog(
       context: context,
       child: child,
     );
   }
+
+  String includei = "";
+  String excludei = "";
 
   @override
   Widget build(BuildContext context) {
@@ -283,13 +291,98 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                             MediaQuery.of(context).size.width,
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceAround,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           children: <Widget>[
                                             InkWell(
                                               onTap: () => _showDialog(
-                                                Text("Include"),
+                                                Column(
+                                                  children: <Widget>[
+                                                    Text("Include"),
+                                                    ChipsInput(
+                                                      initialValue: include,
+                                                      //  includei
+                                                      //     .split("[")[1]
+                                                      //     .split("]")[0]
+                                                      //     .split(",")
+                                                      //     .toList(),
+                                                      //     .forEach((element) {
+                                                      //   include[i] =
+                                                      //       element.toString();
+                                                      //   i++;
+                                                      // }),
+
+                                                      decoration: InputDecoration(
+                                                          labelText:
+                                                              'Select Ingredients To Include'),
+                                                      onChanged: (data) {
+                                                        // includei =
+                                                        //     data.toString();
+                                                        include = data;
+                                                        print(include);
+                                                        // print(includei);
+                                                      },
+                                                      chipBuilder: (context,
+                                                          state, profile) {
+                                                        return InputChip(
+                                                          key: ObjectKey(
+                                                              profile),
+                                                          label: Text(profile),
+                                                          onDeleted: () =>
+                                                              state.deleteChip(
+                                                                  profile),
+                                                          materialTapTargetSize:
+                                                              MaterialTapTargetSize
+                                                                  .shrinkWrap,
+                                                        );
+                                                      },
+                                                      findSuggestions:
+                                                          (String query) {
+                                                        if (query.length != 0) {
+                                                          var lowercaseQuery =
+                                                              query
+                                                                  .toLowerCase();
+                                                          return SearchSuggestions
+                                                              .suggestions
+                                                              .where(
+                                                                  (ingredient) {
+                                                            return ingredient
+                                                                .toLowerCase()
+                                                                .contains(query
+                                                                    .toLowerCase());
+                                                          }).toList(
+                                                                  growable:
+                                                                      false)
+                                                                ..sort((a, b) => a
+                                                                    .toLowerCase()
+                                                                    .indexOf(
+                                                                        lowercaseQuery)
+                                                                    .compareTo(b
+                                                                        .toLowerCase()
+                                                                        .indexOf(
+                                                                            lowercaseQuery)));
+                                                        } else {
+                                                          return [];
+                                                        }
+                                                      },
+                                                      suggestionBuilder:
+                                                          (context, state,
+                                                              ingredient) {
+                                                        return ListTile(
+                                                          key: ObjectKey(
+                                                              ingredient),
+                                                          title:
+                                                              Text(ingredient),
+                                                          onTap: () => state
+                                                              .selectSuggestion(
+                                                                  ingredient),
+                                                        );
+                                                      },
+                                                    ),
+                                                    // FlatButton(),
+                                                  ],
+                                                ),
                                               ),
                                               child: Container(
                                                 height: 50,
