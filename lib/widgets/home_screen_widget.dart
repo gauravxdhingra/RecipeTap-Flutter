@@ -300,85 +300,100 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 Column(
                                                   children: <Widget>[
                                                     Text("Include"),
-                                                    ChipsInput(
-                                                      initialValue: include,
-                                                      //  includei
-                                                      //     .split("[")[1]
-                                                      //     .split("]")[0]
-                                                      //     .split(",")
-                                                      //     .toList(),
-                                                      //     .forEach((element) {
-                                                      //   include[i] =
-                                                      //       element.toString();
-                                                      //   i++;
-                                                      // }),
 
-                                                      decoration: InputDecoration(
-                                                          labelText:
-                                                              'Select Ingredients To Include'),
-                                                      onChanged: (data) {
-                                                        // includei =
-                                                        //     data.toString();
-                                                        include = data;
-                                                        print(include);
-                                                        // print(includei);
-                                                      },
-                                                      chipBuilder: (context,
-                                                          state, profile) {
-                                                        return InputChip(
-                                                          key: ObjectKey(
-                                                              profile),
-                                                          label: Text(profile),
-                                                          onDeleted: () =>
-                                                              state.deleteChip(
-                                                                  profile),
-                                                          materialTapTargetSize:
-                                                              MaterialTapTargetSize
-                                                                  .shrinkWrap,
-                                                        );
-                                                      },
-                                                      findSuggestions:
-                                                          (String query) {
-                                                        if (query.length != 0) {
-                                                          var lowercaseQuery =
-                                                              query
-                                                                  .toLowerCase();
-                                                          return SearchSuggestions
-                                                              .suggestions
-                                                              .where(
-                                                                  (ingredient) {
-                                                            return ingredient
-                                                                .toLowerCase()
-                                                                .contains(query
-                                                                    .toLowerCase());
-                                                          }).toList(
-                                                                  growable:
-                                                                      false)
-                                                                ..sort((a, b) => a
-                                                                    .toLowerCase()
-                                                                    .indexOf(
-                                                                        lowercaseQuery)
-                                                                    .compareTo(b
-                                                                        .toLowerCase()
-                                                                        .indexOf(
-                                                                            lowercaseQuery)));
-                                                        } else {
-                                                          return [];
-                                                        }
-                                                      },
-                                                      suggestionBuilder:
-                                                          (context, state,
-                                                              ingredient) {
-                                                        return ListTile(
-                                                          key: ObjectKey(
-                                                              ingredient),
-                                                          title:
-                                                              Text(ingredient),
-                                                          onTap: () => state
-                                                              .selectSuggestion(
-                                                                  ingredient),
-                                                        );
-                                                      },
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 20,
+                                                        horizontal: 20,
+                                                      ),
+                                                      child: ChipsInput(
+                                                        initialValue: include,
+                                                        //  includei
+                                                        //     .split("[")[1]
+                                                        //     .split("]")[0]
+                                                        //     .split(",")
+                                                        //     .toList(),
+                                                        //     .forEach((element) {
+                                                        //   include[i] =
+                                                        //       element.toString();
+                                                        //   i++;
+                                                        // }),
+
+                                                        decoration: InputDecoration(
+                                                            labelText:
+                                                                'Select Ingredients',
+                                                            counter: Text(include
+                                                                    .length
+                                                                    .toString() ??
+                                                                "0")),
+                                                        onChanged: (data) {
+                                                          // includei =
+                                                          //     data.toString();
+                                                          include = data;
+                                                          print(include);
+                                                          // setState(() {
+                                                          //   data.length =
+                                                          //       data.length;
+                                                          // });
+                                                          // print(includei);
+                                                        },
+                                                        chipBuilder: (context,
+                                                            state, profile) {
+                                                          return InputChip(
+                                                            key: ObjectKey(
+                                                                profile),
+                                                            label:
+                                                                Text(profile),
+                                                            onDeleted: () =>
+                                                                state.deleteChip(
+                                                                    profile),
+                                                            materialTapTargetSize:
+                                                                MaterialTapTargetSize
+                                                                    .shrinkWrap,
+                                                          );
+                                                        },
+                                                        findSuggestions:
+                                                            (String query) {
+                                                          if (query.length !=
+                                                              0) {
+                                                            var lowercaseQuery =
+                                                                query
+                                                                    .toLowerCase();
+                                                            return SearchSuggestions.suggestions.where(
+                                                                (ingredient) {
+                                                              return ingredient
+                                                                  .toLowerCase()
+                                                                  .contains(query
+                                                                      .toLowerCase());
+                                                            }).toList(
+                                                                growable: false)
+                                                              ..sort((a, b) => a
+                                                                  .toLowerCase()
+                                                                  .indexOf(
+                                                                      lowercaseQuery)
+                                                                  .compareTo(b
+                                                                      .toLowerCase()
+                                                                      .indexOf(
+                                                                          lowercaseQuery)));
+                                                          } else {
+                                                            return [];
+                                                          }
+                                                        },
+                                                        suggestionBuilder:
+                                                            (context, state,
+                                                                ingredient) {
+                                                          return ListTile(
+                                                            key: ObjectKey(
+                                                                ingredient),
+                                                            title: Text(
+                                                                ingredient),
+                                                            onTap: () => state
+                                                                .selectSuggestion(
+                                                                    ingredient),
+                                                          );
+                                                        },
+                                                      ),
                                                     ),
                                                     // FlatButton(),
                                                   ],
