@@ -31,9 +31,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: AuthProvider(),
         ),
-        ChangeNotifierProvider.value(
-          value: FavoritesProvider(),
-        ),
+        // ChangeNotifierProvider.value(
+        //   value: FavoritesProvider(),
+        // ),
         ChangeNotifierProvider.value(
           value: RecentsProvider(),
         ),
@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
               caption: TextStyle(
                 fontFamily: 'OpenSans',
               ),
-               button: TextStyle(
+              button: TextStyle(
                 fontFamily: 'OpenSans',
               ),
             ),
