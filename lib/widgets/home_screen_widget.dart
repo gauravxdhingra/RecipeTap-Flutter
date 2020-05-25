@@ -134,50 +134,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        bottom: PreferredSize(
-          child: Stack(
-            children: [
-              AnimatedContainer(
-                duration: duration,
-                height: isSearch ? 200 : 10,
-                color: Theme.of(context).scaffoldBackgroundColor,
-              ),
-              SingleChildScrollView(
-                child: AnimatedContainer(
-                  duration: duration,
-                  height: isSearch ? 200 : 10,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius:
-                        isSearch ? openContainerBR : closedContainerBR,
-                    boxShadow: [
-                      if (isSearch) openContainerBS else closedContainerBS,
-                    ],
-                  ),
-                  child: isSearch
-                      ? SingleChildScrollView(
-                          child: AnimatedContainer(
-                            
-                            duration: duration,
-                            child: SearchHomeWidget(
-                              controller: controller,
-                              // key: key,
-                              suggestions: suggestions,
-                              inclController: inclController,
-                              // keyy: keyy,
-                              exclController: exclController,
-                              submitSearch: submitSearch,
-                            ),
-                          ),
-                        )
-                      : null,
-                ),
-              ),
-            ],
-          ),
-          preferredSize: isSearch ? Size.fromHeight(200) : Size.fromHeight(10),
-        ),
         leading: Center(
           child: CircleAvatar(
             backgroundColor: Theme.of(context).primaryColor,
@@ -228,6 +184,51 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              AnimatedContainer(
+                duration: duration,
+                height: isSearch ? 200 : 20,
+                child: Stack(
+                  children: [
+                    AnimatedContainer(
+                      duration: duration,
+                      height: !isSearch ? 20 : 200,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                    ),
+                    AnimatedContainer(
+                      duration: duration,
+                      height: !isSearch ? 20 : 200,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius:
+                            isSearch ? openContainerBR : closedContainerBR,
+                        boxShadow: [
+                          if (isSearch) openContainerBS else closedContainerBS,
+                        ],
+                      ),
+                      child: isSearch
+                          ? AnimatedContainer(
+                              duration: duration,
+                              child: SingleChildScrollView(
+                                child: SearchHomeWidget(
+                                  controller: controller,
+                                  // key: key,
+                                  suggestions: suggestions,
+                                  inclController: inclController,
+                                  // keyy: keyy,
+                                  exclController: exclController,
+                                  submitSearch: submitSearch,
+                                ),
+                              ),
+                            )
+                          : AnimatedContainer(
+                              duration: duration,
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(

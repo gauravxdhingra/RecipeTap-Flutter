@@ -169,8 +169,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   InkWell(
                     onTap: () async {
-                      await _signIn();
-                      setState(() {});
+                      await _signIn().whenComplete(() => setState(() {}) );
                     },
                     child: ListTile(
                       title: Text('Veg'),

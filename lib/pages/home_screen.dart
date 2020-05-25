@@ -78,9 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
       final auth = Provider.of<AuthProvider>(context);
       isAuth = auth.isAuth;
       print(isAuth);
-      username = auth.username;
-      profilePhotoUrl = auth.profilePhotoUrl;
-      email = auth.email;
+      // username = auth.username;
+      // profilePhotoUrl = auth.profilePhotoUrl;
+      // email = auth.email;
 
       // isAuth = true;
       setState(() {
