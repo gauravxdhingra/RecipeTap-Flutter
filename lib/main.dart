@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: AuthProvider(),
-        ),
+        // ChangeNotifierProvider.value(
+        //   value: AuthProvider(),
+        // ),
         // ChangeNotifierProvider.value(
         //   value: FavoritesProvider(),
         // ),
@@ -38,83 +38,87 @@ class MyApp extends StatelessWidget {
           value: RecentsProvider(),
         ),
       ],
-      child: Consumer<AuthProvider>(
-        builder: (ctx, auth, _) => MaterialApp(
-          title: 'RecipeTap',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            // primaryColor: Colors.white,
-            // primaryColor: Color(0xffEC008C),
-            primaryColor: Color(0xffF01E91),
-            accentColor: Colors.blueGrey[900],
-            textTheme: TextTheme(
-              headline1: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 30,
-              ),
-              headline3: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 20,
-              ),
-              bodyText2: TextStyle(
-                fontFamily: 'OpenSans',
-                // fontSize: 20,
-                color: Colors.black,
-              ),
-              bodyText1: TextStyle(
-                fontFamily: 'OpenSans',
-                // fontSize: 20,
-                // color: Colors.black,
-              ),
-              headline2: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-              headline4: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-              subtitle2: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-              subtitle1: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-              headline6: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-              headline5: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-              overline: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-              caption: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-              button: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
+      child:
+          //  Consumer<AuthProvider>(
+          //   builder: (ctx, auth, _) =>
+          MaterialApp(
+        title: 'RecipeTap',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          // primaryColor: Colors.white,
+          // primaryColor: Color(0xffEC008C),
+          primaryColor: Color(0xffF01E91),
+          accentColor: Colors.blueGrey[900],
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 30,
+            ),
+            headline3: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 20,
+            ),
+            bodyText2: TextStyle(
+              fontFamily: 'OpenSans',
+              // fontSize: 20,
+              color: Colors.black,
+            ),
+            bodyText1: TextStyle(
+              fontFamily: 'OpenSans',
+              // fontSize: 20,
+              // color: Colors.black,
+            ),
+            headline2: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            headline4: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            subtitle2: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            subtitle1: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            headline6: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            headline5: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            overline: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            caption: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            button: TextStyle(
+              fontFamily: 'OpenSans',
             ),
           ),
-          darkTheme: ThemeData.dark().copyWith(),
-
-          routes: {
-            '/':
-                // (context) => LoginPage(),
-                (context) => (auth.isAuth || auth.authSkipped)
-                    ? HomeScreen()
-                    : LoginPage(),
-            HomeScreen.routeName: (context) => HomeScreen(),
-            // SearchScreen.routeName: (context) => SearchScreen(),
-            RecipeViewPage.routeName: (context) => RecipeViewPage(),
-          },
-          // onGenerateRoute: (settings) {
-          //   return RouteGenerator.generateRoute(settings);
-          // },
-          onUnknownRoute: (_) =>
-              MaterialPageRoute(builder: (_) => AwwSnapScreen()),
         ),
+        darkTheme: ThemeData.dark().copyWith(),
+
+        routes: {
+          '/':
+              // (context) => LoginPage(),
+              (context) =>
+                  // (isAuth || authSkipped)
+                  // ?
+                  HomeScreen(),
+          // : LoginPage(),
+          HomeScreen.routeName: (context) => HomeScreen(),
+          // SearchScreen.routeName: (context) => SearchScreen(),
+          RecipeViewPage.routeName: (context) => RecipeViewPage(),
+        },
+        // onGenerateRoute: (settings) {
+        //   return RouteGenerator.generateRoute(settings);
+        // },
+        onUnknownRoute: (_) =>
+            MaterialPageRoute(builder: (_) => AwwSnapScreen()),
       ),
+      // ),
     );
   }
 // TODO: Firebase Login

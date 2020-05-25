@@ -18,7 +18,8 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen>
-    with AutomaticKeepAliveClientMixin<CategoriesScreen> {
+// with AutomaticKeepAliveClientMixin<CategoriesScreen>
+{
   // bool isLoading = true;
   bool isLoading = false;
 
@@ -84,7 +85,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   //   }
   // }
 
-  bool get wantKeepAlive => true;
+  // bool get wantKeepAlive => true;
 
   // sendToFirebase() async {
   //   await recentsRef
@@ -327,7 +328,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
     // sendToFirebase();
     return Scaffold(
       // appBar: AppBar(),

@@ -3,7 +3,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:recipetap/models/recipe_model.dart';
-import 'package:recipetap/provider/auth_provider.dart';
+import 'package:recipetap/pages/home_screen.dart';
+// import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 

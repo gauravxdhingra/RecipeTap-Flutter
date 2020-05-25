@@ -127,7 +127,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     offset: Offset(0.1, 2),
   );
 
-  Duration duration = Duration(milliseconds: 400);
+  Duration duration = Duration(milliseconds: 200);
 
   @override
   Widget build(BuildContext context) {
