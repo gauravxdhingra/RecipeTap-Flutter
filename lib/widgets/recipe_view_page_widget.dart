@@ -71,7 +71,7 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
         _isLoading = true;
       });
 
-      if (Provider.of<AuthProvider>(context, listen: false).isAuth) {
+      if (currentUser != null) {
         // final email = Provider.of<AuthProvider>(context, listen: false).email;
         // print(currentUser.email + " this");
         await Provider.of<RecentsProvider>(context, listen: false)
@@ -134,9 +134,7 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                             }
                           }
                         : () async {
-                            if (Provider.of<AuthProvider>(context,
-                                    listen: false)
-                                .isAuth) {
+                            if (currentUser != null) {
                               isFav = true;
                               await Provider.of<RecentsProvider>(context,
                                       listen: false)

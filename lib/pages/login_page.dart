@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
       _isLoading = true;
     });
 
-    Provider.of<AuthProvider>(context, listen: false).skipAuth();
+    // Provider.of<AuthProvider>(context, listen: false).skipAuth();
   }
 
   @override

@@ -6,12 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/models/search_suggestions.dart';
+import 'package:recipetap/models/userdata.dart';
+import 'package:recipetap/pages/home_screen.dart';
 // import 'package:recipetap/pages/catagories_screen.dart';
 // import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
 // import 'package:recipetap/pages/search_screen.dart';
 // import 'package:recipetap/pages/settings_screen.dart';
-import 'package:recipetap/provider/auth_provider.dart';
+// import 'package:recipetap/provider/auth_provider.dart';
 // import 'package:search_app_bar/search_app_bar.dart';
 // import 'package:simple_search_bar/simple_search_bar.dart';
 // import 'package:slimy_card/slimy_card.dart';
@@ -45,7 +47,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   @override
   void initState() {
     // TODO: implement initState
+
+    if (currentUser != null) {
+      profilePhotoUrl = currentUser.photoUrl;
+      username = currentUser.username;
+      email = currentUser.email;
+    }
+
     super.initState();
+
     inclController = TextEditingController();
     exclController = TextEditingController();
     controller = TextEditingController();
@@ -60,34 +70,30 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     super.dispose();
   }
 
-  var _isLoading = false;
+  // var _isLoading = false;
 
-  var isInit = false;
+  // var isInit = false;
 
   bool isSearch = false;
 
-  @override
-  void didChangeDependencies() async {
-    if (!isInit) {
-      setState(() {
-        _isLoading = true;
-      });
+  // @override
+  // void didChangeDependencies() async {
+  //   if (!isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
 
-      final auth = Provider.of<AuthProvider>(context, listen: false);
+  //     // final auth = Provider.of<AuthProvider>(context, listen: false);
 
-      profilePhotoUrl = auth.profilePhotoUrl;
-      username = auth.username;
-      email = auth.email;
+  //     // isAuth = auth.isAuth;
+  //     // authSkipped = auth.authSkipped;
 
-      isAuth = auth.isAuth;
-      authSkipped = auth.authSkipped;
+  //     _isLoading = false;
 
-      _isLoading = false;
-
-      isInit = true;
-    }
-    super.didChangeDependencies();
-  }
+  //     isInit = true;
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   submitSearch(appBarTitle, dish, incl, excl) {
     Navigator.of(context).push(MaterialPageRoute(
@@ -137,18 +143,18 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         leading: Center(
           child: CircleAvatar(
             backgroundColor: Theme.of(context).primaryColor,
-            child: !(Provider.of<AuthProvider>(context, listen: false).isAuth)
-                ? Icon(
-                    Icons.person,
-                    color: Colors.white,
-                    size: 32,
-                  )
-                : ClipRRect(
+            child: currentUser != null
+                ? ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
                       profilePhotoUrl,
                       fit: BoxFit.cover,
                     ),
+                  )
+                : Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 32,
                   ),
           ),
         ),
@@ -157,7 +163,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              Provider.of<AuthProvider>(context, listen: false).isAuth
+              currentUser != null
                   ? 'Welcome, ${username.split(" ")[0]}!'
                   : 'Welcome!',
             ),

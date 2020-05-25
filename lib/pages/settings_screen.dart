@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/provider/auth_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -26,14 +27,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         _isLoading = true;
       });
 
-      final auth = Provider.of<AuthProvider>(context, listen: false);
+      // final auth = Provider.of<AuthProvider>(context, listen: false);
 
-      profilePhotoUrl = auth.profilePhotoUrl;
-      username = auth.username;
-      email = auth.email;
-      isAuth = auth.isAuth;
-      authSkipped = auth.authSkipped;
-      logout = auth.logout;
+      profilePhotoUrl = currentUser.photoUrl;
+      username = currentUser.username;
+      email = currentUser.email;
+      isAuth = currentUser!=null;
+      // authSkipped = auth.authSkipped;
+      // logout = auth.logout;
       // if (authSkipped)
       // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
 
@@ -67,8 +68,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _isLoading = true;
     });
     // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
-    // TODO: Login not working
-    await Provider.of<AuthProvider>(context, listen: false).login();
+    // TODO: Implement SignIn
+    // await Provider.of<AuthProvider>(context, listen: false).login();
+    await googleSignIn.signIn();
     setState(() {
       _isLoading = false;
     });
@@ -80,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
     // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
     // TODO: Login not working
-    await Provider.of<AuthProvider>(context, listen: false).logout();
+    await googleSignIn.signOut();
     setState(() {
       _isLoading = false;
     });
@@ -99,7 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: EdgeInsets.all(20),
               child: Column(
                 children: <Widget>[
-                  if (Provider.of<AuthProvider>(context, listen: false).isAuth)
+                  if (currentUser != null)
                     Column(
                       children: <Widget>[
                         Container(
@@ -169,7 +171,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   InkWell(
                     onTap: () async {
-                      await _signIn().whenComplete(() => setState(() {}) );
+                      await _signIn().whenComplete(() => setState(() {}));
                     },
                     child: ListTile(
                       title: Text('Veg'),
