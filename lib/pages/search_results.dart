@@ -104,6 +104,13 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
           widget.appBarTitle ?? "",
           overflow: TextOverflow.ellipsis,
         ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         bottom: (widget.incl.toString().isNotEmpty ||
                 widget.excl.toString().isNotEmpty)
             ? PreferredSize(

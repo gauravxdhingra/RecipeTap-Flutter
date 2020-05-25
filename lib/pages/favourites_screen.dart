@@ -184,14 +184,22 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               ? SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Text('FAVOURITE CATEGORIES'),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text('FAVOURITE CATEGORIES'),
+                      ),
                       if (favCategoriesList.length != 0)
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          height: 100,
+                          height: 70,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
                             itemBuilder: (context, i) {
                               return InkWell(
                                 onTap: () => mealsFromCategory(
@@ -199,12 +207,29 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                   context,
                                 ),
                                 child: Container(
-                                  height: 50,
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 8),
+                                  height: 70,
                                   width: 150,
-                                  child: ListTile(
-                                    title: Text(
-                                      favCategoriesList[i].title,
-                                      style: TextStyle(color: Colors.black),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "#" + favCategoriesList[i].title,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            .copyWith(
+                                              color: Colors.white,
+                                            ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 ),
