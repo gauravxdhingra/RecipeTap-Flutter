@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
               Color(0xffF01E91),
 
           accentColor: Color(0xff010a43),
+
           // Colors.blueGrey[900],
           textTheme: TextTheme(
             headline1: TextStyle(
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(
               fontFamily: 'OpenSans',
               // fontSize: 20,
-              // color: Colors.black,
+              color: Colors.white,
             ),
             headline2: TextStyle(
               fontFamily: 'OpenSans',

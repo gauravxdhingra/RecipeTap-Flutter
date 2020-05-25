@@ -30,67 +30,80 @@ class SearchHomeWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: <Widget>[
+          // Container(
+          //   width: MediaQuery.of(context).size.width,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     crossAxisAlignment: CrossAxisAlignment.end,
+          //     children: <Widget>[
+          //       Text('Search For: '),
+          //       Container(
+          //         width: MediaQuery.of(context).size.width * 2 / 3,
+          //         child: TextField(
+          //           controller: controller,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Text('Search For: '),
-                Container(
-                  width: MediaQuery.of(context).size.width * 2 / 3,
-                  child: TextField(
-                    controller: controller,
+                InkWell(
+                  child: Container(
+                    child: Text(
+                      'Include',
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Text('Include'),
-                Container(
-                  width: MediaQuery.of(context).size.width * 2 / 3,
-                  child:
-                      // ChipsInput(
-                      //   chipBuilder: null,
-                      //   suggestionBuilder: null,
-                      //   findSuggestions: null,
-                      //   onChanged: null,
-                      // )
-                      SimpleAutoCompleteTextField(
-                    key: key,
-                    suggestions: suggestions,
-                    // textChanged: (query) => suggestions.add(query),
+                InkWell(
+                  child: Container(
+                    child: Text(
+                      'Exclude',
+                    ),
+                  ),
+                ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width * 2 / 3,
+                //   child:
+                //       // ChipsInput(
+                //       //   chipBuilder: null,
+                //       //   suggestionBuilder: null,
+                //       //   findSuggestions: null,
+                //       //   onChanged: null,
+                //       // )
+                //       SimpleAutoCompleteTextField(
+                //     key: key,
+                //     suggestions: suggestions,
+                //     // textChanged: (query) => suggestions.add(query),
 
-                    controller: inclController,
-                  ),
-                ),
+                //     controller: inclController,
+                //   ),
+                // ),
               ],
             ),
           ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Text('Exclude'),
-                Container(
-                  width: MediaQuery.of(context).size.width * 2 / 3,
-                  child: SimpleAutoCompleteTextField(
-                    key: keyy,
-                    suggestions: suggestions,
-                    controller: exclController,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   width: MediaQuery.of(context).size.width,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     crossAxisAlignment: CrossAxisAlignment.end,
+          //     children: <Widget>[
+          //       Text('Exclude'),
+          //       Container(
+          //         width: MediaQuery.of(context).size.width * 2 / 3,
+          //         child: SimpleAutoCompleteTextField(
+          //           key: keyy,
+          //           suggestions: suggestions,
+          //           controller: exclController,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           FlatButton(
             child: Text('Search'),
             onPressed: () {

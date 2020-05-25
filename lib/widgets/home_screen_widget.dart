@@ -18,6 +18,7 @@ import 'package:recipetap/pages/search_results.dart';
 // import 'package:simple_search_bar/simple_search_bar.dart';
 // import 'package:slimy_card/slimy_card.dart';
 import './search_home_widget.dart';
+import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 
 class HomeScreenWidget extends StatefulWidget {
   @override
@@ -137,47 +138,76 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   Duration duration = Duration(milliseconds: 200);
 
+  void _showDialog(Widget child) {
+    slideDialog.showSlideDialog(
+      context: context,
+      child: child,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        leading: Center(
-          child: CircleAvatar(
-            backgroundColor: Theme.of(context).primaryColor,
-            child: currentUser != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      profilePhotoUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : Icon(
-                    Icons.person,
-                    color: Colors.white,
-                    size: 32,
-                  ),
-          ),
-        ),
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              currentUser != null
-                  ? 'Welcome, ${username.split(" ")[0]}!'
-                  : 'Welcome!',
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 2.0),
-              child: Text(
-                "What would you like to have today?",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+        leading: isSearch
+            ? IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  isSearch = false;
+                  setState(() {});
+                },
+              )
+            : Center(
+                child: CircleAvatar(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  child: currentUser != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(
+                            profilePhotoUrl,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Icon(
+                          Icons.person,
+                          color: Colors.white,
+                          size: 32,
+                        ),
+                ),
               ),
-            ),
-          ],
-        ),
+        title: !isSearch
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    currentUser != null
+                        ? 'Welcome, ${username.split(" ")[0]} !'
+                        : 'Welcome!',
+                    style: Theme.of(context).textTheme.headline1.copyWith(
+                        fontSize: 20,
+                        color: Theme.of(context).textTheme.bodyText1.color),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2.0),
+                    child: Text(
+                      "What would you like to have today?",
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                    ),
+                  ),
+                ],
+              )
+            : TextField(
+                controller: controller,
+              ),
+        // Text(
+        //     'Search For Recipes',
+        //     style: Theme.of(context).textTheme.headline1.copyWith(
+        //         fontSize: 20,
+        //         color: Theme.of(context).textTheme.bodyText1.color),
+        //   ),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.search),
@@ -195,7 +225,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               AnimatedContainer(
                 duration: duration,
                 height: isSearch
-                    ? 200
+                    ? 140
                     : 120 -
                         MediaQuery.of(context).padding.top -
                         AppBar().preferredSize.height,
@@ -204,7 +234,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     AnimatedContainer(
                       duration: duration,
                       height: isSearch
-                          ? 200
+                          ? 140
                           : 120 -
                               MediaQuery.of(context).padding.top -
                               AppBar().preferredSize.height,
@@ -213,7 +243,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     AnimatedContainer(
                       duration: duration,
                       height: isSearch
-                          ? 200
+                          ? 140
                           : 120 -
                               MediaQuery.of(context).padding.top -
                               AppBar().preferredSize.height,
@@ -230,14 +260,128 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                           ? AnimatedContainer(
                               duration: duration,
                               child: SingleChildScrollView(
-                                child: SearchHomeWidget(
-                                  controller: controller,
-                                  // key: key,
-                                  suggestions: suggestions,
-                                  inclController: inclController,
-                                  // keyy: keyy,
-                                  exclController: exclController,
-                                  submitSearch: submitSearch,
+                                child:
+                                    //  SearchHomeWidget(
+                                    //   controller: controller,
+                                    //   // key: key,
+                                    //   suggestions: suggestions,
+                                    //   inclController: inclController,
+                                    //   // keyy: keyy,
+                                    //   exclController: exclController,
+                                    //   submitSearch: submitSearch,
+                                    // ),
+                                    Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Column(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: <Widget>[
+                                            InkWell(
+                                              onTap: () => _showDialog(
+                                                Text("Include"),
+                                              ),
+                                              child: Container(
+                                                height: 50,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2.5,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    25,
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      Icon(Icons.add_circle),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        'Include',
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () => _showDialog(
+                                                Text("Exclude"),
+                                              ),
+                                              child: Container(
+                                                height: 50,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2.5,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  color: Colors.white,
+                                                ),
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      Icon(Icons.remove_circle),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        'Exclude',
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      FlatButton(
+                                        child: Text('Search'),
+                                        onPressed: () {
+                                          submitSearch(
+                                            controller.text.trim().isNotEmpty
+                                                ? "Showing Results For " +
+                                                    controller.text
+                                                : "Showing Recipes From Ingredients",
+                                            controller.text
+                                                .replaceAll(" ", "%20")
+                                                .toLowerCase(),
+                                            inclController.text
+                                                .toLowerCase()
+                                                .replaceAll(", ", ",")
+                                                .replaceAll(" ", "%20"),
+                                            exclController.text
+                                                .toLowerCase()
+                                                .replaceAll(", ", ",")
+                                                .replaceAll(" ", "%20"),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             )
