@@ -191,7 +191,13 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text('FAVOURITE CATEGORIES'),
+                        child: Text(
+                          'FAVOURITE CATEGORIES',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              .copyWith(fontSize: 20),
+                        ),
                       ),
                       if (favCategoriesList.length != 0)
                         Container(
@@ -238,21 +244,63 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                             itemCount: favCategoriesList.length,
                           ),
                         ),
-                      Text('RECENTS'),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          top: 30,
+                        ),
+                        child: Text(
+                          'RECENTS',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              .copyWith(fontSize: 20),
+                        ),
+                      ),
                       if (recentRecipesList.length != 0)
                         BuildRecentsInFavourites(
                             recentRecipesList: recentRecipesList),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text('Favourites'),
-                          FlatButton(
-                            child: Text('View All'),
-                            onPressed: () {},
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              top: 30,
+                            ),
+                            child: Text(
+                              'FAVOURITES',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1
+                                  .copyWith(fontSize: 20),
+                            ),
                           ),
+                          // FlatButton(
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(
+                          //         left: 20, top: 20, bottom: 10),
+                          //     child: Text(
+                          //       'Showing All',
+                          //       style: Theme.of(context)
+                          //           .textTheme
+                          //           .headline1
+                          //           .copyWith(
+                          //             fontSize: 15,
+                          //             color: Theme.of(context).accentColor,
+                          //           ),
+                          //     ),
+                          //   ),
+                          //   onPressed: () {},
+                          // ),
                         ],
                       ),
                       if (favRecipesList.length != 0)
                         BuildFavInFavourites(favRecipesList: favRecipesList),
+                      SizedBox(
+                        height: 30,
+                      ),
                     ],
                   ),
                 )
