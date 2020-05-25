@@ -40,8 +40,8 @@ class AuthProvider with ChangeNotifier {
     googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       handleSignIn(account);
     }, onError: (err) {
-      isAuthh = false;
-      notifyListeners();
+      // isAuthh = false;
+      // notifyListeners();
       print('Error Signing In: $err');
     });
 
@@ -52,8 +52,8 @@ class AuthProvider with ChangeNotifier {
         .then((account) {
       handleSignIn(account);
     }).catchError((err) {
-      isAuthh = false;
-      notifyListeners();
+      // isAuthh = false;
+      // notifyListeners();
       print('Error Silently Signing In: $err');
     });
   }
@@ -78,15 +78,17 @@ class AuthProvider with ChangeNotifier {
   }
 
   login() async {
-    await googleSignIn.signIn().then((value) => isAuthh = true);
+    await googleSignIn.signIn();
+    // .then((value) => isAuthh = true);
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   logout() async {
-    googleSignIn.signOut().then((value) => isAuthh = false);
+    googleSignIn.signOut();
+    // .then((value) => isAuthh = false);
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   skipAuth() {
