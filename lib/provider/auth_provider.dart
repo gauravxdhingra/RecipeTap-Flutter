@@ -102,16 +102,7 @@ class AuthProvider with ChangeNotifier {
   ) async {
     DocumentSnapshot doc = await usersRef.document(emaill).get();
 
-    if (doc.exists) {
-      print(doc.data);
-      print(doc.documentID);
-      print(doc.exists);
-      // await usersRef.document(emaill).updateData({
-      //   "email": emaill,
-      //   "photoUrl": profilePhotoUrll,
-      //   "username": usernamee,
-      // });
-    } else {
+    if (!doc.exists) {
       print('yes');
       await usersRef.document(emaill).setData({
         "email": emaill,

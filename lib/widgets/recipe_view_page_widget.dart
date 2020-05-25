@@ -125,6 +125,11 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                 .checkIfFav(widget.recipe.recipeUrl,
                                     currentUser.email)) {
                               isFav = true;
+                              _scaffoldKey.currentState.showSnackBar(
+                                new SnackBar(
+                                    content: new Text(
+                                        '${widget.headline} Added To Favourites')),
+                              );
                             }
                           }
                         : () async {

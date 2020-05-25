@@ -42,7 +42,11 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       email = auth.email;
 
       if (auth.isAuth) {
-        final recenttag = Provider.of<RecentsProvider>(context);
+        final recenttag = Provider.of<RecentsProvider>(context, listen: false);
+
+//
+//
+//
 
         await recenttag.fetchRecentRecipes(email);
 

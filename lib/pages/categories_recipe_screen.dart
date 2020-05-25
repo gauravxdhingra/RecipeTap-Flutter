@@ -1,3 +1,5 @@
+// TODO : All Snackbars Duration and overlap true
+
 import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -322,7 +324,11 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                       setState(() {});
                       await Provider.of<RecentsProvider>(context, listen: false)
                           .removeFavCategory(categoryTitle, currentUser.email);
-
+                      _scaffoldKey.currentState.showSnackBar((new SnackBar(
+                        content: new Text(
+                          '$categoryTitle Removed From Favourites',
+                        ),
+                      )));
                       if (await Provider.of<RecentsProvider>(context,
                               listen: false)
                           .checkIfFavCategory(
@@ -348,6 +354,10 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                           ),
                           currentUser.email,
                         );
+                        _scaffoldKey.currentState.showSnackBar((new SnackBar(
+                          content:
+                              new Text('$categoryTitle Added To Favourites'),
+                        )));
 
                         if (!await Provider.of<RecentsProvider>(context,
                                 listen: false)
