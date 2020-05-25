@@ -99,10 +99,28 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   //   super.didChangeDependencies();
   // }
 
-  submitSearch(appBarTitle, dish, incl, excl) {
+  submitSearch(appBarTitle, dish) {
     controller.clear();
     inclController.clear();
     exclController.clear();
+
+    String incl = include
+        .toString()
+        .split("[")[1]
+        .split("]")[0]
+        .replaceAll(", ", ",")
+        .toLowerCase()
+        .replaceAll(", ", ",")
+        .replaceAll(" ", "%20");
+
+    String excl = exclude
+        .toString()
+        .split("[")[1]
+        .split("]")[0]
+        .replaceAll(", ", ",")
+        .toLowerCase()
+        .replaceAll(", ", ",")
+        .replaceAll(" ", "%20");
 
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SearchResultsScreen(
@@ -143,11 +161,42 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   Duration duration = Duration(milliseconds: 200);
 
-  _showDialog(Widget child) {
-    slideDialog.showSlideDialog(
-      context: context,
-      child: child,
-    );
+  // _showDialog(Widget child) {
+  //   slideDialog.showSlideDialog(
+  //     context: context,
+  //     child: child,
+  //   );
+  // }
+
+  void onButtonPressed(Widget child) {
+    showModalBottomSheet(
+
+        // isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+        ),
+        enableDrag: true,
+        isScrollControlled: true,
+        backgroundColor: Colors.white,
+        context: context,
+        builder: (context) {
+          return SingleChildScrollView(
+            child: Container(
+              child: child,
+              height: MediaQuery.of(context).size.height * 0.8,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                color: Theme.of(context).canvasColor,
+              ),
+            ),
+          );
+        });
   }
 
   String includei = "";
@@ -296,15 +345,56 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               CrossAxisAlignment.end,
                                           children: <Widget>[
                                             InkWell(
-                                              onTap: () => _showDialog(
+                                              onTap: () => onButtonPressed(
                                                 Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    Text("Include"),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topCenter,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Container(
+                                                          height: 7,
+                                                          width: 50,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .accentColor
+                                                                .withOpacity(
+                                                                    0.5),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 10),
+                                                      child: Text(
+                                                        "Include",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline6,
+                                                      ),
+                                                    ),
 
                                                     Padding(
                                                       padding: const EdgeInsets
                                                           .symmetric(
-                                                        vertical: 20,
+                                                        // vertical: 20,
                                                         horizontal: 20,
                                                       ),
                                                       child: ChipsInput(
@@ -320,22 +410,22 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                         //   i++;
                                                         // }),
 
-                                                        decoration: InputDecoration(
-                                                            labelText:
-                                                                'Select Ingredients',
-                                                            counter: Text(include
-                                                                    .length
-                                                                    .toString() ??
-                                                                "0")),
+                                                        decoration:
+                                                            InputDecoration(
+                                                          labelText:
+                                                              'Select Ingredients',
+                                                          // counter: Text(
+                                                          //   include.length
+                                                          //           .toString() ??
+                                                          //       "0",
+                                                          // ),
+                                                        ),
                                                         onChanged: (data) {
                                                           // includei =
                                                           //     data.toString();
                                                           include = data;
                                                           print(include);
-                                                          // setState(() {
-                                                          //   data.length =
-                                                          //       data.length;
-                                                          // });
+                                                          // setState(() {});
                                                           // print(includei);
                                                         },
                                                         chipBuilder: (context,
@@ -431,8 +521,149 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               ),
                                             ),
                                             InkWell(
-                                              onTap: () => _showDialog(
-                                                Text("Exclude"),
+                                              onTap: () => onButtonPressed(
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topCenter,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Container(
+                                                          height: 7,
+                                                          width: 50,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .accentColor
+                                                                .withOpacity(
+                                                                    0.5),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 10),
+                                                      child: Text(
+                                                        "Exclude",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline6,
+                                                      ),
+                                                    ),
+
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        // vertical: 20,
+                                                        horizontal: 20,
+                                                      ),
+                                                      child: ChipsInput(
+                                                        initialValue: exclude,
+                                                        //  includei
+                                                        //     .split("[")[1]
+                                                        //     .split("]")[0]
+                                                        //     .split(",")
+                                                        //     .toList(),
+                                                        //     .forEach((element) {
+                                                        //   include[i] =
+                                                        //       element.toString();
+                                                        //   i++;
+                                                        // }),
+
+                                                        decoration:
+                                                            InputDecoration(
+                                                          labelText:
+                                                              'Select Ingredients',
+                                                          // counter: Text(
+                                                          //   include.length
+                                                          //           .toString() ??
+                                                          //       "0",
+                                                          // ),
+                                                        ),
+                                                        onChanged: (data) {
+                                                          // includei =
+                                                          //     data.toString();
+                                                          exclude = data;
+                                                          print(exclude);
+                                                          // setState(() {});
+                                                          // print(includei);
+                                                        },
+                                                        chipBuilder: (context,
+                                                            state, profile) {
+                                                          return InputChip(
+                                                            key: ObjectKey(
+                                                                profile),
+                                                            label:
+                                                                Text(profile),
+                                                            onDeleted: () =>
+                                                                state.deleteChip(
+                                                                    profile),
+                                                            materialTapTargetSize:
+                                                                MaterialTapTargetSize
+                                                                    .shrinkWrap,
+                                                          );
+                                                        },
+                                                        findSuggestions:
+                                                            (String query) {
+                                                          if (query.length !=
+                                                              0) {
+                                                            var lowercaseQuery =
+                                                                query
+                                                                    .toLowerCase();
+                                                            return SearchSuggestions.suggestions.where(
+                                                                (ingredient) {
+                                                              return ingredient
+                                                                  .toLowerCase()
+                                                                  .contains(query
+                                                                      .toLowerCase());
+                                                            }).toList(
+                                                                growable: false)
+                                                              ..sort((a, b) => a
+                                                                  .toLowerCase()
+                                                                  .indexOf(
+                                                                      lowercaseQuery)
+                                                                  .compareTo(b
+                                                                      .toLowerCase()
+                                                                      .indexOf(
+                                                                          lowercaseQuery)));
+                                                          } else {
+                                                            return [];
+                                                          }
+                                                        },
+                                                        suggestionBuilder:
+                                                            (context, state,
+                                                                ingredient) {
+                                                          return ListTile(
+                                                            key: ObjectKey(
+                                                                ingredient),
+                                                            title: Text(
+                                                                ingredient),
+                                                            onTap: () => state
+                                                                .selectSuggestion(
+                                                                    ingredient),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                    // FlatButton(),
+                                                  ],
+                                                ),
                                               ),
                                               child: Container(
                                                 height: 50,
@@ -477,14 +708,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                             controller.text
                                                 .replaceAll(" ", "%20")
                                                 .toLowerCase(),
-                                            inclController.text
-                                                .toLowerCase()
-                                                .replaceAll(", ", ",")
-                                                .replaceAll(" ", "%20"),
-                                            exclController.text
-                                                .toLowerCase()
-                                                .replaceAll(", ", ",")
-                                                .replaceAll(" ", "%20"),
                                           );
                                         },
                                       ),
