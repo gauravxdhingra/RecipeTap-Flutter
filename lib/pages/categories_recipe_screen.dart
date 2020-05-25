@@ -32,8 +32,6 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   // static String incl; //= 'milk,sugar';
   // static String excl; //= 'salt,chicken';
 
-
-
   List<RecipeCard> recipeCards = [];
   List<CategoryOptionsRecipeCard> categoryOptionsRecipeCards = [];
   String categoryTitle;
@@ -184,7 +182,6 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
       ));
     });
     // print(recipeCards);
-
 
     // if (this.mounted)
   }
@@ -389,6 +386,13 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
               controller: _scrollController,
               slivers: <Widget>[
                 SliverAppBar(
+                  centerTitle: true,
+                  leading: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
                   title: isLoading ? Text("") : Text(categoryTitle) ?? "",
                   // elevation: 0.1,
                   // expandedHeight: MediaQuery.of(context).size.height / 3,
@@ -485,8 +489,13 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                 ),
                 SliverToBoxAdapter(
                     child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40),
+                      )),
                   height: 30,
-                  color: Theme.of(context).primaryColor,
                 )),
                 SliverToBoxAdapter(
                     child: Container(

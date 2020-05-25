@@ -32,7 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       profilePhotoUrl = currentUser.photoUrl;
       username = currentUser.username;
       email = currentUser.email;
-      isAuth = currentUser!=null;
+      isAuth = currentUser != null;
       // authSkipped = auth.authSkipped;
       // logout = auth.logout;
       // if (authSkipped)
@@ -88,12 +88,73 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
+  BorderRadius openContainerBR = BorderRadius.only(
+    bottomLeft: Radius.circular(40),
+    bottomRight: Radius.circular(40),
+  );
+  BorderRadius closedContainerBR = BorderRadius.only(
+    bottomLeft: Radius.circular(40),
+    bottomRight: Radius.circular(40),
+  );
+  BoxShadow openContainerBS =
+      // BoxShadow(color: Colors.black45),
+      BoxShadow(
+    blurRadius: 0.6,
+    spreadRadius: 0.6,
+    color: Colors.black45,
+    offset: Offset(0.1, 2.1),
+  );
+
+  BoxShadow closedContainerBS = BoxShadow(
+    blurRadius: 0.3,
+    spreadRadius: 0.3,
+    color: Colors.black45,
+    offset: Offset(0.1, 2),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: Icon(Icons.settings),
+        // leading: Icon(Icons.settings),
+        
         title: Text('Settings'),
+        centerTitle: true,
+        elevation: 0,
+        bottom: PreferredSize(
+          child: Container(
+            height: 120 -
+                MediaQuery.of(context).padding.top -
+                AppBar().preferredSize.height,
+            child: Stack(
+              children: [
+                Container(
+                  height: 120 -
+                      MediaQuery.of(context).padding.top -
+                      AppBar().preferredSize.height,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                ),
+                Container(
+                  height: 120 -
+                      MediaQuery.of(context).padding.top -
+                      AppBar().preferredSize.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: closedContainerBR,
+                    boxShadow: [
+                      closedContainerBS,
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          preferredSize: Size.fromHeight(120 -
+              MediaQuery.of(context).padding.top -
+              AppBar().preferredSize.height),
+        ),
       ),
       body: _isLoading
           ? CircularProgressIndicator()

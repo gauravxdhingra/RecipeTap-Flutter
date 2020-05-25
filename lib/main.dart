@@ -18,8 +18,6 @@ void main() {
   runApp(MyApp());
 }
 
-
-
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -48,8 +46,13 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           // primaryColor: Colors.white,
           // primaryColor: Color(0xffEC008C),
-          primaryColor: Color(0xffF01E91),
-          accentColor: Colors.blueGrey[900],
+          primaryColor:
+              //  Color(0xfff54291),
+              //  Colors.deepPurple[900],
+              Color(0xffF01E91),
+
+          accentColor: Color(0xff010a43),
+          // Colors.blueGrey[900],
           textTheme: TextTheme(
             headline1: TextStyle(
               fontFamily: 'OpenSans',

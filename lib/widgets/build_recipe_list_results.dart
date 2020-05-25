@@ -145,7 +145,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
-          childAspectRatio: 4 / 3,
+          childAspectRatio: 4 / 3.1,
           mainAxisSpacing: 20,
         ),
         // itemExtent: ,

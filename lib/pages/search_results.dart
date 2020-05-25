@@ -140,7 +140,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               )
             : null,
       ),
-      extendBodyBehindAppBar: true,
+      // extendBodyBehindAppBar: true,
       body: isLoading
           ? LoadingSpinner()
           : BuildRecipeListResults(

@@ -110,11 +110,73 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
             builder: (context) => CategoryRecipesScreen(url: categoryUrl)));
   }
 
+  var closedContainerHeight = 10;
+  var openContainerHeight = 200;
+  BorderRadius openContainerBR = BorderRadius.only(
+    bottomLeft: Radius.circular(40),
+    bottomRight: Radius.circular(40),
+  );
+  BorderRadius closedContainerBR = BorderRadius.only(
+    bottomLeft: Radius.circular(40),
+    bottomRight: Radius.circular(40),
+  );
+  BoxShadow openContainerBS =
+      // BoxShadow(color: Colors.black45),
+      BoxShadow(
+    blurRadius: 0.6,
+    spreadRadius: 0.6,
+    color: Colors.black45,
+    offset: Offset(0.1, 2.1),
+  );
+
+  BoxShadow closedContainerBS = BoxShadow(
+    blurRadius: 0.3,
+    spreadRadius: 0.3,
+    color: Colors.black45,
+    offset: Offset(0.1, 2),
+  );
+
+  Duration duration = Duration(milliseconds: 200);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Favourites"),
+        elevation: 0,
+        centerTitle: true,
+        bottom: PreferredSize(
+          child: Container(
+            height: 120 -
+                MediaQuery.of(context).padding.top -
+                AppBar().preferredSize.height,
+            child: Stack(
+              children: [
+                Container(
+                  height: 120 -
+                      MediaQuery.of(context).padding.top -
+                      AppBar().preferredSize.height,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                ),
+                Container(
+                  height: 120 -
+                      MediaQuery.of(context).padding.top -
+                      AppBar().preferredSize.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: closedContainerBR,
+                    boxShadow: [
+                      closedContainerBS,
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          preferredSize: Size.fromHeight(120 -
+              MediaQuery.of(context).padding.top -
+              AppBar().preferredSize.height),
+        ),
       ),
       body: _isLoading
           ? CircularProgressIndicator()
@@ -122,7 +184,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               ? SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(
-                 
                     children: <Widget>[
                       Text('FAVOURITE CATEGORIES'),
                       if (favCategoriesList.length != 0)

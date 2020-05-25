@@ -182,8 +182,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // final auth = Provider.of<AuthProvider>(context);
     return Scaffold(
-   
-
       body: isAuth
           ? PageView(
               controller: pageController,
@@ -205,20 +203,33 @@ class _HomeScreenState extends State<HomeScreen> {
           : LoginPage(),
       bottomNavigationBar: isAuth
           ? Container(
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
-              ]),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  // color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 20, color: Colors.black.withOpacity(.1))
+                  ]),
               child: SafeArea(
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
                   child: GNav(
+                    // backgroundColor: Theme.of(context).primaryColor,
                     gap: 8,
                     activeColor: Colors.white,
                     iconSize: 24,
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     duration: Duration(milliseconds: 800),
-                    tabBackgroundColor: Colors.grey[800],
+                    tabBackgroundColor: Theme.of(context).accentColor,
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .button
+                        .copyWith(color: Colors.white),
                     tabs: [
                       GButton(
                         icon: Icons.home,

@@ -194,17 +194,29 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             children: <Widget>[
               AnimatedContainer(
                 duration: duration,
-                height: isSearch ? 200 : 20,
+                height: isSearch
+                    ? 200
+                    : 120 -
+                        MediaQuery.of(context).padding.top -
+                        AppBar().preferredSize.height,
                 child: Stack(
                   children: [
                     AnimatedContainer(
                       duration: duration,
-                      height: !isSearch ? 20 : 200,
+                      height: isSearch
+                          ? 200
+                          : 120 -
+                              MediaQuery.of(context).padding.top -
+                              AppBar().preferredSize.height,
                       color: Theme.of(context).scaffoldBackgroundColor,
                     ),
                     AnimatedContainer(
                       duration: duration,
-                      height: !isSearch ? 20 : 200,
+                      height: isSearch
+                          ? 200
+                          : 120 -
+                              MediaQuery.of(context).padding.top -
+                              AppBar().preferredSize.height,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
