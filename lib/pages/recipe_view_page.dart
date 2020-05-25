@@ -77,7 +77,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       headline =
           document.getElementsByClassName("headline heading-content")[3].text;
 
-// TODO: Fixed For Now  ---- CHECK THIS SNIPPET FOR ERROR
       final srcfirstSplit = coverImageUrl.split("photos/")[0];
       final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/");
       var srcc;
@@ -464,7 +463,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       //   title: isLoading ? Text('') : Text(headline),
       // ),
 
-      // TODO no empty search field
       body: isLoading
           ? LoadingRecipeScreen()
           : Consumer<RecentsProvider>(

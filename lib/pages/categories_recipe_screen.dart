@@ -1,5 +1,3 @@
-// TODO : All Snackbars Duration and overlap true
-
 import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +32,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   // static String incl; //= 'milk,sugar';
   // static String excl; //= 'salt,chicken';
 
-  // TODO: ImagePLaceholders on lazy loading images
+
 
   List<RecipeCard> recipeCards = [];
   List<CategoryOptionsRecipeCard> categoryOptionsRecipeCards = [];
@@ -125,13 +123,17 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             .attributes["href"]
             .split("?internalSource=")[0];
 
-        final photoUrl = element
-            .querySelector("a")
-            .querySelector("img")
-            .attributes["src"]
-            .replaceAll("/140x140", "");
+        var photoUrl =
+            element.querySelector("a").querySelector("img").attributes["src"];
 
-// TODO fix resolution
+        final srcfirstSplit = photoUrl.split("photos/")[0];
+        final srcsecondsplit = photoUrl.split("photos/")[1].split("/");
+        var srcc;
+        if (srcsecondsplit.length > 1) {
+          srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
+          print(srcc);
+          photoUrl = srcc;
+        }
 
         final title =
             element.querySelector("a").querySelector("span").text.trim();
@@ -183,7 +185,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
     });
     // print(recipeCards);
 
-// TODO check if setting state
+
     // if (this.mounted)
   }
 
@@ -568,7 +570,6 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                         ),
                                       ],
                                     ),
-                                    
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 5, horizontal: 20),

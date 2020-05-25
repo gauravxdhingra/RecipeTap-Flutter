@@ -1,5 +1,7 @@
    // TODO Fav Page Dummy - No User or No Data - Placeholder
 
+    // TODO: ImagePLaceholders on lazy loading images
+
    // TODO: Theming and Handle Yield Box Overflow in recipe view page and cooking now
 
    // TODO: PDF
@@ -19,6 +21,8 @@
     // TODO Add Shadow to Categories Pinned Appbars and Curving all Appbars with arrow back ios 
 
    // TODO add feature for ingredients servings division
+
+   // TODO : All Snackbars Duration and overlap true
 
    // TODO retry button for dns fail
 
@@ -46,6 +50,7 @@
 
 
      //TODO searching
+      // TODO no empty search field
      // TODO: all user search inputs lowercase
     // TODO spaces replace %20
     // TODO check same ingredient not included and excluded
