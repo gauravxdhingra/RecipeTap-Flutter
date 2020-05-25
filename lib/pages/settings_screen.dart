@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/pages/home_screen.dart';
-import 'package:recipetap/provider/auth_provider.dart';
+// import 'package:recipetap/provider/auth_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

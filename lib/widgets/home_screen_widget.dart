@@ -46,8 +46,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     if (currentUser != null) {
       profilePhotoUrl = currentUser.photoUrl;
       username = currentUser.username;
@@ -96,6 +94,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   // }
 
   submitSearch(appBarTitle, dish, incl, excl) {
+    controller.clear();
+    inclController.clear();
+    exclController.clear();
+
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SearchResultsScreen(
             appBarTitle: appBarTitle,
@@ -234,7 +236,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   ],
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
@@ -282,7 +283,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   ),
                 ),
               ),
-              // // TODO retry button for dns fail
             ],
           ),
         ),

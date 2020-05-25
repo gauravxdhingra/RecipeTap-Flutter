@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:recipetap/pages/categories_recipe_screen.dart';
 import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
-import 'package:recipetap/provider/auth_provider.dart';
+// import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/models/recents_model.dart';
 import 'package:recipetap/models/favourites_model.dart';
@@ -122,9 +122,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               ? SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(
-                    // TODO : Timeago
-                    // TODO Add Shadow to Categories Pinned Appbars
-
+                 
                     children: <Widget>[
                       Text('FAVOURITE CATEGORIES'),
                       if (favCategoriesList.length != 0)

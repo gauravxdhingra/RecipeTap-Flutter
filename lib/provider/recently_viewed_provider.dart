@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:recipetap/models/recipe_model.dart';
 import 'package:recipetap/models/userdata.dart';
 import 'package:recipetap/pages/home_screen.dart';
-import 'package:recipetap/provider/auth_provider.dart';
-import 'package:recipetap/provider/favorites_provider.dart';
+// import 'package:recipetap/provider/auth_provider.dart';
+// import 'package:recipetap/provider/favorites_provider.dart';
 import 'package:uuid/uuid.dart';
 import '../models/recents_model.dart';
 import '../models/favourites_model.dart';
@@ -118,7 +118,7 @@ class RecentsProvider with ChangeNotifier {
         return;
       }
     });
-// TODO crud delete - check if favourite
+
     await favoritesRef
         .document(email)
         .collection('favs')
@@ -227,7 +227,7 @@ class RecentsProvider with ChangeNotifier {
         return;
       }
     });
-// TODO crud delete - check if favourite
+
     await favoriteCategoriesRef
         .document(email)
         .collection('favs')
@@ -267,7 +267,8 @@ class RecentsProvider with ChangeNotifier {
     // final recipeurl1 = url.split("/recipe/")[1];
     // final recipeurll =
     //     recipeurl1.split("/")[0] + "-" + recipeurl1.split("/")[1];
-    print('$category'+"*************************************************************************");
+    print('$category' +
+        "*************************************************************************");
     DocumentSnapshot doc = await favoriteCategoriesRef
         .document(email)
         .collection('favs')
@@ -302,9 +303,4 @@ class RecentsProvider with ChangeNotifier {
       print("Not a fav");
     }
   }
-
-// TODO Reload Favourites page at every click
-// TODO ZERO RECENTS START ADDING - MESSAGE
-// TODO: Collapsing Home Search
-// TODO: Search not adding more
 }

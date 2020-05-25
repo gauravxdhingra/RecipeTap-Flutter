@@ -146,8 +146,6 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
             )
           ],
         ),
-
-        // TODO highlight current step and transparent next steps
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

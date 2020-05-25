@@ -64,8 +64,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
       });
       return;
     }
-// TODO bummer page
-// TODO handle less than 10 results circle indicator
+
     final recipeCardsFromHtml =
         document.getElementsByClassName("fixed-recipe-card");
 
@@ -224,7 +223,6 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
                               ),
                             ],
                           ),
-                          // TODO Fab Fav
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 20),

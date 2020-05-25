@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 
 class LoadingIngredientsSearchScreen extends StatelessWidget {
   const LoadingIngredientsSearchScreen({Key key}) : super(key: key);
@@ -15,6 +15,5 @@ class LoadingIngredientsSearchScreen extends StatelessWidget {
         ],
       ),
     );
-// TODO: Icons on Recipe Screen Container fixed width
   }
 }

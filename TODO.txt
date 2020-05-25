@@ -1,0 +1,52 @@
+   // TODO Fav Page Dummy - No User or No Data - Placeholder
+
+   // TODO: Theming and Handle Yield Box Overflow in recipe view page and cooking now
+
+   // TODO: PDF
+
+   // TODO search only one page loading
+
+   // TODO: Handle overflow from search items and other recipe cards
+
+   // TODO: Handle Text Overflows Everywhere in the app 
+   
+   // TODO search Ingredients Chips
+
+    // TODO: Searchlist images resolution full
+
+    // TODO : Timeago
+
+    // TODO Add Shadow to Categories Pinned Appbars and Curving all Appbars with arrow back ios 
+
+   // TODO add feature for ingredients servings division
+
+   // TODO retry button for dns fail
+
+   // TODO bummer page
+
+   // TODO Reload Favourites page at every click
+
+    // TODO ZERO RECENTS START ADDING - MESSAGE
+
+    // TODO bummer page
+
+    // TODO filters
+
+    // TODO: Min SDK 16
+
+    // TODO: Review all 10,000 Suggestions
+
+
+
+
+    // TODO recipe view => 
+      // TODO handle empty image
+     // TODO solve-if image rail is empty
+     // TODO: Solve no image bug   
+
+
+     //TODO searching
+     // TODO: all user search inputs lowercase
+    // TODO spaces replace %20
+    // TODO check same ingredient not included and excluded
+    // TODO: Handle empty search result page 404

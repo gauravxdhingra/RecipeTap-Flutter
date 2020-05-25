@@ -11,7 +11,7 @@ import 'package:recipetap/jump_screens/loading_category_recipes.dart';
 import 'package:recipetap/models/category_options_card.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/search_results.dart';
-import 'package:recipetap/provider/auth_provider.dart';
+// import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
@@ -186,7 +186,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 // TODO check if setting state
     // if (this.mounted)
   }
-// TODO: Category recipe of the day
+
 // TODO: First Check if next Page Exists
 
   getSearchResultsNext(url) async {
@@ -205,7 +205,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
       });
       return;
     }
-// TODO bummer page
+
     final recipeCardsFromHtml =
         document.getElementsByClassName("fixed-recipe-card");
 
@@ -305,12 +305,10 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   @override
   Widget build(BuildContext context) {
     // isLoading = true;
-    // TODO Layout: CatagoryOptions , CatagoryRecipes
-    // TODO Loading Progress
 
     return Scaffold(
       key: _scaffoldKey,
-      // TODO Collapsing AppBar
+
       floatingActionButton: isLoading
           ? null
           : FloatingActionButton(
@@ -570,7 +568,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                         ),
                                       ],
                                     ),
-                                    // TODO Fab Fav
+                                    
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 5, horizontal: 20),

@@ -10,15 +10,15 @@ import 'package:recipetap/widgets/loading_spinner.dart';
 
 import 'pages/recipe_view_page.dart';
 
-import './provider/auth_provider.dart';
-import './provider/favorites_provider.dart';
+// import './provider/auth_provider.dart';
+// import './provider/favorites_provider.dart';
 import './provider/recently_viewed_provider.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-// TODO: Handle Text Overflows Everywhere in the app
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -121,9 +121,4 @@ class MyApp extends StatelessWidget {
       // ),
     );
   }
-// TODO: Firebase Login
-// TODO: Favourites on Firebase
-// TODO: Recent Recipes on Firebase
-// TODO: Favourite categories on Firebse
-// TODO: Favoutite Category Options on Firebase
 }

@@ -23,8 +23,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 
   // TODO handle empty image
   // TODO solve-if image rail is empty
-  // TODO: Validate time and Servings mixing prevent
-  // TODO: all getData functions in try and catch
   // TODO: Solve no image bug
   // https://images.media-allrecipes.com/images/82579.png
 
@@ -79,14 +77,16 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       headline =
           document.getElementsByClassName("headline heading-content")[3].text;
 
-// TODO: CHECK THIS SNIPPET FOR ERROR
-      // final srcfirstSplit = coverImageUrl.split("photos/")[0];
-      // final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/")[1];
-      // final srcc = srcfirstSplit + "photos/" + srcsecondsplit;
-      // print(srcc);
-      // images.add(srcc);
-
-      images.add(coverImageUrl);
+// TODO: Fixed For Now  ---- CHECK THIS SNIPPET FOR ERROR
+      final srcfirstSplit = coverImageUrl.split("photos/")[0];
+      final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/");
+      var srcc;
+      if (srcsecondsplit.length > 1) {
+        srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
+        print(srcc);
+        images.add(srcc);
+      } else
+        images.add(coverImageUrl);
 
       var otherImagesRef = document.getElementsByClassName("ugc-photos-link");
       int count = 0;

@@ -60,7 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
 // TODO spaces replace %20
 // TODO check same ingredient not included and excluded
 // TODO: Handle empty search result page 404
-// TODO: Review all 10,000 Suggestions
 
   @override
   void initState() {
@@ -158,8 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
   //   super.didChangeDependencies();
   // }
 
-// TODO: Min SDK 16
-
   List<String> suggestions = SearchSuggestions.suggestions;
   @override
   void dispose() {
@@ -185,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // final auth = Provider.of<AuthProvider>(context);
     return Scaffold(
-      // TODO: Searchlist images resolution full
+   
 
       body: isAuth
           ? PageView(
@@ -227,7 +224,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: Icons.home,
                         text: 'Home',
                       ),
-                      // TODO Category pageview
                       GButton(
                         icon: Icons.category,
                         text: 'Categories',

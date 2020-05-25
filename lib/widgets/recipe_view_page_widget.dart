@@ -269,7 +269,6 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     height: 85,
                     child: Center(
                       child: Row(
-                        // TODO add faeture for ingredients servings division
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -388,7 +387,6 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                   child: Divider(),
                 ),
 
-                // TODO HANDLE HEADING IN SLIVER
                 SliverToBoxAdapter(
                   child: Container(
                     padding: const EdgeInsets.only(
