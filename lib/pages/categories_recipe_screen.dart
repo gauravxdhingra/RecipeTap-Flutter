@@ -17,6 +17,7 @@ import 'package:recipetap/widgets/build_recipe_list_results.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
 import 'package:recipetap/models/category_model.dart';
 
+import 'home_screen.dart';
 import 'recipe_view_page.dart';
 
 class CategoryRecipesScreen extends StatefulWidget {
@@ -75,8 +76,8 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
   }
 
   checkFav() async {
-    var isAuth = Provider.of<AuthProvider>(context, listen: false);
-    if (isAuth.isAuth) {
+    // var isAuth = Provider.of<AuthProvider>(context, listen: false);
+    if (currentUser != null) {
       isFav = await Provider.of<RecentsProvider>(context, listen: false)
           .checkIfFavCategory(
         categoryTitle,
@@ -340,8 +341,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                       }
                     }
                   : () async {
-                      if (Provider.of<AuthProvider>(context, listen: false)
-                          .isAuth) {
+                      if (currentUser != null) {
                         isFav = true;
                         setState(() {});
                         await Provider.of<RecentsProvider>(context,

@@ -2,6 +2,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/pages/categories_recipe_screen.dart';
+import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
@@ -37,11 +38,11 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         _isLoading = true;
       });
 
-      final auth = Provider.of<AuthProvider>(context, listen: false);
+      // final auth = Provider.of<AuthProvider>(context, listen: false);
 
-      email = auth.email;
+      email = currentUser.email;
 
-      if (auth.isAuth) {
+      if (currentUser != null) {
         final recenttag = Provider.of<RecentsProvider>(context, listen: false);
 
 //
@@ -68,8 +69,8 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         favCategoriesList = recenttag.getFavouriteCategoriesList;
       }
 
-      isAuth = auth.isAuth;
-      authSkipped = auth.authSkipped;
+      isAuth = currentUser != null;
+      // authSkipped = auth.authSkipped;
       // setState(() {
       _isLoading = false;
       // });
@@ -117,7 +118,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       ),
       body: _isLoading
           ? CircularProgressIndicator()
-          : Provider.of<AuthProvider>(context, listen: false).isAuth
+          : currentUser != null
               ? SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(

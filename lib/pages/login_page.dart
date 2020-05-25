@@ -15,28 +15,28 @@ class _LoginPageState extends State<LoginPage> {
 
   var isInit = false;
 
-  @override
-  void didChangeDependencies() async {
-    if (!isInit) {
-      setState(() {
-        _isLoading = true;
-      });
+  // @override
+  // void didChangeDependencies() async {
+  //   if (!isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
 
-      await Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
+  //     await Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
 
-      _isLoading = false;
+  //     _isLoading = false;
 
-      isInit = true;
-    }
-    super.didChangeDependencies();
-  }
+  //     isInit = true;
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   Future<void> _submit() async {
     setState(() {
       _isLoading = true;
     });
-
-    await Provider.of<AuthProvider>(context, listen: false).login();
+    await googleSignIn.signIn();
+    // await Provider.of<AuthProvider>(context, listen: false).login();
   }
 
   Future<void> _skipSignIn() async {
