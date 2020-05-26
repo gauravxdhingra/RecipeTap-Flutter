@@ -4,6 +4,7 @@ import 'package:recipetap/models/recents_model.dart';
 import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class BuildRecentsInFavourites extends StatefulWidget {
   const BuildRecentsInFavourites({
@@ -21,8 +22,10 @@ class BuildRecentsInFavourites extends StatefulWidget {
 class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
   @override
   Widget build(BuildContext context) {
+    // final width = MediaQuery.of(context).size.width * 4 / 5;
+    // const widthh = const width;
     return Container(
-      height: MediaQuery.of(context).size.height / 3 + 10,
+      height: MediaQuery.of(context).size.height / 3 + 50,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
@@ -32,10 +35,12 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
             padding: EdgeInsets.symmetric(horizontal: 10),
             width: MediaQuery.of(context).size.width * 4 / 5,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(right: 10),
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 4 / 5 - 95,
+                  ),
                   child: InkWell(
                     onTap: () async {
                       final recipeurl1 = widget.recentRecipesList[i].recipeUrl
@@ -178,6 +183,18 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
                   //     // ),
                   //   ),
                   // ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Text(timeago.format(
+                        widget.recentRecipesList[i].timestamp.toDate())),
+                  ),
                 ),
               ],
             ),

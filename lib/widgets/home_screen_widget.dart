@@ -19,7 +19,7 @@ import 'package:recipetap/pages/search_results.dart';
 // import 'package:simple_search_bar/simple_search_bar.dart';
 // import 'package:slimy_card/slimy_card.dart';
 import './search_home_widget.dart';
-import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
+// import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 
 class HomeScreenWidget extends StatefulWidget {
   @override
