@@ -37,6 +37,22 @@ reportView(context, RecipeModel recipe) async {
       cooksNotes = cooksNotes + element.toString() + "\n";
   });
 
+  String yeild;
+  if (recipe.yeild == null) {
+    yeild = "--";
+  } else {
+    yeild = recipe.yeild.toString();
+  }
+
+  String nutritionalFacts = "";
+  // int k = 0;
+
+  if (recipe.nutritionalFacts != null && recipe.nutritionalFacts != [])
+    recipe.nutritionalFacts.forEach((element) {
+      // k++;
+      nutritionalFacts = nutritionalFacts + element.toString() + "\n";
+    });
+
   pdf.addPage(MultiPage(
       pageFormat:
           PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
@@ -53,7 +69,7 @@ reportView(context, RecipeModel recipe) async {
               border:
                   BoxBorder(bottom: true, width: 0.5, color: PdfColors.grey)),
           child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'RecipeTap',
@@ -75,10 +91,18 @@ reportView(context, RecipeModel recipe) async {
         return Container(
             alignment: Alignment.centerRight,
             margin: const EdgeInsets.only(top: 1.0 * PdfPageFormat.cm),
-            child: Text('Page ${context.pageNumber} of ${context.pagesCount}',
-                style: Theme.of(context)
-                    .defaultTextStyle
-                    .copyWith(color: PdfColors.grey)));
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Page ${context.pageNumber} of ${context.pagesCount}',
+                      style: Theme.of(context)
+                          .defaultTextStyle
+                          .copyWith(color: PdfColors.grey)),
+                  Text('RecipeTap',
+                      style: Theme.of(context)
+                          .defaultTextStyle
+                          .copyWith(color: PdfColors.grey)),
+                ]));
       },
       build: (Context context) => <Widget>[
             Header(
@@ -87,6 +111,7 @@ reportView(context, RecipeModel recipe) async {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text('RecipeTap', textScaleFactor: 2),
+                      Text('Available on Google Play', textScaleFactor: 1)
                       // LOGO
                       // Play Store Url
                     ])),
@@ -101,7 +126,7 @@ reportView(context, RecipeModel recipe) async {
             //        ),
             Table.fromTextArray(context: context, data: <List<String>>[
               <String>['Time', 'Servings', 'Yeild'],
-              <String>[recipe.time, recipe.servings, recipe.yeild],
+              <String>[recipe.time, recipe.servings, yeild],
             ]),
             Padding(padding: const EdgeInsets.all(10)),
             Header(level: 2, text: 'Ingredients'),
@@ -114,6 +139,10 @@ reportView(context, RecipeModel recipe) async {
               Header(level: 2, text: "Cook's Notes"),
             if (cooksNotes.trim() != "")
               Paragraph(text: cooksNotes),
+            if (nutritionalFacts.trim() != "")
+              Header(level: 2, text: "Nutritional Facts"),
+            if (cooksNotes.trim() != "")
+              Paragraph(text: nutritionalFacts),
           ]));
   //save PDF
   final String dir = (await getApplicationDocumentsDirectory()).path;
