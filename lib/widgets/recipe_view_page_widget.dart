@@ -12,6 +12,7 @@ import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/utility/pdf_creator.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sliver_fab/sliver_fab.dart';
+import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 
 class RecipeViewPageWidget extends StatefulWidget {
   const RecipeViewPageWidget({
@@ -619,7 +620,10 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                           //   return File(path);
                           // }
                           // var myFile = await file();
-                          reportView(context, widget.recipe);
+                          await reportView(context, widget.recipe);
+                          // _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                          //     content: new Text(
+                          //         'PDF Saved to InternalStorage/RecipeTap')));
                         },
                         // capture,
                         child: ClipRRect(

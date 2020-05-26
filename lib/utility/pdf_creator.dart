@@ -154,7 +154,7 @@ reportView(context, RecipeModel recipe) async {
   final File file = File(path);
   await file.writeAsBytes(pdf.save());
   String dirext = (await getExternalStorageDirectory()).path;
-  dirext = dirext.split("Android")[0] + "/RecipeTap";
+  dirext = dirext.split("/Android")[0] + "/RecipeTap";
   print(dirext);
 
   String pathext;
@@ -166,9 +166,33 @@ reportView(context, RecipeModel recipe) async {
   final File fileext = File(pathext);
   await fileext.writeAsBytes(pdf.save());
 
-  material.Navigator.of(context).push(
-    material.MaterialPageRoute(
-      builder: (_) => PdfViewerPage(path: path),
-    ),
-  );
+  material.showDialog(
+      context: context,
+      builder: (context) {
+        return material.AlertDialog(
+          title: material.Text('File Saved To Internal Storage'),
+          actions: <material.Widget>[
+            material.FlatButton(
+              child: material.Text('View'),
+              onPressed: () {
+                material.Navigator.of(context).push(
+                  material.MaterialPageRoute(
+                    builder: (_) => PdfViewerPage(path: path),
+                  ),
+                );
+              },
+            ),
+            material.FlatButton(
+              child: material.Text('Share'),
+              onPressed: () {
+                material.Navigator.of(context).push(
+                  material.MaterialPageRoute(
+                    builder: (_) => PdfViewerPage(path: path),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      });
 }
