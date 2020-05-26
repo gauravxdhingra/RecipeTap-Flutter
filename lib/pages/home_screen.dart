@@ -226,6 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     duration: Duration(milliseconds: 800),
                     tabBackgroundColor: Theme.of(context).accentColor,
+
                     textStyle: Theme.of(context)
                         .textTheme
                         .button
@@ -234,18 +235,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       GButton(
                         icon: Icons.home,
                         text: 'Home',
+                        iconColor:
+                            Theme.of(context).accentColor.withOpacity(0.6),
                       ),
                       GButton(
                         icon: Icons.category,
                         text: 'Categories',
+                        iconColor:
+                            Theme.of(context).accentColor.withOpacity(0.6),
                       ),
                       GButton(
                         icon: Icons.favorite,
                         text: 'Favourites',
+                        iconColor:
+                            Theme.of(context).accentColor.withOpacity(0.6),
                       ),
                       GButton(
                         icon: Icons.account_circle,
                         text: 'Profile',
+                        iconColor:
+                            Theme.of(context).accentColor.withOpacity(0.6),
                       ),
                     ],
                     selectedIndex: _selectedIndex,

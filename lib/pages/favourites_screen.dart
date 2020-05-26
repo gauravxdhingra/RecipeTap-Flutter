@@ -181,127 +181,147 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       body: _isLoading
           ? CircularProgressIndicator()
           : currentUser != null
-              ? SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          'FAVOURITE CATEGORIES',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              .copyWith(fontSize: 20),
+              ? RefreshIndicator(
+                  onRefresh: () async {
+                    final recenttag =
+                        Provider.of<RecentsProvider>(context, listen: false);
+
+                    await recenttag.fetchRecentRecipes(email);
+
+                    recentRecipesList = recenttag.recentRecipes;
+
+                    await recenttag.fetchFavoriteRecipes(email);
+
+                    favRecipesList = recenttag.favRecipes;
+
+                    await recenttag.fetchFavoriteCategories(email);
+
+                    favCategoriesList = recenttag.getFavouriteCategoriesList;
+
+                    setState(() {});
+                  },
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
-                      if (favCategoriesList.length != 0)
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 70,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            physics: BouncingScrollPhysics(),
-                            itemBuilder: (context, i) {
-                              return InkWell(
-                                onTap: () => mealsFromCategory(
-                                  favCategoriesList[i].categoryUrl,
-                                  context,
-                                ),
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 8),
-                                  height: 70,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: Theme.of(context).accentColor,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            'FAVOURITE CATEGORIES',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1
+                                .copyWith(fontSize: 20),
+                          ),
+                        ),
+                        if (favCategoriesList.length != 0)
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 70,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, i) {
+                                return InkWell(
+                                  onTap: () => mealsFromCategory(
+                                    favCategoriesList[i].categoryUrl,
+                                    context,
                                   ),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "#" + favCategoriesList[i].title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            .copyWith(
-                                              color: Colors.white,
-                                            ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 8),
+                                    height: 70,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "#" + favCategoriesList[i].title,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              .copyWith(
+                                                color: Colors.white,
+                                              ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                            itemCount: favCategoriesList.length,
-                          ),
-                        ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          top: 30,
-                        ),
-                        child: Text(
-                          'RECENTS',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              .copyWith(fontSize: 20),
-                        ),
-                      ),
-                      if (recentRecipesList.length != 0)
-                        BuildRecentsInFavourites(
-                            recentRecipesList: recentRecipesList),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20,
-                              top: 30,
-                            ),
-                            child: Text(
-                              'FAVOURITES',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1
-                                  .copyWith(fontSize: 20),
+                                );
+                              },
+                              itemCount: favCategoriesList.length,
                             ),
                           ),
-                          // FlatButton(
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.only(
-                          //         left: 20, top: 20, bottom: 10),
-                          //     child: Text(
-                          //       'Showing All',
-                          //       style: Theme.of(context)
-                          //           .textTheme
-                          //           .headline1
-                          //           .copyWith(
-                          //             fontSize: 15,
-                          //             color: Theme.of(context).accentColor,
-                          //           ),
-                          //     ),
-                          //   ),
-                          //   onPressed: () {},
-                          // ),
-                        ],
-                      ),
-                      if (favRecipesList.length != 0)
-                        BuildFavInFavourites(favRecipesList: favRecipesList),
-                      SizedBox(
-                        height: 30,
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            top: 30,
+                          ),
+                          child: Text(
+                            'RECENTS',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1
+                                .copyWith(fontSize: 20),
+                          ),
+                        ),
+                        if (recentRecipesList.length != 0)
+                          BuildRecentsInFavourites(
+                              recentRecipesList: recentRecipesList),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 20,
+                                top: 30,
+                              ),
+                              child: Text(
+                                'FAVOURITES',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    .copyWith(fontSize: 20),
+                              ),
+                            ),
+                            // FlatButton(
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.only(
+                            //         left: 20, top: 20, bottom: 10),
+                            //     child: Text(
+                            //       'Showing All',
+                            //       style: Theme.of(context)
+                            //           .textTheme
+                            //           .headline1
+                            //           .copyWith(
+                            //             fontSize: 15,
+                            //             color: Theme.of(context).accentColor,
+                            //           ),
+                            //     ),
+                            //   ),
+                            //   onPressed: () {},
+                            // ),
+                          ],
+                        ),
+                        if (favRecipesList.length != 0)
+                          BuildFavInFavourites(favRecipesList: favRecipesList),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
                   ),
                 )
               : Text("login to see fav and recents"),

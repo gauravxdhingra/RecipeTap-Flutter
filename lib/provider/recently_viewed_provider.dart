@@ -97,6 +97,11 @@ class RecentsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+// 
+// 
+// 
+// 
+// 
   addToFavourites(RecipeModel recipe, String email) async {
     DocumentSnapshot doc = await favoritesRef.document(currentUser.email).get();
     print(doc.data);

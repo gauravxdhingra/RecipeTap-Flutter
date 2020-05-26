@@ -11,8 +11,6 @@
    // TODO: Handle overflow from search items and other recipe cards
 
    // TODO: Handle Text Overflows Everywhere in the app 
-   
-   // TODO search Ingredients Chips
 
     // TODO: Searchlist images resolution full
 
@@ -25,8 +23,6 @@
    // TODO retry button for dns fail
 
    // TODO bummer page
-
-   // TODO Reload Favourites page at every click
 
     // TODO ZERO RECENTS START ADDING - MESSAGE
 
@@ -51,3 +47,4 @@
     // TODO spaces replace %20
     // TODO check same ingredient not included and excluded
     // TODO: Handle empty search result page 404
+    

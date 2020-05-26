@@ -2,16 +2,19 @@ import 'dart:ui';
 
 // import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 // import 'package:clay_containers/clay_containers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:provider/provider.dart';
+import 'package:recipetap/models/favourites_model.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/models/userdata.dart';
 import 'package:recipetap/pages/home_screen.dart';
 // import 'package:recipetap/pages/catagories_screen.dart';
 // import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
+import 'package:recipetap/provider/recently_viewed_provider.dart';
 // import 'package:recipetap/pages/search_screen.dart';
 // import 'package:recipetap/pages/settings_screen.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
@@ -29,7 +32,7 @@ class HomeScreenWidget extends StatefulWidget {
 class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   // bool search = false;
   TextEditingController controller;
-
+  int time;
   bool isAuth;
   bool authSkipped;
   String profilePhotoUrl;
@@ -57,7 +60,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       username = currentUser.username;
       email = currentUser.email;
     }
-
+    time = DateTime.now().hour;
+    fetchRecommended();
     super.initState();
 
     inclController = TextEditingController();
@@ -66,6 +70,27 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   }
 
   List<String> suggestions = SearchSuggestions.suggestions;
+
+  List<FavouritesModel> recommended = [];
+
+  fetchRecommended() async {
+    List<FavouritesModel> _favslist = [];
+    QuerySnapshot recents = await favoritesRef
+        .document("grvdhingra1999@gmail.com")
+        .collection('favs')
+        .orderBy(
+          'timestamp',
+          descending: true,
+        )
+        .getDocuments();
+    recents.documents.forEach((DocumentSnapshot doc) {
+      print(doc);
+      _favslist.add(FavouritesModel.fromDocument(doc));
+      // print(recentslist);
+    });
+    recommended = _favslist;
+  }
+
   // @override
   // void dispose() {
   //   inclController.dispose();
@@ -159,7 +184,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     offset: Offset(0.1, 2),
   );
 
-  Duration duration = Duration(milliseconds: 200);
+  Duration duration = Duration(milliseconds: 400);
 
   // _showDialog(Widget child) {
   //   slideDialog.showSlideDialog(
@@ -398,7 +423,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                         horizontal: 20,
                                                       ),
                                                       child: ChipsInput(
-                                                                                                                initialValue: include,
+                                                        initialValue: include,
                                                         //  includei
                                                         //     .split("[")[1]
                                                         //     .split("]")[0]
@@ -768,6 +793,170 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 3 + 50,
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.recentRecipesList.length,
+                  itemBuilder: (context, i) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      width: MediaQuery.of(context).size.width * 4 / 5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 4 / 5 -
+                                  95,
+                            ),
+                            child: InkWell(
+                              onTap: () async {
+                                final recipeurl1 = widget
+                                    .recentRecipesList[i].recipeUrl
+                                    .split("/recipe/")[1];
+                                final recipeurll = recipeurl1.split("/")[0] +
+                                    "-" +
+                                    recipeurl1.split("/")[1];
+                                await recentsRef
+                                    .document(currentUser.email)
+                                    .collection('recents')
+                                    .document(recipeurll)
+                                    .delete();
+                                widget.recentRecipesList.removeAt(i);
+                                setState(() {});
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 1),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(0.4),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Text('Remove'),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RecipeViewPage(
+                                          url: widget
+                                              .recentRecipesList[i].recipeUrl,
+                                          coverImageUrl: widget
+                                              .recentRecipesList[i]
+                                              .coverPhotoUrl,
+                                        ))),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                              child: ClayContainer(
+                                borderRadius: 20,
+                                depth: 90,
+                                spread: 6,
+                                // depth: 90,
+                                // color: Theme.of(context).primaryColor,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                  child: Container(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.2),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Stack(
+                                          children: <Widget>[
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20),
+                                              ),
+                                              child: Image.network(
+                                                widget.recentRecipesList[i]
+                                                    .coverPhotoUrl,
+                                                height: 210,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Positioned(
+                                              // top: 0,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .accentColor
+                                                      .withOpacity(0.6),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                height: 50,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: Center(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                      horizontal: 15.0,
+                                                    ),
+                                                    child: Text(
+                                                      widget
+                                                          .recentRecipesList[i]
+                                                          .title,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5, horizontal: 20),
+                                          child: Text(
+                                            widget.recentRecipesList[i].desc,
+                                            style: TextStyle(
+                                              // color: Colors.white,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                            maxLines: 2,
+                                            softWrap: true,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
