@@ -26,6 +26,7 @@ import 'package:recipetap/provider/recently_viewed_provider.dart';
 // import 'package:simple_search_bar/simple_search_bar.dart';
 // import 'package:slimy_card/slimy_card.dart';
 import './search_home_widget.dart';
+import 'home_screen_widgets/time_of_the_day.dart';
 // import 'package:slide_popup_dialog/slide_popup_dialog.dart' as slideDialog;
 
 class HomeScreenWidget extends StatefulWidget {
@@ -241,6 +242,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         context: context,
         builder: (context) {
           return SingleChildScrollView(
+            // physics: NeverScrollableScrollPhysics(),
+
             child: Container(
               child: child,
               height: MediaQuery.of(context).size.height * 0.8,
@@ -334,6 +337,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       ),
       body: Container(
         child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
             children: <Widget>[
               AnimatedContainer(
@@ -836,53 +840,41 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   itemCount: recommendedCategoriesList.length,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: () => {},
-                  //  Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => SearchScreen())),
-                  child: Stack(
-                    children: [
-                      Column(
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
-                            child: Container(
-                              child: Image.asset(
-                                'assets/images/fridge.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                              // child: BackdropFilter(
-                              //   filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                              // ),
-                              // child: Image.asset('assets/images/fridge.jpg'),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(17.0),
-                        child: Text(
-                          'Find Recipes From The Items In Your Fridge'
-                              .toUpperCase(),
-                          textAlign: TextAlign.right,
-                          style: Theme.of(context).textTheme.caption.copyWith(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.w200,
-                                wordSpacing: 2,
-                                letterSpacing: 1.2,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
+              if (time >= 6 && time < 12)
+                timeRecommendation(
+                  context,
+                  "Treat Yourself With A Healthy Breakfast",
+                  "assets/images/timesofday/morning.jpg",
+                  'https://www.allrecipes.com/recipes/78/breakfast-and-brunch/',
                 ),
-              ),
+              if (time >= 12 && time < 16)
+                timeRecommendation(
+                  context,
+                  "It's Lunch Time",
+                  "assets/images/timesofday/noon.jpg",
+                  'https://www.allrecipes.com/recipes/17561/lunch/',
+                ),
+              if (time >= 16 && time < 19)
+                timeRecommendation(
+                  context,
+                  "A Dessert Can Make An Eve Beautiful",
+                  "assets/images/timesofday/eve.jpg",
+                  'https://www.allrecipes.com/recipes/79/desserts/',
+                ),
+              if (time >= 19 && time <= 23)
+                timeRecommendation(
+                  context,
+                  "Finally! It's Dinner Time!",
+                  "assets/images/timesofday/night.jpg",
+                  'https://www.allrecipes.com/recipes/17562/dinner/',
+                ),
+              if (time >= 0 && time < 6)
+                timeRecommendation(
+                  context,
+                  "Late Night Cravings? We're Here!",
+                  "assets/images/fridge.jpg",
+                  "https://www.allrecipes.com/recipes/454/everyday-cooking/more-meal-ideas/15-minute-meals/",
+                ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 10,
@@ -1027,3 +1019,50 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     );
   }
 }
+//  Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: GestureDetector(
+//                   onTap: () => {},
+//                   //  Navigator.push(context,
+//                   //     MaterialPageRoute(builder: (context) => SearchScreen())),
+//                   child: Stack(
+//                     children: [
+//                       Column(
+//                         children: <Widget>[
+//                           ClipRRect(
+//                             borderRadius: BorderRadius.circular(25),
+//                             child: Container(
+//                               child: Image.asset(
+//                                 'assets/images/fridge.jpg',
+//                                 fit: BoxFit.cover,
+//                               ),
+//                               // child: BackdropFilter(
+//                               //   filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+//                               // ),
+//                               // child: Image.asset('assets/images/fridge.jpg'),
+//                             ),
+//                           ),
+//                           SizedBox(
+//                             height: 20,
+//                           ),
+//                         ],
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.all(17.0),
+//                         child: Text(
+//                           'Find Recipes From The Items In Your Fridge'
+//                               .toUpperCase(),
+//                           textAlign: TextAlign.right,
+//                           style: Theme.of(context).textTheme.caption.copyWith(
+//                                 color: Colors.white,
+//                                 fontSize: 30,
+//                                 fontWeight: FontWeight.w200,
+//                                 wordSpacing: 2,
+//                                 letterSpacing: 1.2,
+//                               ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),

@@ -124,15 +124,16 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         var photoUrl =
             element.querySelector("a").querySelector("img").attributes["src"];
 
-        final srcfirstSplit = photoUrl.split("photos/")[0];
-        final srcsecondsplit = photoUrl.split("photos/")[1].split("/");
-        var srcc;
-        if (srcsecondsplit.length > 1) {
-          srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
-          print(srcc);
-          photoUrl = srcc;
-        }
-
+        try {
+          final srcfirstSplit = photoUrl.split("photos/")[0];
+          final srcsecondsplit = photoUrl.split("photos/")[1].split("/");
+          var srcc;
+          if (srcsecondsplit.length > 1) {
+            srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
+            print(srcc);
+            photoUrl = srcc;
+          }
+        } catch (e) {}
         final title =
             element.querySelector("a").querySelector("span").text.trim();
 
