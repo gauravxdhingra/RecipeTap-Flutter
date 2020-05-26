@@ -146,9 +146,26 @@ reportView(context, RecipeModel recipe) async {
           ]));
   //save PDF
   final String dir = (await getApplicationDocumentsDirectory()).path;
-  final String path = '$dir/report.pdf';
+  String path;
+  if (recipe.title.length > 25)
+    path = '$dir/${recipe.title.substring(0, 25)}.pdf';
+  else
+    path = '$dir/${recipe.title}.pdf';
   final File file = File(path);
   await file.writeAsBytes(pdf.save());
+  String dirext = (await getExternalStorageDirectory()).path;
+  dirext = dirext.split("Android")[0] + "/RecipeTap";
+  print(dirext);
+
+  String pathext;
+  if (recipe.title.length > 25)
+    pathext = '$dirext/${recipe.title.substring(0, 25)}.pdf';
+  else
+    pathext = '$dirext/${recipe.title}.pdf';
+  // final String pathext = ;
+  final File fileext = File(pathext);
+  await fileext.writeAsBytes(pdf.save());
+
   material.Navigator.of(context).push(
     material.MaterialPageRoute(
       builder: (_) => PdfViewerPage(path: path),
