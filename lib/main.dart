@@ -8,6 +8,7 @@ import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/utility/route_generator.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
 
+import 'utility/pdf_ui.dart';
 import 'pages/recipe_view_page.dart';
 
 // import './provider/auth_provider.dart';
@@ -106,11 +107,8 @@ class MyApp extends StatelessWidget {
 
         routes: {
           '/':
-              // (context) => LoginPage(),
-              (context) =>
-                  // (isAuth || authSkipped)
-                  // ?
-                  HomeScreen(),
+              // (context) => PDFUI(),
+              (context) => HomeScreen(),
           // : LoginPage(),
           HomeScreen.routeName: (context) => HomeScreen(),
           // SearchScreen.routeName: (context) => SearchScreen(),

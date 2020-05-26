@@ -9,6 +9,7 @@ import 'package:recipetap/models/recipe_model.dart';
 import 'package:recipetap/pages/home_screen.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
+import 'package:recipetap/utility/pdf_creator.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 
@@ -120,6 +121,10 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
   //       path: path //set path where screenshot will be saved
   //       );
   //   print(path);
+  // }
+
+  // generatePdf() {
+  //   reportView(context);
   // }
 
   @override
@@ -602,7 +607,20 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                         horizontal: 20,
                       ),
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () async {
+                          // final String path = '$dir/report.pdf';
+                          // final File file = File(path);
+                          // await file.writeAsBytes(pdf.save());
+                          // String path;
+                          // Future<File> file() async {
+                          //   String dir =
+                          //       (await getApplicationDocumentsDirectory()).path;
+                          //   path = '$dir/${widget.recipe.title}';
+                          //   return File(path);
+                          // }
+                          // var myFile = await file();
+                          reportView(context, widget.recipe);
+                        },
                         // capture,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(40),
