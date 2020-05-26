@@ -103,7 +103,9 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        darkTheme: ThemeData.dark().copyWith(),
+        darkTheme: ThemeData.dark().copyWith(
+          accentColor: Colors.red.withOpacity(0.5),
+        ),
 
         routes: {
           '/':

@@ -118,7 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // extendBodyBehindAppBar: true,
       appBar: AppBar(
         // leading: Icon(Icons.settings),
-        
+
         title: Text('Settings'),
         centerTitle: true,
         elevation: 0,
@@ -237,6 +237,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: ListTile(
                       title: Text('Veg'),
                     ),
+                  ),
+                  ListTile(
+                    title: Text("Search Preferences"),
+                    subtitle: Text("Veg / Non-Veg"),
+                  ),
+                  ListTile(
+                    title: Text("Rate Us!"),
+                    subtitle: Text(
+                        "Liked The Experience? Please Rate Us!"),
+                  ),
+                  ListTile(
+                    title: Text("Share This App"),
+                  ),
+                  ListTile(
+                    title: Text("About"),
                   ),
                 ],
               ),
