@@ -2,15 +2,19 @@ import 'dart:ui';
 
 // import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 // import 'package:clay_containers/clay_containers.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:provider/provider.dart';
+import 'package:recipetap/models/category_model.dart';
 import 'package:recipetap/models/favourites_model.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/models/userdata.dart';
+import 'package:recipetap/pages/categories_recipe_screen.dart';
 import 'package:recipetap/pages/home_screen.dart';
+import 'package:recipetap/pages/recipe_view_page.dart';
 // import 'package:recipetap/pages/catagories_screen.dart';
 // import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
@@ -39,6 +43,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   String username;
   String email;
   int i = 0;
+  bool isloading = true;
 
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
@@ -72,6 +77,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   List<String> suggestions = SearchSuggestions.suggestions;
 
   List<FavouritesModel> recommended = [];
+  List<CategoryModel> recommendedCategoriesList = [];
 
   fetchRecommended() async {
     List<FavouritesModel> _favslist = [];
@@ -86,9 +92,28 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     recents.documents.forEach((DocumentSnapshot doc) {
       print(doc);
       _favslist.add(FavouritesModel.fromDocument(doc));
-      // print(recentslist);
     });
     recommended = _favslist;
+    //
+    // isloading=false;
+    List<CategoryModel> _favcatslist = [];
+    QuerySnapshot recentsc = await favoriteCategoriesRef
+        .document("grvdhingra1999@gmail.com")
+        .collection('favs')
+        .orderBy(
+          'timestamp',
+          descending: true,
+        )
+        .getDocuments();
+
+    recentsc.documents.forEach((DocumentSnapshot doc) {
+      print(doc);
+      _favcatslist.add(CategoryModel.fromDocument(doc));
+    });
+    recommendedCategoriesList = _favcatslist;
+    setState(() {
+      isloading = false;
+    });
   }
 
   // @override
@@ -192,6 +217,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   //     child: child,
   //   );
   // }
+
+  mealsFromCategory(categoryUrl, context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CategoryRecipesScreen(url: categoryUrl)));
+  }
 
   void onButtonPressed(Widget child) {
     showModalBottomSheet(
@@ -749,6 +781,62 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                child: Text(
+                  "Recommended Categories".toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      .copyWith(fontSize: 20),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 70,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, i) {
+                    return InkWell(
+                      onTap: () => mealsFromCategory(
+                        recommendedCategoriesList[i].categoryUrl,
+                        context,
+                      ),
+                      child: Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+                        height: 70,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).accentColor,
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "#" + recommendedCategoriesList[i].title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .copyWith(
+                                    color: Colors.white,
+                                  ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: recommendedCategoriesList.length,
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: () => {},
@@ -795,12 +883,24 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                child: Text(
+                  "Recommended Recipes".toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      .copyWith(fontSize: 20),
+                ),
+              ),
               Container(
                 height: MediaQuery.of(context).size.height / 3 + 50,
                 child: ListView.builder(
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  itemCount: widget.recentRecipesList.length,
+                  itemCount: recommended.length,
                   itemBuilder: (context, i) {
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -808,50 +908,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 4 / 5 -
-                                  95,
-                            ),
-                            child: InkWell(
-                              onTap: () async {
-                                final recipeurl1 = widget
-                                    .recentRecipesList[i].recipeUrl
-                                    .split("/recipe/")[1];
-                                final recipeurll = recipeurl1.split("/")[0] +
-                                    "-" +
-                                    recipeurl1.split("/")[1];
-                                await recentsRef
-                                    .document(currentUser.email)
-                                    .collection('recents')
-                                    .document(recipeurll)
-                                    .delete();
-                                widget.recentRecipesList.removeAt(i);
-                                setState(() {});
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 1),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.4),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Text('Remove'),
-                              ),
-                            ),
-                          ),
                           GestureDetector(
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => RecipeViewPage(
-                                          url: widget
-                                              .recentRecipesList[i].recipeUrl,
-                                          coverImageUrl: widget
-                                              .recentRecipesList[i]
-                                              .coverPhotoUrl,
+                                          url: recommended[i].recipeUrl,
+                                          coverImageUrl:
+                                              recommended[i].coverPhotoUrl,
                                         ))),
                             child: ClipRRect(
                               borderRadius: BorderRadius.all(
@@ -880,8 +944,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 Radius.circular(20),
                                               ),
                                               child: Image.network(
-                                                widget.recentRecipesList[i]
-                                                    .coverPhotoUrl,
+                                                recommended[i].coverPhotoUrl,
                                                 height: 210,
                                                 width: MediaQuery.of(context)
                                                     .size
@@ -910,9 +973,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       horizontal: 15.0,
                                                     ),
                                                     child: Text(
-                                                      widget
-                                                          .recentRecipesList[i]
-                                                          .title,
+                                                      recommended[i].title,
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 25,
@@ -934,7 +995,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 5, horizontal: 20),
                                           child: Text(
-                                            widget.recentRecipesList[i].desc,
+                                            recommended[i].desc,
                                             style: TextStyle(
                                               // color: Colors.white,
                                               fontSize: 17,
