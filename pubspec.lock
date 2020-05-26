@@ -457,25 +457,18 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  screenshot:
+  share_extend:
     dependency: "direct main"
     description:
-      name: screenshot
+      name: share_extend
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "1.1.5"
   sky_engine:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.99"
-  slide_popup_dialog:
-    dependency: "direct main"
-    description:
-      name: slide_popup_dialog
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   slimy_card:
     dependency: "direct main"
     description:
