@@ -8,6 +8,8 @@
 
    // TODO search only one page loading
 
+   // TODO Favourites Page StreamBuilder
+
    // TODO: Handle overflow from search items and other recipe cards
 
    // TODO: Handle Text Overflows Everywhere in the app 
@@ -17,6 +19,8 @@
     // TODO: Searchlist images resolution full
 
     // TODO : Timeago
+
+    // TODO: Searchlist Ordering
 
     // TODO Add Shadow to Categories Pinned Appbars and Curving all Appbars with arrow back ios 
 

@@ -398,7 +398,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                         horizontal: 20,
                                                       ),
                                                       child: ChipsInput(
-                                                        initialValue: include,
+                                                                                                                initialValue: include,
                                                         //  includei
                                                         //     .split("[")[1]
                                                         //     .split("]")[0]
