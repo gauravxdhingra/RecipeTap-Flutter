@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/jump_screens/aww_snap_screen.dart';
+import 'package:recipetap/onboarding_screens/Welcome.dart';
 import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/pages/login_page.dart';
 import 'package:recipetap/pages/search_screen.dart';
@@ -108,9 +109,8 @@ class MyApp extends StatelessWidget {
         ),
 
         routes: {
-          '/':
-              // (context) => PDFUI(),
-              (context) => HomeScreen(),
+          '/': (context) => Welcome(),
+          // (context) => HomeScreen(),
           // : LoginPage(),
           HomeScreen.routeName: (context) => HomeScreen(),
           // SearchScreen.routeName: (context) => SearchScreen(),
