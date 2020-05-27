@@ -1,3 +1,4 @@
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:recipetap/models/category_model.dart';
 
@@ -15,25 +16,33 @@ Container recommendedCategoriesBuilder(BuildContext context,
             recommendedCategoriesList[i].categoryUrl,
             context,
           ),
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-            height: 70,
-            width: 150,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).accentColor,
-            ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "#" + recommendedCategoriesList[i].title,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: Colors.white,
-                      ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            child: ClayContainer(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              borderRadius: 25,
+              depth: 60,
+              spread: 5,
+              child: Container(
+                height: 70,
+                width: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Theme.of(context).accentColor,
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "#" + recommendedCategoriesList[i].title,
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: Colors.white,
+                          ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
               ),
             ),

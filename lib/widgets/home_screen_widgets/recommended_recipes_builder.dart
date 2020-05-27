@@ -6,14 +6,14 @@ import 'package:recipetap/pages/recipe_view_page.dart';
 Container recommendedRecipesBuilder(
     BuildContext context, List<FavouritesModel> recommended) {
   return Container(
-    height: MediaQuery.of(context).size.height / 3 + 50,
+    height: MediaQuery.of(context).size.height / 2.8,
     child: ListView.builder(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       itemCount: recommended.length,
       itemBuilder: (context, i) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           width: MediaQuery.of(context).size.width * 4 / 5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,16 +26,14 @@ Container recommendedRecipesBuilder(
                               url: recommended[i].recipeUrl,
                               coverImageUrl: recommended[i].coverPhotoUrl,
                             ))),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                  child: ClayContainer(
-                    borderRadius: 20,
-                    depth: 90,
-                    spread: 6,
-                    // depth: 90,
-                    // color: Theme.of(context).primaryColor,
+                child: ClayContainer(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: 20,
+                  depth: 50,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),

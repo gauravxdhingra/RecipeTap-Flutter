@@ -206,7 +206,9 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: isAuth
           ? Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.white
+                      : Theme.of(context).primaryColor,
                   // color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
@@ -238,25 +240,33 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: Icons.home,
                         text: 'Home',
                         iconColor:
-                            Theme.of(context).accentColor.withOpacity(0.6),
+                            Theme.of(context).brightness == Brightness.light
+                                ? Theme.of(context).accentColor.withOpacity(0.6)
+                                : Colors.white,
                       ),
                       GButton(
                         icon: Icons.category,
                         text: 'Categories',
                         iconColor:
-                            Theme.of(context).accentColor.withOpacity(0.6),
+                            Theme.of(context).brightness == Brightness.light
+                                ? Theme.of(context).accentColor.withOpacity(0.6)
+                                : Colors.white,
                       ),
                       GButton(
                         icon: Icons.favorite,
                         text: 'Favourites',
                         iconColor:
-                            Theme.of(context).accentColor.withOpacity(0.6),
+                            Theme.of(context).brightness == Brightness.light
+                                ? Theme.of(context).accentColor.withOpacity(0.6)
+                                : Colors.white,
                       ),
                       GButton(
                         icon: Icons.account_circle,
                         text: 'Profile',
                         iconColor:
-                            Theme.of(context).accentColor.withOpacity(0.6),
+                            Theme.of(context).brightness == Brightness.light
+                                ? Theme.of(context).accentColor.withOpacity(0.6)
+                                : Colors.white,
                       ),
                     ],
                     selectedIndex: _selectedIndex,

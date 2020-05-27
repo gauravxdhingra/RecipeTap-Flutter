@@ -34,14 +34,14 @@ class LoadingRecipeScreen extends StatelessWidget {
             // ),
             Text(
               'Your Recipe Is Almost Ready',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: TextStyle(color: Colors.white),
             ),
             Text(
               'Great Things Take Time',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: TextStyle(color: Colors.white),
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             LoadingSpinner(
               size: 100,

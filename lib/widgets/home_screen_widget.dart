@@ -305,8 +305,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                         ? 'Welcome, ${username.split(" ")[0]} !'
                         : 'Welcome!',
                     style: Theme.of(context).textTheme.headline1.copyWith(
-                        fontSize: 20,
-                        color: Theme.of(context).textTheme.bodyText1.color),
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),

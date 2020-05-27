@@ -62,7 +62,12 @@ class MyApp extends StatelessWidget {
           textTheme: ltexttheme,
           appBarTheme: AppBarTheme(
               textTheme: ltexttheme.copyWith(
-            title: TextStyle(fontSize: 20),
+            title: TextStyle(
+              fontSize: 25,
+              color: Colors.white,
+              fontWeight: FontWeight.w300,
+              fontFamily: 'OpenSans',
+            ),
           )),
         ),
         darkTheme: ThemeData.dark().copyWith(
@@ -70,7 +75,12 @@ class MyApp extends StatelessWidget {
           textTheme: dtexttheme,
           appBarTheme: AppBarTheme(
             textTheme: dtexttheme.copyWith(
-              title: TextStyle(fontSize: 20),
+              title: TextStyle(
+                fontSize: 25,
+                color: Colors.white,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'OpenSans',
+              ),
             ),
           ),
         ),
