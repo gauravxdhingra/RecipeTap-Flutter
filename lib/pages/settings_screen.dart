@@ -120,7 +120,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         // leading: Icon(Icons.settings),
 
-        title: Text('Settings'),
+        title: Text('Preferences'),
         centerTitle: true,
         elevation: 0,
         bottom: PreferredSize(
@@ -148,13 +148,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       closedContainerBS,
                     ],
                   ),
+                  child: Text(""),
                 ),
               ],
             ),
           ),
-          preferredSize: Size.fromHeight(120 -
-              MediaQuery.of(context).padding.top -
-              AppBar().preferredSize.height),
+          preferredSize: Size.fromHeight(
+            120 -
+                MediaQuery.of(context).padding.top -
+                AppBar().preferredSize.height,
+          ),
         ),
       ),
       body: _isLoading

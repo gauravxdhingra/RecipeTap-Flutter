@@ -15,6 +15,8 @@ class SearchResultsScreen extends StatefulWidget {
   final url;
   final incl;
   final excl;
+  final List include;
+  final List exclude;
 
   SearchResultsScreen({
     Key key,
@@ -22,6 +24,8 @@ class SearchResultsScreen extends StatefulWidget {
     @required this.appBarTitle,
     this.incl,
     this.excl,
+    this.include,
+    this.exclude,
   }) : super(key: key);
 
   @override
@@ -55,7 +59,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         document.getElementsByClassName("fixed-recipe-card");
 
     recipeCardsFromHtml.forEach((element) {
-      final imageUrlRecipe = element
+      var imageUrlRecipe = element
           .getElementsByClassName("grid-card-image-container")[0]
           // .querySelector("div")
           // .querySelector("a")
@@ -63,6 +67,17 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
           .attributes["data-original-src"];
       // .getElementsByClassName("fixed-recipe-card__img ng-isolate-scope")[0]
       // .attributes["src"];
+
+      final srcfirstSplit = imageUrlRecipe.split("photos/")[0];
+      final srcsecondsplit = imageUrlRecipe.split("photos/")[1].split("/");
+      var srcc;
+      if (srcsecondsplit.length > 1) {
+        srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
+        print(srcc);
+        imageUrlRecipe = srcc;
+      }
+      // images.add(coverImageUrl);
+
       print(imageUrlRecipe);
 
       final titleRecipe = element
@@ -123,7 +138,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                       children: <Widget>[
                         Text("Including: "),
                         Text(
-                          widget.incl,
+                          widget.include.toString().split("[")[1].split("]")[0],
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -133,7 +148,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                       children: <Widget>[
                         Text("Excluding: "),
                         Text(
-                          widget.excl,
+                          widget.exclude.toString().split("[")[1].split("]")[0],
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],

@@ -261,8 +261,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 : Colors.white,
                       ),
                       GButton(
-                        icon: Icons.account_circle,
-                        text: 'Profile',
+                        icon: Icons.settings,
+                        text: 'Preferences',
                         iconColor:
                             Theme.of(context).brightness == Brightness.light
                                 ? Theme.of(context).accentColor.withOpacity(0.6)

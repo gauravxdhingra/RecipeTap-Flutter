@@ -149,7 +149,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         document.getElementsByClassName("fixed-recipe-card");
 
     recipeCardsFromHtml.forEach((element) {
-      final imageUrlRecipe = element
+      var imageUrlRecipe = element
           .getElementsByClassName("grid-card-image-container")[0]
           // .querySelector("div")
           // .querySelector("a")
@@ -157,6 +157,16 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           .attributes["data-original-src"];
       // .getElementsByClassName("fixed-recipe-card__img ng-isolate-scope")[0]
       // .attributes["src"];
+
+      final srcfirstSplit = imageUrlRecipe.split("photos/")[0];
+      final srcsecondsplit = imageUrlRecipe.split("photos/")[1].split("/");
+      var srcc;
+      if (srcsecondsplit.length > 1) {
+        srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
+        print(srcc);
+        imageUrlRecipe = srcc;
+      }
+
       print(imageUrlRecipe);
 
       final titleRecipe = element
@@ -384,6 +394,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
       body: isLoading
           ? Center(
               child: LoadingSpinner(
+              color: Colors.grey,
               size: 150,
             ))
           : CustomScrollView(

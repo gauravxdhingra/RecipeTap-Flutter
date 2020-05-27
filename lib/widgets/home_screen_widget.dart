@@ -154,37 +154,77 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   // }
 
   submitSearch(appBarTitle, dish) {
-    controller.clear();
-    inclController.clear();
-    exclController.clear();
+    if (controller.text.trim().isEmpty && include.isEmpty && exclude.isEmpty) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("Enter A Recipe Or Ingredients To Search"),
+      ));
+      // print("No Search Query");
+      return;
+    }
 
-    String incl = include
-        .toString()
-        .split("[")[1]
-        .split("]")[0]
-        .replaceAll(", ", ",")
-        .toLowerCase()
-        .replaceAll(", ", ",")
-        .replaceAll(" ", "%20");
+    bool conflict = false;
 
-    String excl = exclude
-        .toString()
-        .split("[")[1]
-        .split("]")[0]
-        .replaceAll(", ", ",")
-        .toLowerCase()
-        .replaceAll(", ", ",")
-        .replaceAll(" ", "%20");
+    if (include.isNotEmpty) {
+      include.forEach((element) {
+        conflict = exclude.contains(element);
+        if (conflict == true) {
+          _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text("Same Item Can't Be Included And Excluded"),
+          ));
+          return;
+        }
+      });
+    } else {
+      exclude.forEach((element) {
+        conflict = include.contains(element);
+        if (conflict == true) {
+          _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text("Same Item Can't Be Included And Excluded"),
+          ));
+          return;
+        }
+      });
+    }
 
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => SearchResultsScreen(
-            appBarTitle: appBarTitle,
-            incl: incl,
-            excl: excl,
-            url:
-                'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re')));
-    print(
-        'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re');
+    if (!conflict) {
+      controller.clear();
+      inclController.clear();
+      exclController.clear();
+
+      String incl = include
+          .toString()
+          .split("[")[1]
+          .split("]")[0]
+          .replaceAll(", ", ",")
+          .toLowerCase()
+          .replaceAll(", ", ",")
+          .replaceAll(" ", "%20")
+          .replaceAll("-", "%2d")
+          .replaceAll("/", "%2f");
+
+      String excl = exclude
+          .toString()
+          .split("[")[1]
+          .split("]")[0]
+          .replaceAll(", ", ",")
+          .toLowerCase()
+          .replaceAll(", ", ",")
+          .replaceAll(" ", "%20")
+          .replaceAll("-", "%2d")
+          .replaceAll("/", "%2f");
+
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SearchResultsScreen(
+              exclude: exclude,
+              include: include,
+              appBarTitle: appBarTitle,
+              incl: incl,
+              excl: excl,
+              url:
+                  'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re')));
+      print(
+          'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re');
+    }
   }
 
   var closedContainerHeight = 10;
@@ -337,6 +377,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 child: TextFormField(
                   // validator: (_) => validateSearch(),
                   controller: controller,
+                  onFieldSubmitted: (val) {
+                    submitSearch(
+                      controller.text.trim().isNotEmpty
+                          ? "Showing Results For " + controller.text
+                          : "Showing Recipes From Ingredients",
+                      controller.text.replaceAll(" ", "%20").toLowerCase(),
+                    );
+                  },
                   decoration: InputDecoration(
                     hintText: "Search Recipes",
                     // errorText: validateSearch(),
@@ -899,40 +947,43 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: InkWell(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 45),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(40),
-                                bottomRight: Radius.circular(40),
-                              ),
-                              color: Theme.of(context).accentColor,
-                            ),
-                            child: Text(
-                              'Search'.toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
-                                letterSpacing: 1.2,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                        child: ClayContainer(
+                          color: Theme.of(context).primaryColor,
+                          depth: 60,
+                          spread: 2,
+                          customBorderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(40),
+                            bottomRight: Radius.circular(40),
                           ),
-                          onTap: () {
-                            if (controller.text.trim().isEmpty &&
-                                include.isEmpty &&
-                                exclude.isEmpty) {
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                content: Text(
-                                    "Enter A Recipe Or Ingredients To Search"),
-                              ));
-                              // print("No Search Query");
-                            } else {
-                              print(include);
-                              print(exclude);
+                          child: InkWell(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 45),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(40),
+                                  bottomRight: Radius.circular(40),
+                                ),
+                                color: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? Theme.of(context).scaffoldBackgroundColor
+                                    : Theme.of(context).accentColor,
+                              ),
+                              child: Text(
+                                'Search'.toUpperCase(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(
+                                      // color: Colors.white,
+                                      fontSize: 22,
+                                      letterSpacing: 1.2,
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            onTap: () {
                               submitSearch(
                                 controller.text.trim().isNotEmpty
                                     ? "Showing Results For " + controller.text
@@ -941,9 +992,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                     .replaceAll(" ", "%20")
                                     .toLowerCase(),
                               );
-                            }
-                            // show
-                          },
+
+                              // show
+                            },
+                          ),
                         ),
                       ),
                     ],
