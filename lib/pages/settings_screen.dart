@@ -1,4 +1,5 @@
 import 'package:clay_containers/clay_containers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_brand_icons/flutter_brand_icons.dart';
 import 'package:provider/provider.dart';
@@ -115,6 +116,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     color: Colors.black45,
     offset: Offset(0.1, 2),
   );
+
+  bool vegetarian = false;
 
   @override
   Widget build(BuildContext context) {
@@ -379,6 +382,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ListTile(
                           title: Text("Search Preferences"),
                           subtitle: Text("Veg / Non-Veg"),
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                title: Text("Search Preferences"),
+                                content: Column(
+                                  children: <Widget>[
+                                    ListTile(
+                                      enabled: true,
+                                      leading: Text("Vegetarian"),
+                                      trailing: CupertinoSwitch(
+                                        value: vegetarian,
+                                        onChanged: (bool newValue) {
+                                          setState(() {
+                                            vegetarian = newValue;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    if (!vegetarian)
+                                      ListTile(
+                                        leading: Text("Vegetarian"),
+                                        trailing: CupertinoSwitch(
+                                          value: vegetarian,
+                                          onChanged: (vegetarian) {
+                                            setState(() {
+                                              // vegetarian = !vegetarian;
+                                            });
+                                          },
+                                        ),
+                                      )
+                                  ],
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text("Cancel"),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                         ),
                         ListTile(
                           title: Text("Rate Us!"),
