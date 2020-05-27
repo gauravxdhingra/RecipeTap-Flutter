@@ -20,12 +20,15 @@ void main() {
   runApp(MyApp());
 }
 
+bool alreadyVisited = true;
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    // bool alreadyVisited = await getVisitingFlag();
     return MultiProvider(
       providers: [
         // ChangeNotifierProvider.value(
@@ -109,9 +112,11 @@ class MyApp extends StatelessWidget {
         ),
 
         routes: {
-          '/': (context) => Welcome(),
-          // (context) => HomeScreen(),
-          // : LoginPage(),
+          '/': (context) => !alreadyVisited
+              ? Welcome()
+              :
+              // (context) =>
+              HomeScreen(),
           HomeScreen.routeName: (context) => HomeScreen(),
           // SearchScreen.routeName: (context) => SearchScreen(),
           RecipeViewPage.routeName: (context) => RecipeViewPage(),

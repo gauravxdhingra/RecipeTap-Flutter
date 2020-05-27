@@ -363,6 +363,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   "Treat Yourself With A Healthy Breakfast",
                   "assets/images/timesofday/morning.jpg",
                   'https://www.allrecipes.com/recipes/78/breakfast-and-brunch/',
+                  TextStyle(color: Colors.black),
                 ),
               if (time >= 12 && time < 16)
                 timeRecommendation(
@@ -370,13 +371,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   "It's Lunch Time",
                   "assets/images/timesofday/noon.jpg",
                   'https://www.allrecipes.com/recipes/17561/lunch/',
+                  TextStyle(color: Colors.black),
                 ),
               if (time >= 16 && time < 19)
                 timeRecommendation(
                   context,
-                  "A Dessert Can Make An Eve Beautiful",
+                  "Desserts Can Make Eves Beautiful !",
                   "assets/images/timesofday/eve.jpg",
                   'https://www.allrecipes.com/recipes/79/desserts/',
+                  TextStyle(color: Colors.white),
                 ),
               if (time >= 19 && time <= 23)
                 timeRecommendation(
@@ -384,6 +387,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   "Finally, It's Dinner Time!",
                   "assets/images/timesofday/night.jpg",
                   'https://www.allrecipes.com/recipes/17562/dinner/',
+                  TextStyle(color: Colors.white),
                 ),
               if (time >= 0 && time < 6)
                 timeRecommendation(
@@ -391,6 +395,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   "Late Night Cravings? We're Here!",
                   "assets/images/fridge.jpg",
                   "https://www.allrecipes.com/recipes/454/everyday-cooking/more-meal-ideas/15-minute-meals/",
+                  TextStyle(color: Colors.white),
                 ),
               Padding(
                 padding: const EdgeInsets.symmetric(
