@@ -956,7 +956,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                             bottomRight: Radius.circular(40),
                           ),
                           child: InkWell(
-                            child: Container(
+                            child: AnimatedContainer(
+                              duration: duration,
                               width: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 45),
@@ -965,21 +966,26 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                   bottomLeft: Radius.circular(40),
                                   bottomRight: Radius.circular(40),
                                 ),
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? Theme.of(context).scaffoldBackgroundColor
-                                    : Theme.of(context).accentColor,
+                                color: isSearch
+                                    ? Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Theme.of(context)
+                                            .scaffoldBackgroundColor
+                                        : Theme.of(context).accentColor
+                                    : Colors.transparent,
                               ),
                               child: Text(
                                 'Search'.toUpperCase(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    .copyWith(
-                                      // color: Colors.white,
-                                      fontSize: 22,
-                                      letterSpacing: 1.2,
-                                    ),
+                                style: isSearch
+                                    ? Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        .copyWith(
+                                          // color: Colors.white,
+                                          fontSize: 22,
+                                          letterSpacing: 1.2,
+                                        )
+                                    : TextStyle(color: Colors.transparent),
                                 textAlign: TextAlign.center,
                               ),
                             ),

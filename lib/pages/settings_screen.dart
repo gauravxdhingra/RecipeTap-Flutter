@@ -12,7 +12,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool isAuth;
+  // bool isAuth;
   bool authSkipped;
   String profilePhotoUrl;
   String username;
@@ -35,7 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         profilePhotoUrl = currentUser.photoUrl;
         username = currentUser.username;
         email = currentUser.email;
-        isAuth = currentUser != null;
+        // isAuth = currentUser != null;
       }
       // authSkipped = auth.authSkipped;
       // logout = auth.logout;
@@ -72,12 +72,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _isLoading = true;
     });
     // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
-    // TODO: Implement SignIn
     // await Provider.of<AuthProvider>(context, listen: false).login();
     await googleSignIn.signIn();
-    setState(() {
-      _isLoading = false;
-    });
+
+    _isLoading = false;
+
+    setState(() {});
   }
 
   Future<void> _signOut() async {
@@ -85,11 +85,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _isLoading = true;
     });
     // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
-    // TODO: Login not working
     await googleSignIn.signOut();
-    setState(() {
-      _isLoading = false;
-    });
+
+    _isLoading = false;
+
+    setState(() {});
   }
 
   BorderRadius openContainerBR = BorderRadius.only(
@@ -207,9 +207,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               // spread: 5,
                                               child: CircleAvatar(
                                                 radius: 50,
-                                                backgroundImage: isAuth
+                                                backgroundImage: currentUser !=
+                                                        null
                                                     ? NetworkImage(
-                                                        profilePhotoUrl,
+                                                        currentUser.photoUrl,
                                                       )
                                                     : null,
                                                 backgroundColor:
@@ -230,7 +231,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               //   height: 25,
                                               // ),
                                               Text(
-                                                username ?? "User",
+                                                currentUser.username ?? "User",
                                                 style: TextStyle(
                                                   fontSize: 25,
                                                 ),
@@ -327,7 +328,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  height: 160,
+                                  height: 100,
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: ClayContainer(
@@ -349,7 +350,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               children: <Widget>[
                                                 Icon(
                                                   BrandIcons.google,
-                                                  size: 40,
+                                                  size: 35,
                                                 ),
                                                 SizedBox(
                                                   width: 20,
@@ -359,7 +360,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodyText2
-                                                      .copyWith(fontSize: 30),
+                                                      .copyWith(fontSize: 27),
                                                 ),
                                               ],
                                             ),
@@ -372,6 +373,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ],
                             ),
                           ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         ListTile(
                           title: Text("Search Preferences"),
                           subtitle: Text("Veg / Non-Veg"),
@@ -403,6 +407,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ? Colors.white
                               : null,
                           fit: BoxFit.cover,
+                          // colorBlendMode: BlendMode.hardLight,
                         ),
                       ),
                     ),

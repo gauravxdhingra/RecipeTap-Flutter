@@ -370,7 +370,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                             },
                             child: Container(
                               // padding: const EdgeInsets.only(top: 8.0),
-                              height: 140,
+                              height: 110,
                               child: ClayContainer(
                                 borderRadius: 25,
                                 depth: 60,
@@ -387,7 +387,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                       children: <Widget>[
                                         Icon(
                                           BrandIcons.google,
-                                          size: 40,
+                                          size: 35,
                                         ),
                                         SizedBox(
                                           width: 20,
@@ -397,12 +397,12 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText2
-                                              .copyWith(fontSize: 30),
+                                              .copyWith(fontSize: 26),
                                         ),
                                       ],
                                     ),
                                     SizedBox(
-                                      width: 100,
+                                      height: 10,
                                     ),
                                     Text(
                                         "Login To View Recents And Favourites"),
