@@ -11,6 +11,7 @@ import 'package:recipetap/models/favourites_model.dart';
 import 'package:recipetap/models/category_model.dart';
 import 'package:recipetap/widgets/fav_screen_widgets/build_recents_in_favourites.dart';
 import 'package:recipetap/widgets/fav_screen_widgets/build_fav_in_favourites.dart';
+import 'package:recipetap/widgets/loading_spinner.dart';
 
 class FavouritesScreen extends StatefulWidget {
   FavouritesScreen({Key key}) : super(key: key);
@@ -179,7 +180,12 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         ),
       ),
       body: _isLoading
-          ? CircularProgressIndicator()
+          ? Center(
+              child: LoadingSpinner(
+                size: 100,
+                color: Colors.grey,
+              ),
+            )
           : currentUser != null
               ? RefreshIndicator(
                   onRefresh: () async {

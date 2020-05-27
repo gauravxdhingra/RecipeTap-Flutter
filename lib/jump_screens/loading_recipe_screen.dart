@@ -20,7 +20,7 @@ class LoadingRecipeScreen extends StatelessWidget {
             //   height: MediaQuery.of(context).size.width * 1.4,
             // ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height * 0.75,
               // height: 800,
               child: FlareActor(
                 'assets/flare/chefloading.flr',
@@ -32,8 +32,14 @@ class LoadingRecipeScreen extends StatelessWidget {
             // SizedBox(
             //   height: 50,
             // ),
-            Text('Your Recipe Is Almost Ready'),
-            Text('Great Things Take Time'),
+            Text(
+              'Your Recipe Is Almost Ready',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            Text(
+              'Great Things Take Time',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
             SizedBox(
               height: 30,
             ),

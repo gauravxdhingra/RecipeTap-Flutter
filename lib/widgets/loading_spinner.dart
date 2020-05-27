@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingSpinner extends StatelessWidget {
-  const LoadingSpinner({Key key}) : super(key: key);
+  final Color color;
+  final double size;
+  const LoadingSpinner({Key key, this.color, @required this.size})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SpinKitRipple(
-      size: 70,
-      color: Colors.white,
+      size: size,
+      color: color == null
+          ? Theme.of(context).brightness == Brightness.light
+              ? Colors.white
+              : Colors.grey
+          : color,
     );
   }
 }

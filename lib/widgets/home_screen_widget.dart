@@ -343,73 +343,94 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           child: Column(
             children: <Widget>[
               searchAnimatedContainer(context),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                ),
-                child: Text(
-                  "Recommended Categories".toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(fontSize: 20),
-                ),
+              Stack(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          "Recommended Categories".toUpperCase(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              .copyWith(fontSize: 20),
+                        ),
+                      ),
+                      recommendedCategoriesBuilder(context,
+                          recommendedCategoriesList, mealsFromCategory),
+                      if (time >= 6 && time < 12)
+                        timeRecommendation(
+                          context,
+                          "Treat Yourself With A Healthy Breakfast",
+                          "assets/images/timesofday/morning.jpg",
+                          'https://www.allrecipes.com/recipes/78/breakfast-and-brunch/',
+                          TextStyle(color: Colors.black),
+                        ),
+                      if (time >= 12 && time < 16)
+                        timeRecommendation(
+                          context,
+                          "It's Lunch Time",
+                          "assets/images/timesofday/noon.jpg",
+                          'https://www.allrecipes.com/recipes/17561/lunch/',
+                          TextStyle(color: Colors.black),
+                        ),
+                      if (time >= 16 && time < 19)
+                        timeRecommendation(
+                          context,
+                          "Desserts Can Make Eves Beautiful !",
+                          "assets/images/timesofday/eve.jpg",
+                          'https://www.allrecipes.com/recipes/79/desserts/',
+                          TextStyle(color: Colors.white),
+                        ),
+                      if (time >= 19 && time <= 23)
+                        timeRecommendation(
+                          context,
+                          "Finally, It's Dinner Time!",
+                          "assets/images/timesofday/night.jpg",
+                          'https://www.allrecipes.com/recipes/17562/dinner/',
+                          TextStyle(color: Colors.white),
+                        ),
+                      if (time >= 0 && time < 6)
+                        timeRecommendation(
+                          context,
+                          "Late Night Cravings? We're Here!",
+                          "assets/images/fridge.jpg",
+                          "https://www.allrecipes.com/recipes/454/everyday-cooking/more-meal-ideas/15-minute-meals/",
+                          TextStyle(color: Colors.white),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          "Recommended Recipes".toUpperCase(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              .copyWith(fontSize: 20),
+                        ),
+                      ),
+                      recommendedRecipesBuilder(context, recommended),
+                    ],
+                  ),
+                  if (isSearch)
+                    AnimatedContainer(
+                      duration: duration,
+                      height: isSearch
+                          ? MediaQuery.of(context).size.height - 140
+                          : 120 -
+                              MediaQuery.of(context).padding.top -
+                              AppBar().preferredSize.height,
+                      width: MediaQuery.of(context).size.width,
+                      color: !isSearch
+                          ? Colors.transparent
+                          : Color(0xff0f0f0f).withOpacity(0.6),
+                    ),
+                ],
               ),
-              recommendedCategoriesBuilder(
-                  context, recommendedCategoriesList, mealsFromCategory),
-              if (time >= 6 && time < 12)
-                timeRecommendation(
-                  context,
-                  "Treat Yourself With A Healthy Breakfast",
-                  "assets/images/timesofday/morning.jpg",
-                  'https://www.allrecipes.com/recipes/78/breakfast-and-brunch/',
-                  TextStyle(color: Colors.black),
-                ),
-              if (time >= 12 && time < 16)
-                timeRecommendation(
-                  context,
-                  "It's Lunch Time",
-                  "assets/images/timesofday/noon.jpg",
-                  'https://www.allrecipes.com/recipes/17561/lunch/',
-                  TextStyle(color: Colors.black),
-                ),
-              if (time >= 16 && time < 19)
-                timeRecommendation(
-                  context,
-                  "Desserts Can Make Eves Beautiful !",
-                  "assets/images/timesofday/eve.jpg",
-                  'https://www.allrecipes.com/recipes/79/desserts/',
-                  TextStyle(color: Colors.white),
-                ),
-              if (time >= 19 && time <= 23)
-                timeRecommendation(
-                  context,
-                  "Finally, It's Dinner Time!",
-                  "assets/images/timesofday/night.jpg",
-                  'https://www.allrecipes.com/recipes/17562/dinner/',
-                  TextStyle(color: Colors.white),
-                ),
-              if (time >= 0 && time < 6)
-                timeRecommendation(
-                  context,
-                  "Late Night Cravings? We're Here!",
-                  "assets/images/fridge.jpg",
-                  "https://www.allrecipes.com/recipes/454/everyday-cooking/more-meal-ideas/15-minute-meals/",
-                  TextStyle(color: Colors.white),
-                ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                ),
-                child: Text(
-                  "Recommended Recipes".toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(fontSize: 20),
-                ),
-              ),
-              recommendedRecipesBuilder(context, recommended),
             ],
           ),
         ),
@@ -428,13 +449,16 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       child: Stack(
         children: [
           AnimatedContainer(
-            duration: duration,
+            duration: Duration(milliseconds: 0),
             height: isSearch
                 ? 140
                 : 120 -
                     MediaQuery.of(context).padding.top -
                     AppBar().preferredSize.height,
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: !isSearch
+                ? Theme.of(context).scaffoldBackgroundColor
+                : Color(0xff0f0f0f).withOpacity(0.6),
+            // Theme.of(context).scaffoldBackgroundColor,
           ),
           AnimatedContainer(
             duration: duration,

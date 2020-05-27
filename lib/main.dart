@@ -59,56 +59,20 @@ class MyApp extends StatelessWidget {
           accentColor: Color(0xff010a43),
 
           // Colors.blueGrey[900],
-          textTheme: TextTheme(
-            headline1: TextStyle(
-              fontFamily: 'OpenSans',
-              fontSize: 30,
-            ),
-            headline3: TextStyle(
-              fontFamily: 'OpenSans',
-              fontSize: 20,
-            ),
-            bodyText2: TextStyle(
-              fontFamily: 'OpenSans',
-              // fontSize: 20,
-              color: Colors.black,
-            ),
-            bodyText1: TextStyle(
-              fontFamily: 'OpenSans',
-              // fontSize: 20,
-              color: Colors.white,
-            ),
-            headline2: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-            headline4: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-            subtitle2: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-            subtitle1: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-            headline6: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-            headline5: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-            overline: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-            caption: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-            button: TextStyle(
-              fontFamily: 'OpenSans',
-            ),
-          ),
+          textTheme: ltexttheme,
+          appBarTheme: AppBarTheme(
+              textTheme: ltexttheme.copyWith(
+            title: TextStyle(fontSize: 20),
+          )),
         ),
         darkTheme: ThemeData.dark().copyWith(
-          accentColor: Colors.red.withOpacity(0.5),
+          accentColor: Colors.red,
+          textTheme: dtexttheme,
+          appBarTheme: AppBarTheme(
+            textTheme: dtexttheme.copyWith(
+              title: TextStyle(fontSize: 20),
+            ),
+          ),
         ),
 
         routes: {
@@ -131,3 +95,99 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+final TextTheme ltexttheme = TextTheme(
+  bodyText1: TextStyle(
+    fontFamily: 'OpenSans',
+    // fontSize: 20,
+    color: Colors.white,
+  ),
+  bodyText2: TextStyle(
+    fontFamily: 'OpenSans',
+    // fontSize: 20,
+    color: Colors.black,
+  ),
+  headline1: TextStyle(
+    fontFamily: 'OpenSans',
+    fontSize: 30,
+  ),
+  headline3: TextStyle(
+    fontFamily: 'OpenSans',
+    fontSize: 20,
+  ),
+  headline2: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  headline4: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  subtitle2: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  subtitle1: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  headline6: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  headline5: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  overline: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  caption: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  button: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+);
+
+final TextTheme dtexttheme = TextTheme(
+  bodyText1: TextStyle(
+    fontFamily: 'OpenSans',
+    // fontSize: 20,
+    color: Colors.black,
+  ),
+  bodyText2: TextStyle(
+    fontFamily: 'OpenSans',
+    // fontSize: 20,
+    color: Colors.white,
+  ),
+  headline1: TextStyle(
+    fontFamily: 'OpenSans',
+    fontSize: 30,
+  ),
+  headline3: TextStyle(
+    fontFamily: 'OpenSans',
+    fontSize: 20,
+  ),
+  headline2: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  headline4: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  subtitle2: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  subtitle1: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  headline6: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  headline5: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  overline: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  caption: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+  button: TextStyle(
+    fontFamily: 'OpenSans',
+  ),
+);

@@ -312,6 +312,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
       floatingActionButton: isLoading
           ? null
           : FloatingActionButton(
+              backgroundColor: Theme.of(context).accentColor,
               child: Icon(
                 isFav ? Icons.favorite : Icons.favorite_border,
                 size: 30,
@@ -381,7 +382,10 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
       //         elevation: 0,
       //       ),
       body: isLoading
-          ? CircularProgressIndicator()
+          ? Center(
+              child: LoadingSpinner(
+              size: 150,
+            ))
           : CustomScrollView(
               physics: BouncingScrollPhysics(),
               controller: _scrollController,
@@ -394,7 +398,14 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     ),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
-                  title: isLoading ? Text("") : Text(categoryTitle) ?? "",
+
+                  title: isLoading
+                      ? Text("")
+                      : Text(
+                            categoryTitle,
+                            // style: TextStyle(color: Colors.white),
+                          ) ??
+                          "",
                   // elevation: 0.1,
                   // expandedHeight: MediaQuery.of(context).size.height / 3,
                   pinned: true,
@@ -461,6 +472,8 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                         child: Center(
                                           child: Text(
                                             categoryOptionsRecipeCards[i].title,
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             textAlign: TextAlign.center,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -485,6 +498,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     child: Text(
                       categoryDesc ?? "",
                       textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -506,16 +520,21 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                   delegate: SliverChildBuilderDelegate(
                     (context, i) {
                       // print(recipeCards.length);
-                      if (i == recipeCards.length) return LoadingSpinner();
+                      if (i == recipeCards.length)
+                        return LoadingSpinner(
+                          color: Colors.grey,
+                          size: 70,
+                        );
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 20,
-                          vertical: 10,
+                          vertical: 15,
                         ),
                         child: GestureDetector(
                           onTap: () => goToRecipe(recipeCards[i].href,
                               recipeCards[i].photoUrl, context),
                           child: ClayContainer(
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: 20,
                             depth: 50,
                             child: ClipRRect(
@@ -565,11 +584,14 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                                 ),
                                                 child: Text(
                                                   recipeCards[i].title,
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.w300,
-                                                  ),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      .copyWith(
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                      ),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   textAlign: TextAlign.center,
@@ -585,11 +607,23 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                           vertical: 5, horizontal: 20),
                                       child: Text(
                                         recipeCards[i].desc,
-                                        style: TextStyle(
-                                          // color: Colors.white,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w300,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            .copyWith(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w300,
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black),
+
+                                        //  TextStyle(
+                                        //   // color: Colors.white,
+                                        //   fontSize: 17,
+                                        //   fontWeight: FontWeight.w300,
+                                        // ),
                                         maxLines: 2,
                                         softWrap: true,
                                         overflow: TextOverflow.ellipsis,
@@ -607,6 +641,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                     childCount:
                         hasMore ? recipeCards.length + 1 : recipeCards.length,
                   ),
+
                   // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   //   crossAxisCount: 1,
                   //   // childAspectRatio: 20 / 13,

@@ -181,10 +181,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // final auth = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       body: isAuth
           ? PageView(
               controller: pageController,
+              physics: PageScrollPhysics(),
               children: <Widget>[
                 HomeScreenWidget(),
                 Consumer<RecentsProvider>(
@@ -198,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _selectedIndex = i;
                 setState(() {});
               },
-              // pageSnapping: false,
+              pageSnapping: false,
             )
           : LoginPage(),
       bottomNavigationBar: isAuth
