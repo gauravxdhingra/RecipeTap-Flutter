@@ -22,7 +22,7 @@ class _BuildFavInFavouritesState extends State<BuildFavInFavourites> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 3 + 10,
+      height: MediaQuery.of(context).size.height / 2.8,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
@@ -35,7 +35,7 @@ class _BuildFavInFavouritesState extends State<BuildFavInFavourites> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.only(right: 10, bottom: 5),
                   child: InkWell(
                     onTap: () async {
                       final recipeurl1 = widget.favRecipesList[i].recipeUrl
@@ -55,7 +55,9 @@ class _BuildFavInFavouritesState extends State<BuildFavInFavourites> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.4),
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).primaryColor.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(7),
                       ),
                       child: Text('Remove'),
@@ -71,87 +73,95 @@ class _BuildFavInFavouritesState extends State<BuildFavInFavourites> {
                                 coverImageUrl:
                                     widget.favRecipesList[i].coverPhotoUrl,
                               ))),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    child: ClayContainer(
-                      borderRadius: 20,
-                      depth: 90,
-                      spread: 6,
-                      // depth: 90,
-                      // color: Theme.of(context).primaryColor,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        child: Container(
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.2),
-                          child: Column(
-                            children: <Widget>[
-                              Stack(
-                                children: <Widget>[
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                    child: Image.network(
-                                      widget.favRecipesList[i].coverPhotoUrl,
-                                      height: 210,
-                                      width: MediaQuery.of(context).size.width,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    // top: 0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.6),
-                                        borderRadius: BorderRadius.circular(20),
+                  child: ClayContainer(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: 20,
+                    depth: 50,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      child: ClayContainer(
+                        borderRadius: 20,
+                        depth: 90,
+                        spread: 6,
+                        // depth: 90,
+                        // color: Theme.of(context).primaryColor,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          child: Container(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.2),
+                            child: Column(
+                              children: <Widget>[
+                                Stack(
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
                                       ),
-                                      height: 50,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 15.0,
-                                          ),
-                                          child: Text(
-                                            widget.favRecipesList[i].title,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.w300,
+                                      child: Image.network(
+                                        widget.favRecipesList[i].coverPhotoUrl,
+                                        height: 210,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      // top: 0,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .accentColor
+                                              .withOpacity(0.6),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        height: 50,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 15.0,
                                             ),
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
+                                            child: Text(
+                                              widget.favRecipesList[i].title,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.center,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 20),
-                                child: Text(
-                                  widget.favRecipesList[i].desc,
-                                  style: TextStyle(
-                                    // color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                  maxLines: 2,
-                                  softWrap: true,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 20),
+                                  child: Text(
+                                    widget.favRecipesList[i].desc,
+                                    style: TextStyle(
+                                      // color: Colors.white,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                    maxLines: 2,
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

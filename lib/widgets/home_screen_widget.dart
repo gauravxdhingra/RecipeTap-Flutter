@@ -270,29 +270,29 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       appBar: AppBar(
         elevation: 0,
         leading: isSearch
-            ? IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  isSearch = false;
-                  setState(() {});
-                },
-              )
+            ? null
             : Center(
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: currentUser != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            profilePhotoUrl,
-                            fit: BoxFit.cover,
+                child: ClayContainer(
+                  color: Theme.of(context).primaryColor,
+                  spread: 4,
+                  borderRadius: 20,
+                  depth: 50,
+                  child: CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: currentUser != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(
+                              profilePhotoUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 32,
                           ),
-                        )
-                      : Icon(
-                          Icons.person,
-                          color: Colors.white,
-                          size: 32,
-                        ),
+                  ),
                 ),
               ),
         title: !isSearch
@@ -330,7 +330,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         //   ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.search),
+              icon: Icon(isSearch ? Icons.close : Icons.search),
               onPressed: () {
                 // Provider.of<AuthProvider>(context, listen: false).logout();
                 isSearch = !isSearch;

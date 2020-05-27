@@ -149,7 +149,11 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
       ),
       // extendBodyBehindAppBar: true,
       body: isLoading
-          ? LoadingSpinner()
+          ? Center(
+              child: LoadingSpinner(
+              size: 140,
+              color: Colors.grey,
+            ))
           : BuildRecipeListResults(
               recipeCards: recipeCards,
               url: widget.url,

@@ -24,7 +24,9 @@ class LoadingCategoriesScreen extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
-            LoadingSpinner(),
+            LoadingSpinner(
+              size: 140,
+            ),
           ],
         ),
       ),

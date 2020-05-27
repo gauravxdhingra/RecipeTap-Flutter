@@ -40,6 +40,7 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
                 Padding(
                   padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 4 / 5 - 95,
+                    bottom: 5,
                   ),
                   child: InkWell(
                     onTap: () async {
@@ -59,7 +60,9 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.4),
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).primaryColor.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(7),
                       ),
                       child: Text('Remove'),
@@ -75,88 +78,80 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
                                 coverImageUrl:
                                     widget.recentRecipesList[i].coverPhotoUrl,
                               ))),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    child: ClayContainer(
-                      borderRadius: 20,
-                      depth: 90,
-                      spread: 6,
-                      // depth: 90,
-                      // color: Theme.of(context).primaryColor,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        child: Container(
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.2),
-                          child: Column(
-                            children: <Widget>[
-                              Stack(
-                                children: <Widget>[
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                    child: Image.network(
-                                      widget.recentRecipesList[i].coverPhotoUrl,
-                                      height: 210,
-                                      width: MediaQuery.of(context).size.width,
-                                      fit: BoxFit.cover,
-                                    ),
+                  child: ClayContainer(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    depth: 50,
+                    borderRadius: 20,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      child: Container(
+                        color: Theme.of(context).primaryColor.withOpacity(0.2),
+                        child: Column(
+                          children: <Widget>[
+                            Stack(
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
                                   ),
-                                  Positioned(
-                                    // top: 0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .accentColor
-                                            .withOpacity(0.6),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      height: 50,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 15.0,
+                                  child: Image.network(
+                                    widget.recentRecipesList[i].coverPhotoUrl,
+                                    height: 210,
+                                    width: MediaQuery.of(context).size.width,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                  // top: 0,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .accentColor
+                                          .withOpacity(0.6),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    height: 50,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0,
+                                        ),
+                                        child: Text(
+                                          widget.recentRecipesList[i].title,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w300,
                                           ),
-                                          child: Text(
-                                            widget.recentRecipesList[i].title,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 20),
-                                child: Text(
-                                  widget.recentRecipesList[i].desc,
-                                  style: TextStyle(
-                                    // color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                  maxLines: 2,
-                                  softWrap: true,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
                                 ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 20),
+                              child: Text(
+                                widget.recentRecipesList[i].desc,
+                                style: TextStyle(
+                                  // color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                maxLines: 2,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -185,11 +180,13 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
                   // ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 10, top: 5),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.4),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).primaryColor.withOpacity(0.4),
                       borderRadius: BorderRadius.circular(7),
                     ),
                     child: Text(timeago.format(

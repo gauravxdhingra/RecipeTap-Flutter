@@ -170,6 +170,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       closedContainerBS,
                     ],
                   ),
+                  child: Center(child: Text("Pull To Refresh")),
                 ),
               ],
             ),
@@ -227,7 +228,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                         if (favCategoriesList.length != 0)
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 70,
+                            height: 80,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               physics: BouncingScrollPhysics(),
@@ -238,28 +239,38 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                     context,
                                   ),
                                   child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 5, vertical: 8),
-                                    height: 70,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "#" + favCategoriesList[i].title,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              .copyWith(
-                                                color: Colors.white,
-                                              ),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          textAlign: TextAlign.center,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 13),
+                                    child: ClayContainer(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: 25,
+                                      depth: 60,
+                                      spread: 5,
+                                      child: Container(
+                                        height: 70,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "#" + favCategoriesList[i].title,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  .copyWith(
+                                                    color: Colors.white,
+                                                  ),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -292,7 +303,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                             Padding(
                               padding: const EdgeInsets.only(
                                 left: 20,
-                                top: 30,
+                                top: 20,
                               ),
                               child: Text(
                                 'FAVOURITES',
