@@ -12,7 +12,7 @@ import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/utility/pdf_creator.dart';
 // import 'package:screenshot/screenshot.dart';
 import 'package:sliver_fab/sliver_fab.dart';
-import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
+// import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 
 class RecipeViewPageWidget extends StatefulWidget {
   const RecipeViewPageWidget({
@@ -261,6 +261,11 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                       child: ReadMoreText(
                         widget.desc,
                         trimLines: 2,
+                        style: TextStyle(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black,
+                        ),
                         colorClickableText: Colors.grey,
                         trimMode: TrimMode.Line,
                         trimCollapsedText: '  Show more',
@@ -279,40 +284,80 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           if (widget.timeExists)
                             Container(
-                              height: 80,
+                              height: 85,
                               width: MediaQuery.of(context).size.width / 5,
                               child: Column(
                                 children: <Widget>[
                                   Icon(Icons.timer),
-                                  Text("Time"),
-                                  Text(widget.time ?? ""),
+                                  Text(
+                                    "Time",
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.time ?? "",
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           if (widget.servingsExist)
                             Container(
-                              height: 80,
+                              height: 85,
                               width: MediaQuery.of(context).size.width / 5,
                               child: Column(
                                 children: <Widget>[
                                   Icon(Icons.people_outline),
-                                  Text("Serves".toUpperCase()),
-                                  Text(widget.servings ?? "--"),
+                                  Text(
+                                    "Serves".toUpperCase(),
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.servings ?? "--",
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           if (widget.nutritionalFactsExits)
                             Container(
-                              height: 80,
+                              height: 85,
                               width: MediaQuery.of(context).size.width / 5,
                               child: Column(
                                 children: <Widget>[
                                   Icon(Icons.restaurant_menu),
-                                  Text("Calories".toUpperCase()),
+                                  Text(
+                                    "Calories".toUpperCase(),
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
                                   Text(
                                     widget.nutritionalFactsExits
                                         ? widget.oldWebsite
@@ -323,18 +368,32 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     softWrap: true,
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                           if (widget.yeildExists && widget.oldWebsite == true)
                             Container(
-                              height: 80,
+                              height: 85,
                               width: MediaQuery.of(context).size.width / 5,
                               child: Column(
                                 children: <Widget>[
                                   Icon(Icons.fastfood),
-                                  Text("YEILDS"),
+                                  Text(
+                                    "YEILDS",
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
                                   Text(
                                     widget.yeildExists
                                         ? widget.oldWebsite
@@ -345,6 +404,12 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     softWrap: true,
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -370,7 +435,10 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     ),
                     child: Text(
                       'INGREDIENTS',
-                      style: Theme.of(context).textTheme.headline3.copyWith(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3
+                          .copyWith(fontSize: 25),
                     ),
                   ),
                 ),
@@ -404,7 +472,10 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     ),
                     child: Text(
                       'DIRECTIONS',
-                      style: Theme.of(context).textTheme.headline3.copyWith(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3
+                          .copyWith(fontSize: 25),
                     ),
                   ),
                 ),
@@ -441,7 +512,10 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                       ),
                       child: Text(
                         'NUTRITIONAL FACTS',
-                        style: Theme.of(context).textTheme.headline3.copyWith(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3
+                            .copyWith(fontSize: 25),
                       ),
                     ),
                   ),
@@ -493,7 +567,10 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                       ),
                       child: Text(
                         "COOK'S NOTES",
-                        style: Theme.of(context).textTheme.headline3.copyWith(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3
+                            .copyWith(fontSize: 25),
                       ),
                     ),
                   ),
@@ -563,6 +640,7 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                     .headline3
                                     .copyWith(
                                       fontSize: 25,
+                                      color: Theme.of(context).accentColor,
                                     ),
                               ),
                               alignment: Alignment.topCenter,
@@ -590,7 +668,11 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                           height: 60,
                           color: Color(0xfff4d6cd),
                           child: Center(
-                            child: Text('Save The Recipe As PDF'),
+                            child: Text(
+                              'Save The Recipe As PDF',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.black),
+                            ),
                           ),
                         ),
                       ),

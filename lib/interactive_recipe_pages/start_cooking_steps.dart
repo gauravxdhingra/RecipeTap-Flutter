@@ -28,6 +28,7 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Directions"),
+        centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () => Navigator.pop(context)),
@@ -76,8 +77,8 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
                                 decoration: TextDecoration.lineThrough,
                               )
                             : TextStyle(
-                                color: Colors.black,
-                              ),
+                                // color: Colors.black,
+                                ),
                       ),
                     ),
                   );
@@ -91,15 +92,28 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
                   horizontal: 20,
                   vertical: 20,
                 ),
-                child: RaisedButton(
-                  child: Text("Mark All"),
-                  onPressed: () {
-                    for (int i = 0; i < done.length; i++) {
-                      done[i] = true;
-                    }
-                    setState(() {});
-                  },
-                  color: Theme.of(context).primaryColor,
+                child: Container(
+                  height: 50,
+                  // decoration:
+                  //     BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Text(
+                      "Mark All",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    onPressed: () {
+                      for (int i = 0; i < done.length; i++) {
+                        done[i] = true;
+                      }
+                      setState(() {});
+                    },
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
               ),
             ),

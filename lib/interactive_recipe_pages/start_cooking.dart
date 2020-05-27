@@ -16,6 +16,7 @@ class StartCooking extends StatelessWidget {
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () => Navigator.pop(context)),
         title: Text(recipe.title),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -121,7 +122,7 @@ class StartCooking extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 recipe.desc,
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                style: Theme.of(context).textTheme.bodyText2.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                     ),

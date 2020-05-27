@@ -31,6 +31,7 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Ingredients',
         ),
@@ -81,8 +82,8 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
                                 decoration: TextDecoration.lineThrough,
                               )
                             : TextStyle(
-                                color: Colors.black,
-                              )),
+                                // color: Colors.black,
+                                )),
                   ),
                 );
               },
@@ -95,15 +96,26 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
                 horizontal: 20,
                 vertical: 20,
               ),
-              child: RaisedButton(
-                child: Text("Mark All"),
-                onPressed: () {
-                  for (int i = 0; i < grabbed.length; i++) {
-                    grabbed[i] = true;
-                  }
-                  setState(() {});
-                },
-                color: Theme.of(context).primaryColor,
+              child: Container(
+                height: 50,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Text(
+                    "Mark All",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  onPressed: () {
+                    for (int i = 0; i < grabbed.length; i++) {
+                      grabbed[i] = true;
+                    }
+                    setState(() {});
+                  },
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             ),
           ),

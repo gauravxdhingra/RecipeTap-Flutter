@@ -7,9 +7,10 @@ class StartCookingBonAppetit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Ready!'),
+        centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () => Navigator.pop(context)),
@@ -43,7 +44,7 @@ class StartCookingBonAppetit extends StatelessWidget {
         label: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('Finish'),
+            Text('Return'),
             Icon(Icons.navigate_next),
           ],
         ),
