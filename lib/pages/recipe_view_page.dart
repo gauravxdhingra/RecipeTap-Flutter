@@ -9,6 +9,8 @@ import 'package:recipetap/models/recipe_model.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/widgets/recipe_view_page_widget.dart';
 
+import 'home_screen.dart';
+
 class RecipeViewPage extends StatefulWidget {
   final String url;
   final String coverImageUrl;
@@ -425,12 +427,12 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
         }
       }
     }
-    setState(() {
-      print(headline);
-      print(ingredients[0]);
-      isLoading = false;
-      if (time == null) timeExists = false;
-    });
+    // setState(() {
+    //   print(headline);
+    //   print(ingredients[0]);
+    // isLoading = false;
+    if (time == null) timeExists = false;
+    // });
     recipe = RecipeModel(
       title: headline,
       coverPhotoUrl: images,
@@ -450,9 +452,39 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 
   @override
   void initState() {
-    getData();
+    getData().then((_) => favCheckRecentAdd());
     super.initState();
   }
+
+  var isInit = false;
+  bool isFav = false;
+  Function addToFavorites = () {};
+
+  favCheckRecentAdd() async {
+    if (currentUser != null) {
+      await Provider.of<RecentsProvider>(context, listen: false)
+          .addToRecents(recipe, currentUser.email);
+
+      isFav = await Provider.of<RecentsProvider>(context, listen: false)
+          .checkIfFav(recipe.recipeUrl, currentUser.email);
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  // @override
+  // void didChangeDependencies() async {
+  //   if (!isInit) {
+  //     // setState(() {
+  //     //   _isLoading = true;
+  //     // });
+
+  //     isInit = true;
+  //   }
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -486,6 +518,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
                 newWebsiteFooterNotesExist: newWebsiteFooterNotesExist,
                 cooksNotes: cooksNotes,
                 recipe: recipe,
+                isFav: isFav,
               ),
             ),
       floatingActionButton: isLoading

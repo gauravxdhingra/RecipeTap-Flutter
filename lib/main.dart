@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
           )),
         ),
         darkTheme: ThemeData.dark().copyWith(
-          accentColor: Colors.red,
+          accentColor: Colors.pink[900],
           textTheme: dtexttheme,
           appBarTheme: AppBarTheme(
             textTheme: dtexttheme.copyWith(

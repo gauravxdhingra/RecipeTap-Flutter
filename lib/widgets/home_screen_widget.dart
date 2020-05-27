@@ -417,17 +417,27 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     ],
                   ),
                   if (isSearch)
-                    AnimatedContainer(
-                      duration: duration,
-                      height: isSearch
-                          ? MediaQuery.of(context).size.height - 140
-                          : 120 -
-                              MediaQuery.of(context).padding.top -
-                              AppBar().preferredSize.height,
-                      width: MediaQuery.of(context).size.width,
-                      color: !isSearch
-                          ? Colors.transparent
-                          : Color(0xff0f0f0f).withOpacity(0.6),
+                    GestureDetector(
+                      onDoubleTap: () {
+                        isSearch = false;
+                        setState(() {});
+                      },
+                      onLongPress: () {
+                        isSearch = false;
+                        setState(() {});
+                      },
+                      child: AnimatedContainer(
+                        duration: duration,
+                        height: isSearch
+                            ? MediaQuery.of(context).size.height - 140
+                            : 120 -
+                                MediaQuery.of(context).padding.top -
+                                AppBar().preferredSize.height,
+                        width: MediaQuery.of(context).size.width,
+                        color: !isSearch
+                            ? Colors.transparent
+                            : Color(0xff0f0f0f).withOpacity(0.6),
+                      ),
                     ),
                 ],
               ),

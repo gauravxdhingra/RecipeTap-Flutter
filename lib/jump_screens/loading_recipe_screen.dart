@@ -43,7 +43,9 @@ class LoadingRecipeScreen extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            LoadingSpinner(),
+            LoadingSpinner(
+              size: 100,
+            ),
           ],
         ),
       ),

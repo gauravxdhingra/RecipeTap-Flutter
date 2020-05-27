@@ -36,6 +36,7 @@ class RecipeViewPageWidget extends StatefulWidget {
     @required this.newWebsiteFooterNotesExist,
     @required this.cooksNotes,
     @required this.recipe,
+    @required this.isFav,
   }) : super(key: key);
 
   final String headline;
@@ -56,6 +57,7 @@ class RecipeViewPageWidget extends StatefulWidget {
   final bool cooksNotesExits;
   final bool newWebsiteFooterNotesExist;
   final List cooksNotes;
+  final bool isFav;
   final RecipeModel recipe;
 
   @override
@@ -64,41 +66,14 @@ class RecipeViewPageWidget extends StatefulWidget {
 
 class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
   var _isLoading = false;
-  var isInit = false;
-  // ScreenshotController screenshotController = ScreenshotController();
-  bool isFav = false;
+  bool isFav;
 
-  Function addToFavorites = () {};
+  // ScreenshotController screenshotController = ScreenshotController();
 
   @override
-  void didChangeDependencies() async {
-    if (!isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-
-      if (currentUser != null) {
-        // final email = Provider.of<AuthProvider>(context, listen: false).email;
-        // print(currentUser.email + " this");
-        await Provider.of<RecentsProvider>(context, listen: false)
-            .addToRecents(widget.recipe, currentUser.email);
-
-        // addToFavorites =
-        //     await Provider.of<RecentsProvider>(context, listen: false)
-        //         .addToFavourites(widget.recipe, currentUser.email);
-
-        // Check for fav
-        isFav = await Provider.of<RecentsProvider>(context, listen: false)
-            .checkIfFav(widget.recipe.recipeUrl, currentUser.email);
-      }
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      isInit = true;
-    }
-    super.didChangeDependencies();
+  void initState() {
+    isFav = widget.isFav;
+    super.initState();
   }
 
   // File _imageFile;
