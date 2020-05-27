@@ -7,7 +7,7 @@ import 'package:recipetap/models/userdata.dart';
 import 'package:recipetap/pages/home_screen.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 // import 'package:recipetap/provider/favorites_provider.dart';
-import 'package:uuid/uuid.dart';
+// import 'package:uuid/uuid.dart';
 import '../models/recents_model.dart';
 import '../models/favourites_model.dart';
 import '../models/category_model.dart';
@@ -20,7 +20,7 @@ final favoriteCategoriesRef =
 
 class RecentsProvider with ChangeNotifier {
   RecipeModel recipe;
-  String recipeId = Uuid().v4();
+  // String recipeId = Uuid().v4();
 
   List<RecentsModel> recentslist = [];
 

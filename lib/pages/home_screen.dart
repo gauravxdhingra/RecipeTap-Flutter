@@ -1,7 +1,7 @@
 // import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 // import 'dart:ui';
 
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+// import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:floating_search_bar/floating_search_bar.dart';
@@ -23,7 +23,7 @@ import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/pages/settings_screen.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/widgets/home_screen_widget.dart';
-import '../provider/auth_provider.dart';
+// import '../provider/auth_provider.dart';
 // import 'package:slimy_card/slimy_card.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -52,9 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PageController pageController = PageController();
 
-  GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
+  // GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
-  GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
+  // GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
 
 // TODO: all user search inputs lowercase
 // TODO spaces replace %20

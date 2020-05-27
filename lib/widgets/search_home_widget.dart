@@ -1,4 +1,4 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+// import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 
 class SearchHomeWidget extends StatelessWidget {
@@ -22,9 +22,9 @@ class SearchHomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
+    // GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
-    GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
+    // GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),

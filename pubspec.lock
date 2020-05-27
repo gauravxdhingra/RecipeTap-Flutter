@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
-  autocomplete_textfield:
-    dependency: "direct main"
-    description:
-      name: autocomplete_textfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.7.3"
   barcode:
     dependency: transitive
     description:
@@ -202,13 +195,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
-  flutter_custom_dialog:
-    dependency: "direct main"
-    description:
-      name: flutter_custom_dialog
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.19"
   flutter_full_pdf_viewer:
     dependency: "direct main"
     description:
@@ -324,13 +310,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.12"
-  image_gallery_saver:
-    dependency: "direct main"
-    description:
-      name: image_gallery_saver
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.2"
   js:
     dependency: transitive
     description:
@@ -359,13 +338,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
-  neuomorphic_container:
-    dependency: "direct main"
-    description:
-      name: neuomorphic_container
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.3"
   path:
     dependency: transitive
     description:
@@ -511,13 +483,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  slimy_card:
-    dependency: "direct main"
-    description:
-      name: slimy_card
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   sliver_fab:
     dependency: "direct main"
     description:
@@ -595,13 +560,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.0+5"
-  uuid:
-    dependency: "direct main"
-    description:
-      name: uuid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.4"
   vector_math:
     dependency: transitive
     description:

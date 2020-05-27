@@ -1,3 +1,4 @@
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/pages/home_screen.dart';
@@ -165,57 +166,126 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   if (currentUser != null)
                     Column(
                       children: <Widget>[
-                        Container(
-                          // color: Colors.red,
-                          height: 160,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              CircleAvatar(
-                                radius: 60,
-                                backgroundImage: isAuth
-                                    ? NetworkImage(
-                                        profilePhotoUrl,
-                                      )
-                                    : null,
-                                backgroundColor: Theme.of(context).primaryColor,
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 25,
-                                  ),
-                                  Text(
-                                    username ?? "User",
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text('Google Account'),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  InkWell(
-                                    child: Text(
-                                      "Manage Account",
-                                      style: TextStyle(
-                                        color: Colors.blue,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: ClayContainer(
+                            borderRadius: 25,
+                            depth: 60,
+                            // spread: 5,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            child: Container(
+                              // color: Colors.red,
+                              // height: 160,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5.0, vertical: 5),
+                                      child: ClayContainer(
+                                        borderRadius: 50,
+                                        depth: 60,
+                                        spread: 6,
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        // spread: 5,
+                                        child: CircleAvatar(
+                                          radius: 50,
+                                          backgroundImage: isAuth
+                                              ? NetworkImage(
+                                                  profilePhotoUrl,
+                                                )
+                                              : null,
+                                          backgroundColor:
+                                              Theme.of(context).primaryColor,
+                                        ),
                                       ),
                                     ),
-                                    onTap: () async {
-                                      _signOut();
-                                    },
-                                  ),
-                                ],
-                              )
-                            ],
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Column(
+                                      // mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        // SizedBox(
+                                        //   height: 25,
+                                        // ),
+                                        Text(
+                                          username ?? "User",
+                                          style: TextStyle(
+                                            fontSize: 25,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                        Text('Google Account'),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        InkWell(
+                                          child: Text(
+                                            "Manage Account",
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                          onTap: () async {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    30,
+                                                  ),
+                                                ),
+                                                title: Text("Manage Account"),
+                                                elevation: 10,
+                                                content: Container(
+                                                  height: 120,
+                                                  child: SingleChildScrollView(
+                                                    child: Column(
+                                                      children: <Widget>[
+                                                        ListTile(
+                                                          contentPadding:
+                                                              EdgeInsets.all(0),
+                                                          title: Text("Logout"),
+                                                        ),
+                                                        ListTile(
+                                                          contentPadding:
+                                                              EdgeInsets.all(0),
+                                                          title: Text(
+                                                              "Delete Account"),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text("Cancel"),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                            // _signOut();
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -244,8 +314,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   ListTile(
                     title: Text("Rate Us!"),
-                    subtitle: Text(
-                        "Liked The Experience? Please Rate Us!"),
+                    subtitle: Text("Liked The Experience? Please Rate Us!"),
                   ),
                   ListTile(
                     title: Text("Share This App"),

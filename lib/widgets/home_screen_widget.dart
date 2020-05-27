@@ -261,8 +261,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         });
   }
 
-  String includei = "";
-  String excludei = "";
+  // String validateSearch() {
+  //   if (controller.text.trim().isEmpty && exclude.isEmpty && include.isEmpty) {
+  //     return "Enter a recipe or ingredients to search";
+  //   }
+  //   return null;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -319,8 +323,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   ),
                 ],
               )
-            : TextField(
+            : TextFormField(
+                // validator: (_) => validateSearch(),
                 controller: controller,
+                decoration: InputDecoration(
+                  hintText: "Start Searching",
+                  // errorText: validateSearch(),
+                ),
               ),
         // Text(
         //     'Search For Recipes',
@@ -334,6 +343,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               onPressed: () {
                 // Provider.of<AuthProvider>(context, listen: false).logout();
                 isSearch = !isSearch;
+                controller.clear();
+                include = [];
+                exclude = [];
                 setState(() {});
               })
         ],
@@ -653,10 +665,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: <Widget>[
-                                            Icon(Icons.add_circle),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
+                                            // Icon(Icons.add_circle),
+                                            // SizedBox(
+                                            //   width: 10,
+                                            // ),
                                             Text(
                                               'Include',
                                             ),
@@ -802,10 +814,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: <Widget>[
-                                            Icon(Icons.remove_circle),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
+                                            // Icon(Icons.remove_circle),
+                                            // SizedBox(
+                                            //   width: 10,
+                                            // ),
                                             Text(
                                               'Exclude',
                                             ),
@@ -818,16 +830,33 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                               ),
                             ),
                             FlatButton(
-                              child: Text('Search'),
+                              color: Theme.of(context).accentColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Text(
+                                'Search',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 22),
+                              ),
                               onPressed: () {
-                                submitSearch(
-                                  controller.text.trim().isNotEmpty
-                                      ? "Showing Results For " + controller.text
-                                      : "Showing Recipes From Ingredients",
-                                  controller.text
-                                      .replaceAll(" ", "%20")
-                                      .toLowerCase(),
-                                );
+                                if (controller.text.trim().isEmpty &&
+                                    include.isEmpty &&
+                                    exclude.isEmpty) {
+                                  print("No Search Query");
+                                } else {
+                                  print(include);
+                                  print(exclude);
+                                  submitSearch(
+                                    controller.text.trim().isNotEmpty
+                                        ? "Showing Results For " +
+                                            controller.text
+                                        : "Showing Recipes From Ingredients",
+                                    controller.text
+                                        .replaceAll(" ", "%20")
+                                        .toLowerCase(),
+                                  );
+                                }
+                                // show
                               },
                             ),
                           ],
@@ -837,6 +866,16 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   )
                 : AnimatedContainer(
                     duration: duration,
+                    child: Center(
+                      child: Text(
+                        "Start Searching Recipes From Ingredients"
+                            .toUpperCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2
+                            .copyWith(fontSize: 10, color: Colors.white),
+                      ),
+                    ),
                   ),
           ),
         ],

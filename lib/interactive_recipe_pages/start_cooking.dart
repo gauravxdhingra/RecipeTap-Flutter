@@ -74,7 +74,7 @@ class StartCooking extends StatelessWidget {
                 children: <Widget>[
                   if (recipe.time.isNotEmpty || recipe.time.trim() != '--')
                     Container(
-                      height: 80,
+                      height: 90,
                       width: MediaQuery.of(context).size.width / 5,
                       child: Column(
                         children: <Widget>[
@@ -87,7 +87,7 @@ class StartCooking extends StatelessWidget {
                   if (recipe.servings.isNotEmpty ||
                       recipe.servings.trim() != "--")
                     Container(
-                      height: 80,
+                      height: 90,
                       width: MediaQuery.of(context).size.width / 5,
                       child: Column(
                         children: <Widget>[
@@ -99,7 +99,7 @@ class StartCooking extends StatelessWidget {
                     ),
                   if (recipe.yeild.toString().isNotEmpty)
                     Container(
-                      height: 80,
+                      height: 90,
                       width: MediaQuery.of(context).size.width / 5,
                       child: Column(
                         children: <Widget>[
