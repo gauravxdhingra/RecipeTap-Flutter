@@ -72,6 +72,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     fetchRecommended();
     super.initState();
 
+    _scaffoldKey = GlobalKey<ScaffoldState>();
     inclController = TextEditingController();
     exclController = TextEditingController();
     controller = TextEditingController();
@@ -230,7 +231,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   void onButtonPressed(Widget child) {
     showModalBottomSheet(
-
         // isScrollControlled: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -268,67 +268,79 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   //   return null;
   // }
 
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         leading: isSearch
             ? null
-            : Center(
-                child: ClayContainer(
-                  color: Theme.of(context).primaryColor,
-                  spread: 4,
-                  borderRadius: 20,
-                  depth: 50,
-                  child: CircleAvatar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: currentUser != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.network(
-                              profilePhotoUrl,
-                              fit: BoxFit.cover,
+            : AnimatedContainer(
+                duration: duration,
+                child: Center(
+                  child: ClayContainer(
+                    color: Theme.of(context).primaryColor,
+                    spread: 4,
+                    borderRadius: 20,
+                    depth: 50,
+                    child: CircleAvatar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: currentUser != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                profilePhotoUrl,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 32,
                             ),
-                          )
-                        : Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 32,
-                          ),
+                    ),
                   ),
                 ),
               ),
         title: !isSearch
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    currentUser != null
-                        ? 'Welcome, ${username.split(" ")[0]} !'
-                        : 'Welcome!',
-                    style: Theme.of(context).textTheme.headline1.copyWith(
-                          fontSize: 22,
-                          color: Colors.white,
-                        ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
-                    child: Text(
-                      "What would you like to have today?",
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+            ? AnimatedContainer(
+                duration: duration,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      currentUser != null
+                          ? 'Welcome, ${username.split(" ")[0]} !'
+                          : 'Welcome!',
+                      style: Theme.of(context).textTheme.headline1.copyWith(
+                            fontSize: 22,
+                            color: Colors.white,
+                          ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: Text(
+                        "What would you like to have today?",
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ],
+                ),
               )
-            : TextFormField(
-                // validator: (_) => validateSearch(),
-                controller: controller,
-                decoration: InputDecoration(
-                  hintText: "Start Searching",
-                  // errorText: validateSearch(),
+            : AnimatedContainer(
+                duration: duration,
+                child: TextFormField(
+                  // validator: (_) => validateSearch(),
+                  controller: controller,
+                  decoration: InputDecoration(
+                    hintText: "Search Recipes",
+                    // errorText: validateSearch(),
+                  ),
                 ),
               ),
         // Text(
@@ -338,16 +350,19 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         //         color: Theme.of(context).textTheme.bodyText1.color),
         //   ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(isSearch ? Icons.close : Icons.search),
-              onPressed: () {
-                // Provider.of<AuthProvider>(context, listen: false).logout();
-                isSearch = !isSearch;
-                controller.clear();
-                include = [];
-                exclude = [];
-                setState(() {});
-              })
+          AnimatedContainer(
+            duration: duration,
+            child: IconButton(
+                icon: Icon(isSearch ? Icons.close : Icons.search),
+                onPressed: () {
+                  // Provider.of<AuthProvider>(context, listen: false).logout();
+                  isSearch = !isSearch;
+                  controller.clear();
+                  include = [];
+                  exclude = [];
+                  setState(() {});
+                }),
+          )
         ],
       ),
       body: Container(
@@ -499,370 +514,439 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               ],
             ),
             child: isSearch
-                ? AnimatedContainer(
-                    duration: duration,
-                    child: SingleChildScrollView(
-                      child:
-                          //  SearchHomeWidget(
-                          //   controller: controller,
-                          //   // key: key,
-                          //   suggestions: suggestions,
-                          //   inclController: inclController,
-                          //   // keyy: keyy,
-                          //   exclController: exclController,
-                          //   submitSearch: submitSearch,
-                          // ),
-                          Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  InkWell(
-                                    onTap: () => onButtonPressed(
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Container(
-                                                height: 7,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .accentColor
-                                                      .withOpacity(0.5),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                ? Stack(
+                    children: <Widget>[
+                      AnimatedContainer(
+                        duration: duration,
+                        child: SingleChildScrollView(
+                          child:
+                              //  SearchHomeWidget(
+                              //   controller: controller,
+                              //   // key: key,
+                              //   suggestions: suggestions,
+                              //   inclController: inclController,
+                              //   // keyy: keyy,
+                              //   exclController: exclController,
+                              //   submitSearch: submitSearch,
+                              // ),
+                              Column(
+                            children: <Widget>[
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  // crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    InkWell(
+                                      onTap: () => onButtonPressed(
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          // mainAxisAlignment: MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 7,
+                                                  width: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Theme.of(context)
+                                                        .accentColor
+                                                        .withOpacity(0.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
-                                            child: Text(
-                                              "Include",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6,
+                                            SizedBox(
+                                              height: 20,
                                             ),
-                                          ),
-
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              // vertical: 20,
-                                              horizontal: 20,
-                                            ),
-                                            child: ChipsInput(
-                                              initialValue: include,
-                                              //  includei
-                                              //     .split("[")[1]
-                                              //     .split("]")[0]
-                                              //     .split(",")
-                                              //     .toList(),
-                                              //     .forEach((element) {
-                                              //   include[i] =
-                                              //       element.toString();
-                                              //   i++;
-                                              // }),
-
-                                              decoration: InputDecoration(
-                                                labelText: 'Select Ingredients',
-                                                // counter: Text(
-                                                //   include.length
-                                                //           .toString() ??
-                                                //       "0",
-                                                // ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10),
+                                              child: Text(
+                                                "Add Ingredients",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline6,
                                               ),
-                                              onChanged: (data) {
-                                                // includei =
-                                                //     data.toString();
-                                                include = data;
-                                                print(include);
-                                                // setState(() {});
-                                                // print(includei);
-                                              },
-                                              chipBuilder:
-                                                  (context, state, profile) {
-                                                return InputChip(
-                                                  key: ObjectKey(profile),
-                                                  label: Text(profile),
-                                                  onDeleted: () =>
-                                                      state.deleteChip(profile),
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                );
-                                              },
-                                              findSuggestions: (String query) {
-                                                if (query.length != 0) {
-                                                  var lowercaseQuery =
-                                                      query.toLowerCase();
-                                                  return SearchSuggestions
-                                                      .suggestions
-                                                      .where((ingredient) {
-                                                    return ingredient
-                                                        .toLowerCase()
-                                                        .contains(query
-                                                            .toLowerCase());
-                                                  }).toList(growable: false)
-                                                        ..sort((a, b) => a
-                                                            .toLowerCase()
-                                                            .indexOf(
-                                                                lowercaseQuery)
-                                                            .compareTo(b
-                                                                .toLowerCase()
-                                                                .indexOf(
-                                                                    lowercaseQuery)));
-                                                } else {
-                                                  return [];
-                                                }
-                                              },
-                                              suggestionBuilder:
-                                                  (context, state, ingredient) {
-                                                return ListTile(
-                                                  key: ObjectKey(ingredient),
-                                                  title: Text(ingredient),
-                                                  onTap: () =>
-                                                      state.selectSuggestion(
-                                                          ingredient),
-                                                );
-                                              },
                                             ),
-                                          ),
-                                          // FlatButton(),
-                                        ],
-                                      ),
-                                    ),
-                                    child: Container(
-                                      height: 50,
-                                      width: MediaQuery.of(context).size.width /
-                                          2.5,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(
-                                          25,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            // Icon(Icons.add_circle),
-                                            // SizedBox(
-                                            //   width: 10,
-                                            // ),
-                                            Text(
-                                              'Include',
+
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                // vertical: 20,
+                                                horizontal: 20,
+                                              ),
+                                              child: ChipsInput(
+                                                initialValue: include,
+                                                //  includei
+                                                //     .split("[")[1]
+                                                //     .split("]")[0]
+                                                //     .split(",")
+                                                //     .toList(),
+                                                //     .forEach((element) {
+                                                //   include[i] =
+                                                //       element.toString();
+                                                //   i++;
+                                                // }),
+
+                                                decoration: InputDecoration(
+                                                  labelText:
+                                                      'Select Ingredients',
+                                                  // counter: Text(
+                                                  //   include.length
+                                                  //           .toString() ??
+                                                  //       "0",
+                                                  // ),
+                                                ),
+                                                onChanged: (data) {
+                                                  // includei =
+                                                  //     data.toString();
+                                                  include = data;
+                                                  print(include);
+                                                  // setState(() {});
+                                                  // print(includei);
+                                                },
+                                                chipBuilder:
+                                                    (context, state, profile) {
+                                                  return InputChip(
+                                                    key: ObjectKey(profile),
+                                                    label: Text(profile),
+                                                    onDeleted: () => state
+                                                        .deleteChip(profile),
+                                                    materialTapTargetSize:
+                                                        MaterialTapTargetSize
+                                                            .shrinkWrap,
+                                                  );
+                                                },
+                                                findSuggestions:
+                                                    (String query) {
+                                                  if (query.length != 0) {
+                                                    var lowercaseQuery =
+                                                        query.toLowerCase();
+                                                    return SearchSuggestions
+                                                        .suggestions
+                                                        .where((ingredient) {
+                                                      return ingredient
+                                                          .toLowerCase()
+                                                          .contains(query
+                                                              .toLowerCase());
+                                                    }).toList(growable: false)
+                                                          ..sort((a, b) => a
+                                                              .toLowerCase()
+                                                              .indexOf(
+                                                                  lowercaseQuery)
+                                                              .compareTo(b
+                                                                  .toLowerCase()
+                                                                  .indexOf(
+                                                                      lowercaseQuery)));
+                                                  } else {
+                                                    return [];
+                                                  }
+                                                },
+                                                suggestionBuilder: (context,
+                                                    state, ingredient) {
+                                                  return ListTile(
+                                                    key: ObjectKey(ingredient),
+                                                    title: Text(ingredient),
+                                                    onTap: () =>
+                                                        state.selectSuggestion(
+                                                            ingredient),
+                                                  );
+                                                },
+                                              ),
                                             ),
+                                            // FlatButton(),
                                           ],
                                         ),
                                       ),
+                                      child: ClayContainer(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius: 25,
+                                        child: Container(
+                                          height: 50,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2.5,
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                        .brightness ==
+                                                    Brightness.light
+                                                ? Theme.of(context).primaryColor
+                                                : Colors.black38,
+                                            borderRadius: BorderRadius.circular(
+                                              25,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                // Icon(Icons.add_circle),
+                                                // SizedBox(
+                                                //   width: 10,
+                                                // ),
+                                                Text(
+                                                  'Add Ingredients',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .button
+                                                      .copyWith(
+                                                        color: Colors.white,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: () => onButtonPressed(
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Container(
-                                                height: 7,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .accentColor
-                                                      .withOpacity(0.5),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                    InkWell(
+                                      onTap: () => onButtonPressed(
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 7,
+                                                  width: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Theme.of(context)
+                                                        .accentColor
+                                                        .withOpacity(0.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
-                                            child: Text(
-                                              "Exclude",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6,
+                                            SizedBox(
+                                              height: 20,
                                             ),
-                                          ),
-
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              // vertical: 20,
-                                              horizontal: 20,
-                                            ),
-                                            child: ChipsInput(
-                                              initialValue: exclude,
-                                              //  includei
-                                              //     .split("[")[1]
-                                              //     .split("]")[0]
-                                              //     .split(",")
-                                              //     .toList(),
-                                              //     .forEach((element) {
-                                              //   include[i] =
-                                              //       element.toString();
-                                              //   i++;
-                                              // }),
-
-                                              decoration: InputDecoration(
-                                                labelText: 'Select Ingredients',
-                                                // counter: Text(
-                                                //   include.length
-                                                //           .toString() ??
-                                                //       "0",
-                                                // ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10),
+                                              child: Text(
+                                                "Remove Ingredients",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline6,
                                               ),
-                                              onChanged: (data) {
-                                                // includei =
-                                                //     data.toString();
-                                                exclude = data;
-                                                print(exclude);
-                                                // setState(() {});
-                                                // print(includei);
-                                              },
-                                              chipBuilder:
-                                                  (context, state, profile) {
-                                                return InputChip(
-                                                  key: ObjectKey(profile),
-                                                  label: Text(profile),
-                                                  onDeleted: () =>
-                                                      state.deleteChip(profile),
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                );
-                                              },
-                                              findSuggestions: (String query) {
-                                                if (query.length != 0) {
-                                                  var lowercaseQuery =
-                                                      query.toLowerCase();
-                                                  return SearchSuggestions
-                                                      .suggestions
-                                                      .where((ingredient) {
-                                                    return ingredient
-                                                        .toLowerCase()
-                                                        .contains(query
-                                                            .toLowerCase());
-                                                  }).toList(growable: false)
-                                                        ..sort((a, b) => a
-                                                            .toLowerCase()
-                                                            .indexOf(
-                                                                lowercaseQuery)
-                                                            .compareTo(b
-                                                                .toLowerCase()
-                                                                .indexOf(
-                                                                    lowercaseQuery)));
-                                                } else {
-                                                  return [];
-                                                }
-                                              },
-                                              suggestionBuilder:
-                                                  (context, state, ingredient) {
-                                                return ListTile(
-                                                  key: ObjectKey(ingredient),
-                                                  title: Text(ingredient),
-                                                  onTap: () =>
-                                                      state.selectSuggestion(
-                                                          ingredient),
-                                                );
-                                              },
                                             ),
-                                          ),
-                                          // FlatButton(),
-                                        ],
-                                      ),
-                                    ),
-                                    child: Container(
-                                      height: 50,
-                                      width: MediaQuery.of(context).size.width /
-                                          2.5,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(25),
-                                        color: Colors.white,
-                                      ),
-                                      child: Center(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            // Icon(Icons.remove_circle),
-                                            // SizedBox(
-                                            //   width: 10,
-                                            // ),
-                                            Text(
-                                              'Exclude',
+
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                // vertical: 20,
+                                                horizontal: 20,
+                                              ),
+                                              child: ChipsInput(
+                                                initialValue: exclude,
+                                                //  includei
+                                                //     .split("[")[1]
+                                                //     .split("]")[0]
+                                                //     .split(",")
+                                                //     .toList(),
+                                                //     .forEach((element) {
+                                                //   include[i] =
+                                                //       element.toString();
+                                                //   i++;
+                                                // }),
+
+                                                decoration: InputDecoration(
+                                                  labelText:
+                                                      'Select Ingredients',
+                                                  // counter: Text(
+                                                  //   include.length
+                                                  //           .toString() ??
+                                                  //       "0",
+                                                  // ),
+                                                ),
+                                                onChanged: (data) {
+                                                  // includei =
+                                                  //     data.toString();
+                                                  exclude = data;
+                                                  print(exclude);
+                                                  // setState(() {});
+                                                  // print(includei);
+                                                },
+                                                chipBuilder:
+                                                    (context, state, profile) {
+                                                  return InputChip(
+                                                    key: ObjectKey(profile),
+                                                    label: Text(profile),
+                                                    onDeleted: () => state
+                                                        .deleteChip(profile),
+                                                    materialTapTargetSize:
+                                                        MaterialTapTargetSize
+                                                            .shrinkWrap,
+                                                  );
+                                                },
+                                                findSuggestions:
+                                                    (String query) {
+                                                  if (query.length != 0) {
+                                                    var lowercaseQuery =
+                                                        query.toLowerCase();
+                                                    return SearchSuggestions
+                                                        .suggestions
+                                                        .where((ingredient) {
+                                                      return ingredient
+                                                          .toLowerCase()
+                                                          .contains(query
+                                                              .toLowerCase());
+                                                    }).toList(growable: false)
+                                                          ..sort((a, b) => a
+                                                              .toLowerCase()
+                                                              .indexOf(
+                                                                  lowercaseQuery)
+                                                              .compareTo(b
+                                                                  .toLowerCase()
+                                                                  .indexOf(
+                                                                      lowercaseQuery)));
+                                                  } else {
+                                                    return [];
+                                                  }
+                                                },
+                                                suggestionBuilder: (context,
+                                                    state, ingredient) {
+                                                  return ListTile(
+                                                    key: ObjectKey(ingredient),
+                                                    title: Text(ingredient),
+                                                    onTap: () =>
+                                                        state.selectSuggestion(
+                                                            ingredient),
+                                                  );
+                                                },
+                                              ),
                                             ),
+                                            // FlatButton(),
                                           ],
                                         ),
                                       ),
+                                      child: ClayContainer(
+                                        borderRadius: 25,
+                                        color: Theme.of(context).primaryColor,
+                                        child: Container(
+                                          height: 50,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2.5,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: Theme.of(context)
+                                                        .brightness ==
+                                                    Brightness.light
+                                                ? Theme.of(context).primaryColor
+                                                : Colors.black38,
+                                          ),
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                // Icon(Icons.remove_circle),
+                                                // SizedBox(
+                                                //   width: 10,
+                                                // ),
+                                                Text(
+                                                  'Remove Ingredients',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .button
+                                                      .copyWith(
+                                                        color: Colors.white,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            FlatButton(
-                              color: Theme.of(context).accentColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Text(
-                                'Search',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 22),
+                              SizedBox(
+                                height: 10,
                               ),
-                              onPressed: () {
-                                if (controller.text.trim().isEmpty &&
-                                    include.isEmpty &&
-                                    exclude.isEmpty) {
-                                  print("No Search Query");
-                                } else {
-                                  print(include);
-                                  print(exclude);
-                                  submitSearch(
-                                    controller.text.trim().isNotEmpty
-                                        ? "Showing Results For " +
-                                            controller.text
-                                        : "Showing Recipes From Ingredients",
-                                    controller.text
-                                        .replaceAll(" ", "%20")
-                                        .toLowerCase(),
-                                  );
-                                }
-                                // show
-                              },
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: InkWell(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 45),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
+                              ),
+                              color: Theme.of(context).accentColor,
+                            ),
+                            child: Text(
+                              'Search'.toUpperCase(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                letterSpacing: 1.2,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          onTap: () {
+                            if (controller.text.trim().isEmpty &&
+                                include.isEmpty &&
+                                exclude.isEmpty) {
+                              _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                content: Text(
+                                    "Enter A Recipe Or Ingredients To Search"),
+                              ));
+                              // print("No Search Query");
+                            } else {
+                              print(include);
+                              print(exclude);
+                              submitSearch(
+                                controller.text.trim().isNotEmpty
+                                    ? "Showing Results For " + controller.text
+                                    : "Showing Recipes From Ingredients",
+                                controller.text
+                                    .replaceAll(" ", "%20")
+                                    .toLowerCase(),
+                              );
+                            }
+                            // show
+                          },
+                        ),
+                      ),
+                    ],
                   )
                 : AnimatedContainer(
                     duration: duration,
