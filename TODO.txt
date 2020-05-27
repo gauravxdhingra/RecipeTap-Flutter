@@ -10,6 +10,8 @@
 
     // TODO: Searchlist Ordering
 
+   // TODO : loading spinner sizes 
+
    // TODO retry button for dns fail
 
     // TODO ZERO RECENTS START ADDING - MESSAGE

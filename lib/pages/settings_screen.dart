@@ -1,7 +1,9 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_brand_icons/flutter_brand_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/pages/home_screen.dart';
+import 'package:recipetap/widgets/loading_spinner.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -29,11 +31,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       });
 
       // final auth = Provider.of<AuthProvider>(context, listen: false);
-
-      profilePhotoUrl = currentUser.photoUrl;
-      username = currentUser.username;
-      email = currentUser.email;
-      isAuth = currentUser != null;
+      if (currentUser != null) {
+        profilePhotoUrl = currentUser.photoUrl;
+        username = currentUser.username;
+        email = currentUser.email;
+        isAuth = currentUser != null;
+      }
       // authSkipped = auth.authSkipped;
       // logout = auth.logout;
       // if (authSkipped)
@@ -161,169 +164,279 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       body: _isLoading
-          ? CircularProgressIndicator()
+          ? Center(child: LoadingSpinner(size: 100, color: Colors.grey))
           : Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
+              child: Stack(
                 children: <Widget>[
-                  if (currentUser != null)
-                    Column(
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: ClayContainer(
-                            borderRadius: 25,
-                            depth: 60,
-                            // spread: 5,
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            child: Container(
-                              // color: Colors.red,
-                              // height: 160,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
+                        if (currentUser != null)
+                          Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: ClayContainer(
+                                  borderRadius: 25,
+                                  depth: 60,
+                                  // spread: 5,
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  child: Container(
+                                    // color: Colors.red,
+                                    // height: 160,
+                                    child: Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 5.0, vertical: 5),
-                                      child: ClayContainer(
-                                        borderRadius: 50,
-                                        depth: 60,
-                                        spread: 6,
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                        // spread: 5,
-                                        child: CircleAvatar(
-                                          radius: 50,
-                                          backgroundImage: isAuth
-                                              ? NetworkImage(
-                                                  profilePhotoUrl,
-                                                )
-                                              : null,
-                                          backgroundColor:
-                                              Theme.of(context).primaryColor,
+                                          vertical: 10, horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5.0, vertical: 5),
+                                            child: ClayContainer(
+                                              borderRadius: 50,
+                                              depth: 60,
+                                              spread: 6,
+                                              color: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              // spread: 5,
+                                              child: CircleAvatar(
+                                                radius: 50,
+                                                backgroundImage: isAuth
+                                                    ? NetworkImage(
+                                                        profilePhotoUrl,
+                                                      )
+                                                    : null,
+                                                backgroundColor:
+                                                    Theme.of(context)
+                                                        .primaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Column(
+                                            // mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              // SizedBox(
+                                              //   height: 25,
+                                              // ),
+                                              Text(
+                                                username ?? "User",
+                                                style: TextStyle(
+                                                  fontSize: 25,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                              Text('Google Account'),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              InkWell(
+                                                child: Text(
+                                                  "Manage Account",
+                                                  style: TextStyle(
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                                onTap: () async {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        AlertDialog(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          30,
+                                                        ),
+                                                      ),
+                                                      title: Text(
+                                                          "Manage Account"),
+                                                      elevation: 10,
+                                                      content: Container(
+                                                        height: 120,
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          child: Column(
+                                                            children: <Widget>[
+                                                              ListTile(
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .all(0),
+                                                                title: Text(
+                                                                    "Logout"),
+                                                                onTap:
+                                                                    () async {
+                                                                  await _signOut();
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                              ),
+                                                              ListTile(
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .all(0),
+                                                                title: Text(
+                                                                    "Delete Account"),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        FlatButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Text("Cancel"),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                  // _signOut();
+                                                },
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        else
+                          InkWell(
+                            onTap: () async {
+                              await _signIn()
+                                  .whenComplete(() => setState(() {}));
+                            },
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  height: 160,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: ClayContainer(
+                                      borderRadius: 25,
+                                      depth: 60,
+                                      // spread: 5,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      child: Container(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Icon(
+                                                  BrandIcons.google,
+                                                  size: 40,
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  "Sign In With Google",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText2
+                                                      .copyWith(fontSize: 30),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Column(
-                                      // mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        // SizedBox(
-                                        //   height: 25,
-                                        // ),
-                                        Text(
-                                          username ?? "User",
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                        ),
-                                        Text('Google Account'),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        InkWell(
-                                          child: Text(
-                                            "Manage Account",
-                                            style: TextStyle(
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                          onTap: () async {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    30,
-                                                  ),
-                                                ),
-                                                title: Text("Manage Account"),
-                                                elevation: 10,
-                                                content: Container(
-                                                  height: 120,
-                                                  child: SingleChildScrollView(
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        ListTile(
-                                                          contentPadding:
-                                                              EdgeInsets.all(0),
-                                                          title: Text("Logout"),
-                                                        ),
-                                                        ListTile(
-                                                          contentPadding:
-                                                              EdgeInsets.all(0),
-                                                          title: Text(
-                                                              "Delete Account"),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                actions: <Widget>[
-                                                  FlatButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text("Cancel"),
-                                                  )
-                                                ],
-                                              ),
-                                            );
-                                            // _signOut();
-                                          },
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
+                        ListTile(
+                          title: Text("Search Preferences"),
+                          subtitle: Text("Veg / Non-Veg"),
+                        ),
+                        ListTile(
+                          title: Text("Rate Us!"),
+                          subtitle:
+                              Text("Liked The Experience? Please Rate Us!"),
+                        ),
+                        ListTile(
+                          title: Text("Share This App"),
+                        ),
+                        ListTile(
+                          title: Text("About"),
                         ),
                       ],
-                    )
-                  else
-                    Container(
-                      height: 160,
-                      // TODO: Google Sign In Request
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 55,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Container(
+                        // width: MediaQuery.of(context).size.width * 0.5,
+                        padding: EdgeInsets.symmetric(horizontal: 100),
+                        child: Image.asset(
+                          "assets/logo/banner.png",
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : null,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text('Sign In With Google'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Made Using | "),
+                              Text("Secured By"),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(BrandIcons.flutter),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              Icon(BrandIcons.firebase),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                  InkWell(
-                    onTap: () async {
-                      await _signIn().whenComplete(() => setState(() {}));
-                    },
-                    child: ListTile(
-                      title: Text('Veg'),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text("Search Preferences"),
-                    subtitle: Text("Veg / Non-Veg"),
-                  ),
-                  ListTile(
-                    title: Text("Rate Us!"),
-                    subtitle: Text("Liked The Experience? Please Rate Us!"),
-                  ),
-                  ListTile(
-                    title: Text("Share This App"),
-                  ),
-                  ListTile(
-                    title: Text("About"),
                   ),
                 ],
               ),

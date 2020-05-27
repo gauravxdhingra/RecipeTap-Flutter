@@ -29,6 +29,7 @@ import 'package:recipetap/widgets/home_screen_widget.dart';
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final usersRef = Firestore.instance.collection('users');
 User currentUser;
+bool authSkipped = false;
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -40,7 +41,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   bool isAuth = false;
-  bool authSkipped = false;
+  // bool authSkipped = false;
 
   String username;
   String profilePhotoUrl;
@@ -56,9 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
 
-// TODO: all user search inputs lowercase
-// TODO spaces replace %20
-// TODO check same ingredient not included and excluded
 // TODO: Handle empty search result page 404
 
   @override
@@ -183,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // final auth = Provider.of<AuthProvider>(context);
 
     return Scaffold(
-      body: isAuth
+      body: (isAuth || authSkipped)
           ? PageView(
               controller: pageController,
               physics: PageScrollPhysics(),
@@ -203,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
               pageSnapping: false,
             )
           : LoginPage(),
-      bottomNavigationBar: isAuth
+      bottomNavigationBar: isAuth || authSkipped
           ? Container(
               decoration: BoxDecoration(
                   color: Theme.of(context).brightness == Brightness.light

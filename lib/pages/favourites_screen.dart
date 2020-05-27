@@ -1,9 +1,11 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_brand_icons/flutter_brand_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/pages/categories_recipe_screen.dart';
 import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
+import 'package:recipetap/pages/settings_screen.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/models/recents_model.dart';
@@ -41,9 +43,8 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
 
       // final auth = Provider.of<AuthProvider>(context, listen: false);
 
-      email = currentUser.email;
-
       if (currentUser != null) {
+        email = currentUser.email;
         final recenttag = Provider.of<RecentsProvider>(context, listen: false);
 
 //
@@ -170,7 +171,18 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       closedContainerBS,
                     ],
                   ),
-                  child: Center(child: Text("Pull To Refresh")),
+                  child: currentUser != null
+                      ? Center(
+                          child: Text(
+                            "Pull To Refresh",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : Center(
+                          child: Text(
+                          "Log In To See Favourites",
+                          style: TextStyle(color: Colors.white),
+                        )),
                 ),
               ],
             ),
@@ -341,7 +353,69 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                     ),
                   ),
                 )
-              : Text("login to see fav and recents"),
+              : Center(
+                  child: Container(
+                    height: 180,
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(25),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SettingsScreen()));
+                            },
+                            child: Container(
+                              // padding: const EdgeInsets.only(top: 8.0),
+                              height: 140,
+                              child: ClayContainer(
+                                borderRadius: 25,
+                                depth: 60,
+                                // spread: 5,
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Icon(
+                                          BrandIcons.google,
+                                          size: 40,
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text(
+                                          "Sign In With Google",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2
+                                              .copyWith(fontSize: 30),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: 100,
+                                    ),
+                                    Text(
+                                        "Login To View Recents And Favourites"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
     );
   }
 }

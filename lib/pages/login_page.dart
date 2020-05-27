@@ -40,9 +40,9 @@ class _LoginPageState extends State<LoginPage> {
     // await Provider.of<AuthProvider>(context, listen: false).login();
   }
 
-  Future<void> _skipSignIn() async {
+  _skipSignIn() {
     setState(() {
-      // _isLoading = true;
+      authSkipped = true;
     });
 
     // Provider.of<AuthProvider>(context, listen: false).skipAuth();
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             FlatButton(
-              onPressed: _skipSignIn,
+              onPressed: () => _skipSignIn(),
               child: Text(
                 'Skip SignIn',
                 style: TextStyle(

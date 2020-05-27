@@ -12,6 +12,8 @@ import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/utility/pdf_creator.dart';
 // import 'package:screenshot/screenshot.dart';
 import 'package:sliver_fab/sliver_fab.dart';
+
+import 'loading_spinner.dart';
 // import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 
 class RecipeViewPageWidget extends StatefulWidget {
@@ -108,7 +110,7 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
     return Scaffold(
       key: _scaffoldKey,
       body: _isLoading
-          ? CircularProgressIndicator()
+          ? Center(child: LoadingSpinner(size: 140, color: Colors.grey))
           :
           // controller: screenshotController,
           SliverFab(

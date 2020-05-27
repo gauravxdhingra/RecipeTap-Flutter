@@ -68,14 +68,16 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
       // .getElementsByClassName("fixed-recipe-card__img ng-isolate-scope")[0]
       // .attributes["src"];
 
-      final srcfirstSplit = imageUrlRecipe.split("photos/")[0];
-      final srcsecondsplit = imageUrlRecipe.split("photos/")[1].split("/");
-      var srcc;
-      if (srcsecondsplit.length > 1) {
-        srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
-        print(srcc);
-        imageUrlRecipe = srcc;
-      }
+      try {
+        final srcfirstSplit = imageUrlRecipe.split("photos/")[0];
+        final srcsecondsplit = imageUrlRecipe.split("photos/")[1].split("/");
+        var srcc;
+        if (srcsecondsplit.length > 1) {
+          srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
+          print(srcc);
+          imageUrlRecipe = srcc;
+        }
+      } catch (e) {}
       // images.add(coverImageUrl);
 
       print(imageUrlRecipe);

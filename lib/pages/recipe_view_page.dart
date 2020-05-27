@@ -78,16 +78,22 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
     if (oldWebsite) {
       headline =
           document.getElementsByClassName("headline heading-content")[3].text;
-
-      final srcfirstSplit = coverImageUrl.split("photos/")[0];
-      final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/");
       var srcc;
-      if (srcsecondsplit.length > 1) {
-        srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
-        print(srcc);
-        images.add(srcc);
-      } else
-        images.add(coverImageUrl);
+      try {
+        final srcfirstSplit = coverImageUrl.split("photos/")[0];
+        final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/");
+
+        if (srcsecondsplit.length > 1) {
+          srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
+          print(srcc);
+          images.add(srcc);
+        } else
+          images.add(coverImageUrl);
+      } catch (e) {
+        if (!images.contains(srcc)) {
+          images.add(srcc);
+        }
+      }
 
       var otherImagesRef = document.getElementsByClassName("ugc-photos-link");
       int count = 0;
