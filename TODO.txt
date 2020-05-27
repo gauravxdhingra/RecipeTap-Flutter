@@ -16,8 +16,6 @@
 
     // TODO Add Shadow to Categories Pinned Appbars and Curving all Appbars with arrow back ios 
 
-   // TODO : All Snackbars Duration and overlap true
-
    // TODO retry button for dns fail
 
    // TODO bummer page
