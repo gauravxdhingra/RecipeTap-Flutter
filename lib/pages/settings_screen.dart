@@ -5,6 +5,8 @@ import 'package:flutter_brand_icons/flutter_brand_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
+import 'package:share_extend/share_extend.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -117,7 +119,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     offset: Offset(0.1, 2),
   );
 
-  bool vegetarian = false;
+  String pref = "all";
 
   @override
   Widget build(BuildContext context) {
@@ -381,7 +383,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         ListTile(
                           title: Text("Search Preferences"),
-                          subtitle: Text("Veg / Non-Veg"),
+                          subtitle: pref == "veg"
+                              ? Text("Vegetarian Only")
+                              : pref == "chicken"
+                                  ? Text(
+                                      "Non Vegetarian - Chicken, Mutton, Fish")
+                                  : Text("All Vegetarian and Non Vegetarian"),
                           onTap: () {
                             showDialog(
                               context: context,
@@ -389,34 +396,94 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 8),
                                 title: Text("Search Preferences"),
-                                content: Column(
-                                  children: <Widget>[
-                                    ListTile(
-                                      enabled: true,
-                                      leading: Text("Vegetarian"),
-                                      trailing: CupertinoSwitch(
-                                        value: vegetarian,
-                                        onChanged: (bool newValue) {
+                                content: Container(
+                                  height: 250,
+                                  child: Column(
+                                    children: <Widget>[
+                                      ListTile(
+                                        contentPadding: EdgeInsets.all(0),
+                                        title: Text("Vegetarian"),
+                                        subtitle: Text(
+                                            "Include Only Pure Vegetarian"),
+                                        leading: pref == "veg"
+                                            ? Icon(
+                                                Icons.chevron_right,
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                              )
+                                            : Icon(
+                                                Icons.chevron_right,
+                                                color: Theme.of(context)
+                                                    .dialogBackgroundColor,
+                                              ),
+                                        onTap: () {
                                           setState(() {
-                                            vegetarian = newValue;
+                                            pref = "veg";
                                           });
+                                          Navigator.pop(context);
                                         },
                                       ),
-                                    ),
-                                    if (!vegetarian)
                                       ListTile(
-                                        leading: Text("Vegetarian"),
-                                        trailing: CupertinoSwitch(
-                                          value: vegetarian,
-                                          onChanged: (vegetarian) {
-                                            setState(() {
-                                              // vegetarian = !vegetarian;
-                                            });
-                                          },
-                                        ),
+                                        contentPadding: EdgeInsets.all(0),
+                                        title: Text("Non-Vegetarian"),
+                                        subtitle: Text(
+                                            "Include Only Chicken, Mutton and Fish"),
+                                        leading: pref == "chicken"
+                                            ? Icon(
+                                                Icons.chevron_right,
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                              )
+                                            : Icon(
+                                                Icons.chevron_right,
+                                                color: Theme.of(context)
+                                                    .dialogBackgroundColor,
+                                              ),
+                                        onTap: () {
+                                          setState(() {
+                                            pref = "chicken";
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      SizedBox(height: 8),
+                                      ListTile(
+                                        contentPadding: EdgeInsets.all(0),
+                                        title: Text("Show All"),
+                                        subtitle: Text(
+                                            "Include All Non Vegetarian Dishes"),
+                                        leading: pref == "all"
+                                            ? Icon(
+                                                Icons.chevron_right,
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                              )
+                                            : Icon(
+                                                Icons.chevron_right,
+                                                color: Theme.of(context)
+                                                    .dialogBackgroundColor,
+                                              ),
+                                        onTap: () {
+                                          setState(() {
+                                            pref = "all";
+                                          });
+                                          Navigator.pop(context);
+                                        },
                                       )
-                                  ],
+                                    ],
+                                  ),
                                 ),
                                 actions: <Widget>[
                                   FlatButton(
@@ -432,12 +499,69 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           title: Text("Rate Us!"),
                           subtitle:
                               Text("Liked The Experience? Please Rate Us!"),
+                          onTap: () async {
+                            const url =
+                                "https://play.google.com/store/apps/details?id=com.gauravxdhingra.recipetap";
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
                         ),
                         ListTile(
                           title: Text("Share This App"),
+                          onTap: () {
+                            ShareExtend.share(
+                              "I found out this cool app on Google Play that lets you search recipes with the help of ingredients\nhttps://play.google.com/store/apps/details?id=com.gauravxdhingra.recipetap",
+                              "text",
+                              // " ",
+                              sharePanelTitle: "Share RecipeTap",
+                              // sharePositionOrigin: Rect.
+                            );
+                          },
                         ),
                         ListTile(
                           title: Text("About"),
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Container(
+                                  height: 40,
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  child: Row(
+                                    children: <Widget>[
+                                      Image.asset(
+                                        "assets/logo/icon.png",
+                                        fit: BoxFit.cover,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text("RecipeTap"),
+                                    ],
+                                  ),
+                                ),
+                                content: ListTile(
+                                  leading: Icon(BrandIcons.github),
+                                  title:
+                                      Text("https://github.com/gauravxdhingra"),
+                                  onTap: () async {
+                                    const url =
+                                        "https://gauravxdhingra.github.io/GauravDhingra/";
+                                    if (await canLaunch(url)) {
+                                      await launch(url);
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                                  subtitle: Text("RecipeTap v1.0"),
+                                  // trailing: Text("GoTo"),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
