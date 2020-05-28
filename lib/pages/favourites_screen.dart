@@ -538,67 +538,233 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                     ),
                   ),
                 )
-              : Center(
-                  child: Container(
-                    height: 180,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(25),
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SettingsScreen()));
-                            },
-                            child: Container(
-                              // padding: const EdgeInsets.only(top: 8.0),
-                              height: 110,
-                              child: ClayContainer(
-                                borderRadius: 25,
-                                depth: 60,
-                                // spread: 5,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          BrandIcons.google,
-                                          size: 35,
+              : SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'FAVOURITE CATEGORIES',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              .copyWith(fontSize: 20),
+                        ),
+                      ),
+                      Stack(
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 80,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, i) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 13),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      ClayContainer(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        borderRadius: 25,
+                                        depth: 60,
+                                        spread: 5,
+                                        child: Container(
+                                          height: 70,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          ),
+                                          child: Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                "         ",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    .copyWith(
+                                                      color: Colors.white,
+                                                    ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        SizedBox(
-                                          width: 20,
+                                      ),
+                                      BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                            sigmaX: 4.0, sigmaY: 4.0),
+                                        child: Container(
+                                          child: Text(" "),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white
+                                                  .withOpacity(0.0)),
                                         ),
-                                        Text(
-                                          "Sign In With Google",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2
-                                              .copyWith(fontSize: 26),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                        "Login To View Recents And Favourites"),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              itemCount: 3,
+                            ),
+                          ),
+                          Container(
+                            height: 80,
+                            width: MediaQuery.of(context).size.width,
+                            color: Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0.9),
+                            child: Center(
+                              child: Text(
+                                "",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
                                 ),
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          top: 30,
                         ),
-                      ],
-                    ),
+                        child: Text(
+                          'RECENTS',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              .copyWith(fontSize: 20),
+                        ),
+                      ),
+                      Stack(
+                        children: <Widget>[
+                          BuildRecentsInFavourites(
+                            recentRecipesList: [
+                              RecentsModel(
+                                title: "",
+                                desc: "",
+                                coverPhotoUrl: "",
+                                recipeUrl: "",
+                                timestamp: null,
+                              ),
+                              RecentsModel(
+                                title: "",
+                                desc: "",
+                                coverPhotoUrl: "",
+                                recipeUrl: "",
+                                timestamp: null,
+                              ),
+                            ],
+                          ),
+                          BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.0)),
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height / 2.7,
+                            color: Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0.9),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(60.0),
+                                child: Text(
+                                  "",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey,
+                                      height: 1.6),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              top: 20,
+                            ),
+                            child: Text(
+                              'FAVOURITES',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1
+                                  .copyWith(fontSize: 20),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Stack(
+                        children: <Widget>[
+                          BuildFavInFavourites(
+                            favRecipesList: [
+                              FavouritesModel(
+                                title: "",
+                                coverPhotoUrl: "",
+                                recipeUrl: "",
+                                desc: "",
+                              ),
+                              FavouritesModel(
+                                title: "",
+                                coverPhotoUrl: "",
+                                recipeUrl: "",
+                                desc: "",
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height / 2.9,
+                            color: Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0.9),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(80),
+                                child: Text(
+                                  "",
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      height: 1.6),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                    ],
                   ),
                 ),
     );
