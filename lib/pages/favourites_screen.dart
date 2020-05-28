@@ -468,23 +468,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                     .copyWith(fontSize: 20),
                               ),
                             ),
-                            // FlatButton(
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.only(
-                            //         left: 20, top: 20, bottom: 10),
-                            //     child: Text(
-                            //       'Showing All',
-                            //       style: Theme.of(context)
-                            //           .textTheme
-                            //           .headline1
-                            //           .copyWith(
-                            //             fontSize: 15,
-                            //             color: Theme.of(context).accentColor,
-                            //           ),
-                            //     ),
-                            //   ),
-                            //   onPressed: () {},
-                            // ),
                           ],
                         ),
                         if (favRecipesList.length != 0)
@@ -742,9 +725,14 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height / 2.9,
-                            color: Theme.of(context)
-                                .scaffoldBackgroundColor
-                                .withOpacity(0.9),
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Theme.of(context)
+                                        .scaffoldBackgroundColor
+                                        .withOpacity(0.9)
+                                    : Theme.of(context)
+                                        .scaffoldBackgroundColor
+                                        .withOpacity(0.97),
                             child: Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(80),

@@ -406,10 +406,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               child: ClayContainer(
                 color: Theme.of(context).primaryColor,
                 spread: 4,
-                borderRadius: 15,
+                borderRadius: 45,
                 depth: 50,
                 child: IconButton(
-                    icon: Icon(isSearch ? Icons.close : Icons.search),
+                    icon: Icon(
+                      isSearch ? Icons.close : Icons.search,
+                    ),
                     onPressed: () {
                       // Provider.of<AuthProvider>(context, listen: false).logout();
                       isSearch = !isSearch;
