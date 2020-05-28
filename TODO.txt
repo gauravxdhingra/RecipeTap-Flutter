@@ -1,16 +1,20 @@
-   // TODO: ImagePLaceholders on lazy loading images
+  // TODO: Deafult Image Solution
 
-  // TODO: Deafult No Image Solution
+  // TODO: Empty Containers Skeletons
+
+  // TODO: Setting Screen Account Name Overflow
+
+    // TODO: Directions Select All Mark
+
+    // TODO: SnackBar on recipe view page not showing
 
     // TODO: Navigation Animations
 
+    // TODO back from search results is search =false
 
-
-   // TODO: Handle Text Overflows Everywhere in the app 
+    // TODO: Match Ingredients and Procedure with View Page to The Experience
 
     // TODO: Searchlist suggestions Ordering
-
-   // TODO : loading spinner sizes 
 
    // TODO retry button for dns fail
 
@@ -23,6 +27,9 @@
     // TODO filters
 
     // TODO: Review all 10,000 Suggestions
+
+    // TODO: Permissions
+
 
 
     // TODO recipe view => 

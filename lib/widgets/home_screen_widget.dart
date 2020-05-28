@@ -425,6 +425,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       ),
       body: Container(
         child: SingleChildScrollView(
+          // TODO Scrolling Issues Search Container and STack
           physics: NeverScrollableScrollPhysics(),
           child: Column(
             children: <Widget>[

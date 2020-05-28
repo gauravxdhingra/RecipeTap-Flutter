@@ -6,7 +6,8 @@ import 'package:recipetap/pages/recipe_view_page.dart';
 Container recommendedRecipesBuilder(
     BuildContext context, List<FavouritesModel> recommended) {
   return Container(
-    height: MediaQuery.of(context).size.height / 2.8,
+    // TODO Modified This 2.7
+    height: MediaQuery.of(context).size.height / 2.5,
     child: ListView.builder(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,

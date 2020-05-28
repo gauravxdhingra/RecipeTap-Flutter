@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_brand_icons/flutter_brand_icons.dart';
@@ -293,6 +295,92 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                               itemCount: favCategoriesList.length,
                             ),
                           ),
+                        if (favCategoriesList.length == 0)
+                          Stack(
+                            children: <Widget>[
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 80,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: BouncingScrollPhysics(),
+                                  itemBuilder: (context, i) {
+                                    return Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 13),
+                                      child: Stack(
+                                        children: <Widget>[
+                                          ClayContainer(
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            borderRadius: 25,
+                                            depth: 60,
+                                            spread: 5,
+                                            child: Container(
+                                              height: 70,
+                                              width: 150,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                              ),
+                                              child: Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "         ",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1
+                                                        .copyWith(
+                                                          color: Colors.white,
+                                                        ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          BackdropFilter(
+                                            filter: ImageFilter.blur(
+                                                sigmaX: 4.0, sigmaY: 4.0),
+                                            child: Container(
+                                              child: Text(" "),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white
+                                                      .withOpacity(0.0)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  itemCount: 3,
+                                ),
+                              ),
+                              Container(
+                                height: 80,
+                                width: MediaQuery.of(context).size.width,
+                                color: Theme.of(context)
+                                    .scaffoldBackgroundColor
+                                    .withOpacity(0.9),
+                                child: Center(
+                                  child: Text(
+                                    "Start Adding Categories To Favourites",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         Padding(
                           padding: const EdgeInsets.only(
                             left: 20,
@@ -309,6 +397,60 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                         if (recentRecipesList.length != 0)
                           BuildRecentsInFavourites(
                               recentRecipesList: recentRecipesList),
+                        if (recentRecipesList.length == 0)
+                          Stack(
+                            children: <Widget>[
+                              BuildRecentsInFavourites(
+                                recentRecipesList: [
+                                  RecentsModel(
+                                    title: "",
+                                    desc: "",
+                                    coverPhotoUrl: "",
+                                    recipeUrl: "",
+                                    timestamp: null,
+                                  ),
+                                  RecentsModel(
+                                    title: "",
+                                    desc: "",
+                                    coverPhotoUrl: "",
+                                    recipeUrl: "",
+                                    timestamp: null,
+                                  ),
+                                ],
+                              ),
+                              BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                                child: Container(
+                                  // height: 80,
+                                  // width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.0)),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height / 2.7,
+                                color: Theme.of(context)
+                                    .scaffoldBackgroundColor
+                                    .withOpacity(0.9),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(60.0),
+                                    child: Text(
+                                      "Your Recently Viewed Recipes Will Be Displayed Here",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.grey,
+                                          height: 1.6),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -347,6 +489,48 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                         ),
                         if (favRecipesList.length != 0)
                           BuildFavInFavourites(favRecipesList: favRecipesList),
+                        if (favRecipesList.length == 0)
+                          Stack(
+                            children: <Widget>[
+                              BuildFavInFavourites(
+                                favRecipesList: [
+                                  FavouritesModel(
+                                    title: "",
+                                    coverPhotoUrl: "",
+                                    recipeUrl: "",
+                                    desc: "",
+                                  ),
+                                  FavouritesModel(
+                                    title: "",
+                                    coverPhotoUrl: "",
+                                    recipeUrl: "",
+                                    desc: "",
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height / 2.9,
+                                color: Theme.of(context)
+                                    .scaffoldBackgroundColor
+                                    .withOpacity(0.9),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(80),
+                                    child: Text(
+                                      "Start Adding Recipes To Favourites",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 15,
+                                          height: 1.6),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         SizedBox(
                           height: 30,
                         ),
