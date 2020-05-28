@@ -127,7 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // extendBodyBehindAppBar: true,
       appBar: AppBar(
         // leading: Icon(Icons.settings),
-
+        leading: null,
         title: Text('Preferences'),
         centerTitle: true,
         elevation: 0,
@@ -284,9 +284,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                     "Logout"),
                                                                 onTap:
                                                                     () async {
-                                                                  await _signOut();
-                                                                  Navigator.pop(
-                                                                      context);
+                                                                  await _signOut()
+                                                                      .then(
+                                                                          (value) {
+                                                                    currentUser =
+                                                                        null;
+                                                                    setState(
+                                                                        () {
+                                                                      currentUser =
+                                                                          null;
+                                                                    });
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  });
                                                                 },
                                                               ),
                                                               ListTile(
@@ -529,8 +539,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               builder: (context) => AlertDialog(
                                 title: Container(
                                   height: 30,
-                                  width: MediaQuery.of(context).size.width / 2,
+                                  // width: MediaQuery.of(context).size.width / 2,
                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Image.asset(
                                         "assets/logo/icon.png",
@@ -540,6 +551,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         width: 10,
                                       ),
                                       Text("RecipeTap"),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
                                     ],
                                   ),
                                 ),

@@ -33,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _submit() async {
     // setState(() {
-
     //   _isLoading = true;
     // });
     await googleSignIn.signIn();
@@ -44,7 +43,8 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       authSkipped = true;
     });
-
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => HomeScreen()));
     // Provider.of<AuthProvider>(context, listen: false).skipAuth();
   }
 

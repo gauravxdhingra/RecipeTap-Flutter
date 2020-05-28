@@ -1,10 +1,14 @@
    // TODO: ImagePLaceholders on lazy loading images
 
-   // TODO search only one page loading
+  // TODO: Deafult No Image Solution
+
+    // TODO: Navigation Animations
+
+
 
    // TODO: Handle Text Overflows Everywhere in the app 
 
-    // TODO: Searchlist Ordering
+    // TODO: Searchlist suggestions Ordering
 
    // TODO : loading spinner sizes 
 
@@ -25,3 +29,8 @@
       // TODO handle empty image
      // TODO solve-if image rail is empty
      // TODO: Solve no image bug   
+
+
+
+     ADMOB
+     Testing on SMALLER SCREEN AND ADAPT

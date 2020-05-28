@@ -122,6 +122,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         title: Text(
           widget.appBarTitle ?? "",
           overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: Colors.white, fontSize: 17),
         ),
         centerTitle: true,
         leading: IconButton(

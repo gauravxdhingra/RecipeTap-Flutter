@@ -146,6 +146,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         title: Text("Favourites"),
         elevation: 0,
         centerTitle: true,
+        leading: null,
         bottom: PreferredSize(
           child: Container(
             height: 120 -
@@ -363,7 +364,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(25),
                             onTap: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SettingsScreen()));
