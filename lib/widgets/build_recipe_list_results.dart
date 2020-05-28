@@ -16,10 +16,12 @@ class BuildRecipeListResults extends StatefulWidget {
     Key key,
     @required this.recipeCards,
     @required this.url,
+    this.categoryOption,
   }) : super(key: key);
 
   final List<RecipeCard> recipeCards;
   final String url;
+  final bool categoryOption;
 
   @override
   _BuildRecipeListResultsState createState() => _BuildRecipeListResultsState();
@@ -32,10 +34,13 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
   bool hasMore = true;
   int currentMax;
 
+  bool categoryOption;
+
   ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
+    categoryOption = widget.categoryOption;
     recipeCards = widget.recipeCards;
     super.initState();
     _scrollController.addListener(() {
@@ -58,11 +63,30 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
           .text
           .trim();
       hasMore = true;
+      print(hasMore);
     } catch (e) {
-      setState(() {
-        hasMore = false;
-      });
-      return;
+      try {
+        int count = int.parse(document
+            .getElementsByClassName("search-results__text")[0]
+            .text
+            .split(" recipe results")[0]
+            .trim());
+        if (count > recipeCards.length) {
+          hasMore = true;
+          print(hasMore);
+        } else {
+          setState(() {
+            hasMore = false;
+            print(hasMore);
+          });
+        }
+      } catch (e) {
+        setState(() {
+          hasMore = false;
+          print(hasMore);
+        });
+        return;
+      }
     }
 
     final recipeCardsFromHtml =
@@ -104,7 +128,11 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
 
   loadMore() {
     if (hasMore) {
-      getSearchResults(widget.url + "?page=" + '$page');
+      if (categoryOption)
+        getSearchResults(widget.url + "?page=" + '$page');
+      else {
+        getSearchResults(widget.url + "&page=" + '$page');
+      }
       page++;
       firstPage = false;
       setState(() {
@@ -135,6 +163,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.url);
     return Container(
       // color: Theme.of(context).primaryColor,
       // padding: const EdgeInsets.only(

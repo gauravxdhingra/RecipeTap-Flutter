@@ -1,10 +1,6 @@
-   // TODO Fav Page Dummy - No User or No Data - Placeholder
-
    // TODO: ImagePLaceholders on lazy loading images
 
    // TODO search only one page loading
-
-   // TODO: Handle overflow from search items and other recipe cards
 
    // TODO: Handle Text Overflows Everywhere in the app 
 
@@ -16,7 +12,7 @@
 
     // TODO ZERO RECENTS START ADDING - MESSAGE
 
-    // TODO bummer page
+    // TODO bummer page and empty 404
 
     // TODO Concentric Cooking Experience
 
@@ -24,17 +20,8 @@
 
     // TODO: Review all 10,000 Suggestions
 
-    // TODO: Preferences
-
-    // TODO: Gesture detectors => InkWell
-
 
     // TODO recipe view => 
       // TODO handle empty image
      // TODO solve-if image rail is empty
      // TODO: Solve no image bug   
-
-
-     //TODO searching
-    // TODO: Handle empty search result page 404
-    

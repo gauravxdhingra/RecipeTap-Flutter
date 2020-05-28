@@ -17,6 +17,7 @@ class SearchResultsScreen extends StatefulWidget {
   final excl;
   final List include;
   final List exclude;
+  final bool categoryOption;
 
   SearchResultsScreen({
     Key key,
@@ -26,6 +27,7 @@ class SearchResultsScreen extends StatefulWidget {
     this.excl,
     this.include,
     this.exclude,
+    this.categoryOption,
   }) : super(key: key);
 
   @override
@@ -174,6 +176,7 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
           : BuildRecipeListResults(
               recipeCards: recipeCards,
               url: widget.url,
+              categoryOption: widget.categoryOption,
             ),
     );
   }

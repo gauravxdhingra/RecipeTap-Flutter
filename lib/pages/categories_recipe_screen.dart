@@ -395,7 +395,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           ? Center(
               child: LoadingSpinner(
               color: Colors.grey,
-              size: 150,
+              size: 120,
             ))
           : CustomScrollView(
               physics: BouncingScrollPhysics(),
@@ -443,6 +443,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                               onTap: () => Navigator.of(context).push(
                                   MaterialPageRoute(
                                       builder: (context) => SearchResultsScreen(
+                                          categoryOption: true,
                                           excl: "",
                                           incl: "",
                                           appBarTitle:

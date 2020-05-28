@@ -220,10 +220,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               appBarTitle: appBarTitle,
               incl: incl,
               excl: excl,
+              categoryOption: false,
               url:
-                  'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re')));
-      print(
-          'https://www.allrecipes.com/search/results/?wt=$dish?ingIncl=$incl&ingExcl=$excl&sort=re');
+                  'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl&sort=re')));
+      print("************************" +
+          'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl&sort=re');
     }
   }
 
@@ -398,18 +399,27 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         //         color: Theme.of(context).textTheme.bodyText1.color),
         //   ),
         actions: <Widget>[
-          AnimatedContainer(
-            duration: duration,
-            child: IconButton(
-                icon: Icon(isSearch ? Icons.close : Icons.search),
-                onPressed: () {
-                  // Provider.of<AuthProvider>(context, listen: false).logout();
-                  isSearch = !isSearch;
-                  controller.clear();
-                  include = [];
-                  exclude = [];
-                  setState(() {});
-                }),
+          Padding(
+            padding: const EdgeInsets.only(right: 7.0, bottom: 3, top: 3),
+            child: AnimatedContainer(
+              duration: duration,
+              child: ClayContainer(
+                color: Theme.of(context).primaryColor,
+                spread: 4,
+                borderRadius: 15,
+                depth: 50,
+                child: IconButton(
+                    icon: Icon(isSearch ? Icons.close : Icons.search),
+                    onPressed: () {
+                      // Provider.of<AuthProvider>(context, listen: false).logout();
+                      isSearch = !isSearch;
+                      controller.clear();
+                      include = [];
+                      exclude = [];
+                      setState(() {});
+                    }),
+              ),
+            ),
           )
         ],
       ),

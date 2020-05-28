@@ -528,7 +528,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               context: context,
                               builder: (context) => AlertDialog(
                                 title: Container(
-                                  height: 40,
+                                  height: 30,
                                   width: MediaQuery.of(context).size.width / 2,
                                   child: Row(
                                     children: <Widget>[
@@ -552,13 +552,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         "https://gauravxdhingra.github.io/GauravDhingra/";
                                     if (await canLaunch(url)) {
                                       await launch(url);
+                                      Navigator.pop(context);
                                     } else {
                                       throw 'Could not launch $url';
                                     }
                                   },
-                                  subtitle: Text("RecipeTap v1.0"),
+                                  subtitle: Text(
+                                    "RecipeTap v1.0.0",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
                                   // trailing: Text("GoTo"),
                                 ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40)),
                               ),
                             );
                           },
