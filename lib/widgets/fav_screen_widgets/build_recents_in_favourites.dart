@@ -29,7 +29,7 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
     return Container(
       // TODO: Changed from height / 3 + 50
       height: MediaQuery.of(context).size.height >= 700
-          ? MediaQuery.of(context).size.height / 2.5
+          ? MediaQuery.of(context).size.height / 2.3
           : MediaQuery.of(context).size.height / 2.0,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),

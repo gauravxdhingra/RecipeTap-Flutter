@@ -7,7 +7,7 @@ Container recommendedRecipesBuilder(
     BuildContext context, List<FavouritesModel> recommended) {
   return Container(
     // TODO Modified This 2.7
-    height: MediaQuery.of(context).size.height >= 700
+    height: MediaQuery.of(context).size.height >= 720
         ? MediaQuery.of(context).size.height / 2.5
         : MediaQuery.of(context).size.height / 2.0,
     //  MediaQuery.of(context).size.height / 2.5,
@@ -18,7 +18,9 @@ Container recommendedRecipesBuilder(
       itemBuilder: (context, i) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          width: MediaQuery.of(context).size.width * 4 / 5,
+          width: MediaQuery.of(context).size.height >= 740
+              ? MediaQuery.of(context).size.width * 4 / 5
+              : MediaQuery.of(context).size.width * 3.5 / 5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -54,7 +56,14 @@ Container recommendedRecipesBuilder(
                                   ),
                                   child: Image.network(
                                     recommended[i].coverPhotoUrl,
-                                    height: 210,
+                                    // height: 210,
+                                    height: MediaQuery.of(context)
+                                                .size
+                                                .height >=
+                                            720
+                                        ? MediaQuery.of(context).size.height / 5
+                                        : MediaQuery.of(context).size.height /
+                                            4.0,
                                     width: MediaQuery.of(context).size.width,
                                     fit: BoxFit.cover,
                                   ),

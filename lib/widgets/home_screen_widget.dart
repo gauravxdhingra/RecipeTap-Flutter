@@ -436,18 +436,19 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
+                      if (MediaQuery.of(context).size.height > 740)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                            "Recommended Categories".toUpperCase(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1
+                                .copyWith(fontSize: 20),
+                          ),
                         ),
-                        child: Text(
-                          "Recommended Categories".toUpperCase(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              .copyWith(fontSize: 20),
-                        ),
-                      ),
                       recommendedCategoriesBuilder(context,
                           recommendedCategoriesList, mealsFromCategory),
                       if (time >= 6 && time < 12)
