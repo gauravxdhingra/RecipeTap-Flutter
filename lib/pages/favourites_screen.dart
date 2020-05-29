@@ -368,7 +368,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                 width: MediaQuery.of(context).size.width,
                                 color: Theme.of(context)
                                     .scaffoldBackgroundColor
-                                    .withOpacity(0.9),
+                                    .withOpacity(0.82),
                                 child: Center(
                                   child: Text(
                                     "Start Adding Categories To Favourites",
@@ -436,7 +436,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                     : MediaQuery.of(context).size.height / 2.0,
                                 color: Theme.of(context)
                                     .scaffoldBackgroundColor
-                                    .withOpacity(0.9),
+                                    .withOpacity(0.82),
                                 child: Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(60.0),
@@ -501,7 +501,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                     : MediaQuery.of(context).size.height / 2.0,
                                 color: Theme.of(context)
                                     .scaffoldBackgroundColor
-                                    .withOpacity(0.9),
+                                    .withOpacity(0.82),
                                 child: Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(80),
@@ -614,7 +614,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                             width: MediaQuery.of(context).size.width,
                             color: Theme.of(context)
                                 .scaffoldBackgroundColor
-                                .withOpacity(0.9),
+                                .withOpacity(0.82),
                             child: Center(
                               child: Text(
                                 "",
@@ -674,7 +674,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                 : MediaQuery.of(context).size.height / 2.0,
                             color: Theme.of(context)
                                 .scaffoldBackgroundColor
-                                .withOpacity(0.9),
+                                .withOpacity(0.82),
                             child: Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(60.0),
@@ -733,14 +733,9 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                             height: MediaQuery.of(context).size.height >= 700
                                 ? MediaQuery.of(context).size.height / 2.5
                                 : MediaQuery.of(context).size.height / 2.0,
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Theme.of(context)
-                                        .scaffoldBackgroundColor
-                                        .withOpacity(0.9)
-                                    : Theme.of(context)
-                                        .scaffoldBackgroundColor
-                                        .withOpacity(0.97),
+                            color: Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0.82),
                             child: Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(80),

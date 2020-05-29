@@ -600,10 +600,10 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                                       .textTheme
                                                       .bodyText1
                                                       .copyWith(
-                                                        fontSize: 25,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
+                                                          fontSize: 25,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                          color: Colors.white),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   textAlign: TextAlign.center,
