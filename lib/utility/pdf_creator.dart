@@ -17,24 +17,79 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
     final Document pdf = Document();
     String filePath;
     String ingredients = "";
+    final font = await rootBundle.load("assets/fonts/OpenSans-Regular.ttf");
+    final ttf = Font.ttf(font);
+    final fontBold = await rootBundle.load("assets/fonts/OpenSans-Bold.ttf");
+    final ttfBold = Font.ttf(fontBold);
+    final fontItalic =
+        await rootBundle.load("assets/fonts/OpenSans-Italic.ttf");
+    final ttfItalic = Font.ttf(fontItalic);
+    // final fontBoldItalic =
+    //     await rootBundle.load("assets/fonts/OpenSans-BoldItalic.ttf");
+    // final ttfBoldItalic = Font.ttf(fontBoldItalic);
+    final theme = Theme.withFont(
+      base: ttf,
+      bold: ttfBold,
+      italic: ttfItalic,
+      // boldItalic: ttfBoldItalic,
+    );
 
-    recipe.ingredients.forEach((element) {
-      ingredients = ingredients + element.toString() + "\n";
-    });
+    // recipe.ingredients.forEach((element) {
+    //   ingredients = ingredients + element.toString() + "\n";
+    // });
+
+    if (recipe.oldWebsite)
+      for (int x = 0; x < recipe.ingredients.length; x++) {
+        ingredients = ingredients + recipe.ingredients[x].toString() + "\n";
+      }
+
+    if (!recipe.oldWebsite)
+      for (int x = 0; x < recipe.ingredients.length - 2; x++) {
+        ingredients = ingredients + recipe.ingredients[x].toString() + "\n";
+      }
 
     String directions = "";
-    int i = 0;
-    recipe.steps.forEach((element) {
-      i++;
-      if (recipe.steps[i - 1].toString().trim() != "" &&
-          !recipe.steps[i - 1].toString().trim().contains("Cook's"))
-        directions = directions +
-            "#" +
-            i.toString() +
-            "\n" +
-            element.toString() +
-            "\n\n";
-    });
+    // int i = 0;
+    // recipe.steps.forEach((element) {
+    //   i++;
+    //   // if (recipe.steps[i - 1].toString().trim() != "" &&
+    //   //     !recipe.steps[i - 1].toString().trim().contains("Cook's"))
+    //     directions = directions +
+    //         "#" +
+    //         i.toString() +
+    //         "\n" +
+    //         element.toString() +
+    //         "\n\n";
+    // });
+
+    // if (recipe.oldWebsite)
+
+    print(recipe.steps);
+    for (int x = 0; x < recipe.steps.length - 1; x++) {
+      // x++;
+      // if (recipe.steps[x - 2].toString().trim() != "" &&
+      //     !recipe.steps[x - 2].toString().trim().contains("Cook's"))
+      directions = directions +
+          "#" +
+          (x + 1).toString() +
+          "\n" +
+          recipe.steps[x].toString() +
+          "\n\n";
+    }
+
+    // if (!recipe.oldWebsite)
+    //   for (int x = 0; x < recipe.steps.length-1; x++) {
+    //     x++;
+    //     // if (recipe.steps[x - 1].toString().trim() != "" &&
+    //     //     !recipe.steps[x - 1].toString().trim().contains("Cook's"))
+    //     directions = directions +
+    //         "#" +
+    //         x.toString() +
+    //         "\n" +
+    //         recipe.steps[x - 1].toString() +
+    //         "\n\n";
+    //     print(recipe.steps[x - 1]);
+    //   }
 
     String cooksNotes = "";
     int j = 0;
@@ -55,13 +110,29 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
 
     String nutritionalFacts = "";
     // int k = 0;
+    print(recipe.nutritionalFacts);
 
-    if (recipe.nutritionalFacts != null && recipe.nutritionalFacts != [])
-      recipe.nutritionalFacts.forEach((element) {
-        // k++;
-        nutritionalFacts = nutritionalFacts + element.toString() + "\n";
-      });
+    if (recipe.nutritionalFacts != null || recipe.nutritionalFacts != [])
+    // recipe.nutritionalFacts.forEach((element) {
+    //   // k++;
+    //   nutritionalFacts = nutritionalFacts + element.toString() + "\n";
+    // });
 
+    if (recipe.nutritionalFacts != null &&
+        recipe.nutritionalFacts != []) if (recipe.oldWebsite)
+      for (int x = 0; x < recipe.nutritionalFacts.length - 1; x++) {
+        nutritionalFacts =
+            nutritionalFacts + recipe.nutritionalFacts[x].toString() + "\n";
+      }
+
+    if (recipe.nutritionalFacts != null &&
+        recipe.nutritionalFacts != []) if (!recipe.oldWebsite)
+      for (int x = 0; x < recipe.nutritionalFacts.length; x++) {
+        nutritionalFacts =
+            nutritionalFacts + recipe.nutritionalFacts[x].toString() + "\n";
+      }
+
+    print(nutritionalFacts);
     // final String imgdir = (await getApplicationDocumentsDirectory()).path;
     // String pathh = '$imgdir/pdfcover.jpg';
     // File filee = File(pathh);
@@ -75,6 +146,7 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
     // );
 
     pdf.addPage(MultiPage(
+        theme: theme,
         pageFormat:
             PdfPageFormat.letter.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,14 +229,19 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
               Header(level: 2, text: 'Directions'),
               Paragraph(text: directions),
               Padding(padding: const EdgeInsets.all(10)),
+
               if (cooksNotes.trim() != "")
                 Header(level: 2, text: "Cook's Notes"),
               if (cooksNotes.trim() != "")
                 Paragraph(text: cooksNotes),
+
               if (nutritionalFacts.trim() != "")
                 Header(level: 2, text: "Nutritional Facts"),
-              if (cooksNotes.trim() != "")
+              if (nutritionalFacts.trim() != "")
                 Paragraph(text: nutritionalFacts),
+
+              //   if (cooksNotes.trim() != "")
+              // Paragraph(text: nutritionalFacts),
             ]));
     //save PDF
     final String dir = (await getApplicationDocumentsDirectory()).path;

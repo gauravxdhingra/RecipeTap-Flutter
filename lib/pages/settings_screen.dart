@@ -443,7 +443,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         contentPadding: EdgeInsets.all(0),
                                         title: Text("Non-Vegetarian"),
                                         subtitle: Text(
-                                            "Include Only Chicken, Mutton and Fish"),
+                                            "Include Only Chicken, Eggs, Mutton and Fish"),
                                         leading: pref == "chicken"
                                             ? Icon(
                                                 Icons.chevron_right,

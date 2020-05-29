@@ -449,7 +449,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       yeild: yeild,
       ingredients: ingredients,
       steps: directions,
-      nutritionalFacts: nutritionalFacts,
+      nutritionalFacts: oldWebsite ? nutritionalFacts : nutritionalFactsNew,
       recipeUrl: widget.url,
       cooksNotes: oldWebsite
           ? cooksNotes

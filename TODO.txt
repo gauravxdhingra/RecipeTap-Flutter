@@ -1,28 +1,21 @@
-  // TODO: Deafult Image Solution
-
-    // TODO: Navigation Animations
-
-    // TODO: Match Ingredients and Procedure with recipe View Page to The Experience
-
+    // TODO: Deafult Image Solution
     // TODO: Searchlist suggestions Ordering
- 
     // TODO bummer page and empty 404
-
-    // TODO: Review all 10,000 Suggestions
-
     // TODO: FCM Notifications
 
 
     // TODO recipe view => 
-      // TODO handle empty image
-     // TODO solve-if image rail is empty
- 
+    // TODO handle empty image
+    // TODO solve-if image rail is empty
 
 
-      Shared Pref veg nonveg
-     ADMOB
+    Shared Pref veg nonveg
+    ADMOB
 
+
+    // TODO: Navigation Animations 
+    // TODO: Review all 10,000 Suggestions
 
 
     // TODO Concentric Cooking Experience
-        // TODO filters
+    // TODO filters
