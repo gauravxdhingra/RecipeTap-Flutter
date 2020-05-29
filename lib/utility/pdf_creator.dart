@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:recipetap/models/recipe_model.dart';
 import 'package:share_extend/share_extend.dart';
 import './pdf_viewer_page.dart';
+import 'package:http/http.dart' show get;
 // import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 import 'package:flutter/material.dart' as material;
@@ -112,12 +113,6 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
     // int k = 0;
     print(recipe.nutritionalFacts);
 
-    if (recipe.nutritionalFacts != null || recipe.nutritionalFacts != [])
-    // recipe.nutritionalFacts.forEach((element) {
-    //   // k++;
-    //   nutritionalFacts = nutritionalFacts + element.toString() + "\n";
-    // });
-
     if (recipe.nutritionalFacts != null &&
         recipe.nutritionalFacts != []) if (recipe.oldWebsite)
       for (int x = 0; x < recipe.nutritionalFacts.length - 1; x++) {
@@ -133,6 +128,7 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
       }
 
     print(nutritionalFacts);
+
     // final String imgdir = (await getApplicationDocumentsDirectory()).path;
     // String pathh = '$imgdir/pdfcover.jpg';
     // File filee = File(pathh);
@@ -144,6 +140,22 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
     //   pdf.document,
     //   bytes: filee.readAsBytesSync(),
     // );
+
+    var url = recipe.coverPhotoUrl[0]; // <-- 1
+    var response = await get(url); // <--2
+    var documentDirectory = await getApplicationDocumentsDirectory();
+    var firstPath = documentDirectory.path + "/images";
+    var filePathAndName = documentDirectory.path + '/images/pic.jpg';
+    //comment out the next three lines to prevent the image from being saved
+    //to the device to show that it's coming from the internet
+    await Directory(firstPath).create(recursive: true); // <-- 1
+    File file2 = new File(filePathAndName); // <-- 2
+    file2.writeAsBytesSync(response.bodyBytes);
+
+    final image = PdfImage.file(
+      pdf.document,
+      bytes: file2.readAsBytesSync(),
+    );
 
     pdf.addPage(MultiPage(
         theme: theme,
@@ -209,20 +221,35 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
                         // Play Store Url
                       ])),
               Header(level: 1, text: recipe.title),
-              // Image(image),
+              Padding(padding: const EdgeInsets.all(10)),
+              Image(
+                image,
+                fit: BoxFit.cover,
+                height: 220,
+                width: 220,
+                alignment: Alignment.center,
+              ),
+              Padding(padding: const EdgeInsets.all(10)),
               // Recipe Cover Image Here
               Paragraph(
                 text: recipe.desc,
+                textAlign: TextAlign.center,
               ),
 
               // Paragraph(
               //     text:
               //        ),
-              Table.fromTextArray(context: context, data: <List<String>>[
-                <String>['Time', 'Servings', 'Yeild'],
-                <String>[recipe.time, recipe.servings, yeild],
-              ]),
               Padding(padding: const EdgeInsets.all(10)),
+              Table.fromTextArray(
+                context: context,
+                data: <List<String>>[
+                  <String>['Time', 'Servings', 'Yeild'],
+                  <String>[recipe.time, recipe.servings, yeild],
+                ],
+                cellAlignment: Alignment.center,
+              ),
+              Padding(padding: const EdgeInsets.all(10)),
+              SizedBox(height: 20),
               Header(level: 2, text: 'Ingredients'),
               Paragraph(text: ingredients),
               Padding(padding: const EdgeInsets.all(10)),
@@ -270,10 +297,11 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
     // final String pathext = ;
     final File fileext = File(pathext);
     await fileext.writeAsBytes(pdf.save());
-
+    material.Navigator.pop(context);
     material.showDialog(
         context: context,
         builder: (context) {
+          // material.Navigator.pop(context);
           return material.AlertDialog(
             title: material.Text('File Saved To Internal Storage'),
             content: material.Text(
@@ -304,6 +332,7 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
         });
   } catch (e) {
     print(e);
+    material.Navigator.pop(context);
     material.showDialog(
       context: context,
       builder: (context) {
@@ -315,6 +344,7 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
               child: material.Text("OK"),
               onPressed: () {
                 material.Navigator.pop(context);
+                // material.Navigator.pop(context);
               },
             )
           ],
@@ -322,4 +352,5 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
       },
     );
   }
+  // material.Navigator.pop(context);
 }

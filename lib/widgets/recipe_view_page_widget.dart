@@ -571,7 +571,6 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                 ),
                               );
                             },
-                            // TODO Child Flag
                       childCount: widget.oldWebsite
                           ? widget.nutritionalFacts.length - 1
                           : widget.nutritionalFactsNew.length,
@@ -685,6 +684,17 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     child: GestureDetector(
                       onTap: () async {
                         if (await Permission.storage.request().isGranted) {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("Loading..."),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25)),
+                              );
+                            },
+                          );
                           await reportView(context, widget.recipe,
                               widget.recipe.coverPhotoUrl[0]);
                           // Either the permission was already granted before or the user just granted it.
@@ -695,6 +705,8 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                               return AlertDialog(
                                 title: Text(
                                     "Failed To Generate PDF.\nWe are looking into it"),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25)),
                                 actions: <Widget>[
                                   FlatButton(
                                     child: Text("OK"),
