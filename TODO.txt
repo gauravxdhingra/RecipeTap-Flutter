@@ -2,11 +2,7 @@
 
     // TODO: Directions Select All Mark
 
-    // TODO: SnackBar on recipe view page not showing
-
     // TODO: Navigation Animations
-
-    // TODO back from search results is search =false
 
     // TODO: Match Ingredients and Procedure with View Page to The Experience
 
@@ -20,6 +16,7 @@
 
     // TODO: Permissions
 
+    // TODO: FCM Notifications
 
 
     // TODO recipe view => 
@@ -34,5 +31,4 @@
 
 
     // TODO Concentric Cooking Experience
-
         // TODO filters

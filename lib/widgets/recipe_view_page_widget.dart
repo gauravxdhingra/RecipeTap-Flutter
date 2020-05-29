@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:recipetap/models/recipe_model.dart';
@@ -133,14 +134,23 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                     widget.recipe.recipeUrl, currentUser.email);
 
                             if (await Provider.of<RecentsProvider>(context,
-                                    listen: false)
-                                .checkIfFav(widget.recipe.recipeUrl,
-                                    currentUser.email)) {
+                                        listen: false)
+                                    .checkIfFav(widget.recipe.recipeUrl,
+                                        currentUser.email) ==
+                                false) {
                               isFav = true;
                               _scaffoldKey.currentState.showSnackBar(
                                 new SnackBar(
                                     content: new Text(
-                                        '${widget.headline} Added To Favourites')),
+                                        '${widget.headline} \nRemoved From Favourites')),
+                              );
+                              print("SnackBar");
+                            } else {
+                              isFav = false;
+                              _scaffoldKey.currentState.showSnackBar(
+                                new SnackBar(
+                                    content: new Text(
+                                        'Failed To Remove From Favourites')),
                               );
                             }
                           }
@@ -156,7 +166,18 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                       listen: false)
                                   .checkIfFav(widget.recipe.recipeUrl,
                                       currentUser.email)) {
+                                _scaffoldKey.currentState.showSnackBar(
+                                  new SnackBar(
+                                      content: new Text(
+                                          'Failed To Add To Favourites')),
+                                );
                                 isFav = false;
+                              } else {
+                                _scaffoldKey.currentState.showSnackBar(
+                                  new SnackBar(
+                                      content: new Text(
+                                          '${widget.headline} \nAdded To Favourites')),
+                                );
                               }
                             } else {
                               _scaffoldKey.currentState.showSnackBar(
@@ -661,7 +682,28 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     ),
                     child: GestureDetector(
                       onTap: () async {
-                        await reportView(context, widget.recipe);
+                        if (await Permission.storage.request().isGranted) {
+                          await reportView(context, widget.recipe);
+                          // Either the permission was already granted before or the user just granted it.
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(
+                                    "Failed To Generate PDF.\nWe are looking into it"),
+                                actions: <Widget>[
+                                  InkWell(
+                                    child: Text('OK'),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       // capture,
                       child: ClipRRect(
