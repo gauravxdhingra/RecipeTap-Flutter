@@ -12,8 +12,10 @@ class RecipeModel {
   final List steps;
   final List nutritionalFacts;
   final List cooksNotes;
+  final bool oldWebsite;
 
   RecipeModel({
+    this.oldWebsite,
     this.recipeUrl,
     this.title,
     this.coverPhotoUrl,

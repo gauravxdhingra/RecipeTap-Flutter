@@ -163,7 +163,7 @@ class _StartCookingStepsState extends State<StartCookingSteps> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          for (int i = 0; i < done.length; i++) {
+          for (int i = 0; i < done.length - 1; i++) {
             if (done[i] == true) {
             } else {
               _scaffoldKey.currentState.showSnackBar(new SnackBar(

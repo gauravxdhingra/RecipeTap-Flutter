@@ -255,6 +255,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   );
 
   Duration duration = Duration(milliseconds: 400);
+  Curve curve = Curves.easeIn;
 
   // _showDialog(Widget child) {
   //   slideDialog.showSlideDialog(
@@ -320,6 +321,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         leading: isSearch
             ? null
             : AnimatedContainer(
+                curve: curve,
                 duration: duration,
                 child: Center(
                   child: ClayContainer(
@@ -348,6 +350,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               ),
         title: !isSearch
             ? AnimatedContainer(
+                curve: curve,
                 duration: duration,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -374,6 +377,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 ),
               )
             : AnimatedContainer(
+                curve: curve,
                 duration: duration,
                 child: TextFormField(
                   // validator: (_) => validateSearch(),
@@ -411,6 +415,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           Padding(
             padding: const EdgeInsets.only(right: 7.0, bottom: 3, top: 3),
             child: AnimatedContainer(
+              curve: curve,
               duration: duration,
               child: ClayContainer(
                 color: Theme.of(context).primaryColor,
@@ -573,6 +578,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                         setState(() {});
                       },
                       child: AnimatedContainer(
+                        curve: curve,
                         duration: duration,
                         height: isSearch
                             ? MediaQuery.of(context).size.height - 140
@@ -596,6 +602,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   AnimatedContainer searchAnimatedContainer(BuildContext context) {
     return AnimatedContainer(
+      curve: curve,
       duration: duration,
       height: isSearch
           ? 140
@@ -605,6 +612,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       child: Stack(
         children: [
           AnimatedContainer(
+            curve: curve,
             duration: Duration(milliseconds: 0),
             height: isSearch
                 ? 140
@@ -617,6 +625,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             // Theme.of(context).scaffoldBackgroundColor,
           ),
           AnimatedContainer(
+            curve: curve,
             duration: duration,
             height: isSearch
                 ? 140
@@ -635,6 +644,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 ? Stack(
                     children: <Widget>[
                       AnimatedContainer(
+                        curve: curve,
                         duration: duration,
                         child: SingleChildScrollView(
                           child:
@@ -1035,6 +1045,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                           ),
                           child: InkWell(
                             child: AnimatedContainer(
+                              curve: curve,
                               duration: duration,
                               width: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.symmetric(
@@ -1085,6 +1096,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     ],
                   )
                 : AnimatedContainer(
+                    curve: curve,
                     duration: duration,
                     child: Center(
                       child: Text(

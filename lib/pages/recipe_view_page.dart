@@ -440,6 +440,7 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
     if (time == null) timeExists = false;
     // });
     recipe = RecipeModel(
+      oldWebsite: oldWebsite,
       title: headline,
       coverPhotoUrl: images,
       desc: desc,
@@ -479,18 +480,6 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       isLoading = false;
     });
   }
-
-  // @override
-  // void didChangeDependencies() async {
-  //   if (!isInit) {
-  //     // setState(() {
-  //     //   _isLoading = true;
-  //     // });
-
-  //     isInit = true;
-  //   }
-  //   super.didChangeDependencies();
-  // }
 
   @override
   Widget build(BuildContext context) {

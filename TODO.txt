@@ -1,15 +1,11 @@
   // TODO: Deafult Image Solution
 
-    // TODO: Directions Select All Mark
-
     // TODO: Navigation Animations
 
     // TODO: Match Ingredients and Procedure with recipe View Page to The Experience
 
     // TODO: Searchlist suggestions Ordering
-
-   // TODO retry button for dns fail
-
+ 
     // TODO bummer page and empty 404
 
     // TODO: Review all 10,000 Suggestions

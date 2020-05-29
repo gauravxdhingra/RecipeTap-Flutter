@@ -87,7 +87,9 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
                   ),
                 );
               },
-              childCount: widget.recipe.ingredients.length,
+              childCount: widget.recipe.oldWebsite
+                  ? widget.recipe.ingredients.length
+                  : widget.recipe.ingredients.length - 2,
             ),
           ),
           SliverToBoxAdapter(
@@ -151,15 +153,28 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // grabbed.add(false);
-          for (int i = 0; i < grabbed.length; i++) {
-            if (grabbed[i] == true) {
-            } else {
-              _scaffoldKey.currentState.showSnackBar(new SnackBar(
-                  duration: Duration(milliseconds: 700),
-                  content: new Text("Select All Items To Proceed!")));
-              return;
+
+          if (widget.recipe.oldWebsite)
+            for (int i = 0; i < grabbed.length; i++) {
+              if (grabbed[i] == true) {
+              } else {
+                _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                    duration: Duration(milliseconds: 700),
+                    content: new Text("Select All Items To Proceed!")));
+                return;
+              }
             }
-          }
+
+          if (!widget.recipe.oldWebsite)
+            for (int i = 0; i < grabbed.length - 2; i++) {
+              if (grabbed[i] == true) {
+              } else {
+                _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                    duration: Duration(milliseconds: 700),
+                    content: new Text("Select All Items To Proceed!")));
+                return;
+              }
+            }
           Navigator.push(
               context,
               MaterialPageRoute(
