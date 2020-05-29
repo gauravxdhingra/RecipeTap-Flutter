@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
         ),
 
         routes: {
-          '/': (context) => alreadyVisited ? Welcome() : HomeScreen(),
+          '/': (context) => !alreadyVisited ? Welcome() : HomeScreen(),
           HomeScreen.routeName: (context) => HomeScreen(),
           // SearchScreen.routeName: (context) => SearchScreen(),
           RecipeViewPage.routeName: (context) => RecipeViewPage(),

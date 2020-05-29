@@ -180,7 +180,7 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
         // itemExtent: ,
         controller: _scrollController,
         physics: BouncingScrollPhysics(),
-        itemCount: recipeCards.length + 1,
+        itemCount: hasMore ? recipeCards.length + 1 : recipeCards.length,
         itemBuilder: (context, i) {
           // print(recipeCards.length);
           if (i == recipeCards.length && hasMore)

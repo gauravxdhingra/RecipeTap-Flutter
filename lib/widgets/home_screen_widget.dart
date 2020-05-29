@@ -62,7 +62,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   List<dynamic> include = [];
   List exclude = [];
-
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     if (currentUser != null) {
@@ -71,13 +71,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       email = currentUser.email;
     }
     time = DateTime.now().hour;
-    fetchRecommended();
-    super.initState();
-
     _scaffoldKey = GlobalKey<ScaffoldState>();
     inclController = TextEditingController();
     exclController = TextEditingController();
     controller = TextEditingController();
+    fetchRecommended();
+    super.initState();
   }
 
   List<String> suggestions = SearchSuggestions.suggestions;
@@ -156,89 +155,111 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   // }
 
   submitSearch(appBarTitle, dish) async {
-    diet = await getDiet();
-    if (controller.text.trim().isEmpty && include.isEmpty && exclude.isEmpty) {
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text("Enter A Recipe Or Ingredients To Search"),
-      ));
-      // print("No Search Query");
-      return;
-    }
+    try {
+      diet = await getDiet();
+      if (controller.text.trim().isEmpty &&
+          include.isEmpty &&
+          exclude.isEmpty) {
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text("Enter A Recipe Or Ingredients To Search"),
+        ));
+        // print("No Search Query");
+        return;
+      }
 
-    bool conflict = false;
+      bool conflict = false;
 
-    if (include.isNotEmpty) {
-      include.forEach((element) {
-        conflict = exclude.contains(element);
-        if (conflict == true) {
-          _scaffoldKey.currentState.showSnackBar(SnackBar(
-            content: Text("Same Item Can't Be Included And Excluded"),
-          ));
-          return;
+      if (include.isNotEmpty) {
+        include.forEach((element) {
+          conflict = exclude.contains(element);
+          if (conflict == true) {
+            _scaffoldKey.currentState.showSnackBar(SnackBar(
+              content: Text("Same Item Can't Be Included And Excluded"),
+            ));
+            return;
+          }
+        });
+      } else {
+        exclude.forEach((element) {
+          conflict = include.contains(element);
+          if (conflict == true) {
+            _scaffoldKey.currentState.showSnackBar(SnackBar(
+              content: Text("Same Item Can't Be Included And Excluded"),
+            ));
+            return;
+          }
+        });
+      }
+
+      if (!conflict) {
+        controller.clear();
+        inclController.clear();
+        exclController.clear();
+
+        String incl = include
+            .toString()
+            .split("[")[1]
+            .split("]")[0]
+            .replaceAll(", ", ",")
+            .toLowerCase()
+            .replaceAll(", ", ",")
+            .replaceAll(" ", "%20")
+            .replaceAll("-", "%2d")
+            .replaceAll("/", "%2f");
+
+        String excl = exclude
+            .toString()
+            .split("[")[1]
+            .split("]")[0]
+            .replaceAll(", ", ",")
+            .toLowerCase()
+            .replaceAll(", ", ",")
+            .replaceAll(" ", "%20")
+            .replaceAll("-", "%2d")
+            .replaceAll("/", "%2f");
+
+        String exclext = "";
+        if (diet == "all") {
+          if (excl.isNotEmpty) {
+            exclext = ",beef,pork,ham";
+          } else
+            exclext = "beef,pork,ham";
         }
-      });
-    } else {
-      exclude.forEach((element) {
-        conflict = include.contains(element);
-        if (conflict == true) {
-          _scaffoldKey.currentState.showSnackBar(SnackBar(
-            content: Text("Same Item Can't Be Included And Excluded"),
-          ));
-          return;
+        if (diet == "chicken") {
+          if (excl.isNotEmpty) {
+            exclext =
+                ",beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal";
+          } else
+            exclext =
+                "beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal";
         }
-      });
-    }
-
-    if (!conflict) {
-      controller.clear();
-      inclController.clear();
-      exclController.clear();
-
-      String incl = include
-          .toString()
-          .split("[")[1]
-          .split("]")[0]
-          .replaceAll(", ", ",")
-          .toLowerCase()
-          .replaceAll(", ", ",")
-          .replaceAll(" ", "%20")
-          .replaceAll("-", "%2d")
-          .replaceAll("/", "%2f");
-
-      String excl = exclude
-          .toString()
-          .split("[")[1]
-          .split("]")[0]
-          .replaceAll(", ", ",")
-          .toLowerCase()
-          .replaceAll(", ", ",")
-          .replaceAll(" ", "%20")
-          .replaceAll("-", "%2d")
-          .replaceAll("/", "%2f");
-
-      String exclext;
-      if (diet == "all") exclext = "beef";
-
-      if (diet == "chicken") exclext = "beef,pork,bacon,turkey,";
-
-      if (diet == "veg") exclext = "chicken,mutton,egg,beef,pork,bacon,turkey,";
-
-      isSearch = await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => SearchResultsScreen(
-            exclude: exclude,
-            include: include,
-            appBarTitle: appBarTitle,
-            incl: incl,
-            excl: excl,
-            categoryOption: false,
-            url:
-                'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl&sort=re',
+        if (diet == "veg") {
+          if (excl.isNotEmpty) {
+            exclext =
+                ",fish,salmon,tuna,chicken,mutton,egg,beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal";
+          } else
+            exclext =
+                "fish,salmon,tuna,chicken,mutton,egg,beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal";
+        }
+        isSearch = await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SearchResultsScreen(
+              exclude: exclude,
+              include: include,
+              appBarTitle: appBarTitle,
+              incl: incl,
+              excl: excl,
+              categoryOption: false,
+              url:
+                  'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl$exclext&sort=re',
+            ),
           ),
-        ),
-      );
-      print("************************" +
-          'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl&sort=re');
+        );
+        print("************************" +
+            'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl$exclext&sort=re');
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -323,8 +344,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   //   }
   //   return null;
   // }
-// TODO Modal Sheet Keyboard
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {

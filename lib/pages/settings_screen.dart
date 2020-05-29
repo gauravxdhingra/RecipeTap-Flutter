@@ -52,9 +52,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // if (authSkipped)
       // Provider.of<AuthProvider>(context, listen: false).tryGoogleSignIn();
 
-      // setState(() {
-      _isLoading = false;
-      // });
+      setState(() {
+        _isLoading = false;
+      });
 
       isInit = true;
     }
@@ -402,7 +402,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ? Text("Vegetarian Only")
                               : pref == "chicken"
                                   ? Text(
-                                      "Non Vegetarian - Chicken, Mutton, Fish")
+                                      "Non Vegetarian - Chicken, Mutton, Fish, Eggs")
                                   : Text("All Vegetarian and Non Vegetarian"),
                           onTap: () {
                             showDialog(
