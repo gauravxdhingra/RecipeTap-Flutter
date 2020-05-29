@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:network_to_file_image/network_to_file_image.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:network_to_file_image/network_to_file_image.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
@@ -204,7 +204,18 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                   pinned: true,
                   // backgroundColor: Colors.white,
                   leading: IconButton(
-                    icon: Icon(Icons.arrow_back_ios),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: (widget.images[0] == null ||
+                              widget.images[0] ==
+                                  "https://www.allrecipes.com/img/icons/generic-recipe.svg" ||
+                              widget.images[0] ==
+                                  "https://images.media-allrecipes.com/images/82579.png" ||
+                              widget.images[0] ==
+                                  "https://images.media-allrecipes.com/images/79591.png")
+                          ? Theme.of(context).iconTheme.color
+                          : Colors.white,
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -247,10 +258,25 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                               bottomLeft: Radius.circular(45),
                               bottomRight: Radius.circular(45),
                             ),
-                            child: Image.network(
-                              widget.images[index],
-                              fit: BoxFit.cover,
-                            ),
+                            child: (widget.images[index] == null ||
+                                    widget.images[index] ==
+                                        "https://www.allrecipes.com/img/icons/generic-recipe.svg" ||
+                                    widget.images[index] ==
+                                        "https://images.media-allrecipes.com/images/82579.png" ||
+                                    widget.images[index] ==
+                                        "https://images.media-allrecipes.com/images/79591.png")
+                                ? Image.asset(
+                                    'assets/logo/banner.png',
+                                    fit: BoxFit.contain,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.grey
+                                        : null,
+                                  )
+                                : Image.network(
+                                    widget.images[index] ?? "",
+                                    fit: BoxFit.cover,
+                                  ),
                           );
                         },
 

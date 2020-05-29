@@ -39,10 +39,31 @@ class StartCooking extends StatelessWidget {
                       borderRadius: BorderRadius.all(
                         Radius.circular(45),
                       ),
-                      child: Image.network(
-                        recipe.coverPhotoUrl[index],
-                        fit: BoxFit.cover,
-                      ),
+                      child: (recipe.coverPhotoUrl[index] == null ||
+                              recipe.coverPhotoUrl[index] ==
+                                  "https://www.allrecipes.com/img/icons/generic-recipe.svg" ||
+                              recipe.coverPhotoUrl[index] ==
+                                  "https://images.media-allrecipes.com/images/82579.png" ||
+                              recipe.coverPhotoUrl[index] ==
+                                  "https://images.media-allrecipes.com/images/79591.png")
+                          ? Container(
+                              // height: 210,
+                              child: Image.asset(
+                                'assets/logo/banner.png',
+                                // fit: BoxFit.scaleDown,
+                                // width: 100,
+                                // scale: 3,
+                                alignment: Alignment.center,
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? Colors.white
+                                    : null,
+                              ),
+                            )
+                          : Image.network(
+                              recipe.coverPhotoUrl[index],
+                              fit: BoxFit.cover,
+                            ),
                     );
                   },
 

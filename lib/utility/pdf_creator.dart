@@ -141,7 +141,8 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
     //   bytes: filee.readAsBytesSync(),
     // );
 
-    var url = recipe.coverPhotoUrl[0]; // <-- 1
+    var url = recipe.coverPhotoUrl[0] ??
+        "https://cdn.dribbble.com/users/844846/screenshots/2855815/no_image_to_show_.jpg"; // <-- 1
     var response = await get(url); // <--2
     var documentDirectory = await getApplicationDocumentsDirectory();
     var firstPath = documentDirectory.path + "/images";
@@ -221,15 +222,37 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
                         // Play Store Url
                       ])),
               Header(level: 1, text: recipe.title),
-              Padding(padding: const EdgeInsets.all(10)),
-              Image(
-                image,
-                fit: BoxFit.cover,
-                height: 220,
-                width: 220,
-                alignment: Alignment.center,
-              ),
-              Padding(padding: const EdgeInsets.all(10)),
+              if (photoUrl != null &&
+                  photoUrl !=
+                      "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
+                  photoUrl !=
+                      "https://images.media-allrecipes.com/images/82579.png" &&
+                  photoUrl !=
+                      "https://images.media-allrecipes.com/images/79591.png")
+                Padding(padding: const EdgeInsets.all(10)),
+
+              if (photoUrl != null &&
+                  photoUrl !=
+                      "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
+                  photoUrl !=
+                      "https://images.media-allrecipes.com/images/82579.png" &&
+                  photoUrl !=
+                      "https://images.media-allrecipes.com/images/79591.png")
+                Image(
+                  image,
+                  fit: BoxFit.cover,
+                  height: 220,
+                  width: 220,
+                  alignment: Alignment.center,
+                ),
+              if (photoUrl != null &&
+                  photoUrl !=
+                      "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
+                  photoUrl !=
+                      "https://images.media-allrecipes.com/images/82579.png" &&
+                  photoUrl !=
+                      "https://images.media-allrecipes.com/images/79591.png")
+                Padding(padding: const EdgeInsets.all(10)),
               // Recipe Cover Image Here
               Paragraph(
                 text: recipe.desc,

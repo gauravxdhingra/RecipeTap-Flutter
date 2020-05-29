@@ -58,25 +58,67 @@ Container recommendedRecipesBuilder(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(20),
                                       ),
-                                      child: Image.network(
-                                        recommended[i].coverPhotoUrl,
-                                        // height: 210,
-                                        height: MediaQuery.of(context)
+                                      child: (recommended[i].coverPhotoUrl ==
+                                                  null ||
+                                              recommended[i].coverPhotoUrl ==
+                                                  "https://www.allrecipes.com/img/icons/generic-recipe.svg" ||
+                                              recommended[i].coverPhotoUrl ==
+                                                  "https://images.media-allrecipes.com/images/82579.png" ||
+                                              recommended[i].coverPhotoUrl ==
+                                                  "https://images.media-allrecipes.com/images/79591.png")
+                                          ? Container(
+                                              // height: 210,
+                                              child: Image.asset(
+                                                'assets/logo/banner.png',
+                                                // fit: BoxFit.scaleDown,
+                                                // width: 100,
+                                                scale: 3,
+                                                height: MediaQuery.of(context)
+                                                            .size
+                                                            .height >=
+                                                        720
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        5
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        4.0,
+                                                width: MediaQuery.of(context)
                                                     .size
-                                                    .height >=
-                                                720
-                                            ? MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                5
-                                            : MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                4.0,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        fit: BoxFit.cover,
-                                      ),
+                                                    .width,
+                                                alignment: Alignment.lerp(
+                                                    Alignment.center,
+                                                    Alignment.bottomCenter,
+                                                    0.5),
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white
+                                                    : null,
+                                              ),
+                                            )
+                                          : Image.network(
+                                              recommended[i].coverPhotoUrl,
+                                              // height: 210,
+                                              height: MediaQuery.of(context)
+                                                          .size
+                                                          .height >=
+                                                      720
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      5
+                                                  : MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      4.0,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              fit: BoxFit.cover,
+                                            ),
                                     ),
                                     Positioned(
                                       // top: 0,

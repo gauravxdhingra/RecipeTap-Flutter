@@ -5,7 +5,6 @@
 
 
     // TODO recipe view => 
-    // TODO handle empty image
     // TODO solve-if image rail is empty
 
 
