@@ -6,6 +6,7 @@ import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
+import 'package:recipetap/utility/shared_prefs.dart';
 
 class SearchResultsScreen extends StatefulWidget {
   static const routeName = 'search_result_screen';
@@ -36,6 +37,7 @@ class SearchResultsScreen extends StatefulWidget {
 
 class _SearchResultsScreenState extends State<SearchResultsScreen> {
   bool isLoading = true;
+  String diet;
   // static String incl; //= 'milk,sugar';
   // static String excl; //= 'salt,chicken';
 
@@ -143,32 +145,42 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Including: "),
-                          Text(
-                            widget.include
-                                .toString()
-                                .split("[")[1]
-                                .split("]")[0],
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Excluding: "),
-                          Text(
-                            widget.exclude
-                                .toString()
-                                .split("[")[1]
-                                .split("]")[0],
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
+                      if (widget.incl.toString().isNotEmpty)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Including: ",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              widget.include
+                                  .toString()
+                                  .split("[")[1]
+                                  .split("]")[0],
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      if (widget.excl.toString().isNotEmpty)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Excluding: ",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              widget.exclude
+                                  .toString()
+                                  .split("[")[1]
+                                  .split("]")[0],
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
                       SizedBox(
                         height: 4,
                       ),

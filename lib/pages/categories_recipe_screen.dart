@@ -565,14 +565,44 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
                                           borderRadius: BorderRadius.all(
                                             Radius.circular(20),
                                           ),
-                                          child: Image.network(
-                                            recipeCards[i].photoUrl,
-                                            height: 220,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            fit: BoxFit.cover,
-                                          ),
+                                          child: (recipeCards[i].photoUrl ==
+                                                      null ||
+                                                  recipeCards[i].photoUrl ==
+                                                      "https://www.allrecipes.com/img/icons/generic-recipe.svg" ||
+                                                  recipeCards[i].photoUrl ==
+                                                      "https://images.media-allrecipes.com/images/82579.png" ||
+                                                  recipeCards[i].photoUrl ==
+                                                      "https://images.media-allrecipes.com/images/79591.png")
+                                              ? Container(
+                                                  height: 210,
+                                                  child: Image.asset(
+                                                    'assets/logo/banner.png',
+                                                    // fit: BoxFit.scaleDown,
+                                                    // width: 100,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    scale: 3,
+                                                    alignment: Alignment.lerp(
+                                                        Alignment.center,
+                                                        Alignment.bottomCenter,
+                                                        0.5),
+                                                    color: Theme.of(context)
+                                                                .brightness ==
+                                                            Brightness.dark
+                                                        ? Colors.white
+                                                        : null,
+                                                  ),
+                                                )
+                                              : Image.network(
+                                                  recipeCards[i].photoUrl,
+                                                  height: 220,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  fit: BoxFit.cover,
+                                                ),
                                         ),
                                         Positioned(
                                           // top: 0,

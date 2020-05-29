@@ -7,6 +7,7 @@ import 'package:recipetap/pages/home_screen.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:recipetap/utility/shared_prefs.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -21,10 +22,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String username;
   String email;
   Function logout;
+  String pref;
 
   var _isLoading = false;
 
   var isInit = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() async {
@@ -32,7 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       setState(() {
         _isLoading = true;
       });
-
+      pref = await getDiet();
       // final auth = Provider.of<AuthProvider>(context, listen: false);
       if (currentUser != null) {
         profilePhotoUrl = currentUser.photoUrl;
@@ -118,8 +125,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     color: Colors.black45,
     offset: Offset(0.1, 2),
   );
-
-  String pref = "all";
 
   @override
   Widget build(BuildContext context) {
@@ -432,10 +437,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 color: Theme.of(context)
                                                     .dialogBackgroundColor,
                                               ),
-                                        onTap: () {
+                                        onTap: () async {
+                                          await setDiet("veg");
                                           setState(() {
                                             pref = "veg";
                                           });
+                                          pref = await getDiet();
                                           Navigator.pop(context);
                                         },
                                       ),
@@ -458,10 +465,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 color: Theme.of(context)
                                                     .dialogBackgroundColor,
                                               ),
-                                        onTap: () {
+                                        onTap: () async {
+                                          await setDiet("chicken");
                                           setState(() {
                                             pref = "chicken";
                                           });
+                                          pref = await getDiet();
                                           Navigator.pop(context);
                                         },
                                       ),
@@ -485,10 +494,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 color: Theme.of(context)
                                                     .dialogBackgroundColor,
                                               ),
-                                        onTap: () {
+                                        onTap: () async {
+                                          await setDiet("all");
                                           setState(() {
                                             pref = "all";
                                           });
+                                          pref = await getDiet();
                                           Navigator.pop(context);
                                         },
                                       )

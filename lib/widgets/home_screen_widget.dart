@@ -19,6 +19,7 @@ import 'package:recipetap/pages/recipe_view_page.dart';
 // import 'package:recipetap/pages/favourites_screen.dart';
 import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
+import 'package:recipetap/utility/shared_prefs.dart';
 // import 'package:recipetap/pages/search_screen.dart';
 // import 'package:recipetap/pages/settings_screen.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
@@ -47,6 +48,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   String email;
   int i = 0;
   bool isloading = true;
+  String diet;
 
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
@@ -154,6 +156,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   // }
 
   submitSearch(appBarTitle, dish) async {
+    diet = await getDiet();
     if (controller.text.trim().isEmpty && include.isEmpty && exclude.isEmpty) {
       _scaffoldKey.currentState.showSnackBar(SnackBar(
         content: Text("Enter A Recipe Or Ingredients To Search"),
@@ -213,16 +216,27 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           .replaceAll("-", "%2d")
           .replaceAll("/", "%2f");
 
-      isSearch = await Navigator.of(context).push(MaterialPageRoute(
+      String exclext;
+      if (diet == "all") exclext = "beef";
+
+      if (diet == "chicken") exclext = "beef,pork,bacon,turkey,";
+
+      if (diet == "veg") exclext = "chicken,mutton,egg,beef,pork,bacon,turkey,";
+
+      isSearch = await Navigator.of(context).push(
+        MaterialPageRoute(
           builder: (context) => SearchResultsScreen(
-              exclude: exclude,
-              include: include,
-              appBarTitle: appBarTitle,
-              incl: incl,
-              excl: excl,
-              categoryOption: false,
-              url:
-                  'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl&sort=re')));
+            exclude: exclude,
+            include: include,
+            appBarTitle: appBarTitle,
+            incl: incl,
+            excl: excl,
+            categoryOption: false,
+            url:
+                'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl&sort=re',
+          ),
+        ),
+      );
       print("************************" +
           'https://www.allrecipes.com/search/results/?wt=$dish&ingIncl=$incl&ingExcl=$excl&sort=re');
     }
@@ -589,6 +603,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                         color: !isSearch
                             ? Colors.transparent
                             : Color(0xff0f0f0f).withOpacity(0.6),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 110),
+                          child: Text(
+                            "Double Tap Or Hold Here To Cancel Search",
+                            style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
                     ),
                 ],
@@ -960,7 +982,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                               .compareTo(b
                                                                   .toLowerCase()
                                                                   .indexOf(
-                                                                      lowercaseQuery)));
+                                                                      lowercaseQuery)))
+                                                          ..sort((a, b) => a
+                                                              .replaceAll(
+                                                                  " ", "")
+                                                              .length
+                                                              .compareTo(b
+                                                                  .replaceAll(
+                                                                      " ", "")
+                                                                  .length));
                                                   } else {
                                                     return [];
                                                   }

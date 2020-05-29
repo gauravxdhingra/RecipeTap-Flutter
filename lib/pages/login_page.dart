@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 import 'package:recipetap/pages/home_screen.dart';
 // import '../provider/auth_provider.dart';
+import 'package:flutter_brand_icons/flutter_brand_icons.dart';
+import 'dart:ui';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -52,27 +54,80 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.red,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              "assets/onboarding/ingredients.jpg",
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        // color: Colors.red,
+        child: Stack(
           children: <Widget>[
-            Text('SIGN IN'),
-            FlatButton(
-              onPressed: _submit,
-              child: Text(
-                'Sign In With Google',
-                style: TextStyle(
-                  color: Colors.white,
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
+              child: Container(
+                child: Text(" "),
+                decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10, top: 30),
+                child: FlatButton(
+                  onPressed: () => _skipSignIn(),
+                  child: Text(
+                    'Skip For Now',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
-            FlatButton(
-              onPressed: () => _skipSignIn(),
-              child: Text(
-                'Skip SignIn',
-                style: TextStyle(
-                  color: Colors.yellow,
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                padding: EdgeInsets.only(top: 100),
+                child: Image.asset(
+                  "assets/logo/banner.png",
+                  fit: BoxFit.cover,
+                  scale: 2.2,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: 70,
+                  decoration: BoxDecoration(
+                      color: Colors.white54,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: FlatButton(
+                    onPressed: _submit,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(BrandIcons.google),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          'Sign In With Google',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
