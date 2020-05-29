@@ -7,7 +7,10 @@ Container recommendedRecipesBuilder(
     BuildContext context, List<FavouritesModel> recommended) {
   return Container(
     // TODO Modified This 2.7
-    height: MediaQuery.of(context).size.height / 2.5,
+    height: MediaQuery.of(context).size.height >= 700
+        ? MediaQuery.of(context).size.height / 2.5
+        : MediaQuery.of(context).size.height / 2.0,
+    //  MediaQuery.of(context).size.height / 2.5,
     child: ListView.builder(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,

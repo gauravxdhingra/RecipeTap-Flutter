@@ -25,7 +25,11 @@ class _BuildFavInFavouritesState extends State<BuildFavInFavourites> {
   Widget build(BuildContext context) {
     return Container(
       // TODO changed from 2.8
-      height: MediaQuery.of(context).size.height / 2.5,
+      height: MediaQuery.of(context).size.height >= 700
+          ? MediaQuery.of(context).size.height / 2.5
+          : MediaQuery.of(context).size.height / 2.0,
+
+      // MediaQuery.of(context).size.height / 2.5,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,

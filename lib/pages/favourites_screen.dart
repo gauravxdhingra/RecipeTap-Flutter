@@ -430,8 +430,10 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height / 2.7,
+                                height: MediaQuery.of(context).size.height >=
+                                        700
+                                    ? MediaQuery.of(context).size.height / 2.5
+                                    : MediaQuery.of(context).size.height / 2.0,
                                 color: Theme.of(context)
                                     .scaffoldBackgroundColor
                                     .withOpacity(0.9),
@@ -493,8 +495,10 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height / 2.9,
+                                height: MediaQuery.of(context).size.height >=
+                                        700
+                                    ? MediaQuery.of(context).size.height / 2.5
+                                    : MediaQuery.of(context).size.height / 2.0,
                                 color: Theme.of(context)
                                     .scaffoldBackgroundColor
                                     .withOpacity(0.9),
@@ -665,7 +669,9 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height / 2.7,
+                            height: MediaQuery.of(context).size.height >= 700
+                                ? MediaQuery.of(context).size.height / 2.5
+                                : MediaQuery.of(context).size.height / 2.0,
                             color: Theme.of(context)
                                 .scaffoldBackgroundColor
                                 .withOpacity(0.9),
@@ -724,7 +730,9 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height / 2.9,
+                            height: MediaQuery.of(context).size.height >= 700
+                                ? MediaQuery.of(context).size.height / 2.5
+                                : MediaQuery.of(context).size.height / 2.0,
                             color:
                                 Theme.of(context).brightness == Brightness.light
                                     ? Theme.of(context)

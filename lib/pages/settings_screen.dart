@@ -204,14 +204,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 5.0, vertical: 5),
                                             child: ClayContainer(
-                                              borderRadius: 50,
+                                              borderRadius: 40,
                                               depth: 60,
                                               spread: 6,
                                               color: Theme.of(context)
                                                   .scaffoldBackgroundColor,
                                               // spread: 5,
                                               child: CircleAvatar(
-                                                radius: 50,
+                                                radius: 40,
                                                 backgroundImage: currentUser !=
                                                         null
                                                     ? NetworkImage(
@@ -238,7 +238,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               Text(
                                                 currentUser.username ?? "User",
                                                 style: TextStyle(
-                                                  fontSize: 25,
+                                                  fontSize: 24,
                                                 ),
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
@@ -586,55 +586,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                   ),
-                  Positioned(
-                    bottom: 55,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
+                  if (MediaQuery.of(context).size.height > 700)
+                    Positioned(
+                      bottom: 55,
                       child: Container(
-                        // width: MediaQuery.of(context).size.width * 0.5,
-                        padding: EdgeInsets.symmetric(horizontal: 100),
-                        child: Image.asset(
-                          "assets/logo/banner.png",
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : null,
-                          fit: BoxFit.cover,
-                          // colorBlendMode: BlendMode.hardLight,
+                        width: MediaQuery.of(context).size.width,
+                        child: Container(
+                          // width: MediaQuery.of(context).size.width * 0.5,
+                          padding: EdgeInsets.symmetric(horizontal: 100),
+                          child: Image.asset(
+                            "assets/logo/banner.png",
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.white
+                                    : null,
+                            fit: BoxFit.cover,
+                            // colorBlendMode: BlendMode.hardLight,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text("Made Using | "),
-                              Text("Secured By"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(BrandIcons.flutter),
-                              SizedBox(
-                                width: 50,
-                              ),
-                              Icon(BrandIcons.firebase),
-                            ],
-                          ),
-                        ],
+                  if (MediaQuery.of(context).size.height > 700)
+                    Positioned(
+                      bottom: 20,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text("Made Using | "),
+                                Text("Secured By"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(BrandIcons.flutter),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Icon(BrandIcons.firebase),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
