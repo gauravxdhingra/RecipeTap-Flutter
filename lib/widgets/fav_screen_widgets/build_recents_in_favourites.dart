@@ -220,7 +220,7 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
                   BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                     child: Container(
-                      height: 80,
+                      // height: 80,
                       width: MediaQuery.of(context).size.width,
                       decoration:
                           BoxDecoration(color: Colors.white.withOpacity(0.0)),

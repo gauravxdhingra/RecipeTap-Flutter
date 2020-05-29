@@ -153,7 +153,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   //   super.didChangeDependencies();
   // }
 
-  submitSearch(appBarTitle, dish) {
+  submitSearch(appBarTitle, dish) async {
     if (controller.text.trim().isEmpty && include.isEmpty && exclude.isEmpty) {
       _scaffoldKey.currentState.showSnackBar(SnackBar(
         content: Text("Enter A Recipe Or Ingredients To Search"),
@@ -213,7 +213,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           .replaceAll("-", "%2d")
           .replaceAll("/", "%2f");
 
-      Navigator.of(context).push(MaterialPageRoute(
+      isSearch = await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => SearchResultsScreen(
               exclude: exclude,
               include: include,
@@ -377,6 +377,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 duration: duration,
                 child: TextFormField(
                   // validator: (_) => validateSearch(),
+
                   controller: controller,
                   onFieldSubmitted: (val) {
                     submitSearch(
@@ -388,8 +389,16 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   },
                   decoration: InputDecoration(
                     hintText: "Search Recipes",
+                    hintStyle: TextStyle(color: Colors.white),
+
                     // errorText: validateSearch(),
                   ),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  autofocus: true,
+                  textInputAction: TextInputAction.search,
+                  cursorColor: Colors.white,
                 ),
               ),
         // Text(

@@ -117,68 +117,80 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
   Widget build(BuildContext context) {
     // final inclexclArgs = ModalRoute.of(context).settings.arguments;
     // print(inclexclArgs.incl);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.appBarTitle ?? "",
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: Colors.white, fontSize: 17),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, false);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.appBarTitle ?? "",
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.white, fontSize: 17),
           ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        bottom: (widget.incl.toString().isNotEmpty ||
-                widget.excl.toString().isNotEmpty)
-            ? PreferredSize(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Including: "),
-                        Text(
-                          widget.include.toString().split("[")[1].split("]")[0],
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Excluding: "),
-                        Text(
-                          widget.exclude.toString().split("[")[1].split("]")[0],
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                  ],
-                ),
-                preferredSize: Size(MediaQuery.of(context).size.width, 18),
-              )
-            : null,
-      ),
-      // extendBodyBehindAppBar: true,
-      body: isLoading
-          ? Center(
-              child: LoadingSpinner(
-              size: 140,
-              color: Colors.grey,
-            ))
-          : BuildRecipeListResults(
-              recipeCards: recipeCards,
-              url: widget.url,
-              categoryOption: widget.categoryOption,
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
             ),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          bottom: (widget.incl.toString().isNotEmpty ||
+                  widget.excl.toString().isNotEmpty)
+              ? PreferredSize(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("Including: "),
+                          Text(
+                            widget.include
+                                .toString()
+                                .split("[")[1]
+                                .split("]")[0],
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("Excluding: "),
+                          Text(
+                            widget.exclude
+                                .toString()
+                                .split("[")[1]
+                                .split("]")[0],
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                    ],
+                  ),
+                  preferredSize: Size(MediaQuery.of(context).size.width, 18),
+                )
+              : null,
+        ),
+        // extendBodyBehindAppBar: true,
+        body: isLoading
+            ? Center(
+                child: LoadingSpinner(
+                size: 140,
+                color: Colors.grey,
+              ))
+            : BuildRecipeListResults(
+                recipeCards: recipeCards,
+                url: widget.url,
+                categoryOption: widget.categoryOption,
+              ),
+      ),
     );
   }
 }

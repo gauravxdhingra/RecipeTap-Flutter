@@ -228,7 +228,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         SizedBox(
-                          height: 20,
+                          height: 40,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
