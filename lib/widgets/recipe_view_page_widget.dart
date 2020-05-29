@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:network_to_file_image/network_to_file_image.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -683,7 +684,8 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                     child: GestureDetector(
                       onTap: () async {
                         if (await Permission.storage.request().isGranted) {
-                          await reportView(context, widget.recipe);
+                          await reportView(context, widget.recipe,
+                              widget.recipe.coverPhotoUrl[0]);
                           // Either the permission was already granted before or the user just granted it.
                         } else {
                           showDialog(
@@ -693,12 +695,12 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                 title: Text(
                                     "Failed To Generate PDF.\nWe are looking into it"),
                                 actions: <Widget>[
-                                  InkWell(
-                                    child: Text('OK'),
-                                    onTap: () {
+                                  FlatButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                  ),
+                                  )
                                 ],
                               );
                             },

@@ -458,8 +458,30 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                 .copyWith(fontSize: 20),
                           ),
                         ),
-                      recommendedCategoriesBuilder(context,
-                          recommendedCategoriesList, mealsFromCategory),
+                      if (isloading)
+                        recommendedCategoriesBuilder(
+                            context,
+                            [
+                              CategoryModel(
+                                title: "",
+                                categoryUrl: "",
+                                timestamp: null,
+                              ),
+                              CategoryModel(
+                                title: "",
+                                categoryUrl: "",
+                                timestamp: null,
+                              ),
+                              CategoryModel(
+                                title: "",
+                                categoryUrl: "",
+                                timestamp: null,
+                              ),
+                            ],
+                            null),
+                      if (!isloading)
+                        recommendedCategoriesBuilder(context,
+                            recommendedCategoriesList, mealsFromCategory),
                       if (time >= 6 && time < 12)
                         timeRecommendation(
                           context,
@@ -512,7 +534,32 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                               .copyWith(fontSize: 20),
                         ),
                       ),
-                      recommendedRecipesBuilder(context, recommended),
+                      if (isloading)
+                        recommendedRecipesBuilder(context, [
+                          FavouritesModel(
+                            title: "",
+                            desc: "",
+                            coverPhotoUrl: "",
+                            timestamp: null,
+                            recipeUrl: "",
+                          ),
+                          FavouritesModel(
+                            title: "",
+                            desc: "",
+                            coverPhotoUrl: "",
+                            timestamp: null,
+                            recipeUrl: "",
+                          ),
+                          FavouritesModel(
+                            title: "",
+                            desc: "",
+                            coverPhotoUrl: "",
+                            timestamp: null,
+                            recipeUrl: "",
+                          ),
+                        ]),
+                      if (!isloading)
+                        recommendedRecipesBuilder(context, recommended),
                     ],
                   ),
                   if (isSearch)
@@ -650,7 +697,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 "Add Ingredients",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .headline6,
+                                                    .bodyText2
+                                                    .copyWith(
+                                                        fontSize: 22,
+                                                        fontWeight:
+                                                            FontWeight.w300),
                                               ),
                                             ),
 
@@ -823,7 +874,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 "Remove Ingredients",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .headline6,
+                                                    .bodyText2
+                                                    .copyWith(
+                                                        fontSize: 22,
+                                                        fontWeight:
+                                                            FontWeight.w300),
                                               ),
                                             ),
 

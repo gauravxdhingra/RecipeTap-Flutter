@@ -1,5 +1,6 @@
 // import 'package:flutter_example/pdf.dart';
 import 'package:flutter/services.dart';
+import 'package:network_to_file_image/network_to_file_image.dart';
 import 'package:pdf/pdf.dart';
 import 'dart:io';
 import 'package:pdf/widgets.dart';
@@ -11,7 +12,7 @@ import './pdf_viewer_page.dart';
 
 import 'package:flutter/material.dart' as material;
 
-reportView(context, RecipeModel recipe) async {
+reportView(context, RecipeModel recipe, String photoUrl) async {
   try {
     final Document pdf = Document();
     String filePath;
@@ -60,6 +61,18 @@ reportView(context, RecipeModel recipe) async {
         // k++;
         nutritionalFacts = nutritionalFacts + element.toString() + "\n";
       });
+
+    // final String imgdir = (await getApplicationDocumentsDirectory()).path;
+    // String pathh = '$imgdir/pdfcover.jpg';
+    // File filee = File(pathh);
+    // print(photoUrl);
+    // material.Image(
+    //     image: NetworkToFileImage(url: photoUrl, file: filee, debug: true));
+
+    // final image = PdfImage.file(
+    //   pdf.document,
+    //   bytes: filee.readAsBytesSync(),
+    // );
 
     pdf.addPage(MultiPage(
         pageFormat:
@@ -124,6 +137,7 @@ reportView(context, RecipeModel recipe) async {
                         // Play Store Url
                       ])),
               Header(level: 1, text: recipe.title),
+              // Image(image),
               // Recipe Cover Image Here
               Paragraph(
                 text: recipe.desc,
@@ -212,6 +226,7 @@ reportView(context, RecipeModel recipe) async {
           );
         });
   } catch (e) {
+    print(e);
     material.showDialog(
       context: context,
       builder: (context) {
@@ -219,12 +234,12 @@ reportView(context, RecipeModel recipe) async {
           title:
               material.Text("Failed To Generate PDF.\nWe are looking into it"),
           actions: <material.Widget>[
-            material.InkWell(
-              child: material.Text('OK'),
-              onTap: () {
+            material.FlatButton(
+              child: material.Text("OK"),
+              onPressed: () {
                 material.Navigator.pop(context);
               },
-            ),
+            )
           ],
         );
       },
