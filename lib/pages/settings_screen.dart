@@ -17,7 +17,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   // bool isAuth;
-  bool authSkipped;
+  // bool authSkipped;
   String profilePhotoUrl;
   String username;
   String email;
@@ -99,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     _isLoading = false;
 
-    setState(() {});
+    // setState(() {});
   }
 
   BorderRadius openContainerBR = BorderRadius.only(
@@ -289,18 +289,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                     "Logout"),
                                                                 onTap:
                                                                     () async {
-                                                                  await _signOut()
-                                                                      .then(
-                                                                          (value) {
+                                                                  await _signOut();
+                                                                  authSkipped =
+                                                                      true;
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  setState(() {
                                                                     currentUser =
                                                                         null;
-                                                                    setState(
-                                                                        () {
-                                                                      currentUser =
-                                                                          null;
-                                                                    });
-                                                                    Navigator.pop(
-                                                                        context);
                                                                   });
                                                                 },
                                                               ),

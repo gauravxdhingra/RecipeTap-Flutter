@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:recipetap/widgets/loading_spinner.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_chips_input/flutter_chips_input.dart';
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String profilePhotoUrl;
   String email;
 
+  bool isLoading = true;
   TextEditingController inclController = TextEditingController();
   TextEditingController exclController = TextEditingController();
   TextEditingController normalSearchController = TextEditingController();
@@ -85,6 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     super.initState();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   login() {
@@ -179,30 +184,37 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // final auth = Provider.of<AuthProvider>(context);
-    print(MediaQuery.of(context).size.height.toString() +
-        "w" +
-        MediaQuery.of(context).size.width.toString());
+    // print(MediaQuery.of(context).size.height.toString() +
+    //     "w" +
+    //     MediaQuery.of(context).size.width.toString());
     return Scaffold(
-      body: (isAuth || authSkipped)
-          ? PageView(
-              controller: pageController,
-              physics: PageScrollPhysics(),
-              children: <Widget>[
-                HomeScreenWidget(),
-                Consumer<RecentsProvider>(
-                    builder: (context, recents, _) => CategoriesScreen()),
-                Consumer<RecentsProvider>(
-                    builder: (context, recents, _) => FavouritesScreen()),
-                // SearchScreen(),
-                SettingsScreen(),
-              ],
-              onPageChanged: (i) {
-                _selectedIndex = i;
-                setState(() {});
-              },
-              pageSnapping: false,
-            )
-          : LoginPage(),
+      body:
+          // (isAuth || authSkipped)
+          //     ?
+          isLoading
+              ? LoadingSpinner(
+                  size: 100,
+                  color: Colors.grey,
+                )
+              : PageView(
+                  controller: pageController,
+                  physics: PageScrollPhysics(),
+                  children: <Widget>[
+                    HomeScreenWidget(),
+                    Consumer<RecentsProvider>(
+                        builder: (context, recents, _) => CategoriesScreen()),
+                    Consumer<RecentsProvider>(
+                        builder: (context, recents, _) => FavouritesScreen()),
+                    // SearchScreen(),
+                    SettingsScreen(),
+                  ],
+                  onPageChanged: (i) {
+                    _selectedIndex = i;
+                    setState(() {});
+                  },
+                  pageSnapping: false,
+                ),
+      // : LoginPage(),
       bottomNavigationBar: isAuth || authSkipped
           ? Container(
               decoration: BoxDecoration(

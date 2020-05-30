@@ -1,7 +1,6 @@
     // TODO: FCM Notifications
-
-profile url null at login
-login screen not setting state after login with google
+    // TODO: Delete Account
+    // TODO: SharedPref for Onboarding
 
     // TODO: Navigation Animations 
     // TODO: Review all 10,000 Suggestions

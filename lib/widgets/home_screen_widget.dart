@@ -368,9 +368,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                profilePhotoUrl,
+                                currentUser.photoUrl,
                                 fit: BoxFit.cover,
                               ),
+                              // TODO
+                              // TODO
                             )
                           : Icon(
                               Icons.person,
@@ -391,13 +393,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   children: <Widget>[
                     Text(
                       currentUser != null
-                          ? 'Welcome, ${username.split(" ")[0]} !'
+                          ? 'Welcome, ${currentUser.username.split(" ")[0]} !'
                           : 'Welcome!',
                       style: Theme.of(context).textTheme.headline1.copyWith(
                             fontSize: 22,
                             color: Colors.white,
                           ),
                     ),
+                    // TODO
+                    // TODO
                     Padding(
                       padding: const EdgeInsets.only(top: 2.0),
                       child: Text(
@@ -497,26 +501,33 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                           ),
                         ),
                       if (isloading)
-                        recommendedCategoriesBuilder(
-                            context,
-                            [
-                              CategoryModel(
-                                title: "",
-                                categoryUrl: "",
-                                timestamp: null,
-                              ),
-                              CategoryModel(
-                                title: "",
-                                categoryUrl: "",
-                                timestamp: null,
-                              ),
-                              CategoryModel(
-                                title: "",
-                                categoryUrl: "",
-                                timestamp: null,
-                              ),
-                            ],
-                            null),
+                        Padding(
+                          padding: MediaQuery.of(context).size.height > 740
+                              ? EdgeInsets.all(0)
+                              : EdgeInsets.symmetric(
+                                  vertical: 10,
+                                ),
+                          child: recommendedCategoriesBuilder(
+                              context,
+                              [
+                                CategoryModel(
+                                  title: "",
+                                  categoryUrl: "",
+                                  timestamp: null,
+                                ),
+                                CategoryModel(
+                                  title: "",
+                                  categoryUrl: "",
+                                  timestamp: null,
+                                ),
+                                CategoryModel(
+                                  title: "",
+                                  categoryUrl: "",
+                                  timestamp: null,
+                                ),
+                              ],
+                              null),
+                        ),
                       if (!isloading)
                         recommendedCategoriesBuilder(context,
                             recommendedCategoriesList, mealsFromCategory),
@@ -560,18 +571,19 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                           "https://www.allrecipes.com/recipes/454/everyday-cooking/more-meal-ideas/15-minute-meals/",
                           TextStyle(color: Colors.white),
                         ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10,
+                      if (MediaQuery.of(context).size.height > 740)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                            "Recommended Recipes".toUpperCase(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1
+                                .copyWith(fontSize: 20),
+                          ),
                         ),
-                        child: Text(
-                          "Recommended Recipes".toUpperCase(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              .copyWith(fontSize: 20),
-                        ),
-                      ),
                       if (isloading)
                         recommendedRecipesBuilder(context, [
                           FavouritesModel(

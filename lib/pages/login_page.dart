@@ -39,6 +39,9 @@ class _LoginPageState extends State<LoginPage> {
     //   _isLoading = true;
     // });
     await googleSignIn.signIn();
+
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => HomeScreen()));
     // await Provider.of<AuthProvider>(context, listen: false).login();
   }
 
