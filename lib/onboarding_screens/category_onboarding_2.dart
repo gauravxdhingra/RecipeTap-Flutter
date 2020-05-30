@@ -20,7 +20,6 @@ class CategoryOnboarding2 extends StatelessWidget {
                 child: ClipRRect(
                   child: Image.asset(
                     'assets/onboarding/category.jpg',
-                    // TODO chnage photo luscious
                     width: MediaQuery.of(context).size.width * 0.8,
                   ),
                   borderRadius: BorderRadius.circular(25),

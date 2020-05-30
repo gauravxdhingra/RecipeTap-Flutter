@@ -21,7 +21,6 @@ class DirectionsOnboarding3 extends StatelessWidget {
                 child: ClipRRect(
                   child: Image.asset(
                     'assets/onboarding/directions.jpg',
-                    // TODO change image direcyons too big
                     width: MediaQuery.of(context).size.width * 0.8,
                   ),
                   borderRadius: BorderRadius.circular(20),

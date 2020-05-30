@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:clay_containers/clay_containers.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipetap/models/favourites_model.dart';
 import 'package:recipetap/pages/home_screen.dart';
@@ -24,7 +24,7 @@ class _BuildFavInFavouritesState extends State<BuildFavInFavourites> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // TODO changed from 2.8
+      
       height: MediaQuery.of(context).size.height >= 700
           ? MediaQuery.of(context).size.height / 2.5
           : MediaQuery.of(context).size.height / 2.0,

@@ -2,7 +2,7 @@
 // import 'dart:ui';
 
 // import 'package:autocomplete_textfield/autocomplete_textfield.dart';
-import 'package:clay_containers/clay_containers.dart';
+// import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:floating_search_bar/floating_search_bar.dart';
@@ -20,7 +20,7 @@ import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/models/userdata.dart';
 import 'package:recipetap/pages/catagories_screen.dart';
 import 'package:recipetap/pages/favourites_screen.dart';
-import 'package:recipetap/pages/login_page.dart';
+// import 'package:recipetap/pages/login_page.dart';
 // import 'package:recipetap/pages/login_page.dart';
 import 'package:recipetap/pages/search_results.dart';
 // import 'package:recipetap/pages/search_screen.dart';
@@ -62,8 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
   // GlobalKey<AutoCompleteTextFieldState<String>> keyy = GlobalKey();
-
-// TODO: Handle empty search result page 404
 
   @override
   void initState() {

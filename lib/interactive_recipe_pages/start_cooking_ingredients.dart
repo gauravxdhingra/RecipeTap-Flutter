@@ -18,9 +18,9 @@ class _StartCookingIngredientsState extends State<StartCookingIngredients> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
-    int i = 0;
+    // int i = 0;
     widget.recipe.ingredients.forEach((element) {
-      i++;
+      // i++;
       grabbed.add(false);
     });
     super.initState();

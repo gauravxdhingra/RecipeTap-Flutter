@@ -5,3 +5,6 @@
     // TODO Concentric Cooking Experience
     // TODO filters
     // TODO: Searchlist suggestions Order the List
+
+Filter Locations:
+    [search_results, build_recipe_list_results, categories_recipe_screen, home_screen_widget]

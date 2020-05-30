@@ -5,14 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:provider/provider.dart';
-import 'package:recipetap/jump_screens/loading_category_recipes.dart';
+// import 'package:recipetap/jump_screens/loading_category_recipes.dart';
 import 'package:recipetap/models/category_options_card.dart';
 import 'package:recipetap/models/recipe_card.dart';
 import 'package:recipetap/pages/search_results.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/utility/shared_prefs.dart';
-import 'package:recipetap/widgets/build_recipe_list_results.dart';
+// import 'package:recipetap/widgets/build_recipe_list_results.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
 import 'package:recipetap/models/category_model.dart';
 
@@ -319,8 +319,6 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
 
     // if (this.mounted)
   }
-
-// TODO: First Check if next Page Exists
 
   getSearchResultsNext(url) async {
     // print(url);

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:recipetap/models/recipe_card.dart';
-import 'package:recipetap/pages/recipe_view_page.dart';
+// import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:recipetap/widgets/build_recipe_list_results.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
 import 'package:recipetap/utility/shared_prefs.dart';

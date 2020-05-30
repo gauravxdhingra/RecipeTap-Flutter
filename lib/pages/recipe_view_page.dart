@@ -23,9 +23,7 @@ class RecipeViewPage extends StatefulWidget {
 class _RecipeViewPageState extends State<RecipeViewPage> {
   bool isLoading = true;
 
-  // TODO handle empty image
-  // TODO solve-if image rail is empty
-  // TODO: Solve no image bug
+
   // https://images.media-allrecipes.com/images/82579.png
 
   // final String url =

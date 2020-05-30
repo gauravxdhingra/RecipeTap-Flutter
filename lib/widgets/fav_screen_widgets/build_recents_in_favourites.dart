@@ -27,7 +27,6 @@ class _BuildRecentsInFavouritesState extends State<BuildRecentsInFavourites> {
     // final width = MediaQuery.of(context).size.width * 4 / 5;
     // const widthh = const width;
     return Container(
-      // TODO: Changed from height / 3 + 50
       height: MediaQuery.of(context).size.height >= 700
           ? MediaQuery.of(context).size.height / 2.3
           : MediaQuery.of(context).size.height / 2.0,

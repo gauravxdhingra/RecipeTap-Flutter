@@ -4,13 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:recipetap/jump_screens/aww_snap_screen.dart';
 import 'package:recipetap/onboarding_screens/Welcome.dart';
 import 'package:recipetap/pages/home_screen.dart';
-import 'package:recipetap/pages/login_page.dart';
-import 'package:recipetap/pages/search_screen.dart';
-import 'package:recipetap/utility/route_generator.dart';
-import 'package:recipetap/widgets/loading_spinner.dart';
+// import 'package:recipetap/pages/login_page.dart';
+// import 'package:recipetap/pages/search_screen.dart';
+// import 'package:recipetap/utility/route_generator.dart';
+// import 'package:recipetap/widgets/loading_spinner.dart';
 import 'package:animations/animations.dart';
 import 'pages/recipe_view_page.dart';
-import 'utility/push_notifications.dart';
+// import 'utility/push_notifications.dart';
 import 'utility/shared_prefs.dart';
 
 // import './provider/auth_provider.dart';

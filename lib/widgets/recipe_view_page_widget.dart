@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -190,8 +190,6 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                   ),
                 ),
               ),
-
-              // TODO Adjust max resolution for loading Images
               floatingPosition: FloatingPosition(
                   left: MediaQuery.of(context).size.width * 0.8),
               expandedHeight: MediaQuery.of(context).size.height / 3,

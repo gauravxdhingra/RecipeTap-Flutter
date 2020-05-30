@@ -3,7 +3,6 @@ import 'package:concentric_transition/concentric_transition.dart';
 import 'package:recipetap/onboarding_screens/save_as_pdf_4.dart';
 import 'package:recipetap/onboarding_screens/search_onboarding_1.dart';
 import 'package:recipetap/onboarding_screens/timeoftheday_5.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/login_page.dart';
 
 import 'category_onboarding_2.dart';
