@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:concentric_transition/concentric_transition.dart';
+import 'package:recipetap/onboarding_screens/save_as_pdf_4.dart';
+import 'package:recipetap/onboarding_screens/search_onboarding_1.dart';
+import 'package:recipetap/onboarding_screens/timeoftheday_5.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'category_onboarding_2.dart';
+import 'directions_onboarding_3.dart';
 
 class Welcome extends StatefulWidget {
   Welcome({Key key}) : super(key: key);
@@ -14,30 +20,33 @@ class _WelcomeState extends State<Welcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ConcentricPageView(
-        colors: <Color>[Colors.white, Colors.blue, Colors.red],
-        itemCount: 4, // null = infinity
+        colors: <Color>[
+          Colors.black,
+          Colors.redAccent[700],
+          Colors.white,
+
+          Color(0xffff2e63),
+          Color(0xff010a43),
+          // Color(0xffffd0cc),
+          // Color(0xff120136),
+        ],
+        itemCount: 5, // null = infinity
         // physics: NeverScrollableScrollPhysics(),
+
         duration: Duration(milliseconds: 1500),
         physics: BouncingScrollPhysics(),
         itemBuilder: (int index, double value) {
-          return Center(
-            child: Container(
-              child: Text('Page $index'),
-            ),
-          );
+          return pageCard(index);
         },
       ),
     );
   }
 }
 
-setVisitingFlag() async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  preferences.setBool("alreadyVisited", true);
-}
-
-Future<bool> getVisitingFlag() async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  bool alreadyVisited = preferences.getBool("alreadyVisited") ?? false;
-  return alreadyVisited;
+pageCard(int index) {
+  if (index == 0) return SearchOnboarding1();
+  if (index == 1) return CategoryOnboarding2();
+  if (index == 2) return DirectionsOnboarding3();
+  if (index == 3) return SaveAsPdfOnboarding4();
+  if (index == 4) return TimeOfTheDayOnboarding5();
 }

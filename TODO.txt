@@ -1,7 +1,5 @@
     // TODO: FCM Notifications
     Onboarding And Login Screen + Shared Pref
-    Shared Pref veg nonveg
-    empty search result oreo + milk
 
     // TODO: Navigation Animations 
     // TODO: Review all 10,000 Suggestions
