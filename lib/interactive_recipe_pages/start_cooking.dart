@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:recipetap/interactive_recipe_pages/start_cooking_ingredients.dart';
 import 'package:recipetap/models/recipe_model.dart';
+import 'package:concentric_transition/concentric_transition.dart';
 
 class StartCooking extends StatelessWidget {
   const StartCooking({Key key, @required this.recipe}) : super(key: key);
@@ -160,7 +161,7 @@ class StartCooking extends StatelessWidget {
         onPressed: () {
           Navigator.push(
               context,
-              MaterialPageRoute(
+              ConcentricPageRoute(
                   builder: (context) => StartCookingIngredients(
                         recipe: recipe,
                       )));

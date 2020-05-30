@@ -94,13 +94,14 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
 
     String cooksNotes = "";
     int j = 0;
-    recipe.cooksNotes.forEach((element) {
-      j++;
-      if (recipe.steps[j - 1].toString().trim() != "" &&
-          !recipe.steps[j - 1].toString().trim().contains("Cook's") &&
-          !recipe.steps[j - 1].toString().trim().contains("calories"))
-        cooksNotes = cooksNotes + element.toString() + "\n";
-    });
+    if (recipe.oldWebsite)
+      recipe.cooksNotes.forEach((element) {
+        j++;
+        if (recipe.steps[j - 1].toString().trim() != "" &&
+            !recipe.steps[j - 1].toString().trim().contains("Cook's") &&
+            !recipe.steps[j - 1].toString().trim().contains("calories"))
+          cooksNotes = cooksNotes + element.toString() + "\n";
+      });
 
     String yeild;
     if (recipe.yeild == null) {
