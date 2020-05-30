@@ -1,7 +1,5 @@
     // TODO: FCM Notifications
 
-    // TODO: Navigation Animations 
-
     // TODO: Review all 10,000 Suggestions
     // ADMOB
     // TODO Concentric Cooking Experience

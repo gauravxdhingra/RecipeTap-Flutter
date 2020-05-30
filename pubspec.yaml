@@ -70,6 +70,8 @@ dependencies:
   # network_to_file_image: ^2.3.1
   # custom_refresh_indicator: ^0.8.0+1
   custom_refresh_indicator:
+  animations: ^1.0.0+5
+  firebase_messaging: ^6.0.16
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

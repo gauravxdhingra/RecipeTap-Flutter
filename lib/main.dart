@@ -8,18 +8,21 @@ import 'package:recipetap/pages/login_page.dart';
 import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/utility/route_generator.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
-
+import 'package:animations/animations.dart';
 import 'pages/recipe_view_page.dart';
+import 'utility/push_notifications.dart';
 import 'utility/shared_prefs.dart';
 
 // import './provider/auth_provider.dart';
 // import './provider/favorites_provider.dart';
 import './provider/recently_viewed_provider.dart';
 
+PushNotificationsManager pushNotificationsManager = PushNotificationsManager();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   alreadyVisited = await getVisitingFlag();
   print(alreadyVisited);
+  await pushNotificationsManager.init();
   runApp(MyApp());
 }
 
@@ -73,6 +76,12 @@ class MyApp extends StatelessWidget {
               fontFamily: 'OpenSans',
             ),
           )),
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: FadeThroughPageTransitionsBuilder(),
+              // ZoomPageTransitionsBuilder(),
+            },
+          ),
         ),
         darkTheme: ThemeData.dark().copyWith(
           accentColor: Colors.pink[900],
