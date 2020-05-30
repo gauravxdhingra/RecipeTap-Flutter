@@ -270,7 +270,7 @@ class _RecipeViewPageWidgetState extends State<RecipeViewPageWidget> {
                                     fit: BoxFit.contain,
                                     color: Theme.of(context).brightness ==
                                             Brightness.dark
-                                        ? Colors.grey
+                                        ? Colors.white
                                         : null,
                                   )
                                 : Image.network(

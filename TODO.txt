@@ -1,8 +1,7 @@
-    // TODO: FCM Notifications
+    // TODO: Remove Beef via Contains => Categories 
 
-    // TODO: Review all 10,000 Suggestions
+
     // ADMOB
     // TODO Concentric Cooking Experience
     // TODO filters
-    // TODO: Searchlist suggestions Ordering
-    // TODO bummer page and empty 404
+    // TODO: Searchlist suggestions Order the List
