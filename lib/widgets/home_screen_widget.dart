@@ -290,7 +290,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   );
 
   Duration duration = Duration(milliseconds: 400);
-  Curve curve = Curves.easeIn;
+  Curve curve = Curves.ease;
 
   // _showDialog(Widget child) {
   //   slideDialog.showSlideDialog(
