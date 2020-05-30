@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-import 'package:recipetap/pages/home_screen.dart';
-// import '../provider/auth_provider.dart';
-import 'package:flutter_brand_icons/flutter_brand_icons.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'dart:ui';
+
+import 'package:clay_containers/clay_containers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_brand_icons/flutter_brand_icons.dart';
+
 import '../utility/shared_prefs.dart';
+import 'home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -87,9 +87,9 @@ class _LoginPageState extends State<LoginPage> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: const EdgeInsets.only(right: 10, top: 30),
+              padding: const EdgeInsets.only(right: 10, top: 35),
               child: FlatButton(
-                color: Colors.white.withOpacity(0.16),
+                color: Colors.white.withOpacity(0.2),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 onPressed: () => _skipSignIn(),
@@ -105,13 +105,17 @@ class _LoginPageState extends State<LoginPage> {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              padding: EdgeInsets.only(top: 80, left: 40, right: 40),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: Image.asset(
-                  "assets/onboarding/favourites.jpg",
-                  fit: BoxFit.cover,
-                  scale: 2.2,
+              padding: EdgeInsets.only(top: 120, left: 40, right: 40),
+              child: ClayContainer(
+                borderRadius: 25,
+                color: Colors.redAccent[700],
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.asset(
+                    "assets/onboarding/favourites.jpg",
+                    fit: BoxFit.cover,
+                    scale: 2.2,
+                  ),
                 ),
               ),
             ),
@@ -125,14 +129,16 @@ class _LoginPageState extends State<LoginPage> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 0),
               child: ClayContainer(
-                color: Colors.redAccent[700],
+                color: Colors.transparent,
+                // Colors.redAccent[700],
                 borderRadius: 15,
                 depth: 90,
+                spread: 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: 70,
                   decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(15)),
                   child: FlatButton(
                     onPressed: _submit,
@@ -141,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: <Widget>[
                         Icon(
                           BrandIcons.google,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         SizedBox(
                           width: 20,
@@ -149,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                         Text(
                           'Sign In With Google',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 22,
                           ),
                         ),

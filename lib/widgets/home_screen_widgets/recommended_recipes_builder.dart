@@ -1,8 +1,10 @@
+import 'dart:ui';
+
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:recipetap/models/favourites_model.dart';
-import 'package:recipetap/pages/recipe_view_page.dart';
-import 'dart:ui';
+
+import '../../models/favourites_model.dart';
+import '../../pages/recipe_view_page.dart';
 
 Container recommendedRecipesBuilder(
     BuildContext context, List<FavouritesModel> recommended) {

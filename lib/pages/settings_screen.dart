@@ -2,13 +2,13 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_brand_icons/flutter_brand_icons.dart';
-// import 'package:provider/provider.dart';
-import 'package:recipetap/pages/home_screen.dart';
-import 'package:recipetap/widgets/loading_spinner.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:recipetap/utility/shared_prefs.dart';
+
 import '../provider/recently_viewed_provider.dart';
+import '../utility/shared_prefs.dart';
+import '../widgets/loading_spinner.dart';
+import 'home_screen.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 
 class SettingsScreen extends StatefulWidget {

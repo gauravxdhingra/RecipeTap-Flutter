@@ -1,15 +1,12 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-// import 'package:neuomorphic_container/neuomorphic_container.dart';
-// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-// import 'package:recipetap/jump_screens/aww_snap_screen.dart';
-import 'package:recipetap/models/recipe_card.dart';
-import 'package:recipetap/pages/recipe_view_page.dart';
-import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
-import 'package:recipetap/utility/shared_prefs.dart';
+import 'package:http/http.dart' as http;
 
+import '../models/recipe_card.dart';
+import '../pages/recipe_view_page.dart';
+import '../utility/shared_prefs.dart';
 import 'loading_spinner.dart';
 
 class BuildRecipeListResults extends StatefulWidget {

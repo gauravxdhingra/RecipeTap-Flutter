@@ -14,7 +14,7 @@ class TimeOfTheDayOnboarding5 extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 180),
+                  const EdgeInsets.symmetric(horizontal: 30, vertical: 150),
               child: ClayContainer(
                 color: Colors.black,
                 borderRadius: 30,

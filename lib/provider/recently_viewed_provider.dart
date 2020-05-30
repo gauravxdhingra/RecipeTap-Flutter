@@ -3,14 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipetap/models/recipe_model.dart';
-// import 'package:recipetap/models/userdata.dart';
 import 'package:recipetap/pages/home_screen.dart';
-// import 'package:recipetap/provider/auth_provider.dart';
-// import 'package:recipetap/provider/favorites_provider.dart';
-// import 'package:uuid/uuid.dart';
-import '../models/recents_model.dart';
-import '../models/favourites_model.dart';
+
 import '../models/category_model.dart';
+import '../models/favourites_model.dart';
+import '../models/recents_model.dart';
 // import 'package:provider/provider.dart';
 
 final recentsRef = Firestore.instance.collection('recentlyViewed');

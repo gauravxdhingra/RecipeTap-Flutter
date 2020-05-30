@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
-import 'package:recipetap/models/recipe_card.dart';
-// import 'package:recipetap/pages/recipe_view_page.dart';
-import 'package:recipetap/widgets/build_recipe_list_results.dart';
-import 'package:recipetap/widgets/loading_spinner.dart';
-import 'package:recipetap/utility/shared_prefs.dart';
+import 'package:http/http.dart' as http;
+
+import '../models/recipe_card.dart';
+import '../utility/shared_prefs.dart';
+import '../widgets/build_recipe_list_results.dart';
+import '../widgets/loading_spinner.dart';
 
 class SearchResultsScreen extends StatefulWidget {
   static const routeName = 'search_result_screen';

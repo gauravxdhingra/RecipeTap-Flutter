@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:recipetap/interactive_recipe_pages/start_cooking_bon_appetit.dart';
-import 'package:recipetap/models/recipe_model.dart';
+
+import '../models/recipe_model.dart';
+import 'start_cooking_bon_appetit.dart';
 
 class StartCookingSteps extends StatefulWidget {
   StartCookingSteps({Key key, this.recipe}) : super(key: key);

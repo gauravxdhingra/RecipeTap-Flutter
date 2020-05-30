@@ -1,23 +1,22 @@
 // import 'package:flutter_example/pdf.dart';
-import 'package:flutter/services.dart';
-// import 'package:network_to_file_image/network_to_file_image.dart';
-import 'package:pdf/pdf.dart';
 import 'dart:io';
-import 'package:pdf/widgets.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:recipetap/models/recipe_model.dart';
-import 'package:share_extend/share_extend.dart';
-import './pdf_viewer_page.dart';
-import 'package:http/http.dart' show get;
-// import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 import 'package:flutter/material.dart' as material;
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' show get;
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart';
+import 'package:recipetap/models/recipe_model.dart';
+import 'package:share_extend/share_extend.dart';
+
+import './pdf_viewer_page.dart';
 
 reportView(context, RecipeModel recipe, String photoUrl) async {
   try {
     final Document pdf = Document();
     String filePath;
-    String ingredients = "";
+
     final font = await rootBundle.load("assets/fonts/OpenSans-Regular.ttf");
     final ttf = Font.ttf(font);
     final fontBold = await rootBundle.load("assets/fonts/OpenSans-Bold.ttf");
@@ -38,16 +37,30 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
     // recipe.ingredients.forEach((element) {
     //   ingredients = ingredients + element.toString() + "\n";
     // });
-
+    String ingredients = "";
+    List ingredientss = [];
     if (recipe.oldWebsite)
       for (int x = 0; x < recipe.ingredients.length; x++) {
-        ingredients = ingredients + recipe.ingredients[x].toString() + "\n";
+        // ingredients = ingredients + recipe.ingredients[x].toString() + "\n\n";
+        // ingredientss.add(recipe.ingredients[x].toString() + "\n");
+        ingredientss.add(recipe.ingredients[x].toString());
+        //  + "\n");
+        // ingredientss.add("\n");
       }
 
     if (!recipe.oldWebsite)
       for (int x = 0; x < recipe.ingredients.length - 2; x++) {
-        ingredients = ingredients + recipe.ingredients[x].toString() + "\n";
+        // ingredients = ingredients + recipe.ingredients[x].toString() + "\n\n";
+        // ingredientss.add(recipe.ingredients[x].toString() + "\n");
+        // ingredientss.add(recipe.ingredients[x].toString() + "\n");
+        ingredientss.add(recipe.ingredients[x].toString());
+        // ingredientss.add("\n");
       }
+
+    // for (int i = 0; i < ingredients.split("\n\n").length; i++) {
+    //   ingredientss.add(ingredients.split("\n\n")[i].toString() + "\n\n77");
+    // }
+    // print(ingredientss);
 
     String directions = "";
     // int i = 0;
@@ -65,7 +78,7 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
 
     // if (recipe.oldWebsite)
 
-    print(recipe.steps);
+    // print(recipe.steps);
     for (int x = 0; x < recipe.steps.length - 1; x++) {
       // x++;
       // if (recipe.steps[x - 2].toString().trim() != "" &&
@@ -76,6 +89,11 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
           "\n" +
           recipe.steps[x].toString() +
           "\n\n";
+    }
+    List directionss = [];
+
+    for (int i = 0; i < directions.split("\n\n").length; i++) {
+      directionss.add(directions.split("\n\n")[i]);
     }
 
     // if (!recipe.oldWebsite)
@@ -112,7 +130,7 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
 
     String nutritionalFacts = "";
     // int k = 0;
-    print(recipe.nutritionalFacts);
+    // print(recipe.nutritionalFacts);
 
     if (recipe.nutritionalFacts != null &&
         recipe.nutritionalFacts != []) if (recipe.oldWebsite)
@@ -128,7 +146,7 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
             nutritionalFacts + recipe.nutritionalFacts[x].toString() + "\n";
       }
 
-    print(nutritionalFacts);
+    // print(nutritionalFacts);
 
     // final String imgdir = (await getApplicationDocumentsDirectory()).path;
     // String pathh = '$imgdir/pdfcover.jpg';
@@ -212,87 +230,101 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
                   ]));
         },
         build: (Context context) => <Widget>[
-              Header(
-                  level: 0,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('RecipeTap', textScaleFactor: 2),
-                        Text('Available on Google Play', textScaleFactor: 1)
-                        // LOGO
-                        // Play Store Url
-                      ])),
-              Header(level: 1, text: recipe.title),
-              if (photoUrl != null &&
-                  photoUrl !=
-                      "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
-                  photoUrl !=
-                      "https://images.media-allrecipes.com/images/82579.png" &&
-                  photoUrl !=
-                      "https://images.media-allrecipes.com/images/79591.png")
-                Padding(padding: const EdgeInsets.all(10)),
+              Wrap(children: [
+                Header(
+                    level: 0,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('RecipeTap', textScaleFactor: 2),
+                          Text('Available on Google Play', textScaleFactor: 1)
+                          // LOGO
+                          // Play Store Url
+                        ])),
+                Header(level: 1, text: recipe.title),
+                if (photoUrl != null &&
+                    photoUrl !=
+                        "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
+                    photoUrl !=
+                        "https://images.media-allrecipes.com/images/82579.png" &&
+                    photoUrl !=
+                        "https://images.media-allrecipes.com/images/79591.png")
+                  Padding(padding: const EdgeInsets.all(10)),
 
-              if (photoUrl != null &&
-                  photoUrl !=
-                      "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
-                  photoUrl !=
-                      "https://images.media-allrecipes.com/images/82579.png" &&
-                  photoUrl !=
-                      "https://images.media-allrecipes.com/images/79591.png")
-                Image(
-                  image,
-                  fit: BoxFit.cover,
-                  height: 220,
-                  width: 220,
-                  alignment: Alignment.center,
+                if (photoUrl != null &&
+                    photoUrl !=
+                        "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
+                    photoUrl !=
+                        "https://images.media-allrecipes.com/images/82579.png" &&
+                    photoUrl !=
+                        "https://images.media-allrecipes.com/images/79591.png")
+                  Image(
+                    image,
+                    fit: BoxFit.cover,
+                    height: 220,
+                    width: 220,
+                    alignment: Alignment.center,
+                  ),
+                if (photoUrl != null &&
+                    photoUrl !=
+                        "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
+                    photoUrl !=
+                        "https://images.media-allrecipes.com/images/82579.png" &&
+                    photoUrl !=
+                        "https://images.media-allrecipes.com/images/79591.png")
+                  Padding(padding: const EdgeInsets.all(10)),
+                // Recipe Cover Image Here
+                Paragraph(
+                  text: recipe.desc,
+                  textAlign: TextAlign.center,
                 ),
-              if (photoUrl != null &&
-                  photoUrl !=
-                      "https://www.allrecipes.com/img/icons/generic-recipe.svg" &&
-                  photoUrl !=
-                      "https://images.media-allrecipes.com/images/82579.png" &&
-                  photoUrl !=
-                      "https://images.media-allrecipes.com/images/79591.png")
+
+                // Paragraph(
+                //     text:
+                //        ),
                 Padding(padding: const EdgeInsets.all(10)),
-              // Recipe Cover Image Here
-              Paragraph(
-                text: recipe.desc,
-                textAlign: TextAlign.center,
-              ),
+                Table.fromTextArray(
+                  context: context,
+                  data: <List<String>>[
+                    <String>['Time', 'Servings', 'Yeild'],
+                    <String>[recipe.time, recipe.servings, yeild],
+                  ],
+                  cellAlignment: Alignment.center,
+                ),
+                Padding(padding: const EdgeInsets.all(10)),
+                SizedBox(height: 20),
+                Header(level: 2, text: 'Ingredients'),
+                // Paragraph(text: ingredients),
+                for (var i in ingredientss)
+                  Paragraph(
+                      text: i.toString(), padding: EdgeInsets.only(right: 200)),
 
-              // Paragraph(
-              //     text:
-              //        ),
-              Padding(padding: const EdgeInsets.all(10)),
-              Table.fromTextArray(
-                context: context,
-                data: <List<String>>[
-                  <String>['Time', 'Servings', 'Yeild'],
-                  <String>[recipe.time, recipe.servings, yeild],
-                ],
-                cellAlignment: Alignment.center,
-              ),
-              Padding(padding: const EdgeInsets.all(10)),
-              SizedBox(height: 20),
-              Header(level: 2, text: 'Ingredients'),
-              Paragraph(text: ingredients),
-              Padding(padding: const EdgeInsets.all(10)),
-              Header(level: 2, text: 'Directions'),
-              Paragraph(text: directions),
-              Padding(padding: const EdgeInsets.all(10)),
+                Padding(padding: const EdgeInsets.all(10)),
 
-              if (cooksNotes.trim() != "")
-                Header(level: 2, text: "Cook's Notes"),
-              if (cooksNotes.trim() != "")
-                Paragraph(text: cooksNotes),
+                Header(level: 2, text: 'Directions'),
 
-              if (nutritionalFacts.trim() != "")
-                Header(level: 2, text: "Nutritional Facts"),
-              if (nutritionalFacts.trim() != "")
-                Paragraph(text: nutritionalFacts),
+                for (var i in directionss)
+                  Paragraph(
+                    text: i.toString(),
+                  ),
 
-              //   if (cooksNotes.trim() != "")
-              // Paragraph(text: nutritionalFacts),
+                // Paragraph(text: directions),
+
+                Padding(padding: const EdgeInsets.all(10)),
+
+                if (cooksNotes.trim() != "")
+                  Header(level: 2, text: "Cook's Notes"),
+                if (cooksNotes.trim() != "")
+                  Paragraph(text: cooksNotes),
+
+                if (nutritionalFacts.trim() != "")
+                  Header(level: 2, text: "Nutritional Facts"),
+                if (nutritionalFacts.trim() != "")
+                  Paragraph(text: nutritionalFacts),
+
+                //   if (cooksNotes.trim() != "")
+                // Paragraph(text: nutritionalFacts),
+              ])
             ]));
     //save PDF
     final String dir = (await getApplicationDocumentsDirectory()).path;

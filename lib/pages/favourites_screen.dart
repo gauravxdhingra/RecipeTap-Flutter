@@ -1,23 +1,20 @@
 import 'dart:ui';
 
 import 'package:clay_containers/clay_containers.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-// import 'package:flutter_brand_icons/flutter_brand_icons.dart';
-import 'package:provider/provider.dart';
-import 'package:recipetap/pages/categories_recipe_screen.dart';
-import 'package:recipetap/pages/home_screen.dart';
-// import 'package:recipetap/pages/recipe_view_page.dart';
-// import 'package:recipetap/pages/settings_screen.dart';
-// import 'package:recipetap/provider/auth_provider.dart';
-import 'package:recipetap/provider/recently_viewed_provider.dart';
-import 'package:recipetap/models/recents_model.dart';
-import 'package:recipetap/models/favourites_model.dart';
-import 'package:recipetap/models/category_model.dart';
-import 'package:recipetap/widgets/fav_screen_widgets/build_recents_in_favourites.dart';
-import 'package:recipetap/widgets/fav_screen_widgets/build_fav_in_favourites.dart';
-import 'package:recipetap/widgets/loading_spinner.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
+import '../models/category_model.dart';
+import '../models/favourites_model.dart';
+import '../models/recents_model.dart';
+import '../provider/recently_viewed_provider.dart';
+import '../widgets/fav_screen_widgets/build_fav_in_favourites.dart';
+import '../widgets/fav_screen_widgets/build_recents_in_favourites.dart';
+import '../widgets/loading_spinner.dart';
+import 'categories_recipe_screen.dart';
+import 'home_screen.dart';
 
 class ParalaxConfig {
   final int level;

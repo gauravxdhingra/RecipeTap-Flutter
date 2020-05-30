@@ -2,17 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-// import 'package:network_to_file_image/network_to_file_image.dart';
-// import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:recipetap/models/recipe_model.dart';
 import 'package:recipetap/pages/home_screen.dart';
-// import 'package:recipetap/provider/auth_provider.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/utility/pdf_creator.dart';
-// import 'package:screenshot/screenshot.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 
 import 'loading_spinner.dart';

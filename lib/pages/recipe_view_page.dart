@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:recipetap/interactive_recipe_pages/start_cooking.dart';
-import 'package:recipetap/jump_screens/loading_recipe_screen.dart';
-import 'package:recipetap/models/recipe_model.dart';
-import 'package:recipetap/provider/recently_viewed_provider.dart';
-import 'package:recipetap/widgets/recipe_view_page_widget.dart';
 
+import '../interactive_recipe_pages/start_cooking.dart';
+import '../jump_screens/loading_recipe_screen.dart';
+import '../models/recipe_model.dart';
+import '../provider/recently_viewed_provider.dart';
+import '../widgets/recipe_view_page_widget.dart';
 import 'home_screen.dart';
 
 class RecipeViewPage extends StatefulWidget {

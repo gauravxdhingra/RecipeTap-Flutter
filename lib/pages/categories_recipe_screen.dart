@@ -1,23 +1,20 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-// import 'package:recipetap/jump_screens/loading_category_recipes.dart';
-import 'package:recipetap/models/category_options_card.dart';
-import 'package:recipetap/models/recipe_card.dart';
-import 'package:recipetap/pages/search_results.dart';
-// import 'package:recipetap/provider/auth_provider.dart';
-import 'package:recipetap/provider/recently_viewed_provider.dart';
-import 'package:recipetap/utility/shared_prefs.dart';
-// import 'package:recipetap/widgets/build_recipe_list_results.dart';
-import 'package:recipetap/widgets/loading_spinner.dart';
-import 'package:recipetap/models/category_model.dart';
 
+import '../models/category_model.dart';
+import '../models/category_options_card.dart';
+import '../models/recipe_card.dart';
+import '../provider/recently_viewed_provider.dart';
+import '../utility/shared_prefs.dart';
+import '../widgets/loading_spinner.dart';
 import 'home_screen.dart';
 import 'recipe_view_page.dart';
+import 'search_results.dart';
 
 class CategoryRecipesScreen extends StatefulWidget {
   final String url;

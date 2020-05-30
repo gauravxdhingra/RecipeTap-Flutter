@@ -1,7 +1,9 @@
+import 'dart:ui';
+
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:recipetap/models/category_model.dart';
-import 'dart:ui';
+
+import '../../models/category_model.dart';
 
 Container recommendedCategoriesBuilder(BuildContext context,
     List<CategoryModel> recommendedCategoriesList, Function mealsFromCategory) {

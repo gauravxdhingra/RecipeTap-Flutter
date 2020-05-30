@@ -2,11 +2,12 @@ import 'dart:ui';
 
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:recipetap/models/recents_model.dart';
-import 'package:recipetap/pages/home_screen.dart';
-import 'package:recipetap/pages/recipe_view_page.dart';
-import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../../models/recents_model.dart';
+import '../../pages/home_screen.dart';
+import '../../pages/recipe_view_page.dart';
+import '../../provider/recently_viewed_provider.dart';
 
 class BuildRecentsInFavourites extends StatefulWidget {
   const BuildRecentsInFavourites({

@@ -1,7 +1,8 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:recipetap/pages/categories_recipe_screen.dart';
-import 'package:recipetap/pages/search_results.dart';
+
+import '../../pages/categories_recipe_screen.dart';
+import '../../pages/search_results.dart';
 
 Padding timeRecommendation(
   BuildContext context,

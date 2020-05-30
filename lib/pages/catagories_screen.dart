@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:html/dom.dart' as dom;
-// import 'package:html/parser.dart' as parser;
-import 'package:recipetap/jump_screens/loading_categories_screen.dart';
-import 'package:recipetap/jump_screens/retry_screen.dart';
-// import 'package:recipetap/provider/recently_viewed_provider.dart';
-import 'package:recipetap/widgets/all_categories_scroll.dart';
+
+import '../jump_screens/loading_categories_screen.dart';
+import '../jump_screens/retry_screen.dart';
+import '../widgets/all_categories_scroll.dart';
 
 // import 'categories_recipe_screen.dart';
 
