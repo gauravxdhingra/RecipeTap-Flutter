@@ -303,23 +303,44 @@ reportView(context, RecipeModel recipe, String photoUrl) async {
       path = '$dir/${recipe.title}.pdf';
       filePath = path;
     }
-    final File file = File(path);
+    File file = File(path);
     await file.writeAsBytes(pdf.save());
-    String dirext = (await getExternalStorageDirectory()).path;
-    dirext = dirext.split("/Android")[0] + "/RecipeTap";
-    print(dirext);
 
-    String pathext;
-    if (recipe.title.length > 25) {
-      pathext = '$dirext/${recipe.title.substring(0, 25)}.pdf';
-      // filePath = pathext;
-    } else {
-      pathext = '$dirext/${recipe.title}.pdf';
-      // filePath = pathext;
+    // Ext
+    try {
+      String dirext = (await getExternalStorageDirectory()).path;
+      dirext = dirext.split("/Android")[0] + "/RecipeTap";
+      print(dirext);
+
+      String pathext;
+      if (recipe.title.length > 25) {
+        pathext = '$dirext/${recipe.title.substring(0, 25)}.pdf';
+        // filePath = pathext;
+      } else {
+        pathext = '$dirext/${recipe.title}.pdf';
+        // filePath = pathext;
+      }
+      // final String pathext = ;
+      final File fileext = File(pathext);
+      await fileext.writeAsBytes(pdf.save());
+    } catch (e) {
+      String dirext = (await getExternalStorageDirectory()).path;
+      // dirext = dirext.split("/Android")[0] + "/RecipeTap";
+      print(dirext);
+
+      String pathext;
+      if (recipe.title.length > 25) {
+        pathext = '$dirext/${recipe.title.substring(0, 25)}.pdf';
+        // filePath = pathext;
+      } else {
+        pathext = '$dirext/${recipe.title}.pdf';
+        // filePath = pathext;
+      }
+      // final String pathext = ;
+      final File fileext = File(pathext);
+      await fileext.writeAsBytes(pdf.save());
     }
-    // final String pathext = ;
-    final File fileext = File(pathext);
-    await fileext.writeAsBytes(pdf.save());
+    // Nav
     material.Navigator.pop(context);
     material.showDialog(
         context: context,

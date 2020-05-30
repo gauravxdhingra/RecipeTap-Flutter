@@ -12,7 +12,7 @@ class CategoryOnboarding2 extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
               child: ClayContainer(
                 color: Colors.redAccent[700],
                 borderRadius: 25,

@@ -4,6 +4,7 @@ import 'package:recipetap/onboarding_screens/save_as_pdf_4.dart';
 import 'package:recipetap/onboarding_screens/search_onboarding_1.dart';
 import 'package:recipetap/onboarding_screens/timeoftheday_5.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../pages/login_page.dart';
 
 import 'category_onboarding_2.dart';
 import 'directions_onboarding_3.dart';
@@ -29,7 +30,7 @@ class _WelcomeState extends State<Welcome> {
           // Color(0xffffd0cc),
           // Color(0xff120136),
         ],
-        itemCount: 5, // null = infinity
+        itemCount: 6, // null = infinity
         duration: Duration(milliseconds: 1500),
         // physics: NeverScrollableScrollPhysics(),
         physics: BouncingScrollPhysics(),
@@ -48,4 +49,5 @@ pageCard(int index) {
   if (index == 2) return DirectionsOnboarding3();
   if (index == 3) return SaveAsPdfOnboarding4();
   if (index == 4) return TimeOfTheDayOnboarding5();
+  if (index == 5) return LoginPage();
 }

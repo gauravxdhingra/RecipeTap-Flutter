@@ -1,5 +1,6 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
+import 'package:concentric_transition/concentric_transition.dart';
 
 class TimeOfTheDayOnboarding5 extends StatelessWidget {
   const TimeOfTheDayOnboarding5({Key key}) : super(key: key);
@@ -41,6 +42,7 @@ class TimeOfTheDayOnboarding5 extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w300,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -76,7 +78,7 @@ class TimeOfTheDayOnboarding5 extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: "TIme",
+                      text: "Time",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 32,
@@ -90,6 +92,25 @@ class TimeOfTheDayOnboarding5 extends StatelessWidget {
               ),
             ),
           ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipPath(
+              clipper: ConcentricClipper(
+                progress: 0, // from 0.0 to 1.0
+                reverse: false,
+                radius: 300.0,
+                verticalPosition: 0.75,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  print("det");
+                },
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
