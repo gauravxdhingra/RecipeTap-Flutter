@@ -17,7 +17,7 @@ class SaveAsPdfOnboarding4 extends StatelessWidget {
               child: ClayContainer(
                 borderRadius: 30,
                 depth: 60,
-                color: Color(0xffff2e63),
+                color: Colors.redAccent[700],
                 child: ClipRRect(
                   child: Image.asset(
                     'assets/onboarding/saveaspdf.jpg',

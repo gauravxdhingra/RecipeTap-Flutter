@@ -15,17 +15,36 @@ class TimeOfTheDayOnboarding5 extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 10, vertical: 180),
               child: ClayContainer(
-                color: Color(0xff010a43),
+                color: Colors.black,
                 borderRadius: 30,
                 depth: 90,
-                spread: 4,
-                child: ClipRRect(
-                  child: Image.asset(
-                    'assets/images/fridge.jpg',
-                    // TODO change image direcyons too big
-                    // width: MediaQuery.of(context).size.width * 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(30),
+                // spread: 4,
+                child: Stack(
+                  children: <Widget>[
+                    ClipRRect(
+                      child: Image.asset(
+                        'assets/images/fridge.jpg',
+                        // width: MediaQuery.of(context).size.width * 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        "Late Night Cravings? \nWe Got You Covered!"
+                            .toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

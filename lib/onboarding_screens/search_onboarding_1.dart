@@ -72,11 +72,26 @@ class SearchOnboarding1 extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
               child: Image.asset(
                 'assets/logo/banner.png',
                 scale: 3,
-                color: Colors.white70,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                "Tap To Proceed".toUpperCase(),
+                style: TextStyle(
+                  fontSize: 15,
+                  // color: Colors.white.withOpacity(0.8),
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 1.5,
+                ),
               ),
             ),
           ),

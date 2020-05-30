@@ -345,13 +345,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
-  network_to_file_image:
-    dependency: "direct main"
-    description:
-      name: network_to_file_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.1"
   path:
     dependency: transitive
     description:
@@ -652,5 +645,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.8.0 <3.0.0"
+  dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.16.0 <2.0.0"

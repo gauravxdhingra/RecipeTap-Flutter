@@ -23,21 +23,20 @@ class _WelcomeState extends State<Welcome> {
         colors: <Color>[
           Colors.black,
           Colors.redAccent[700],
-          Colors.white,
-
-          Color(0xffff2e63),
-          Color(0xff010a43),
+          // Colors.white,
+          // Color(0xffff2e63),
+          // Color(0xff010a43),
           // Color(0xffffd0cc),
           // Color(0xff120136),
         ],
         itemCount: 5, // null = infinity
-        // physics: NeverScrollableScrollPhysics(),
-
         duration: Duration(milliseconds: 1500),
+        // physics: NeverScrollableScrollPhysics(),
         physics: BouncingScrollPhysics(),
         itemBuilder: (int index, double value) {
           return pageCard(index);
         },
+        radius: 300,
       ),
     );
   }

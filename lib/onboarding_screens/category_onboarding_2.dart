@@ -69,6 +69,13 @@ class CategoryOnboarding2 extends StatelessWidget {
               ),
             ),
           ),
+          // Align(
+          //   alignment: Alignment.bottomRight,
+          //   child: Padding(
+          //     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          //     child: Text("NEXT"),
+          //   ),
+          // ),
         ],
       ),
     );

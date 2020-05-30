@@ -16,8 +16,8 @@ class DirectionsOnboarding3 extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
               child: ClayContainer(
                 borderRadius: 20,
-                color: Colors.white,
-                depth: 150,
+                color: Colors.black,
+                depth: 90,
                 child: ClipRRect(
                   child: Image.asset(
                     'assets/onboarding/directions.jpg',
@@ -38,7 +38,7 @@ class DirectionsOnboarding3 extends StatelessWidget {
                 text: TextSpan(
                   text: "Follow ",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 32,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.2,
@@ -48,7 +48,7 @@ class DirectionsOnboarding3 extends StatelessWidget {
                     TextSpan(
                       text: "Along The ",
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.white60,
                         fontSize: 28,
                         fontWeight: FontWeight.w300,
                         fontStyle: FontStyle.normal,
@@ -58,7 +58,7 @@ class DirectionsOnboarding3 extends StatelessWidget {
                     TextSpan(
                       text: "Directions ",
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 32,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
@@ -68,7 +68,7 @@ class DirectionsOnboarding3 extends StatelessWidget {
                     TextSpan(
                       text: "While Cooking",
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.white60,
                         fontSize: 28,
                         fontWeight: FontWeight.w300,
                         fontStyle: FontStyle.normal,
