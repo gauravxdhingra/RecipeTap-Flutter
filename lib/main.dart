@@ -17,12 +17,12 @@ import 'utility/shared_prefs.dart';
 // import './provider/favorites_provider.dart';
 import './provider/recently_viewed_provider.dart';
 
-PushNotificationsManager pushNotificationsManager = PushNotificationsManager();
+// PushNotificationsManager pushNotificationsManager = PushNotificationsManager();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   alreadyVisited = await getVisitingFlag();
   print(alreadyVisited);
-  await pushNotificationsManager.init();
+  // await pushNotificationsManager.init();
   runApp(MyApp());
 }
 

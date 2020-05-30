@@ -4,11 +4,14 @@
 // import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:recipetap/pages/categories_recipe_screen.dart';
+import 'package:recipetap/pages/recipe_view_page.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +27,7 @@ import 'package:recipetap/pages/search_results.dart';
 import 'package:recipetap/pages/settings_screen.dart';
 import 'package:recipetap/provider/recently_viewed_provider.dart';
 import 'package:recipetap/widgets/home_screen_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import '../provider/auth_provider.dart';
 // import 'package:slimy_card/slimy_card.dart';
 
@@ -86,10 +90,16 @@ class _HomeScreenState extends State<HomeScreen> {
       print('SilentSignInError $err');
     });
 
+    initialize();
+
     super.initState();
     setState(() {
       isLoading = false;
     });
+  }
+
+  initialize() async {
+    await init();
   }
 
   login() {
@@ -159,6 +169,130 @@ class _HomeScreenState extends State<HomeScreen> {
   //   }
   //   super.didChangeDependencies();
   // }
+
+  _HomeScreenState._();
+
+  factory _HomeScreenState() => _instance;
+
+  static final _HomeScreenState _instance = _HomeScreenState._();
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  bool _initialized = false;
+
+  Future<void> init() async {
+    if (!_initialized) {
+      // For iOS request permission first.
+      _firebaseMessaging.requestNotificationPermissions();
+      _firebaseMessaging.configure(
+        // Foreground Notif
+        onMessage: (Map<String, dynamic> message) async {
+          print(message.toString());
+          serialiseAndNavigate(message);
+        },
+        // Closed
+        onLaunch: (Map<String, dynamic> message) async {
+          print(message.toString());
+          serialiseAndNavigate(message);
+        },
+        // Background
+        onResume: (Map<String, dynamic> message) async {
+          print(message.toString());
+          serialiseAndNavigate(message);
+        },
+      );
+
+      // For testing purposes print the Firebase Messaging token
+      String token = await _firebaseMessaging.getToken();
+      print("FirebaseMessaging token: $token");
+
+      _initialized = true;
+    }
+  }
+
+  void serialiseAndNavigate(Map<String, dynamic> message) async {
+    var notificationData = message['data'];
+    var view = notificationData['view'];
+
+// TODO
+// TODO
+// TODO
+// click_action
+// FLUTTER_NOTIFICATION_CLICK
+
+// Method Triggers
+// TODO
+// TODO
+// TODO
+
+    if (view != null) {
+      // Navigate to any view
+      if (view == "fav") {
+        pageController.animateToPage(2,
+            duration: Duration(milliseconds: 150), curve: Curves.ease);
+        setState(() {});
+      }
+
+      if (view == "preferences") {
+        pageController.animateToPage(3,
+            duration: Duration(milliseconds: 150), curve: Curves.ease);
+        setState(() {});
+      }
+
+      if (view == "categories") {
+        pageController.animateToPage(1,
+            duration: Duration(milliseconds: 150), curve: Curves.ease);
+        setState(() {});
+      }
+
+      if (view == "recipe") {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => RecipeViewPage(
+                  url: notificationData['url'],
+                  coverImageUrl: notificationData['coverImg'],
+                )));
+      }
+
+      if (view == "category") {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CategoryRecipesScreen(
+                  url: notificationData['url'],
+                  categoryName: notificationData['categoryName'],
+                )));
+      }
+
+      if (view == "categoryOptions") {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => SearchResultsScreen(
+                  url: notificationData['url'],
+                  appBarTitle: notificationData['appbarTitle'],
+                  excl: "",
+                  incl: "",
+                  categoryOption: true,
+                  // categoryName: notificationData['categoryName'],
+                )));
+      }
+
+      if (view == "rateUs") {
+        const url =
+            "https://play.google.com/store/apps/details?id=com.gauravxdhingra.recipetap";
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          throw 'Could not launch $url';
+        }
+
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => SearchResultsScreen(
+        //           url: notificationData['url'],
+        //           appBarTitle: notificationData['appbarTitle'],
+        //           excl: "",
+        //           incl: "",
+        //           categoryOption: true,
+        //           // categoryName: notificationData['categoryName'],
+        //         )));
+      }
+    }
+  }
 
   List<String> suggestions = SearchSuggestions.suggestions;
   @override
