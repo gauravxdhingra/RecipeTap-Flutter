@@ -221,25 +221,25 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         String exclext = "";
         if (diet == "all") {
           if (excl.isNotEmpty) {
-            exclext = ",beef,pork,ham";
+            exclext = ",beef,pork,ham,steak,veal,buffalo";
           } else
-            exclext = "beef,pork,ham";
+            exclext = "beef,pork,ham,veal,buffalo";
         }
         if (diet == "chicken") {
           if (excl.isNotEmpty) {
             exclext =
-                ",beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal";
+                ",beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal,buffalo";
           } else
             exclext =
-                "beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal";
+                "beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal,buffalo";
         }
         if (diet == "veg") {
           if (excl.isNotEmpty) {
             exclext =
-                ",fish,salmon,tuna,chicken,mutton,egg,beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal";
+                ",fish,salmon,tuna,chicken,mutton,egg,beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal,buffalo";
           } else
             exclext =
-                "fish,salmon,tuna,chicken,mutton,egg,beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal";
+                "fish,salmon,tuna,chicken,mutton,egg,beef,pork,ham,bacon,turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal,buffalo";
         }
         isSearch = await Navigator.of(context).push(
           MaterialPageRoute(

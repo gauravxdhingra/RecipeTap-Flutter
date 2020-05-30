@@ -195,12 +195,14 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             !titleRecipe.toLowerCase().contains("ham") &&
             !titleRecipe.toLowerCase().contains("steak") &&
             !titleRecipe.toLowerCase().contains("veal") &&
+            !titleRecipe.toLowerCase().contains("buffalo") &&
             !desc.toLowerCase().contains("beef") &&
             !desc.toLowerCase().contains("pork") &&
             !desc.toLowerCase().contains("bacon") &&
             !desc.toLowerCase().contains("ham") &&
             !desc.toLowerCase().contains("steak") &&
-            !desc.toLowerCase().contains("veal"))
+            !desc.toLowerCase().contains("veal") &&
+            !desc.toLowerCase().contains("buffalo"))
           recipeCards.add(RecipeCard(
             title: titleRecipe,
             desc: desc,
@@ -226,6 +228,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             !titleRecipe.toLowerCase().contains("oyster") &&
             !titleRecipe.toLowerCase().contains("chevon") &&
             !titleRecipe.toLowerCase().contains("veal") &&
+            !titleRecipe.toLowerCase().contains("buffalo") &&
             !desc.toLowerCase().contains("beef") &&
             !desc.toLowerCase().contains("pork") &&
             !desc.toLowerCase().contains("bacon") &&
@@ -241,7 +244,8 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             !desc.toLowerCase().contains("lobster") &&
             !desc.toLowerCase().contains("oyster") &&
             !desc.toLowerCase().contains("chevon") &&
-            !desc.toLowerCase().contains("veal"))
+            !desc.toLowerCase().contains("veal") &&
+            !desc.toLowerCase().contains("buffalo"))
           recipeCards.add(RecipeCard(
             title: titleRecipe,
             desc: desc,
@@ -255,6 +259,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             !titleRecipe.toLowerCase().contains("tuna") &&
             !titleRecipe.toLowerCase().contains("salmon") &&
             !titleRecipe.toLowerCase().contains("mutton") &&
+            !titleRecipe.toLowerCase().contains("goat") &&
             !titleRecipe.toLowerCase().contains("egg") &&
             !titleRecipe.toLowerCase().contains("beef") &&
             !titleRecipe.toLowerCase().contains("pork") &&
@@ -272,10 +277,12 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             !titleRecipe.toLowerCase().contains("oyster") &&
             !titleRecipe.toLowerCase().contains("chevon") &&
             !titleRecipe.toLowerCase().contains("veal") &&
+            !titleRecipe.toLowerCase().contains("buffalo") &&
             !desc.toLowerCase().contains("chicken") &&
             !desc.toLowerCase().contains("tuna") &&
             !desc.toLowerCase().contains("salmon") &&
             !desc.toLowerCase().contains("mutton") &&
+            !desc.toLowerCase().contains("goat") &&
             !desc.toLowerCase().contains("egg") &&
             !desc.toLowerCase().contains("beef") &&
             !desc.toLowerCase().contains("pork") &&
@@ -292,7 +299,8 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
             !desc.toLowerCase().contains("lobster") &&
             !desc.toLowerCase().contains("oyster") &&
             !desc.toLowerCase().contains("chevon") &&
-            !desc.toLowerCase().contains("veal"))
+            !desc.toLowerCase().contains("veal") &&
+            !desc.toLowerCase().contains("buffalo"))
           recipeCards.add(RecipeCard(
             title: titleRecipe,
             desc: desc,
