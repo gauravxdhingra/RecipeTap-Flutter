@@ -5,6 +5,7 @@ import 'package:recipetap/pages/home_screen.dart';
 import 'package:flutter_brand_icons/flutter_brand_icons.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'dart:ui';
+import '../utility/shared_prefs.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -33,6 +34,12 @@ class _LoginPageState extends State<LoginPage> {
   //   }
   //   super.didChangeDependencies();
   // }
+  @override
+  void initState() {
+    setVisitingFlag();
+    print(getVisitingFlag());
+    super.initState();
+  }
 
   Future<void> _submit() async {
     // setState(() {

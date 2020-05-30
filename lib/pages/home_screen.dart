@@ -30,7 +30,7 @@ import 'package:recipetap/widgets/home_screen_widget.dart';
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final usersRef = Firestore.instance.collection('users');
 User currentUser;
-bool authSkipped = false;
+bool authSkipped = true;
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);

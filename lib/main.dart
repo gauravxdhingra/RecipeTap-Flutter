@@ -9,21 +9,25 @@ import 'package:recipetap/pages/search_screen.dart';
 import 'package:recipetap/utility/route_generator.dart';
 import 'package:recipetap/widgets/loading_spinner.dart';
 
-import 'utility/pdf_ui.dart';
 import 'pages/recipe_view_page.dart';
+import 'utility/shared_prefs.dart';
 
 // import './provider/auth_provider.dart';
 // import './provider/favorites_provider.dart';
 import './provider/recently_viewed_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  alreadyVisited = await getVisitingFlag();
+  print(alreadyVisited);
   runApp(MyApp());
 }
 
-bool alreadyVisited = true;
+bool alreadyVisited = false;
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -86,7 +90,7 @@ class MyApp extends StatelessWidget {
         ),
 
         routes: {
-          '/': (context) => alreadyVisited ? Welcome() : HomeScreen(),
+          '/': (context) => !alreadyVisited ? Welcome() : HomeScreen(),
           HomeScreen.routeName: (context) => HomeScreen(),
           // SearchScreen.routeName: (context) => SearchScreen(),
           RecipeViewPage.routeName: (context) => RecipeViewPage(),

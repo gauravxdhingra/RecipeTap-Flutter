@@ -371,8 +371,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                 currentUser.photoUrl,
                                 fit: BoxFit.cover,
                               ),
-                              // TODO
-                              // TODO
                             )
                           : Icon(
                               Icons.person,
@@ -400,8 +398,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                             color: Colors.white,
                           ),
                     ),
-                    // TODO
-                    // TODO
                     Padding(
                       padding: const EdgeInsets.only(top: 2.0),
                       child: Text(
@@ -478,7 +474,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       ),
       body: Container(
         child: SingleChildScrollView(
-          // TODO Scrolling Issues Search Container and STack
           physics: NeverScrollableScrollPhysics(),
           child: Column(
             children: <Widget>[

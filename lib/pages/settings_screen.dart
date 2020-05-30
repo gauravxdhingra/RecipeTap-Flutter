@@ -8,6 +8,7 @@ import 'package:recipetap/widgets/loading_spinner.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:recipetap/utility/shared_prefs.dart';
+import '../provider/recently_viewed_provider.dart';
 // import 'package:recipetap/provider/auth_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -289,15 +290,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                     "Logout"),
                                                                 onTap:
                                                                     () async {
-                                                                  await _signOut();
-                                                                  authSkipped =
-                                                                      true;
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  setState(() {
-                                                                    currentUser =
-                                                                        null;
-                                                                  });
+                                                                  try {
+                                                                    await _signOut();
+                                                                    authSkipped =
+                                                                        true;
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    setState(
+                                                                        () {
+                                                                      currentUser =
+                                                                          null;
+                                                                    });
+                                                                  } catch (e) {
+                                                                    showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return AlertDialog(
+                                                                            title:
+                                                                                Text("Failed To Log Out!"),
+                                                                            content:
+                                                                                Text("Please Check Your Internet Conection and Retry"),
+                                                                          );
+                                                                        });
+                                                                  }
                                                                 },
                                                               ),
                                                               ListTile(
@@ -306,6 +323,63 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                                         .all(0),
                                                                 title: Text(
                                                                     "Delete Account"),
+                                                                onTap:
+                                                                    () async {
+                                                                  try {
+                                                                    await _signOut();
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    // FIREBASE DELETE
+                                                                    setState(
+                                                                        () {
+                                                                      _isLoading =
+                                                                          true;
+                                                                    });
+                                                                    await usersRef
+                                                                        .document(
+                                                                            currentUser.email)
+                                                                        .delete();
+                                                                    await favoritesRef
+                                                                        .document(
+                                                                            currentUser.email)
+                                                                        .delete();
+                                                                    await recentsRef
+                                                                        .document(
+                                                                            currentUser.email)
+                                                                        .delete();
+                                                                    await favoriteCategoriesRef
+                                                                        .document(
+                                                                            currentUser.email)
+                                                                        .delete();
+                                                                    // STATE HANDLING
+                                                                    authSkipped =
+                                                                        true;
+
+                                                                    setState(
+                                                                        () {
+                                                                      currentUser =
+                                                                          null;
+                                                                    });
+                                                                    setState(
+                                                                        () {
+                                                                      _isLoading =
+                                                                          false;
+                                                                    });
+                                                                  } catch (e) {
+                                                                    showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return AlertDialog(
+                                                                            title:
+                                                                                Text("Couldn't Delete Your Account"),
+                                                                            content:
+                                                                                Text("Please Check Your Internet Conection and Retry"),
+                                                                          );
+                                                                        });
+                                                                  }
+                                                                },
                                                               ),
                                                             ],
                                                           ),
