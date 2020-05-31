@@ -313,6 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // print(MediaQuery.of(context).size.height.toString() +
     //     "w" +
     //     MediaQuery.of(context).size.width.toString());
+    print(Theme.of(context).scaffoldBackgroundColor);
     return Scaffold(
       body:
           // (isAuth || authSkipped)

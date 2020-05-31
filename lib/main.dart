@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:recipetap/pages/splash_screen.dart';
 
 import './provider/recently_viewed_provider.dart';
 import 'jump_screens/aww_snap_screen.dart';
@@ -93,7 +94,7 @@ class MyApp extends StatelessWidget {
         ),
 
         routes: {
-          '/': (context) => !alreadyVisited ? Welcome() : HomeScreen(),
+          '/': (context) => !alreadyVisited ? Welcome() : SplashScreen(),
           HomeScreen.routeName: (context) => HomeScreen(),
           // SearchScreen.routeName: (context) => SearchScreen(),
           RecipeViewPage.routeName: (context) => RecipeViewPage(),

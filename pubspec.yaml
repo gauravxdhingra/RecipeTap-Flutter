@@ -31,7 +31,7 @@ dependencies:
   flutter_sticky_header: ^0.4.2
   flutter_swiper: ^1.1.6
   readmore: ^1.0.0
-  flutter_svg: ^0.17.4
+  # flutter_svg: ^0.17.4
   google_nav_bar: ^2.2.0
   # floating_search_bar: ^0.3.0
   # slimy_card: ^1.0.4
@@ -98,7 +98,6 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/svg/.
     - assets/images/.
     - assets/flare/.
     - assets/images/categories/.
@@ -129,6 +128,7 @@ flutter:
           weight: 300
         - asset: assets/fonts/OpenSans-ExtraBold.ttf
           weight: 900
+        - asset: assets/fonts/Playlist.ttf
     # - family: Trajan Pro
     #   fonts:
     #     - asset: fonts/TrajanPro.ttf
