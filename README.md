@@ -9,27 +9,6 @@ Developed using Flutter for Cross-Platform Deployment (Android and iOS)
 [https://www.linkedin.com/feed/update/urn:li:activity:6673963270581420032/](https://www.linkedin.com/feed/update/urn:li:activity:6673963270581420032/)
 
 
-![  ](https://user-images.githubusercontent.com/44085104/83658054-53c60d80-a5df-11ea-839d-e3c24c2cf116.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658058-56286780-a5df-11ea-8958-b2df6c970ef9.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658060-56c0fe00-a5df-11ea-819b-84dbb9a09d93.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658078-588ac180-a5df-11ea-9f0b-197df0c649be.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658084-59bbee80-a5df-11ea-93d3-624e9a75c514.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658085-59bbee80-a5df-11ea-811c-ad6d5b9fa981.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658087-5a548500-a5df-11ea-802e-cd0182b0fbc5.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658093-5d4f7580-a5df-11ea-9f62-10f365ea9fb6.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658111-62142980-a5df-11ea-8c50-4aa59f85dd38.jpg =200x)
-
-![  ](https://user-images.githubusercontent.com/44085104/83658117-63dded00-a5df-11ea-8671-3e51340d827a.jpg =200x)
-
-
   ## Features
 - Search Recipes From Ingredients  
 - 1 Million+ Recipes, Just A Tap Away  
