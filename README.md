@@ -47,6 +47,7 @@ Developed using Flutter for Cross-Platform Deployment (Android and iOS)
   
 And a lot of amazing features coming soon...
 
+
 ## Reporting an issue
 
 Click on the issues tab from the repository and open an issue, reporting a bug, a request for a feature or enhancement
