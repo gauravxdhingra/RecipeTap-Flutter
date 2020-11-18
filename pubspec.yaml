@@ -23,55 +23,62 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Web Scraping
   html: ^0.14.0+3
   http: ^0.12.1
-  # flutter_chips_input: ^1.8.1
-  # autocomplete_textfield: ^1.7.3
-  # sliding_up_panel: ^1.0.2
-  flutter_sticky_header: ^0.4.2
-  flutter_swiper: ^1.1.6
-  readmore: ^1.0.0
-  # flutter_svg: ^0.17.4
-  google_nav_bar: ^2.2.0
-  # floating_search_bar: ^0.3.0
-  # slimy_card: ^1.0.4
-  # lazy_loading_list: ^1.0.0+1
-  sliver_fab: ^1.0.0
-  # flutter_animation_set: ^0.0.4
-  flutter_spinkit: ^4.1.2+1
-  flare_flutter: ^2.0.3
-  # flutter_neumorphic: ^2.0.1
-  # neuomorphic_container: ^2.0.3
-  clay_containers: ^0.2.2
+  # Util
   provider: ^4.1.2
-  pdf: ^1.8.1
-  # search_app_bar: ^1.0.2+2
-  flutter_chips_input: ^1.8.1
+  path_provider: ^1.6.9
+  timeago: ^2.0.26
+  shared_preferences: ^0.5.7+3
+  url_launcher: ^5.4.10
+  permission_handler: ^5.0.0+hotfix.6
+  share_extend: ^1.1.5
+  animations: ^1.0.0+5
+  # Firebase
   google_sign_in: ^4.5.1
   cloud_firestore: ^0.13.5
-  # uuid: ^2.0.4
   firebase_auth: ^0.16.0
   firebase_core: ^0.4.4+3
   firebase_analytics: ^5.0.11
-  # slide_popup_dialog: ^0.0.2
-  path_provider: ^1.6.9
-  # screenshot: ^0.1.1
-  # image_gallery_saver: ^1.2.2
+  firebase_messaging: ^6.0.16
+  # PDF
+  pdf: ^1.8.1
   flutter_full_pdf_viewer: ^1.0.6
-  # flutter_custom_dialog: ^1.0.19
-  # esys_flutter_share: ^1.0.2
-  share_extend: ^1.1.5
-  timeago: ^2.0.26
-  concentric_transition: ^0.1.1
-  shared_preferences: ^0.5.7+3
+  # UI, Animations and Others
+  flare_flutter: ^2.0.3
   flutter_brand_icons: ^1.1.0
-  url_launcher: ^5.4.10
-  permission_handler: ^5.0.0+hotfix.6
+  flutter_spinkit: ^4.1.2+1
+  readmore: ^1.0.0
+  custom_refresh_indicator:
+  concentric_transition: ^0.1.1
+  flutter_sticky_header: ^0.4.2
+  flutter_swiper: ^1.1.6
+  google_nav_bar: ^2.2.0
+  sliver_fab: ^1.0.0
+  clay_containers: ^0.2.2
+  flutter_chips_input: ^1.8.1
+  
+  
+
   # network_to_file_image: ^2.3.1
   # custom_refresh_indicator: ^0.8.0+1
-  custom_refresh_indicator:
-  animations: ^1.0.0+5
-  firebase_messaging: ^6.0.16
+  # flutter_custom_dialog: ^1.0.19
+  # esys_flutter_share: ^1.0.2
+  # screenshot: ^0.1.1
+  # image_gallery_saver: ^1.2.2
+  # uuid: ^2.0.4
+  # flutter_neumorphic: ^2.0.1
+  # neuomorphic_container: ^2.0.3
+  # search_app_bar: ^1.0.2+2
+  # flutter_animation_set: ^0.0.4
+  # floating_search_bar: ^0.3.0
+  # slimy_card: ^1.0.4
+  # lazy_loading_list: ^1.0.0+1
+  # flutter_svg: ^0.17.4
+  # flutter_chips_input: ^1.8.1
+  # autocomplete_textfield: ^1.7.3
+  # sliding_up_panel: ^1.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
