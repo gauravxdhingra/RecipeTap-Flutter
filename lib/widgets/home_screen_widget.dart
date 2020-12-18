@@ -4,7 +4,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chips_input/flutter_chips_input.dart';
+// import 'package:flutter_chips_input/flutter_chips_input.dart';
 
 import '../models/category_model.dart';
 import '../models/favourites_model.dart';
@@ -749,92 +749,92 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             FontWeight.w300),
                                               ),
                                             ),
+// TODO
+                                            // Padding(
+                                            //   padding:
+                                            //       const EdgeInsets.symmetric(
+                                            //     // vertical: 20,
+                                            //     horizontal: 20,
+                                            //   ),
+                                            //   child: ChipsInput(
+                                            //     initialValue: include,
+                                            //     //  includei
+                                            //     //     .split("[")[1]
+                                            //     //     .split("]")[0]
+                                            //     //     .split(",")
+                                            //     //     .toList(),
+                                            //     //     .forEach((element) {
+                                            //     //   include[i] =
+                                            //     //       element.toString();
+                                            //     //   i++;
+                                            //     // }),
 
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                // vertical: 20,
-                                                horizontal: 20,
-                                              ),
-                                              child: ChipsInput(
-                                                initialValue: include,
-                                                //  includei
-                                                //     .split("[")[1]
-                                                //     .split("]")[0]
-                                                //     .split(",")
-                                                //     .toList(),
-                                                //     .forEach((element) {
-                                                //   include[i] =
-                                                //       element.toString();
-                                                //   i++;
-                                                // }),
-
-                                                decoration: InputDecoration(
-                                                  labelText:
-                                                      'Select Ingredients',
-                                                  // counter: Text(
-                                                  //   include.length
-                                                  //           .toString() ??
-                                                  //       "0",
-                                                  // ),
-                                                ),
-                                                onChanged: (data) {
-                                                  // includei =
-                                                  //     data.toString();
-                                                  include = data;
-                                                  print(include);
-                                                  // setState(() {});
-                                                  // print(includei);
-                                                },
-                                                chipBuilder:
-                                                    (context, state, profile) {
-                                                  return InputChip(
-                                                    key: ObjectKey(profile),
-                                                    label: Text(profile),
-                                                    onDeleted: () => state
-                                                        .deleteChip(profile),
-                                                    materialTapTargetSize:
-                                                        MaterialTapTargetSize
-                                                            .shrinkWrap,
-                                                  );
-                                                },
-                                                findSuggestions:
-                                                    (String query) {
-                                                  if (query.length != 0) {
-                                                    var lowercaseQuery =
-                                                        query.toLowerCase();
-                                                    return SearchSuggestions
-                                                        .suggestions
-                                                        .where((ingredient) {
-                                                      return ingredient
-                                                          .toLowerCase()
-                                                          .contains(query
-                                                              .toLowerCase());
-                                                    }).toList(growable: false)
-                                                          ..sort((a, b) => a
-                                                              .toLowerCase()
-                                                              .indexOf(
-                                                                  lowercaseQuery)
-                                                              .compareTo(b
-                                                                  .toLowerCase()
-                                                                  .indexOf(
-                                                                      lowercaseQuery)));
-                                                  } else {
-                                                    return [];
-                                                  }
-                                                },
-                                                suggestionBuilder: (context,
-                                                    state, ingredient) {
-                                                  return ListTile(
-                                                    key: ObjectKey(ingredient),
-                                                    title: Text(ingredient),
-                                                    onTap: () =>
-                                                        state.selectSuggestion(
-                                                            ingredient),
-                                                  );
-                                                },
-                                              ),
-                                            ),
+                                            //     decoration: InputDecoration(
+                                            //       labelText:
+                                            //           'Select Ingredients',
+                                            //       // counter: Text(
+                                            //       //   include.length
+                                            //       //           .toString() ??
+                                            //       //       "0",
+                                            //       // ),
+                                            //     ),
+                                            //     onChanged: (data) {
+                                            //       // includei =
+                                            //       //     data.toString();
+                                            //       include = data;
+                                            //       print(include);
+                                            //       // setState(() {});
+                                            //       // print(includei);
+                                            //     },
+                                            //     chipBuilder:
+                                            //         (context, state, profile) {
+                                            //       return InputChip(
+                                            //         key: ObjectKey(profile),
+                                            //         label: Text(profile),
+                                            //         onDeleted: () => state
+                                            //             .deleteChip(profile),
+                                            //         materialTapTargetSize:
+                                            //             MaterialTapTargetSize
+                                            //                 .shrinkWrap,
+                                            //       );
+                                            //     },
+                                            //     findSuggestions:
+                                            //         (String query) {
+                                            //       if (query.length != 0) {
+                                            //         var lowercaseQuery =
+                                            //             query.toLowerCase();
+                                            //         return SearchSuggestions
+                                            //             .suggestions
+                                            //             .where((ingredient) {
+                                            //           return ingredient
+                                            //               .toLowerCase()
+                                            //               .contains(query
+                                            //                   .toLowerCase());
+                                            //         }).toList(growable: false)
+                                            //               ..sort((a, b) => a
+                                            //                   .toLowerCase()
+                                            //                   .indexOf(
+                                            //                       lowercaseQuery)
+                                            //                   .compareTo(b
+                                            //                       .toLowerCase()
+                                            //                       .indexOf(
+                                            //                           lowercaseQuery)));
+                                            //       } else {
+                                            //         return [];
+                                            //       }
+                                            //     },
+                                            //     suggestionBuilder: (context,
+                                            //         state, ingredient) {
+                                            //       return ListTile(
+                                            //         key: ObjectKey(ingredient),
+                                            //         title: Text(ingredient),
+                                            //         onTap: () =>
+                                            //             state.selectSuggestion(
+                                            //                 ingredient),
+                                            //       );
+                                            //     },
+                                            //   ),
+                                            // ),
                                             // FlatButton(),
                                           ],
                                         ),
@@ -927,99 +927,100 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               ),
                                             ),
 
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                // vertical: 20,
-                                                horizontal: 20,
-                                              ),
-                                              child: ChipsInput(
-                                                initialValue: exclude,
-                                                //  includei
-                                                //     .split("[")[1]
-                                                //     .split("]")[0]
-                                                //     .split(",")
-                                                //     .toList(),
-                                                //     .forEach((element) {
-                                                //   include[i] =
-                                                //       element.toString();
-                                                //   i++;
-                                                // }),
+// TODO
+                                            // Padding(
+                                            //   padding:
+                                            //       const EdgeInsets.symmetric(
+                                            //     // vertical: 20,
+                                            //     horizontal: 20,
+                                            //   ),
+                                            //   child: ChipsInput(
+                                            //     initialValue: exclude,
+                                            //     //  includei
+                                            //     //     .split("[")[1]
+                                            //     //     .split("]")[0]
+                                            //     //     .split(",")
+                                            //     //     .toList(),
+                                            //     //     .forEach((element) {
+                                            //     //   include[i] =
+                                            //     //       element.toString();
+                                            //     //   i++;
+                                            //     // }),
 
-                                                decoration: InputDecoration(
-                                                  labelText:
-                                                      'Select Ingredients',
-                                                  // counter: Text(
-                                                  //   include.length
-                                                  //           .toString() ??
-                                                  //       "0",
-                                                  // ),
-                                                ),
-                                                onChanged: (data) {
-                                                  // includei =
-                                                  //     data.toString();
-                                                  exclude = data;
-                                                  print(exclude);
-                                                  // setState(() {});
-                                                  // print(includei);
-                                                },
-                                                chipBuilder:
-                                                    (context, state, profile) {
-                                                  return InputChip(
-                                                    key: ObjectKey(profile),
-                                                    label: Text(profile),
-                                                    onDeleted: () => state
-                                                        .deleteChip(profile),
-                                                    materialTapTargetSize:
-                                                        MaterialTapTargetSize
-                                                            .shrinkWrap,
-                                                  );
-                                                },
-                                                findSuggestions:
-                                                    (String query) {
-                                                  if (query.length != 0) {
-                                                    var lowercaseQuery =
-                                                        query.toLowerCase();
-                                                    return SearchSuggestions
-                                                        .suggestions
-                                                        .where((ingredient) {
-                                                      return ingredient
-                                                          .toLowerCase()
-                                                          .contains(query
-                                                              .toLowerCase());
-                                                    }).toList(growable: false)
-                                                          ..sort((a, b) => a
-                                                              .toLowerCase()
-                                                              .indexOf(
-                                                                  lowercaseQuery)
-                                                              .compareTo(b
-                                                                  .toLowerCase()
-                                                                  .indexOf(
-                                                                      lowercaseQuery)))
-                                                          ..sort((a, b) => a
-                                                              .replaceAll(
-                                                                  " ", "")
-                                                              .length
-                                                              .compareTo(b
-                                                                  .replaceAll(
-                                                                      " ", "")
-                                                                  .length));
-                                                  } else {
-                                                    return [];
-                                                  }
-                                                },
-                                                suggestionBuilder: (context,
-                                                    state, ingredient) {
-                                                  return ListTile(
-                                                    key: ObjectKey(ingredient),
-                                                    title: Text(ingredient),
-                                                    onTap: () =>
-                                                        state.selectSuggestion(
-                                                            ingredient),
-                                                  );
-                                                },
-                                              ),
-                                            ),
+                                            //     decoration: InputDecoration(
+                                            //       labelText:
+                                            //           'Select Ingredients',
+                                            //       // counter: Text(
+                                            //       //   include.length
+                                            //       //           .toString() ??
+                                            //       //       "0",
+                                            //       // ),
+                                            //     ),
+                                            //     onChanged: (data) {
+                                            //       // includei =
+                                            //       //     data.toString();
+                                            //       exclude = data;
+                                            //       print(exclude);
+                                            //       // setState(() {});
+                                            //       // print(includei);
+                                            //     },
+                                            //     chipBuilder:
+                                            //         (context, state, profile) {
+                                            //       return InputChip(
+                                            //         key: ObjectKey(profile),
+                                            //         label: Text(profile),
+                                            //         onDeleted: () => state
+                                            //             .deleteChip(profile),
+                                            //         materialTapTargetSize:
+                                            //             MaterialTapTargetSize
+                                            //                 .shrinkWrap,
+                                            //       );
+                                            //     },
+                                            //     findSuggestions:
+                                            //         (String query) {
+                                            //       if (query.length != 0) {
+                                            //         var lowercaseQuery =
+                                            //             query.toLowerCase();
+                                            //         return SearchSuggestions
+                                            //             .suggestions
+                                            //             .where((ingredient) {
+                                            //           return ingredient
+                                            //               .toLowerCase()
+                                            //               .contains(query
+                                            //                   .toLowerCase());
+                                            //         }).toList(growable: false)
+                                            //               ..sort((a, b) => a
+                                            //                   .toLowerCase()
+                                            //                   .indexOf(
+                                            //                       lowercaseQuery)
+                                            //                   .compareTo(b
+                                            //                       .toLowerCase()
+                                            //                       .indexOf(
+                                            //                           lowercaseQuery)))
+                                            //               ..sort((a, b) => a
+                                            //                   .replaceAll(
+                                            //                       " ", "")
+                                            //                   .length
+                                            //                   .compareTo(b
+                                            //                       .replaceAll(
+                                            //                           " ", "")
+                                            //                       .length));
+                                            //       } else {
+                                            //         return [];
+                                            //       }
+                                            //     },
+                                            //     suggestionBuilder: (context,
+                                            //         state, ingredient) {
+                                            //       return ListTile(
+                                            //         key: ObjectKey(ingredient),
+                                            //         title: Text(ingredient),
+                                            //         onTap: () =>
+                                            //             state.selectSuggestion(
+                                            //                 ingredient),
+                                            //       );
+                                            //     },
+                                            //   ),
+                                            // ),
                                             // FlatButton(),
                                           ],
                                         ),

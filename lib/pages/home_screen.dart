@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:native_updater/native_updater.dart';
 import 'package:provider/provider.dart';
 import 'package:recipetap/models/search_suggestions.dart';
 import 'package:recipetap/models/userdata.dart';
@@ -198,6 +199,11 @@ class _HomeScreenState extends State<HomeScreen> {
       print("FirebaseMessaging token: $token");
 
       _initialized = true;
+
+      await NativeUpdater.displayUpdateAlert(
+        context,
+        forceUpdate: true,
+      );
     }
   }
 
@@ -313,34 +319,27 @@ class _HomeScreenState extends State<HomeScreen> {
     // print(MediaQuery.of(context).size.height.toString() +
     //     "w" +
     //     MediaQuery.of(context).size.width.toString());
-    print(Theme.of(context).scaffoldBackgroundColor);
+    // print(Theme.of(context).scaffoldBackgroundColor);
     return Scaffold(
-      body:
-          // (isAuth || authSkipped)
-          //     ?
-          isLoading
-              ? LoadingSpinner(
-                  size: 100,
-                  color: Colors.grey,
-                )
-              : PageView(
-                  controller: pageController,
-                  physics: PageScrollPhysics(),
-                  children: <Widget>[
-                    HomeScreenWidget(),
-                    Consumer<RecentsProvider>(
-                        builder: (context, recents, _) => CategoriesScreen()),
-                    Consumer<RecentsProvider>(
-                        builder: (context, recents, _) => FavouritesScreen()),
-                    // SearchScreen(),
-                    SettingsScreen(),
-                  ],
-                  onPageChanged: (i) {
-                    _selectedIndex = i;
-                    setState(() {});
-                  },
-                  pageSnapping: false,
-                ),
+      body: isLoading
+          ? LoadingSpinner(size: 100, color: Colors.grey)
+          : PageView(
+              controller: pageController,
+              physics: PageScrollPhysics(),
+              children: <Widget>[
+                HomeScreenWidget(),
+                Consumer<RecentsProvider>(
+                    builder: (context, recents, _) => CategoriesScreen()),
+                Consumer<RecentsProvider>(
+                    builder: (context, recents, _) => FavouritesScreen()),
+                SettingsScreen(),
+              ],
+              onPageChanged: (i) {
+                _selectedIndex = i;
+                setState(() {});
+              },
+              pageSnapping: false,
+            ),
       // : LoginPage(),
       bottomNavigationBar: isAuth || authSkipped
           ? Container(
@@ -348,28 +347,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Theme.of(context).brightness == Brightness.light
                       ? Colors.white
                       : Theme.of(context).primaryColor,
-                  // color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25),
                   ),
                   boxShadow: [
                     BoxShadow(
-                        blurRadius: 20, color: Colors.black.withOpacity(.1))
+                      blurRadius: 20,
+                      color: Colors.black.withOpacity(.1),
+                    )
                   ]),
               child: SafeArea(
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
                   child: GNav(
-                    // backgroundColor: Theme.of(context).primaryColor,
                     gap: 8,
                     activeColor: Colors.white,
                     iconSize: 24,
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     duration: Duration(milliseconds: 800),
                     tabBackgroundColor: Theme.of(context).accentColor,
-
                     textStyle: Theme.of(context)
                         .textTheme
                         .button

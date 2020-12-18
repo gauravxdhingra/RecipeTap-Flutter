@@ -23,7 +23,6 @@ class RecipeViewPage extends StatefulWidget {
 class _RecipeViewPageState extends State<RecipeViewPage> {
   bool isLoading = true;
 
-
   // https://images.media-allrecipes.com/images/82579.png
 
   // final String url =
@@ -75,23 +74,25 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 
     if (oldWebsite) {
       headline =
-          document.getElementsByClassName("headline heading-content")[3].text;
-      var srcc;
-      try {
-        final srcfirstSplit = coverImageUrl.split("photos/")[0];
-        final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/");
+          document.getElementsByClassName("headline-wrapper")[0].text.trim();
+      // var srcc;
+      // try {
+      //   final srcfirstSplit = coverImageUrl.split("photos/")[0];
+      //   final srcsecondsplit = coverImageUrl.split("photos/")[1].split("/");
 
-        if (srcsecondsplit.length > 1) {
-          srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
-          print(srcc);
-          images.add(srcc);
-        } else
-          images.add(coverImageUrl);
-      } catch (e) {
-        if (!images.contains(srcc)) {
-          images.add(srcc);
-        }
-      }
+      //   if (srcsecondsplit.length > 1) {
+      //     srcc = srcfirstSplit + "photos/" + srcsecondsplit[1];
+      //     print(srcc);
+      //     images.add(srcc);
+      //   } else
+      //     images.add(coverImageUrl);
+      // } catch (e) {
+      //   if (!images.contains(srcc)) {
+      //     images.add(srcc);
+      //   }
+      // }
+
+      images.add(coverImageUrl);
 
       var otherImagesRef = document.getElementsByClassName("ugc-photos-link");
       int count = 0;
@@ -248,7 +249,8 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
 //
 //
     } else {
-      headline = document.getElementsByClassName("recipe-summary__h1")[0].text;
+      headline =
+          document.getElementsByClassName("recipe-summary__h1")[0].text.trim();
 
       final imagerow = document
           .getElementsByClassName("photo-strip__items")[0]
@@ -451,7 +453,9 @@ class _RecipeViewPageState extends State<RecipeViewPage> {
       recipeUrl: widget.url,
       cooksNotes: oldWebsite
           ? cooksNotes
-          : newWebsiteFooterNotesExist ? cooksNotes[0] : [],
+          : newWebsiteFooterNotesExist
+              ? cooksNotes[0]
+              : [],
     );
   }
 

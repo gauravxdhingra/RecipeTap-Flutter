@@ -1,4 +1,4 @@
-import 'package:animations/animations.dart';
+// import 'package:animations/animations.dart' as anim;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -71,12 +71,12 @@ class MyApp extends StatelessWidget {
               fontFamily: 'OpenSans',
             ),
           )),
-          pageTransitionsTheme: const PageTransitionsTheme(
-            builders: <TargetPlatform, PageTransitionsBuilder>{
-              TargetPlatform.android: FadeThroughPageTransitionsBuilder(),
-              // ZoomPageTransitionsBuilder(),
-            },
-          ),
+          // pageTransitionsTheme: const PageTransitionsTheme(
+          //   builders: <TargetPlatform, PageTransitionsBuilder>{
+          //     TargetPlatform.android: anim.FadeThroughPageTransitionsBuilder(),
+          //     // ZoomPageTransitionsBuilder(),
+          //   },
+          // ),
         ),
         darkTheme: ThemeData.dark().copyWith(
           accentColor: Colors.pink[900],

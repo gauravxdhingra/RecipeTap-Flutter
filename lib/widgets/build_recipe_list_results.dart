@@ -58,11 +58,9 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
     dom.Document document = parser.parse(response.body);
     diet = await getDiet();
     try {
-      document
-          .getElementsByClassName("title-section__text title")[0]
-          .text
-          .trim();
+      document.getElementsByClassName("component card card__category")[0];
       hasMore = true;
+      print("**************************HAS MORE SUBSC******************");
       print(hasMore);
     } catch (e) {
       try {
@@ -75,168 +73,91 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
           hasMore = true;
           print(hasMore);
         } else {
-          setState(() {
-            hasMore = false;
-            print(hasMore);
-          });
-        }
-      } catch (e) {
-        setState(() {
           hasMore = false;
           print(hasMore);
-        });
+        }
+      } catch (e) {
+        hasMore = false;
+        print(hasMore);
         return;
       }
     }
 
-    final recipeCardsFromHtml =
-        document.getElementsByClassName("fixed-recipe-card");
+    setState(() {});
+    try {
+      final recipeCardsFromHtml =
+          document.getElementsByClassName("fixed-recipe-card");
+      var x = recipeCardsFromHtml[0];
 
-    recipeCardsFromHtml.forEach((element) {
-      final imageUrlRecipe = element
-          .getElementsByClassName("grid-card-image-container")[0]
-          .querySelector("img")
-          .attributes["data-original-src"];
+      recipeCardsFromHtml.forEach((element) {
+        final imageUrlRecipe = element
+            .getElementsByClassName("grid-card-image-container")[0]
+            .querySelector("img")
+            .attributes["data-original-src"];
 
-      // print(imageUrlRecipe);
+        // print(imageUrlRecipe);
 
-      final titleRecipe = element
-          .getElementsByClassName("fixed-recipe-card__title-link")[0]
-          .text
-          .trim();
-      // print(titleRecipe);
+        final titleRecipe = element
+            .getElementsByClassName("fixed-recipe-card__title-link")[0]
+            .text
+            .trim();
+        // print(titleRecipe);
 
-      final desc = element.text.split(titleRecipe)[1].split("By ")[0].trim();
-      // print(desc);
+        final desc = element.text.split(titleRecipe)[1].split("By ")[0].trim();
+        // print(desc);
 
-      final href = element
-          .getElementsByClassName("fixed-recipe-card__info")[0]
-          .querySelector("a")
-          .attributes["href"]
-          .split("?internal")[0];
-      // print(href);
+        final href = element
+            .getElementsByClassName("fixed-recipe-card__info")[0]
+            .querySelector("a")
+            .attributes["href"]
+            .split("?internal")[0];
+        // print(href);
 
-      if (diet == "all") {
-        if (!titleRecipe.toLowerCase().contains("beef") &&
-            !titleRecipe.toLowerCase().contains("pork") &&
-            !titleRecipe.toLowerCase().contains("bacon") &&
-            !titleRecipe.toLowerCase().contains("ham") &&
-            !titleRecipe.toLowerCase().contains("steak") &&
-            !titleRecipe.toLowerCase().contains("veal") &&
-            !titleRecipe.toLowerCase().contains("buffalo") &&
-            !desc.toLowerCase().contains("beef") &&
-            !desc.toLowerCase().contains("pork") &&
-            !desc.toLowerCase().contains("bacon") &&
-            !desc.toLowerCase().contains("ham") &&
-            !desc.toLowerCase().contains("steak") &&
-            !desc.toLowerCase().contains("veal") &&
-            !desc.toLowerCase().contains("buffalo"))
-          recipeCards.add(RecipeCard(
-            title: titleRecipe,
+        checkFilter(
             desc: desc,
-            photoUrl: imageUrlRecipe,
+            titleRecipe: titleRecipe,
             href: href,
-          ));
-      }
-// turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal
-      if (diet == "chicken") {
-        if (!titleRecipe.toLowerCase().contains("beef") &&
-            !titleRecipe.toLowerCase().contains("pork") &&
-            !titleRecipe.toLowerCase().contains("bacon") &&
-            !titleRecipe.toLowerCase().contains("ham") &&
-            !titleRecipe.toLowerCase().contains("turkey") &&
-            !titleRecipe.toLowerCase().contains("lamb") &&
-            !titleRecipe.toLowerCase().contains("steak") &&
-            !titleRecipe.toLowerCase().contains("duck") &&
-            !titleRecipe.toLowerCase().contains("quail") &&
-            !titleRecipe.toLowerCase().contains("shrimp") &&
-            !titleRecipe.toLowerCase().contains("prawn") &&
-            !titleRecipe.toLowerCase().contains("crab") &&
-            !titleRecipe.toLowerCase().contains("lobster") &&
-            !titleRecipe.toLowerCase().contains("oyster") &&
-            !titleRecipe.toLowerCase().contains("chevon") &&
-            !titleRecipe.toLowerCase().contains("veal") &&
-            !titleRecipe.toLowerCase().contains("buffalo") &&
-            !desc.toLowerCase().contains("beef") &&
-            !desc.toLowerCase().contains("pork") &&
-            !desc.toLowerCase().contains("bacon") &&
-            !desc.toLowerCase().contains("ham") &&
-            !desc.toLowerCase().contains("turkey") &&
-            !desc.toLowerCase().contains("lamb") &&
-            !desc.toLowerCase().contains("steak") &&
-            !desc.toLowerCase().contains("duck") &&
-            !desc.toLowerCase().contains("quail") &&
-            !desc.toLowerCase().contains("shrimp") &&
-            !desc.toLowerCase().contains("prawn") &&
-            !desc.toLowerCase().contains("crab") &&
-            !desc.toLowerCase().contains("lobster") &&
-            !desc.toLowerCase().contains("oyster") &&
-            !desc.toLowerCase().contains("chevon") &&
-            !desc.toLowerCase().contains("veal") &&
-            !desc.toLowerCase().contains("buffalo"))
-          recipeCards.add(RecipeCard(
-            title: titleRecipe,
-            desc: desc,
-            photoUrl: imageUrlRecipe,
-            href: href,
-          ));
-      }
+            imageUrlRecipe: imageUrlRecipe);
+      });
+    } catch (e) {
+      print("SUB CATEGORY");
 
-      if (diet == "veg") {
-        if (!titleRecipe.toLowerCase().contains("chicken") &&
-            !titleRecipe.toLowerCase().contains("tuna") &&
-            !titleRecipe.toLowerCase().contains("salmon") &&
-            !titleRecipe.toLowerCase().contains("mutton") &&
-            !titleRecipe.toLowerCase().contains("goat") &&
-            !titleRecipe.toLowerCase().contains("egg") &&
-            !titleRecipe.toLowerCase().contains("beef") &&
-            !titleRecipe.toLowerCase().contains("pork") &&
-            !titleRecipe.toLowerCase().contains("bacon") &&
-            !titleRecipe.toLowerCase().contains("ham") &&
-            !titleRecipe.toLowerCase().contains("turkey") &&
-            !titleRecipe.toLowerCase().contains("lamb") &&
-            !titleRecipe.toLowerCase().contains("steak") &&
-            !titleRecipe.toLowerCase().contains("duck") &&
-            !titleRecipe.toLowerCase().contains("quail") &&
-            !titleRecipe.toLowerCase().contains("shrimp") &&
-            !titleRecipe.toLowerCase().contains("prawn") &&
-            !titleRecipe.toLowerCase().contains("crab") &&
-            !titleRecipe.toLowerCase().contains("lobster") &&
-            !titleRecipe.toLowerCase().contains("oyster") &&
-            !titleRecipe.toLowerCase().contains("chevon") &&
-            !titleRecipe.toLowerCase().contains("veal") &&
-            !titleRecipe.toLowerCase().contains("buffalo") &&
-            !desc.toLowerCase().contains("chicken") &&
-            !desc.toLowerCase().contains("tuna") &&
-            !desc.toLowerCase().contains("salmon") &&
-            !desc.toLowerCase().contains("mutton") &&
-            !desc.toLowerCase().contains("goat") &&
-            !desc.toLowerCase().contains("egg") &&
-            !desc.toLowerCase().contains("beef") &&
-            !desc.toLowerCase().contains("pork") &&
-            !desc.toLowerCase().contains("bacon") &&
-            !desc.toLowerCase().contains("ham") &&
-            !desc.toLowerCase().contains("turkey") &&
-            !desc.toLowerCase().contains("lamb") &&
-            !desc.toLowerCase().contains("steak") &&
-            !desc.toLowerCase().contains("duck") &&
-            !desc.toLowerCase().contains("quail") &&
-            !desc.toLowerCase().contains("shrimp") &&
-            !desc.toLowerCase().contains("prawn") &&
-            !desc.toLowerCase().contains("crab") &&
-            !desc.toLowerCase().contains("lobster") &&
-            !desc.toLowerCase().contains("oyster") &&
-            !desc.toLowerCase().contains("chevon") &&
-            !desc.toLowerCase().contains("veal") &&
-            !desc.toLowerCase().contains("buffalo"))
-          recipeCards.add(RecipeCard(
-            title: titleRecipe,
+      final recipeCardsFromHtml =
+          document.getElementsByClassName("component card card__category");
+
+      recipeCardsFromHtml.forEach((element) {
+        var imageUrlRecipe = element
+            .querySelector("div")
+            .querySelector("a")
+            .querySelector("div")
+            .attributes["data-src"];
+
+        print(imageUrlRecipe);
+
+        final titleRecipe = element
+            .getElementsByClassName("card__detailsContainer")[0]
+            .querySelector("div")
+            .querySelector("a")
+            .text
+            .trim();
+        print(titleRecipe);
+
+        final desc =
+            element.getElementsByClassName("card__summary")[0].text.trim();
+        print(desc);
+
+        final href = element
+            .getElementsByClassName("card__titleLink manual-link-behavior")[0]
+            .attributes["href"];
+        print(href);
+
+        checkFilter(
             desc: desc,
-            photoUrl: imageUrlRecipe,
             href: href,
-          ));
-      }
-    });
+            imageUrlRecipe: imageUrlRecipe,
+            titleRecipe: titleRecipe);
+      });
+    }
     setState(() {});
   }
 
@@ -275,6 +196,130 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
     );
   }
 
+  checkFilter(
+      {String titleRecipe, String desc, String imageUrlRecipe, String href}) {
+    if (diet == "all") {
+      if (!titleRecipe.toLowerCase().contains("beef") &&
+          !titleRecipe.toLowerCase().contains("pork") &&
+          !titleRecipe.toLowerCase().contains("bacon") &&
+          !titleRecipe.toLowerCase().contains("ham") &&
+          !titleRecipe.toLowerCase().contains("steak") &&
+          !titleRecipe.toLowerCase().contains("veal") &&
+          !titleRecipe.toLowerCase().contains("buffalo") &&
+          !desc.toLowerCase().contains("beef") &&
+          !desc.toLowerCase().contains("pork") &&
+          !desc.toLowerCase().contains("bacon") &&
+          !desc.toLowerCase().contains("ham") &&
+          !desc.toLowerCase().contains("steak") &&
+          !desc.toLowerCase().contains("veal") &&
+          !desc.toLowerCase().contains("buffalo"))
+        recipeCards.add(RecipeCard(
+          title: titleRecipe,
+          desc: desc,
+          photoUrl: imageUrlRecipe,
+          href: href,
+        ));
+    }
+// turkey,lamb,steak,duck,camel,goat,quail,shrimp,prawn,crab,lobster,oyster,chevon,veal
+    if (diet == "chicken") {
+      if (!titleRecipe.toLowerCase().contains("beef") &&
+          !titleRecipe.toLowerCase().contains("pork") &&
+          !titleRecipe.toLowerCase().contains("bacon") &&
+          !titleRecipe.toLowerCase().contains("ham") &&
+          !titleRecipe.toLowerCase().contains("turkey") &&
+          !titleRecipe.toLowerCase().contains("lamb") &&
+          !titleRecipe.toLowerCase().contains("steak") &&
+          !titleRecipe.toLowerCase().contains("duck") &&
+          !titleRecipe.toLowerCase().contains("quail") &&
+          !titleRecipe.toLowerCase().contains("shrimp") &&
+          !titleRecipe.toLowerCase().contains("prawn") &&
+          !titleRecipe.toLowerCase().contains("crab") &&
+          !titleRecipe.toLowerCase().contains("lobster") &&
+          !titleRecipe.toLowerCase().contains("oyster") &&
+          !titleRecipe.toLowerCase().contains("chevon") &&
+          !titleRecipe.toLowerCase().contains("veal") &&
+          !titleRecipe.toLowerCase().contains("buffalo") &&
+          !desc.toLowerCase().contains("beef") &&
+          !desc.toLowerCase().contains("pork") &&
+          !desc.toLowerCase().contains("bacon") &&
+          !desc.toLowerCase().contains("ham") &&
+          !desc.toLowerCase().contains("turkey") &&
+          !desc.toLowerCase().contains("lamb") &&
+          !desc.toLowerCase().contains("steak") &&
+          !desc.toLowerCase().contains("duck") &&
+          !desc.toLowerCase().contains("quail") &&
+          !desc.toLowerCase().contains("shrimp") &&
+          !desc.toLowerCase().contains("prawn") &&
+          !desc.toLowerCase().contains("crab") &&
+          !desc.toLowerCase().contains("lobster") &&
+          !desc.toLowerCase().contains("oyster") &&
+          !desc.toLowerCase().contains("chevon") &&
+          !desc.toLowerCase().contains("veal") &&
+          !desc.toLowerCase().contains("buffalo"))
+        recipeCards.add(RecipeCard(
+          title: titleRecipe,
+          desc: desc,
+          photoUrl: imageUrlRecipe,
+          href: href,
+        ));
+    }
+
+    if (diet == "veg") {
+      if (!titleRecipe.toLowerCase().contains("chicken") &&
+          !titleRecipe.toLowerCase().contains("tuna") &&
+          !titleRecipe.toLowerCase().contains("salmon") &&
+          !titleRecipe.toLowerCase().contains("mutton") &&
+          !titleRecipe.toLowerCase().contains("goat") &&
+          !titleRecipe.toLowerCase().contains("egg") &&
+          !titleRecipe.toLowerCase().contains("beef") &&
+          !titleRecipe.toLowerCase().contains("pork") &&
+          !titleRecipe.toLowerCase().contains("bacon") &&
+          !titleRecipe.toLowerCase().contains("ham") &&
+          !titleRecipe.toLowerCase().contains("turkey") &&
+          !titleRecipe.toLowerCase().contains("lamb") &&
+          !titleRecipe.toLowerCase().contains("steak") &&
+          !titleRecipe.toLowerCase().contains("duck") &&
+          !titleRecipe.toLowerCase().contains("quail") &&
+          !titleRecipe.toLowerCase().contains("shrimp") &&
+          !titleRecipe.toLowerCase().contains("prawn") &&
+          !titleRecipe.toLowerCase().contains("crab") &&
+          !titleRecipe.toLowerCase().contains("lobster") &&
+          !titleRecipe.toLowerCase().contains("oyster") &&
+          !titleRecipe.toLowerCase().contains("chevon") &&
+          !titleRecipe.toLowerCase().contains("veal") &&
+          !titleRecipe.toLowerCase().contains("buffalo") &&
+          !desc.toLowerCase().contains("chicken") &&
+          !desc.toLowerCase().contains("tuna") &&
+          !desc.toLowerCase().contains("salmon") &&
+          !desc.toLowerCase().contains("mutton") &&
+          !desc.toLowerCase().contains("goat") &&
+          !desc.toLowerCase().contains("egg") &&
+          !desc.toLowerCase().contains("beef") &&
+          !desc.toLowerCase().contains("pork") &&
+          !desc.toLowerCase().contains("bacon") &&
+          !desc.toLowerCase().contains("ham") &&
+          !desc.toLowerCase().contains("turkey") &&
+          !desc.toLowerCase().contains("lamb") &&
+          !desc.toLowerCase().contains("steak") &&
+          !desc.toLowerCase().contains("duck") &&
+          !desc.toLowerCase().contains("quail") &&
+          !desc.toLowerCase().contains("shrimp") &&
+          !desc.toLowerCase().contains("prawn") &&
+          !desc.toLowerCase().contains("crab") &&
+          !desc.toLowerCase().contains("lobster") &&
+          !desc.toLowerCase().contains("oyster") &&
+          !desc.toLowerCase().contains("chevon") &&
+          !desc.toLowerCase().contains("veal") &&
+          !desc.toLowerCase().contains("buffalo"))
+        recipeCards.add(RecipeCard(
+          title: titleRecipe,
+          desc: desc,
+          photoUrl: imageUrlRecipe,
+          href: href,
+        ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.url);
@@ -300,7 +345,9 @@ class _BuildRecipeListResultsState extends State<BuildRecipeListResults> {
               physics: BouncingScrollPhysics(),
               itemCount: recipeCards.length == 0
                   ? 0
-                  : hasMore ? recipeCards.length + 1 : recipeCards.length,
+                  : hasMore
+                      ? recipeCards.length + 1
+                      : recipeCards.length,
               itemBuilder: (context, i) {
                 // print(recipeCards.length);
                 if (i == recipeCards.length && hasMore)
