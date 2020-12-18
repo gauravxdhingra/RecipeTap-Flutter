@@ -1,0 +1,5 @@
+storePassword=
+keyPassword=
+keyAlias=key
+# storeFile=c:\\Users\\GauravXd\\key.jks
+storeFile=key.jks
