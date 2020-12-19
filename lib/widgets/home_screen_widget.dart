@@ -709,7 +709,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
-                                          // mainAxisAlignment: MainAxisAlignment.end,
                                           children: <Widget>[
                                             Align(
                                               alignment: Alignment.topCenter,
@@ -739,7 +738,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       horizontal: 20,
                                                       vertical: 10),
                                               child: Text(
-                                                "Add Ingredients",
+                                                "+ Add Ingredients",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyText2
@@ -750,92 +749,55 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               ),
                                             ),
 // TODO
-                                            // Padding(
-                                            //   padding:
-                                            //       const EdgeInsets.symmetric(
-                                            //     // vertical: 20,
-                                            //     horizontal: 20,
-                                            //   ),
-                                            //   child: ChipsInput(
-                                            //     initialValue: include,
-                                            //     //  includei
-                                            //     //     .split("[")[1]
-                                            //     //     .split("]")[0]
-                                            //     //     .split(",")
-                                            //     //     .toList(),
-                                            //     //     .forEach((element) {
-                                            //     //   include[i] =
-                                            //     //       element.toString();
-                                            //     //   i++;
-                                            //     // }),
-
-                                            //     decoration: InputDecoration(
-                                            //       labelText:
-                                            //           'Select Ingredients',
-                                            //       // counter: Text(
-                                            //       //   include.length
-                                            //       //           .toString() ??
-                                            //       //       "0",
-                                            //       // ),
-                                            //     ),
-                                            //     onChanged: (data) {
-                                            //       // includei =
-                                            //       //     data.toString();
-                                            //       include = data;
-                                            //       print(include);
-                                            //       // setState(() {});
-                                            //       // print(includei);
-                                            //     },
-                                            //     chipBuilder:
-                                            //         (context, state, profile) {
-                                            //       return InputChip(
-                                            //         key: ObjectKey(profile),
-                                            //         label: Text(profile),
-                                            //         onDeleted: () => state
-                                            //             .deleteChip(profile),
-                                            //         materialTapTargetSize:
-                                            //             MaterialTapTargetSize
-                                            //                 .shrinkWrap,
-                                            //       );
-                                            //     },
-                                            //     findSuggestions:
-                                            //         (String query) {
-                                            //       if (query.length != 0) {
-                                            //         var lowercaseQuery =
-                                            //             query.toLowerCase();
-                                            //         return SearchSuggestions
-                                            //             .suggestions
-                                            //             .where((ingredient) {
-                                            //           return ingredient
-                                            //               .toLowerCase()
-                                            //               .contains(query
-                                            //                   .toLowerCase());
-                                            //         }).toList(growable: false)
-                                            //               ..sort((a, b) => a
-                                            //                   .toLowerCase()
-                                            //                   .indexOf(
-                                            //                       lowercaseQuery)
-                                            //                   .compareTo(b
-                                            //                       .toLowerCase()
-                                            //                       .indexOf(
-                                            //                           lowercaseQuery)));
-                                            //       } else {
-                                            //         return [];
-                                            //       }
-                                            //     },
-                                            //     suggestionBuilder: (context,
-                                            //         state, ingredient) {
-                                            //       return ListTile(
-                                            //         key: ObjectKey(ingredient),
-                                            //         title: Text(ingredient),
-                                            //         onTap: () =>
-                                            //             state.selectSuggestion(
-                                            //                 ingredient),
-                                            //       );
-                                            //     },
-                                            //   ),
-                                            // ),
-                                            // FlatButton(),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10),
+                                              child:
+                                                  Text("Separate Using Commas"),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20,
+                                                      horizontal: 20),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white
+                                                        .withOpacity(0.2),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: TextFormField(
+                                                  initialValue: include
+                                                      .toString()
+                                                      .split("[")[1]
+                                                      .split("]")[0],
+                                                  onChanged: (val) {
+                                                    include = [];
+                                                    val
+                                                        .split(",")
+                                                        .forEach((element) {
+                                                      include
+                                                          .add(element.trim());
+                                                    });
+                                                    print(include);
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'Enter Ingredients to be added',
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 5),
+                                                    border: InputBorder.none,
+                                                    labelStyle: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -868,7 +830,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 //   width: 10,
                                                 // ),
                                                 Text(
-                                                  'Add Ingredients',
+                                                  '+ Add Ingredients',
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .button
@@ -916,7 +878,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       horizontal: 20,
                                                       vertical: 10),
                                               child: Text(
-                                                "Remove Ingredients",
+                                                "- Exclude Ingredients",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyText2
@@ -928,100 +890,55 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                             ),
 
 // TODO
-                                            // Padding(
-                                            //   padding:
-                                            //       const EdgeInsets.symmetric(
-                                            //     // vertical: 20,
-                                            //     horizontal: 20,
-                                            //   ),
-                                            //   child: ChipsInput(
-                                            //     initialValue: exclude,
-                                            //     //  includei
-                                            //     //     .split("[")[1]
-                                            //     //     .split("]")[0]
-                                            //     //     .split(",")
-                                            //     //     .toList(),
-                                            //     //     .forEach((element) {
-                                            //     //   include[i] =
-                                            //     //       element.toString();
-                                            //     //   i++;
-                                            //     // }),
-
-                                            //     decoration: InputDecoration(
-                                            //       labelText:
-                                            //           'Select Ingredients',
-                                            //       // counter: Text(
-                                            //       //   include.length
-                                            //       //           .toString() ??
-                                            //       //       "0",
-                                            //       // ),
-                                            //     ),
-                                            //     onChanged: (data) {
-                                            //       // includei =
-                                            //       //     data.toString();
-                                            //       exclude = data;
-                                            //       print(exclude);
-                                            //       // setState(() {});
-                                            //       // print(includei);
-                                            //     },
-                                            //     chipBuilder:
-                                            //         (context, state, profile) {
-                                            //       return InputChip(
-                                            //         key: ObjectKey(profile),
-                                            //         label: Text(profile),
-                                            //         onDeleted: () => state
-                                            //             .deleteChip(profile),
-                                            //         materialTapTargetSize:
-                                            //             MaterialTapTargetSize
-                                            //                 .shrinkWrap,
-                                            //       );
-                                            //     },
-                                            //     findSuggestions:
-                                            //         (String query) {
-                                            //       if (query.length != 0) {
-                                            //         var lowercaseQuery =
-                                            //             query.toLowerCase();
-                                            //         return SearchSuggestions
-                                            //             .suggestions
-                                            //             .where((ingredient) {
-                                            //           return ingredient
-                                            //               .toLowerCase()
-                                            //               .contains(query
-                                            //                   .toLowerCase());
-                                            //         }).toList(growable: false)
-                                            //               ..sort((a, b) => a
-                                            //                   .toLowerCase()
-                                            //                   .indexOf(
-                                            //                       lowercaseQuery)
-                                            //                   .compareTo(b
-                                            //                       .toLowerCase()
-                                            //                       .indexOf(
-                                            //                           lowercaseQuery)))
-                                            //               ..sort((a, b) => a
-                                            //                   .replaceAll(
-                                            //                       " ", "")
-                                            //                   .length
-                                            //                   .compareTo(b
-                                            //                       .replaceAll(
-                                            //                           " ", "")
-                                            //                       .length));
-                                            //       } else {
-                                            //         return [];
-                                            //       }
-                                            //     },
-                                            //     suggestionBuilder: (context,
-                                            //         state, ingredient) {
-                                            //       return ListTile(
-                                            //         key: ObjectKey(ingredient),
-                                            //         title: Text(ingredient),
-                                            //         onTap: () =>
-                                            //             state.selectSuggestion(
-                                            //                 ingredient),
-                                            //       );
-                                            //     },
-                                            //   ),
-                                            // ),
-                                            // FlatButton(),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10),
+                                              child:
+                                                  Text("Separate Using Commas"),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20,
+                                                      horizontal: 20),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white
+                                                        .withOpacity(0.2),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: TextFormField(
+                                                  initialValue: exclude
+                                                      .toString()
+                                                      .split("[")[1]
+                                                      .split("]")[0],
+                                                  onChanged: (val) {
+                                                    exclude = [];
+                                                    val
+                                                        .split(",")
+                                                        .forEach((element) {
+                                                      exclude
+                                                          .add(element.trim());
+                                                    });
+                                                    print(exclude);
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'Enter Ingredients to be excluded',
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 5),
+                                                    border: InputBorder.none,
+                                                    labelStyle: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -1053,7 +970,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 //   width: 10,
                                                 // ),
                                                 Text(
-                                                  'Remove Ingredients',
+                                                  '- Exclude Ingredients',
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .button
